@@ -26,15 +26,15 @@ public class FoodController {
 	 */
 	
 	// 음식점 정보 등록 관련
-	@RequestMapping(value = "food/register.go", method = RequestMethod.GET)
-	public ModelAndView foodRegister(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "food/insert.go", method = RequestMethod.GET)
+	public ModelAndView foodInsert(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("food/register.tiles");		
+		mav.setViewName("food/insert.tiles");		
 		return mav;		
 	}
 
-	@RequestMapping(value = "food/registerOk.go", method = RequestMethod.POST)
-	public ModelAndView foodRegisterOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
+	@RequestMapping(value = "food/insertOk.go", method = RequestMethod.POST)
+	public ModelAndView foodInsertOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
 		mav.addObject("foodDto",foodDto);

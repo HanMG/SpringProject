@@ -14,16 +14,13 @@
 		<c:when test="${id == null }">
 			<a href="${root}/member/signIn.go">회원가입</a>
 			<a href="${root}/member/login.go">로그인</a>
-			<a href="${root}/food/register.go">음식정보등록</a>
+			<a href="${root}/food/insert.go">음식정보등록</a>
 			<a href="${root}/food/update.go">음식정보수정</a>
 			<a href="${root}/food/delete.go">음식정보삭제</a>
 			<a href="${root}/food/detail.go">음식상세페이지 </a>
 		</c:when>
 		<c:when test="${id != null }">
-			<a href="${root}/food/register.go">음식정보등록</a>
-			<a href="${root}/food/update.go">음식정보수정</a>
-			<a href="${root}/food/delete.go">음식정보삭제</a>
-			<a href="${root}/food/detail.go">음식상세페이지 </a>
+					
 		</c:when>
 	</c:choose>
 	</div>

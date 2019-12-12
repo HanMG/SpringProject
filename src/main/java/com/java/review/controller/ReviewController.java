@@ -19,14 +19,14 @@ public class ReviewController {
 	 */
 	
 	// 리뷰 등록 관련
-	@RequestMapping(value = "review/register.go", method = RequestMethod.GET)
+	@RequestMapping(value = "review/insert.go", method = RequestMethod.GET)
 	public ModelAndView reviewRegister(HttpServletRequest request, HttpServletResponse reponse) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("review/register.tiles");	
+		mav.setViewName("review/insert.tiles");	
 		return mav;				
 	}
 	
-	@RequestMapping(value = "review/registerOk.go", method = RequestMethod.POST)
+	@RequestMapping(value = "review/insertOk.go", method = RequestMethod.POST)
 	public ModelAndView reviewRegisterOk(HttpServletRequest request, HttpServletResponse reponse, ReviewDto reviewDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);

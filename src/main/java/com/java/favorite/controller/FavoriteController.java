@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 public class FavoriteController {
 	
 	// 즐겨찾기 등록 - 돌아올 데이터 X 
-	public void favoriteRegister(HttpServletRequest request, HttpServletResponse response) {
+	public void favoriteInsert(HttpServletRequest request, HttpServletResponse response) {
 				
 		
 	}

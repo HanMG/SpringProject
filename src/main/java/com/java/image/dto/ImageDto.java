@@ -11,6 +11,8 @@ public class ImageDto {
 	private String image_name;
 	private int image_size;
 	private String image_path;
+	public ImageDto() {
+	}
 	public String getImage_code() {
 		return image_code;
 	}
@@ -49,6 +51,7 @@ public class ImageDto {
 		this.image_size = image_size;
 		this.image_path = image_path;
 	}
+
 	@Override
 	public String toString() {
 		return "imageDto [image_code=" + image_code + ", refer_code=" + refer_code + ", image_name=" + image_name

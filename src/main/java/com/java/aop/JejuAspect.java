@@ -7,6 +7,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 9.
+ * @설명 : advice   
+ */
+
 @Component
 @Aspect
 public class JejuAspect {

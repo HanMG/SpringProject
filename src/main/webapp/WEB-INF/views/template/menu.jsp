@@ -16,6 +16,8 @@
 </head>
 <body>	
 	<div class="container">
+		<a href="${root}/coupon/couponInsert.go">상품등록</a>
+		
 	<c:choose>
 		<c:when test="${id == null }">
 			<a href="${root}/member/signIn.do">회원가입</a>

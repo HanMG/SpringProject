@@ -42,8 +42,7 @@
 	
 	<!-- AOP -->
 	<context:component-scan base-package="com.java.aop"/>
+	<context:component-scan base-package="com.java.coupon.*"/>
 	
-	<aop:aspectj-autoproxy/>
-	
-	
+	<aop:aspectj-autoproxy/>	
 </beans:beans>

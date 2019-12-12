@@ -5,7 +5,7 @@ package com.java.image.dto;
  * @작업일 : 2019. 12. 12.
  * @작업 내용 :  imageDto 생성
  */
-public class imageDto {
+public class ImageDto {
 	private String image_code;
 	private String refer_code;
 	private String image_name;
@@ -41,7 +41,7 @@ public class imageDto {
 	public void setImage_path(String image_path) {
 		this.image_path = image_path;
 	}
-	public imageDto(String image_code, String refer_code, String image_name, int image_size, String image_path) {
+	public ImageDto(String image_code, String refer_code, String image_name, int image_size, String image_path) {
 		super();
 		this.image_code = image_code;
 		this.refer_code = refer_code;

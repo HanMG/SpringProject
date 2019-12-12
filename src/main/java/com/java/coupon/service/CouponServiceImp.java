@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dao.CouponDao;
 import com.java.coupon.dto.CouponDto;
+import com.java.image.dao.ImageDao;
+import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 전지원
@@ -25,6 +27,9 @@ public class CouponServiceImp implements CouponService {
 	
 	@Autowired
 	private CouponDao couponDao;
+	
+	@Autowired
+	private ImageDao imageDao;
 	
 	//쿠폰상품 등록 페이지
 	@Override
@@ -41,32 +46,37 @@ public class CouponServiceImp implements CouponService {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		MultipartFile upImage = request.getFile("file");
 		long imageSize = upImage.getSize();
+		ImageDto imageDto = new ImageDto();
 		
 		
+		String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
+		File path = new File("C:\\images\\");
 		
-			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
-			File path = new File("C:\\images\\");
+		if(path.exists() && path.isDirectory()) {
+			File file = new File(path, imageName);
 			
-			if(path.exists() && path.isDirectory()) {
-				File file = new File(path, imageName);
-				
-				try {
-					upImage.transferTo(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				String imagePath = file.getAbsolutePath();
-				
-				mav.addObject("image_name", imageName);
-				mav.addObject("image_size", imageSize);
-				mav.addObject("image_path", imagePath);
-				
-				
-				//int check = couponDao.couponInsert(couponInsert);
-				
+			try {
+				upImage.transferTo(file);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-	
+			
+			imageDto.setImage_name(imageName);
+			imageDto.setImage_path(file.getAbsolutePath());
+			imageDto.setImage_size(Integer.parseInt(imageName));
+			
+			String couponCode = null;			
+			couponCode = couponDao.couponInsert("couponDto");	//TODO
+			
+			if(couponCode != null) {
+				Map<String, Object> cMap = Map<String, Object>();
+				cMap.put("imageDto", imageDto);
+				cMap.put("couponCode",couponCode);
+				
+				int check = imageDao.imageInsert(cMap);	//TODO
+			}
+		}
+
 		
 		
 		mav.addObject("couponDao",couponDao);

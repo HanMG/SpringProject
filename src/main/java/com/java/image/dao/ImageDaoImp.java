@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImageDaoImp {
 
-	@Autowired
-	SqlSessionTemplate sqlSessionTemplate;
+//	@Autowired
+//	SqlSessionTemplate sqlSessionTemplate;
 	
 	
 }

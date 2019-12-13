@@ -2,6 +2,10 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,63 +33,79 @@ public class CouponServiceImp implements CouponService {
 	@Autowired
 	private CouponDao couponDao;
 	
-	@Autowired
-	private ImageDao imageDao;
-	
-	//쿠폰상품 등록 페이지
-	@Override
-	public void couponInsert(ModelAndView mav) {
-		mav.setViewName("coupon/couponInsert.tiles");
-	}
+//	@Autowired
+//	private ImageDao imageDao;
 	
 	//쿠폰상품 등록
+	
 	@Override
 	public void couponInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		CouponDto couponDto =(CouponDto) map.get("couponDto");
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
-		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
-		MultipartFile upImage = request.getFile("file");
-		long imageSize = upImage.getSize();
-		ImageDto imageDto = new ImageDto();
+		String couponStartdate = couponDto.getCouponStartdate();
+		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date dt = date.parse(couponStartdate);
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponStartDate: " + couponStartdate);
+		//DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		//couponStartdate = dateFormat.format(date);
 		
 		
-		String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
-		File path = new File("C:\\images\\");
-		
-		if(path.exists() && path.isDirectory()) {
-			File file = new File(path, imageName);
-			
-			try {
-				upImage.transferTo(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			imageDto.setImage_name(imageName);
-			imageDto.setImage_path(file.getAbsolutePath());
-			imageDto.setImage_size(Integer.parseInt(imageName));
-			
-			String couponCode = null;			
-			couponCode = couponDao.couponInsert(couponDto);	//TODO
-			JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
-			
-			if(couponCode != null) {
-				JejuAspect.logger.info(JejuAspect.logMsg + "couponCode2: "+ couponCode);
-				
+
+
+
+//		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
+//		MultipartFile upImage = request.getFile("file");
+//		long imageSize = upImage.getSize();
+//		ImageDto imageDto = new ImageDto();
+//
+//		String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
+//		File path = new File("C:\\images\\");
+//		
+//		if(path.exists() && path.isDirectory()) {
+//			File file = new File(path, imageName);
+//			
+//			try {
+//				upImage.transferTo(file);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}`
+//			
+//			imageDto.setImageName(imageName);
+//			imageDto.setImagePath(file.getAbsolutePath());
+//			imageDto.setImageSize(Integer.parseInt(imageName));
+//			
+//			//String couponCode = null;			
+//			
+//			//JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
+//			
+//			
+//			
+//			
+//			
+//			if(couponCode != null) {
+//				JejuAspect.logger.info(JejuAspect.logMsg + "couponCode2: "+ couponCode);
+//				
 //				Map<String, Object> cMap = new HashMap<String, Object>();
 //				cMap.put("imageDto", imageDto);
 //				cMap.put("couponCode",couponCode);
 //				
 //				int check = imageDao.imageInsert(cMap);	//TODO
-			}
-		}
-
-		
-		
+//			}
+//		}
+		int check = couponDao.couponInsert(couponDto);	//TODO
+		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
 		mav.addObject("couponDao",couponDao);
-		JejuAspect.logger.info(JejuAspect.logMsg + couponDao);
+		//JejuAspect.logger.info(JejuAspect.logMsg + couponDao);
 		
-		mav.setViewName("coupon/couponInsertOk.tiles");
+		//mav.setViewName("coupon/couponInsertOk.tiles");
 	}
 }

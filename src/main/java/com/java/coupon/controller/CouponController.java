@@ -26,7 +26,7 @@ public class CouponController {
 	@RequestMapping(value="/coupon/couponInsert.go", method= RequestMethod.GET)
 	public ModelAndView couponInsert(HttpServletRequest request, HttpServletResponse reponse) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("request",request);
+		mav.setViewName("coupon/couponInsert.tiles");
 		
 		return mav;
 	}
@@ -38,7 +38,9 @@ public class CouponController {
 		mav.addObject("request",request);
 		mav.addObject("couponDto",couponDto);
 		
-		couponService.couponInsert(mav);
+		couponService.couponInsertOk(mav);
+		
+		//return mav;
 	}
 	
 	

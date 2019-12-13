@@ -19,12 +19,12 @@ public class CouponDaoImp implements CouponDao {
 	
 	//쿠폰상품 등록
 	@Override
-	public String couponInsert(CouponDto couponDto) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("dao.CouponMapper.insert", couponDto);
+	public int couponInsert(CouponDto couponDto) {
+		System.out.println("daoimp");
+		int check =sqlSessionTemplate.insert("dao.CouponMapper.insert", couponDto);
 		
-		String couponCode = sqlSessionTemplate.selectOne("dao.CouponMapper.codeSelect");
-		return couponCode;
+		//String couponCode = sqlSessionTemplate.selectOne("dao.CouponMapper.codeSelect");
+		return check;
 	}
 	
 }

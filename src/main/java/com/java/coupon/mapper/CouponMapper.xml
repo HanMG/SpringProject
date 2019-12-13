@@ -4,12 +4,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 12.12 Mapper 생성 -->
 <mapper namespace="dao.CouponMapper">
-	<insert id="insert">
-		INSERT INTO coupon 
-		VALUES(COUPON_CODE=#{coupon_code}, FOOD_CODE=#{food_code}, COUPON_NAME=#{coupon_name},
-		COUPON_STARTDATE = #{coupon_startdate}, COUPON_ENDDATE=#{coupon_enddate}, COUPON_COSTORI=#{coupon_costori},
-		COUPON_SALERATE=#{coupon_salerate}, COUPON_COSTSALE=#{coupon_costsale}, COUPON_INTRO=#{coupon_intro}
-		 ); 
+	<insert id="insert" parameterType="com.java.coupon.dto.CouponDto">
+		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
+		VALUES('coupon'||LPAD(seqcoupon.nextval,4,0), #{foodCode}, #{couponName}, #{couponStartdate}, #{couponEnddate}, #{couponCostori}, #{couponSalerate}, 
+		#{couponCostsale}, #{couponIntro}) 
 	</insert>
+	
 
 </mapper>

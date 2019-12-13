@@ -2,6 +2,7 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,14 +67,17 @@ public class CouponServiceImp implements CouponService {
 			imageDto.setImage_size(Integer.parseInt(imageName));
 			
 			String couponCode = null;			
-			couponCode = couponDao.couponInsert("couponDto");	//TODO
+			couponCode = couponDao.couponInsert(couponDto);	//TODO
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 			
 			if(couponCode != null) {
-				Map<String, Object> cMap = Map<String, Object>();
-				cMap.put("imageDto", imageDto);
-				cMap.put("couponCode",couponCode);
+				JejuAspect.logger.info(JejuAspect.logMsg + "couponCode2: "+ couponCode);
 				
-				int check = imageDao.imageInsert(cMap);	//TODO
+//				Map<String, Object> cMap = new HashMap<String, Object>();
+//				cMap.put("imageDto", imageDto);
+//				cMap.put("couponCode",couponCode);
+//				
+//				int check = imageDao.imageInsert(cMap);	//TODO
 			}
 		}
 

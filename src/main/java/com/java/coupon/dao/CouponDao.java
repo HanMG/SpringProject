@@ -12,5 +12,6 @@ import com.java.coupon.dto.CouponDto;
 
 @Component
 public interface CouponDao {
-	public CouponDao couponInsert(CouponDto couponDto);
+	public String couponInsert(CouponDto couponDto);
+
 }

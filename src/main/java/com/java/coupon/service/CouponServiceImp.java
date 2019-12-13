@@ -37,7 +37,6 @@ public class CouponServiceImp implements CouponService {
 //	private ImageDao imageDao;
 	
 	//쿠폰상품 등록
-	
 	@Override
 	public void couponInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -45,22 +44,18 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
 		String couponStartdate = couponDto.getCouponStartdate();
+		String couponEnddate = couponDto.getCouponEnddate();
 		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date dt = date.parse(couponStartdate);
+			Date sDate = date.parse(couponStartdate);
+			Date eDate = date.parse(couponEnddate);
 			
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponStartDate: " + sDate);
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponEnddate: " + eDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponStartDate: " + couponStartdate);
-		//DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-		//couponStartdate = dateFormat.format(date);
-		
-		
-
-
 
 //		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 //		MultipartFile upImage = request.getFile("file");

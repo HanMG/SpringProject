@@ -233,12 +233,6 @@
 			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>Spring Plugins</id>
-			<url>https://repo.spring.io/plugins-release/</url>
-		</repository>
-	</repositories>
     <build>
         <plugins>
             <plugin>

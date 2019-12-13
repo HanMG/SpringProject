@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.service.CouponService;
+import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 전지원
@@ -35,11 +36,11 @@ public class CouponController {
 	@RequestMapping(value="/coupon/couponInsertOk.go", method= RequestMethod.POST)
 	public void couponInsertOk(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("request",request);
-		mav.addObject("couponDto",couponDto);
+		mav.addObject("request", request);
+		mav.addObject("couponDto", couponDto);
+		//mav.addObject("imageDto", imageDto);
 		
 		couponService.couponInsertOk(mav);
-		
 		//return mav;
 	}
 	

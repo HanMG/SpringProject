@@ -1,5 +1,7 @@
 package com.java.coupon.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,12 +21,12 @@ public class CouponDaoImp implements CouponDao {
 	
 	//쿠폰상품 등록
 	@Override
-	public int couponInsert(CouponDto couponDto) {
-		System.out.println("daoimp");
-		int check =sqlSessionTemplate.insert("dao.CouponMapper.insert", couponDto);
+	public String couponInsert(CouponDto couponDto) {
+		sqlSessionTemplate.insert("dao.CouponMapper.insert", couponDto);
+		String couponCode = couponDto.getCouponCode();
 		
-		//String couponCode = sqlSessionTemplate.selectOne("dao.CouponMapper.codeSelect");
-		return check;
+		//System.out.println("couponCode: "+ couponCode);
+		return couponCode;
 	}
 	
 }

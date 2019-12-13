@@ -56,11 +56,17 @@ public class CouponServiceImp implements CouponService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
+		String couponCode = couponDao.couponInsert(couponDto);
+		//String couponCode = couponDao.couponInsert(couponDto);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 
+		//TODO : 이미지 insert
 //		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 //		MultipartFile upImage = request.getFile("file");
 //		long imageSize = upImage.getSize();
-//		ImageDto imageDto = new ImageDto();
+//		ImageDto imageDto = (ImageDto) map.get("imageDto");
+//		JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
 //
 //		String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
 //		File path = new File("C:\\images\\");
@@ -72,19 +78,11 @@ public class CouponServiceImp implements CouponService {
 //				upImage.transferTo(file);
 //			} catch (IOException e) {
 //				e.printStackTrace();
-//			}`
+//			}
 //			
 //			imageDto.setImageName(imageName);
 //			imageDto.setImagePath(file.getAbsolutePath());
 //			imageDto.setImageSize(Integer.parseInt(imageName));
-//			
-//			//String couponCode = null;			
-//			
-//			//JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
-//			
-//			
-//			
-//			
 //			
 //			if(couponCode != null) {
 //				JejuAspect.logger.info(JejuAspect.logMsg + "couponCode2: "+ couponCode);
@@ -96,10 +94,10 @@ public class CouponServiceImp implements CouponService {
 //				int check = imageDao.imageInsert(cMap);	//TODO
 //			}
 //		}
-		int check = couponDao.couponInsert(couponDto);	//TODO
-		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+//		int check = couponDao.couponInsert(couponDto);	//TODO
+//		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
 		mav.addObject("couponDao",couponDao);
-		//JejuAspect.logger.info(JejuAspect.logMsg + couponDao);
+		JejuAspect.logger.info(JejuAspect.logMsg + couponDao);
 		
 		//mav.setViewName("coupon/couponInsertOk.tiles");
 	}

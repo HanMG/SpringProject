@@ -6,55 +6,55 @@ package com.java.image.dto;
  * @작업 내용 :  imageDto 생성
  */
 public class ImageDto {
-	private String image_code;
-	private String refer_code;
-	private String image_name;
-	private int image_size;
-	private String image_path;
+	private String imageCode;
+	private String referCode;
+	private String imageName;
+	private int imageSize;
+	private String imagePath;
 	public ImageDto() {
 	}
-	public String getImage_code() {
-		return image_code;
+	public String getimageCode() {
+		return imageCode;
 	}
-	public void setImage_code(String image_code) {
-		this.image_code = image_code;
+	public void setimageCode(String imageCode) {
+		this.imageCode = imageCode;
 	}
-	public String getRefer_code() {
-		return refer_code;
+	public String getreferCode() {
+		return referCode;
 	}
-	public void setRefer_code(String refer_code) {
-		this.refer_code = refer_code;
+	public void setreferCode(String referCode) {
+		this.referCode = referCode;
 	}
-	public String getImage_name() {
-		return image_name;
+	public String getimageName() {
+		return imageName;
 	}
-	public void setImage_name(String image_name) {
-		this.image_name = image_name;
+	public void setimageName(String imageName) {
+		this.imageName = imageName;
 	}
-	public int getImage_size() {
-		return image_size;
+	public int getimageSize() {
+		return imageSize;
 	}
-	public void setImage_size(int image_size) {
-		this.image_size = image_size;
+	public void setimageSize(int imageSize) {
+		this.imageSize = imageSize;
 	}
-	public String getImage_path() {
-		return image_path;
+	public String getimagePath() {
+		return imagePath;
 	}
-	public void setImage_path(String image_path) {
-		this.image_path = image_path;
+	public void setimagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
-	public ImageDto(String image_code, String refer_code, String image_name, int image_size, String image_path) {
+	public ImageDto(String imageCode, String referCode, String imageName, int imageSize, String imagePath) {
 		super();
-		this.image_code = image_code;
-		this.refer_code = refer_code;
-		this.image_name = image_name;
-		this.image_size = image_size;
-		this.image_path = image_path;
+		this.imageCode = imageCode;
+		this.referCode = referCode;
+		this.imageName = imageName;
+		this.imageSize = imageSize;
+		this.imagePath = imagePath;
 	}
 
 	@Override
 	public String toString() {
-		return "imageDto [image_code=" + image_code + ", refer_code=" + refer_code + ", image_name=" + image_name
-				+ ", image_size=" + image_size + ", image_path=" + image_path + "]";
+		return "imageDto [imageCode=" + imageCode + ", referCode=" + referCode + ", imageName=" + imageName
+				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
 	}
 }

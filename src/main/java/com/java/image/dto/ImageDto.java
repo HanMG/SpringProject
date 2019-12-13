@@ -13,36 +13,6 @@ public class ImageDto {
 	private String imagePath;
 	public ImageDto() {
 	}
-	public String getimageCode() {
-		return imageCode;
-	}
-	public void setimageCode(String imageCode) {
-		this.imageCode = imageCode;
-	}
-	public String getreferCode() {
-		return referCode;
-	}
-	public void setreferCode(String referCode) {
-		this.referCode = referCode;
-	}
-	public String getimageName() {
-		return imageName;
-	}
-	public void setimageName(String imageName) {
-		this.imageName = imageName;
-	}
-	public int getimageSize() {
-		return imageSize;
-	}
-	public void setimageSize(int imageSize) {
-		this.imageSize = imageSize;
-	}
-	public String getimagePath() {
-		return imagePath;
-	}
-	public void setimagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
 	public ImageDto(String imageCode, String referCode, String imageName, int imageSize, String imagePath) {
 		super();
 		this.imageCode = imageCode;
@@ -51,10 +21,40 @@ public class ImageDto {
 		this.imageSize = imageSize;
 		this.imagePath = imagePath;
 	}
-
+	public String getImageCode() {
+		return imageCode;
+	}
+	public void setImageCode(String imageCode) {
+		this.imageCode = imageCode;
+	}
+	public String getReferCode() {
+		return referCode;
+	}
+	public void setReferCode(String referCode) {
+		this.referCode = referCode;
+	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public int getImageSize() {
+		return imageSize;
+	}
+	public void setImageSize(int imageSize) {
+		this.imageSize = imageSize;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	@Override
 	public String toString() {
-		return "imageDto [imageCode=" + imageCode + ", referCode=" + referCode + ", imageName=" + imageName
+		return "ImageDto [imageCode=" + imageCode + ", referCode=" + referCode + ", imageName=" + imageName
 				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
 	}
+	
 }

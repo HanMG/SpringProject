@@ -9,16 +9,24 @@
 		<title>쿠폰 상품 등록</title>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon.js"></script>
 		<script type="text/javascript">
-		//유효성 체크
-		function insertForm(obj){
-			alert("insertForm Ok");
-		}
-
-		//식당코드 리스트 출력
-		function foodcodeRead (root){
-			var url = root + "/coupon/searchFoodCode.go";
-			open(url, "", "width= 500, height=500, scrollbars=yes");
-		}
+			//유효성 체크
+			function insertForm(obj){
+				alert("insertForm Ok");
+			}
+	
+			//식당코드 리스트 출력
+			function foodcodeRead (root){
+				var url = root + "/coupon/searchFoodCode.go";
+				open(url, "", "width= 500, height=500, scrollbars=yes");
+			}
+			
+			//식당코드 기입
+			function sendFoodCode(foodCode, foodName, foodAddr){
+				var add = foodCode + " " + foodName + " " +foodAddr;
+				
+				open.couponForm.foodCode.value= foodCode;
+				self.close();
+			}
 		</script>
 	</head>
 	<body>
@@ -29,53 +37,53 @@
 					<li>
 						<p>상품명(쿠폰명)</p>
 						<p>
-							<input type="text" name="couponName">
+							<input type="text" name="couponName" value="강남">
 						</p>
 					</li>
 					<li>
 						<p>식당명</p>
 						<p>
-							<input type="text" name="foodCode">
+							<input type="text" name="foodCode" value="123">
 							<input type="button" value="식당검색" onclick="foodcodeRead('${root}')">
 						</p>
 					</li>
 					<li>
 						<p>유효 기간</p>
 						<p>
-							<input type="text" name="couponStartdate">
+							<input type="text" name="couponStartdate" value="2019-12-12">
 							<span>~</span>
-							<input type="text" name="couponEnddate">
+							<input type="text" name="couponEnddate"  value="2019-12-31">
 						</p>
 					</li>
 					<li>
 						<p>상품 소개</p>
 						<p>
-							<textarea rows="10" cols="10" name="couponIntro"></textarea>
+							<textarea rows="10" cols="10" name="couponIntro">123</textarea>
 						</p>
 					</li>
 					<li>
 						<p>상품 가격(할인 전 가격)</p>
 						<p>
-							<input type="text" name="couponCostori">
+							<input type="text" name="couponCostori" value="123">
 						</p>
 					</li>
 					<li>
 						<p>할인율</p>
 						<p>
-							<input type="text" name="couponSalerate">
+							<input type="text" name="couponSalerate" value="123">
 						</p>
 					</li>
 					<li>
 					<li>
 						<p>판매 가격(할인된 가격)</p>
 						<p>
-							<input type="text" name="couponCostsale">
+							<input type="text" name="couponCostsale" value="123">
 						</p>
 					</li>
 					<li>
 						<p>상품 대표 이미지</p>
 						<p>
-							<input type="file" name="file">
+							<input type="file" name="imageFile">
 							<span></span>
 						</p>
 					</li>

@@ -13,5 +13,9 @@
 		#{couponCostsale}, #{couponIntro})
 	</insert>
 	
+	<select id="selFoodCode" parameterType="String" resultType="com.java.coupon.dto.SearchFoodCodeDto">
+		SELECT food_code, food_name, food_addr  FROM food 
+		WHERE food_name LIKE #{foodName} OR food_name LIKE '%'||#{foodName}||'%'
+	</select>
 
 </mapper>

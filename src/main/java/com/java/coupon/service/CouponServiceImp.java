@@ -7,7 +7,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,15 +21,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dao.CouponDao;
 import com.java.coupon.dto.CouponDto;
+import com.java.coupon.dto.SearchFoodCodeDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
 
+
 /**
  * @작성자 : 전지원
- * @작업일 : 2019. 12. 12.
- * @작업 내용 :  CouponServiceImp 생성
- */
-
+ * @작업일 : 2019. 12. 14.
+ * @작업 내용 : insert & 식당코드 검색 작성
+*/
 @Component
 public class CouponServiceImp implements CouponService {
 	
@@ -35,6 +39,7 @@ public class CouponServiceImp implements CouponService {
 	
 	@Autowired
 	private ImageDao imageDao;
+	
 	
 	//쿠폰상품 등록
 	@Override
@@ -97,4 +102,24 @@ public class CouponServiceImp implements CouponService {
 		mav.addObject("check", check);
 		mav.setViewName("coupon/couponInsertOk.tiles");
 	}
+	
+	//식당 코드 검색
+	// TODO Auto-generated method stub
+	@Override
+	public void searchFoodCodeOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String foodName = request.getParameter("foodName");
+		JejuAspect.logger.info(JejuAspect.logMsg + "검색 내용: "+ foodName);
+		
+		if(foodName != null) {
+			List<SearchFoodCodeDto> searchFoodCodeList = couponDao.searchFoodCode(foodName);
+			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList: "+ searchFoodCodeList.size());
+			
+			mav.addObject("foodCodeList", searchFoodCodeList);
+			
+		}
+		mav.setViewName("coupon/searchFoodCode.empty");
+	}
+	
 }

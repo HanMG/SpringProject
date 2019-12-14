@@ -12,4 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public interface CouponService {
 	//쿠폰 사용 등록
 	public void couponInsertOk(ModelAndView mav);
+	
+	//식당 코드 검색
+	public void searchFoodCodeOk(ModelAndView mav);
 }

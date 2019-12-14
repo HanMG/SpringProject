@@ -48,6 +48,28 @@ public class CouponController {
 		return mav;
 	}
 	
+	//식당코드 검색 페이지 연결
+	@RequestMapping(value="/coupon/searchFoodCode.go", method=RequestMethod.GET)
+	public ModelAndView searchFoodCode(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("coupon/searchFoodCode.empty");
+		
+		return mav;
+	}
+	
+	//식당코드 검색 
+	@RequestMapping(value="/coupon/searchFoodCodeOk.go", method=RequestMethod.GET)
+	public ModelAndView readFoodCode(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		String foodName = request.getParameter("foodName");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("foodName", foodName);
+		couponService.searchFoodCodeOk(mav);
+		
+		return mav;
+	}
+	
 	
 	
 	

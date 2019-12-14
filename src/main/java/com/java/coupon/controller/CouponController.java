@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.service.CouponService;
 import com.java.image.dto.ImageDto;
@@ -34,14 +35,17 @@ public class CouponController {
 	
 	//쿠폰상품 등록
 	@RequestMapping(value="/coupon/couponInsertOk.go", method= RequestMethod.POST)
-	public void couponInsertOk(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+	public ModelAndView couponInsertOk(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		String imageFile = request.getParameter("imageFile");
+		//JejuAspect.logger.info(JejuAspect.logMsg + "imageFile: "+ imageFile);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponDto", couponDto);
-		//mav.addObject("imageDto", imageDto);
+		mav.addObject("imageFile", imageFile);
 		
 		couponService.couponInsertOk(mav);
-		//return mav;
+		
+		return mav;
 	}
 	
 	

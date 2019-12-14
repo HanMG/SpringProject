@@ -33,8 +33,8 @@ public class CouponServiceImp implements CouponService {
 	@Autowired
 	private CouponDao couponDao;
 	
-//	@Autowired
-//	private ImageDao imageDao;
+	@Autowired
+	private ImageDao imageDao;
 	
 	//쿠폰상품 등록
 	@Override
@@ -58,47 +58,43 @@ public class CouponServiceImp implements CouponService {
 		}
 		
 		String couponCode = couponDao.couponInsert(couponDto);
-		//String couponCode = couponDao.couponInsert(couponDto);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
-
-		//TODO : 이미지 insert
-//		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
-//		MultipartFile upImage = request.getFile("file");
-//		long imageSize = upImage.getSize();
-//		ImageDto imageDto = (ImageDto) map.get("imageDto");
-//		JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
-//
-//		String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
-//		File path = new File("C:\\images\\");
-//		
-//		if(path.exists() && path.isDirectory()) {
-//			File file = new File(path, imageName);
-//			
-//			try {
-//				upImage.transferTo(file);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			
-//			imageDto.setImageName(imageName);
-//			imageDto.setImagePath(file.getAbsolutePath());
-//			imageDto.setImageSize(Integer.parseInt(imageName));
-//			
-//			if(couponCode != null) {
-//				JejuAspect.logger.info(JejuAspect.logMsg + "couponCode2: "+ couponCode);
-//				
-//				Map<String, Object> cMap = new HashMap<String, Object>();
-//				cMap.put("imageDto", imageDto);
-//				cMap.put("couponCode",couponCode);
-//				
-//				int check = imageDao.imageInsert(cMap);	//TODO
-//			}
-//		}
-//		int check = couponDao.couponInsert(couponDto);	//TODO
-//		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
-		mav.addObject("couponDao",couponDao);
-		JejuAspect.logger.info(JejuAspect.logMsg + couponDao);
-		
-		//mav.setViewName("coupon/couponInsertOk.tiles");
+		int check = 0;
+		if(couponCode != null) {
+			//TODO : 이미지 insert
+			MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
+			MultipartFile upImage = request.getFile("imageFile");
+			
+			long imageSize = upImage.getSize();
+			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
+			File imagePath = new File("D:\\jeonjiwon\\project\\image");
+			imagePath.mkdir();
+			
+			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: "+ imageSize);
+			JejuAspect.logger.info(JejuAspect.logMsg + "imageName: "+ imageName);
+			JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: "+ imagePath);
+			
+			if(imagePath.exists() && imagePath.isDirectory()) {
+				File file = new File(imagePath, imageName);
+				System.out.println("CHECK");
+				try {
+					upImage.transferTo(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				ImageDto imageDto = new ImageDto();
+				imageDto.setImageName(imageName);
+				imageDto.setReferCode(couponCode);
+				imageDto.setImageSize(imageSize);
+				imageDto.setImagePath(file.getAbsolutePath());
+				JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
+				
+				check = imageDao.couponImageInsert(imageDto);
+				JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+			}
+		}
+		mav.addObject("check", check);
+		mav.setViewName("coupon/couponInsertOk.tiles");
 	}
 }

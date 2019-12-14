@@ -9,11 +9,11 @@ public class ImageDto {
 	private String imageCode;
 	private String referCode;
 	private String imageName;
-	private int imageSize;
+	private long imageSize;
 	private String imagePath;
 	public ImageDto() {
 	}
-	public ImageDto(String imageCode, String referCode, String imageName, int imageSize, String imagePath) {
+	public ImageDto(String imageCode, String referCode, String imageName, long imageSize, String imagePath) {
 		super();
 		this.imageCode = imageCode;
 		this.referCode = referCode;
@@ -39,10 +39,10 @@ public class ImageDto {
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
-	public int getImageSize() {
+	public long getImageSize() {
 		return imageSize;
 	}
-	public void setImageSize(int imageSize) {
+	public void setImageSize(long imageSize) {
 		this.imageSize = imageSize;
 	}
 	public String getImagePath() {
@@ -56,5 +56,4 @@ public class ImageDto {
 		return "ImageDto [imageCode=" + imageCode + ", referCode=" + referCode + ", imageName=" + imageName
 				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
 	}
-	
 }

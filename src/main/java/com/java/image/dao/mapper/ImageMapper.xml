@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="dao.ImageMapper">
+   <insert id="couponImageInsert" parameterType="com.java.image.dto.ImageDto">
+   	INSERT INTO image(image_code, refer_Code, image_name, image_size, image_path)
+   	VALUES ('image'||LPAD(SEQImage.nextval,4,0), #{referCode}, #{imageName}, #{imageSize}, #{imagePath})
+   </insert>
+</mapper>

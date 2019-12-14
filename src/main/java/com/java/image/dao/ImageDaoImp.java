@@ -9,11 +9,21 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
-public class ImageDaoImp {
+import com.java.aop.JejuAspect;
+import com.java.image.dto.ImageDto;
 
-//	@Autowired
-//	SqlSessionTemplate sqlSessionTemplate;
-	
+@Component
+public class ImageDaoImp implements ImageDao {
+
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+
+	//쿠폰이미지 삽입
+	@Override
+	public int couponImageInsert(ImageDto imageDto) {
+		int check = sqlSessionTemplate.insert("dao.ImageMapper.couponImageInsert", imageDto);
+		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+		return check;
+	}
 	
 }

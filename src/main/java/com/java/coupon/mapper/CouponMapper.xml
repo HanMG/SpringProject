@@ -4,18 +4,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 12.12 Mapper 생성 -->
 <mapper namespace="dao.CouponMapper">
-	<!-- <insert id="insert" parameterType="com.java.coupon.dto.CouponDto">
-		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
-		VALUES('coupon'||LPAD(seqcoupon.nextval,4,0), #{foodCode}, #{couponName}, #{couponStartdate}, #{couponEnddate}, #{couponCostori}, #{couponSalerate}, 
-		#{couponCostsale}, #{couponIntro}) 
-	</insert> -->
 	<insert id="insert" parameterType="com.java.coupon.dto.CouponDto" useGeneratedKeys="true">
-		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
-		VALUES('coupon'||LPAD(seqcoupon.nextval,4,0), #{foodCode}, #{couponName}, #{couponStartdate}, #{couponEnddate}, #{couponCostori}, #{couponSalerate}, 
-		#{couponCostsale}, #{couponIntro})
-		<selectKey keyProperty="couponCode" resultType="String" order="AFTER">
-			SELECT 'coupon'||LPAD(seqcoupon.nextval,4,0) As couponCode from coupon
+		<selectKey keyProperty="couponCode" resultType="String" order="BEFORE">
+			SELECT 'coupon'||LPAD(seqcoupon.nextval,4,0) As couponCode from dual
 		</selectKey>
+		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
+		VALUES('coupon'||LPAD(seqcoupon.CURRVAL,4,0), #{foodCode}, #{couponName}, #{couponStartdate}, #{couponEnddate}, #{couponCostori}, #{couponSalerate}, 
+		#{couponCostsale}, #{couponIntro})
 	</insert>
 	
 

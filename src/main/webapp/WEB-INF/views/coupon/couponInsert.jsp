@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 상품 등록</title>
-		<script type="text/javascript" src="${root}/resources/javascript/coupon.js"></script>
+		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 		<script type="text/javascript">
 			//유효성 체크
 			function insertForm(obj){
@@ -20,13 +20,6 @@
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
 			
-			//식당코드 기입
-			function sendFoodCode(foodCode, foodName, foodAddr){
-				var add = foodCode + " " + foodName + " " +foodAddr;
-				
-				open.couponForm.foodCode.value= foodCode;
-				self.close();
-			}
 		</script>
 	</head>
 	<body>
@@ -43,9 +36,11 @@
 					<li>
 						<p>식당명</p>
 						<p>
-							<input type="text" name="foodCode" value="123">
+							<input type="text" name="foodCode">
+							
 							<input type="button" value="식당검색" onclick="foodcodeRead('${root}')">
 						</p>
+						<p><input type="text" name="foodName" disabled></p>
 					</li>
 					<li>
 						<p>유효 기간</p>

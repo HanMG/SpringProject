@@ -72,7 +72,8 @@ public class CouponServiceImp implements CouponService {
 			
 			long imageSize = upImage.getSize();
 			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
-			File imagePath = new File("D:\\jeonjiwon\\project\\image");
+			//File imagePath = new File("D:\\jeonjiwon\\project\\image");
+			File imagePath = new File("X:\\imageDB");
 			imagePath.mkdir();
 			
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: "+ imageSize);
@@ -104,20 +105,21 @@ public class CouponServiceImp implements CouponService {
 	}
 	
 	//식당 코드 검색
-	// TODO Auto-generated method stub
+	// TODO 
 	@Override
-	public void searchFoodCodeOk(ModelAndView mav) {
+	public void searchFoodCode(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
 		String foodName = request.getParameter("foodName");
 		JejuAspect.logger.info(JejuAspect.logMsg + "검색 내용: "+ foodName);
 		
 		if(foodName != null) {
 			List<SearchFoodCodeDto> searchFoodCodeList = couponDao.searchFoodCode(foodName);
-			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList: "+ searchFoodCodeList.size());
 			
+			//JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList toString: "+ searchFoodCodeList.toString());
+			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList 사이즈: "+ searchFoodCodeList.size());
 			mav.addObject("foodCodeList", searchFoodCodeList);
-			
 		}
 		mav.setViewName("coupon/searchFoodCode.empty");
 	}

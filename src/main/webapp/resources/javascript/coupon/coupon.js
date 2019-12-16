@@ -18,8 +18,7 @@ function foodcodeRead (root){
 
 //식당코드 기입
 function sendFoodCode(foodCode, foodName, foodAddr){
-	var add = foodCode + " " + foodName + " " +foodAddr;
-	
-	open.couponForm.foodCode.value= foodCode;
+	opener.couponForm.foodCode.value= foodCode;
+	open.couponForm.foodName.value= foodName;
 	self.close();
 }

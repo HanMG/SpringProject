@@ -14,5 +14,5 @@ public interface CouponService {
 	public void couponInsertOk(ModelAndView mav);
 	
 	//식당 코드 검색
-	public void searchFoodCodeOk(ModelAndView mav);
+	public void searchFoodCode(ModelAndView mav);
 }

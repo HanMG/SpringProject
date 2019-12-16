@@ -4,6 +4,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 12.12 Mapper 생성 -->
 <mapper namespace="dao.CouponMapper">
+	<resultMap type="com.java.coupon.dto.SearchFoodCodeDto" id="SearchFoodCodeDto">
+		<result column="food_code" property="foodCode"/>
+		<result column="food_name" property="foodName"/>
+		<result column="food_addr" property="foodAddr"/>
+		
+	</resultMap>
+
 	<insert id="insert" parameterType="com.java.coupon.dto.CouponDto" useGeneratedKeys="true">
 		<selectKey keyProperty="couponCode" resultType="String" order="BEFORE">
 			SELECT 'coupon'||LPAD(seqcoupon.nextval,4,0) As couponCode from dual
@@ -13,9 +20,9 @@
 		#{couponCostsale}, #{couponIntro})
 	</insert>
 	
-	<select id="selFoodCode" parameterType="String" resultType="com.java.coupon.dto.SearchFoodCodeDto">
+	<select id="selFoodCode" parameterType="String" resultMap="SearchFoodCodeDto">
 		SELECT food_code, food_name, food_addr  FROM food 
-		WHERE food_name LIKE #{foodName} OR food_name LIKE '%'||#{foodName}||'%'
+		WHERE food_name LIKE '%'||#{foodName}||'%'
 	</select>
 
 </mapper>

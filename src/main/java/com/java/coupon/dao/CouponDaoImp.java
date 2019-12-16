@@ -33,10 +33,7 @@ public class CouponDaoImp implements CouponDao {
 	//식당코드 검색
 	@Override
 	public List<SearchFoodCodeDto> searchFoodCode(String foodName) {
-		List<SearchFoodCodeDto> searchFoodCodeDto = sqlSessionTemplate.selectList("dao.CouponMapper.selFoodCode", foodName);
-		JejuAspect.logger.info(JejuAspect.logMsg + "List: "+ searchFoodCodeDto.size());
-		
-		return searchFoodCodeDto;
+		return sqlSessionTemplate.selectList("dao.CouponMapper.selFoodCode", foodName);
 	}
 	
 }

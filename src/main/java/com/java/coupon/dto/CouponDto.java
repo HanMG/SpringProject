@@ -7,7 +7,7 @@ package com.java.coupon.dto;
 */
 public class CouponDto {
 	private String couponCode;				// 쿠폰코드
-	private int foodCode;				// 식당코드
+	private String foodCode;				// 식당코드
 	private String couponName;			// 쿠폰명(상품명)
 	private String couponStartdate;		// 쿠폰유효기간(시작)
 	private String couponEnddate;			// 쿠폰유효기간(마감)
@@ -18,8 +18,8 @@ public class CouponDto {
 	
 	public CouponDto() {}
 
-	public CouponDto(String couponCode, int foodCode, String couponName, String couponStartdate, String couponEnddate,
-			String couponIntro, int couponCostori, int couponCostsale, int couponSalerate) {
+	public CouponDto(String couponCode, String foodCode, String couponName, String couponStartdate,
+			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate) {
 		super();
 		this.couponCode = couponCode;
 		this.foodCode = foodCode;
@@ -40,11 +40,11 @@ public class CouponDto {
 		this.couponCode = couponCode;
 	}
 
-	public int getFoodCode() {
+	public String getFoodCode() {
 		return foodCode;
 	}
 
-	public void setFoodCode(int foodCode) {
+	public void setFoodCode(String foodCode) {
 		this.foodCode = foodCode;
 	}
 
@@ -110,5 +110,6 @@ public class CouponDto {
 				+ ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro="
 				+ couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale
 				+ ", couponSalerate=" + couponSalerate + "]";
-	}	
+	}
+	
 }

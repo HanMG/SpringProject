@@ -115,13 +115,90 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "검색 내용: "+ foodName);
 		
 		if(foodName != null) {
+			//검색어로 식당코드 찾기
 			List<SearchFoodCodeDto> searchFoodCodeList = couponDao.searchFoodCode(foodName);
 			
-			//JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList toString: "+ searchFoodCodeList.toString());
 			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList 사이즈: "+ searchFoodCodeList.size());
 			mav.addObject("foodCodeList", searchFoodCodeList);
 		}
 		mav.setViewName("coupon/searchFoodCode.empty");
 	}
+	
+	
+	//쿠폰리스트 TODO
+	@Override
+	public void couponList(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String pageNumber = request.getParameter("pageNumber");
+		
+		if(pageNumber == null) pageNumber = "1";
+		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber: "+ pageNumber);
+		int currentPage = Integer.parseInt(pageNumber);
+		
+		//쿠폰 리스트 카운트
+		int count = couponDao.couponListCount();
+		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		
+		
+		int scrollSize = 10;
+		int startRow = (currentPage - 1) * scrollSize + 1;
+		int endRow = currentPage*scrollSize;
+		
+		List<CouponDto> couponList = null;
+		
+		if(count > 0) {
+			//쿠폰 리스트 가져오기
+			couponList = couponDao.couponList(startRow, endRow);
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
+			mav.addObject("couponList", couponList);
+		}
+		mav.addObject("count", count);
+		mav.addObject("pageNumber", pageNumber);
+		
+		mav.setViewName("coupon/couponList.tiles");
+	}
+	
+	// TODO Auto-generated method stub
+	//쿠폰상세페이지
+	@Override
+	public void couponRead(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		String couponCode = request.getParameter("couponCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode + " pageNumber: " + pageNumber);
+		
+		CouponDto couponDto =couponDao.couponRead(couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
+		
+		if(couponDto.getImageName() != null) {
+			int index = couponDto.getImageName().indexOf("_")+1;
+			couponDto.setImageName(couponDto.getImageName().substring(index));
+		}
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
+		
+		mav.addObject("couponDto", couponDto);
+		mav.setViewName("coupon/couponDetail.tiles");
+	}
+	
+	//쿠폰상품수정페이지
+	@Override
+	public void couponUpdate(ModelAndView mav) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String couponCode = request.getParameter("couponCode");
+		
+		CouponDto couponDto = couponDao.couponRead(couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
+		mav.addObject("couponDto",couponDto);
+		mav.setViewName("coupon/couponUpdate.tiles");
+	}
+	
+	
 	
 }

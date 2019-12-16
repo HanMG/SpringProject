@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>쿠폰 상품 등록</title>
+		<title>쿠폰 상품 수정</title>
 		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 		<script type="text/javascript">
@@ -24,62 +24,62 @@
 		</script>
 	</head>
 	<body>
-		<form action="${root}/coupon/couponInsertOk.go" method="post" enctype="multipart/form-data" 
+		<form action="${root}/coupon/couponUpdateOk.go" method="post" enctype="multipart/form-data" 
 		onsubmit="return insertForm(this)" name="couponForm">
 				<%-- <input type="hidden" name="sequenceLevel" value="${sequenceLevel}" /> --%>
 				<ul class="write_box">
 					<li>
 						<p>상품명(쿠폰명)</p>
 						<p>
-							<input type="text" name="couponName" value="강남">
+							<input type="text" name="couponName" value="${couponDto.couponName}">
 						</p>
 					</li>
 					<li>
 						<p>식당명</p>
 						<p>
-							<input type="text" name="foodCode">
+							<input type="text" name="foodCode" value="${couponDto.foodCode}">
 							
 							<input type="button" value="식당검색" onclick="foodcodeRead('${root}')">
 						</p>
-						<p><input type="text" name="foodName" disabled></p>
+						<p><input type="text" name="foodName" value="${couponDto.foodName}" disabled></p>
 					</li>
 					<li>
 						<p>유효 기간</p>
 						<p>
-							<input type="text" name="couponStartdate" value="2019-12-12">
+							<input type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
 							<span>~</span>
-							<input type="text" name="couponEnddate"  value="2019-12-31">
+							<input type="text" name="couponEnddate"  value="${couponDto.couponEnddate}">
 						</p>
 					</li>
 					<li>
 						<p>상품 소개</p>
 						<p>
-							<textarea rows="10" cols="10" name="couponIntro">123</textarea>
+							<textarea rows="10" cols="10" name="couponIntro">${couponDto.couponIntro}</textarea>
 						</p>
 					</li>
 					<li>
 						<p>상품 가격(할인 전 가격)</p>
 						<p>
-							<input id="cost" type="text" name="couponCostori">
+							<input id="cost" type="text" name="couponCostori" value="${couponDto.couponCostori}">
 						</p>
 					</li>
 					<li>
 						<p>할인율</p>
 						<p>
-							<input id="saleRate" type="text" name="couponSalerate">
+							<input id="saleRate" type="text" name="couponSalerate" value="${couponDto.couponSalerate}">
 						</p>
 					</li>
 					<li>
 						<p>판매 가격(할인된 가격)</p>
 						<p>
-							<input id="" type="text" name="couponCostsale">
+							<input type="text" name="couponCostsale" value="${couponDto.couponCostsale}">
 						</p>
 					</li>
 					<li>
 						<p>상품 대표 이미지</p>
 						<p>
 							<input type="file" name="imageFile">
-							<span></span>
+							<span>${couponDto.imageName}</span>
 						</p>
 					</li>
 					<li>
@@ -99,7 +99,6 @@
 				var oriCost = parseInt($('input[name=couponCostori]').val() || 0);
 				var salePer = parseInt($('input[name=couponSalerate]').val() || 0);
 				var result = (oriCost - (oriCost * (salePer * 0.01)));
-				//var result = Math.round(oriCost - oriCost * (salePer * 0.01));
 				
 				$('input[name=couponCostsale]').val(result);
 			});

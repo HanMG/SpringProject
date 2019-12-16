@@ -20,5 +20,15 @@ public interface CouponDao {
 	
 	//식당코드 검색
 	public List<SearchFoodCodeDto> searchFoodCode(String foodName);
+	
+	//쿠폰 리스트 카운트
+	public int couponListCount();
 
+	//쿠폰 리스트
+	public List<CouponDto> couponList(int startRow, int endRow);
+	
+	//쿠폰 상세페이지
+	public CouponDto couponRead(String couponCode);
+	
+	
 }

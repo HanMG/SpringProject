@@ -15,11 +15,16 @@ public class CouponDto {
 	private int couponCostori;			// 쿠폰 원가
 	private int couponCostsale;			// 쿠폰 할인가
 	private int couponSalerate;				// 쿠폰 할인률
+	private String imageCode;
+	private String imageName;
+	private long imageSize;
+	private String imagePath;
 	
 	public CouponDto() {}
 
 	public CouponDto(String couponCode, String foodCode, String couponName, String couponStartdate,
-			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate) {
+			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate,
+			String imageCode, String imageName, long imageSize, String imagePath) {
 		super();
 		this.couponCode = couponCode;
 		this.foodCode = foodCode;
@@ -30,6 +35,10 @@ public class CouponDto {
 		this.couponCostori = couponCostori;
 		this.couponCostsale = couponCostsale;
 		this.couponSalerate = couponSalerate;
+		this.imageCode = imageCode;
+		this.imageName = imageName;
+		this.imageSize = imageSize;
+		this.imagePath = imagePath;
 	}
 
 	public String getCouponCode() {
@@ -104,12 +113,44 @@ public class CouponDto {
 		this.couponSalerate = couponSalerate;
 	}
 
+	public String getImageCode() {
+		return imageCode;
+	}
+
+	public void setImageCode(String imageCode) {
+		this.imageCode = imageCode;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public long getImageSize() {
+		return imageSize;
+	}
+
+	public void setImageSize(long imageSize) {
+		this.imageSize = imageSize;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "CouponDto [couponCode=" + couponCode + ", foodCode=" + foodCode + ", couponName=" + couponName
 				+ ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro="
 				+ couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale
-				+ ", couponSalerate=" + couponSalerate + "]";
+				+ ", couponSalerate=" + couponSalerate + ", imageCode=" + imageCode + ", imageName=" + imageName
+				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
 	}
-	
 }

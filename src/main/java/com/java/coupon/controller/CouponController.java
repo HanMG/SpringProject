@@ -61,7 +61,37 @@ public class CouponController {
 		return mav;
 	}
 	
+	//쿠폰리스트
+	@RequestMapping(value="/coupon/couponList.go", method=RequestMethod.GET)
+	public ModelAndView couponList(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		couponService.couponList(mav);
+		
+		return mav;
+	}
 	
+	//쿠폰 상세페이지
+	@RequestMapping(value="/coupon/couponRead.go", method=RequestMethod.GET)
+	public ModelAndView couponRead(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		ModelAndView mav= new ModelAndView();
+		mav.addObject("request", request);
+		
+		couponService.couponRead(mav);
+		
+		return mav;
+	}
+	
+	//쿠폰상품 수정
+	@RequestMapping(value="/coupon/couponUpdate.go", method=RequestMethod.GET)
+	public ModelAndView couponUpdate(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		couponService.couponUpdate(mav);
+		
+		return mav;
+	}
 	
 	
 }

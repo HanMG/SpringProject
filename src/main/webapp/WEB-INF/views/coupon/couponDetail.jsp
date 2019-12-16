@@ -12,11 +12,11 @@
 				alert("휴대폰 인증되었습니다.");
 			}
 			
-			function couponUpdate(root, obj){
+			/* function couponUpdate(root, couponCode){
 				var url= root+"/coupon/couponUpdate.go?couponCode="+couponCode;
 				alert(url);
 				location.href=url;
-			}
+			} */
 		</script>
 	</head>
 	<body>
@@ -34,8 +34,8 @@
 		<input id="phoneCheck" type="button" value="인증" onclick="phoneCheck()">
 		
 		<!-- 관리자일 경우  -->		
-		<p><a href="couponUpdate('${root}','${couponDto.couponCode}')">수정하기</a></p>
-		<p><a href="couponDelete('${root}','${couponDto.couponCode}')">삭제하기</a></p>
+		<p><a href="${root}/coupon/couponUpdate.go?couponCode=${couponDto.couponCode}">수정하기</a></p>
+		<p><a href="${root}/coupon/couponDelete.go?couponCode=${couponDto.couponCode}">삭제하기</a></p>
 		
 		<!-- 일반사용자일 경우 -->
 		<p><a href="purchase()">구매하기</a></p>

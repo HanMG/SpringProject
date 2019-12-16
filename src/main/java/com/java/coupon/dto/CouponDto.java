@@ -19,12 +19,13 @@ public class CouponDto {
 	private String imageName;
 	private long imageSize;
 	private String imagePath;
+	private String foodName;
 	
 	public CouponDto() {}
 
 	public CouponDto(String couponCode, String foodCode, String couponName, String couponStartdate,
 			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate,
-			String imageCode, String imageName, long imageSize, String imagePath) {
+			String imageCode, String imageName, long imageSize, String imagePath, String foodName) {
 		super();
 		this.couponCode = couponCode;
 		this.foodCode = foodCode;
@@ -39,6 +40,7 @@ public class CouponDto {
 		this.imageName = imageName;
 		this.imageSize = imageSize;
 		this.imagePath = imagePath;
+		this.foodName = foodName;
 	}
 
 	public String getCouponCode() {
@@ -145,12 +147,20 @@ public class CouponDto {
 		this.imagePath = imagePath;
 	}
 
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
 	@Override
 	public String toString() {
 		return "CouponDto [couponCode=" + couponCode + ", foodCode=" + foodCode + ", couponName=" + couponName
 				+ ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro="
 				+ couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale
 				+ ", couponSalerate=" + couponSalerate + ", imageCode=" + imageCode + ", imageName=" + imageName
-				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
+				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + ", foodName=" + foodName + "]";
 	}
 }

@@ -73,7 +73,8 @@ public class CouponServiceImp implements CouponService {
 			long imageSize = upImage.getSize();
 			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
 			//File imagePath = new File("D:\\jeonjiwon\\project\\image");
-			File imagePath = new File("X:\\imageDB");
+			//File imagePath = new File("X:\\imageDB");
+			File imagePath = new File("D:\\web\\project\\02_dev\\final\\src\\main\\webapp\\resources\\ftp");
 			imagePath.mkdir();
 			
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: "+ imageSize);
@@ -192,9 +193,10 @@ public class CouponServiceImp implements CouponService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String couponCode = request.getParameter("couponCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode);
 		
 		CouponDto couponDto = couponDao.couponRead(couponCode);
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
+		
 		mav.addObject("couponDto",couponDto);
 		mav.setViewName("coupon/couponUpdate.tiles");
 	}

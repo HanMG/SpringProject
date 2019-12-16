@@ -86,8 +86,10 @@ public class CouponController {
 	//쿠폰상품 수정
 	@RequestMapping(value="/coupon/couponUpdate.go", method=RequestMethod.GET)
 	public ModelAndView couponUpdate(HttpServletRequest request, HttpServletResponse reponse, CouponDto couponDto) {
+		String couponCode = request.getParameter("couponCode");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
+		mav.addObject("couponCode", couponCode);
 		couponService.couponUpdate(mav);
 		
 		return mav;

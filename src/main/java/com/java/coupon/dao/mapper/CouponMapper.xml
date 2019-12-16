@@ -24,6 +24,8 @@
 		<result column="image_name" property="imageName"/>
 		<result column="image_size" property="imageSize"/>
 		<result column="image_path" property="imagePath"/>
+		
+		<result column="food_name" property="foodName"/>
 	</resultMap>
 	<resultMap type="com.java.image.dto.ImageDto" id="ImageDto">
 		<result column="image_code" property="imageCode"/>
@@ -56,12 +58,6 @@
 	</select>
 	
 	<!-- 쿠폰리스트 불러오기 -->
-	<!-- <select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
-		<![CDATA[
-		SELECT * FROM (SELECT ROWNUM as num01, A.* FROM 
-		(SELECT * FROM coupon) A) B WHERE B.num01 >= #{startRow} AND B.num01 <= #{endRow}
-		]]>
-	</select> -->
 	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
 		<![CDATA[
 		SELECT * FROM 
@@ -75,14 +71,11 @@
 		select coupon.*, 
 		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,
 		(select image_name from image where refer_code = coupon.coupon_code) AS image_name, 
-		(select image_path from image where refer_code = coupon.coupon_code) AS image_path
+		(select image_path from image where refer_code = coupon.coupon_code) AS image_path,
+        (select food_name from food Where food_code = coupon.food_code) AS food_name
 		from coupon where coupon_code = #{couponCode}
 	</select>
 	
-	<!-- 쿠폰 불러오기 -->
-	<!-- <select id="couponSelect" parameterType="String" resultMap="CouponDto">
-		
-	</select> -->
 	
 	
 

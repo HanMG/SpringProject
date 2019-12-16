@@ -2,8 +2,32 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
   
-<mapper namespace="dao.FoodMapper">
- 
- 
+<mapper namespace="dao.FoodMapper"> 
+ 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
+ 		insert into food values ('food'||LPAD(#{foodCode},4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodPhone}, #{foodKind}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus})
+ 	</insert> 
+ 	
+ 	<select id="foodMax" resultType="String">
+ 		select nvl(max(food_code),0) from food
+ 	</select>
+ 	
+ 	<select id="foodRead" parameterType="String" resultType="com.java.food.dto.FoodDto">
+ 		select * from food where food_code = #{foodCode}
+ 	</select>
+ 	
+ 	<delete id="foodDelete" parameterType="String">
+ 		delete from food where food_code = #{foodCode}
+ 	</delete>
+ 	
+ 	<update id="foodUpadte" parameterType="com.java.food.dto.FoodDto">
+ 		update food set food_Name=#{foodName}, food_addr=#{foodAddr},food_area=#{foodArea},food_phone=#{foodPhone},food_kind=#{foodKind},food_menu=#{foodMenu},food_time=#{foodTime},food_break=#{foodBreak},food_intro=#{foodIntro},food_date=#{foodDate},food_status=#{foodStatus} where food_code=#{foodCode}
+ 	</update> 	
+ 	
+ 	<update id="foodReadUpdate" parameterType="String">
+ 		<![CDATA[
+		update food set food_read=food_read+1 where food_code=#{foodCode}
+		]]>
+ 	</update>
 </mapper>

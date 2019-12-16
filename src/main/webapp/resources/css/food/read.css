@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.fa {
+  font-size: 25px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: pink;
+}
+
+body{
+	background-color: red;
+}

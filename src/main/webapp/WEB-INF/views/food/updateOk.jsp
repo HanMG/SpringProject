@@ -9,6 +9,17 @@
 <title>음식점정보수정OK</title>
 </head>
 <body>
-	
+	<c:if test="${check > 0 }">
+		<script>
+			alert("수정되었습니다.");
+			location.href="${root}/index.jsp";
+		</script>
+	</c:if>
+	<c:if test="${check == 0 }">
+		<script>
+			alert("ERROR ! 수정되지않았습니다.");
+			location.href="${root}/index.jsp";
+		</script>
+	</c:if>
 </body>
 </html>

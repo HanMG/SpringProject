@@ -31,11 +31,13 @@
 		select * from image where refer_code = #{referCode}
 	</select>
 	
+	<select id="imgSelect" parameterType="com.java.image.dto.ImageDto" resultType="com.java.image.dto.ImageDto">
+		select * from image where refer_code = #{referCode} AND image_name = #{imageName}
+	</select>
+	
 	<delete id="imgSelectDelete" parameterType="com.java.image.dto.ImageDto">
 		delete from image where refer_code = #{referCode} AND image_name = #{imageName}
 	</delete>
 	
-	<select id="imgSelect" parameterType="com.java.image.dto.ImageDto" resultType="com.java.image.dto.ImageDto">
-		select * from image where refer_code = #{referCode} AND image_name = #{imageName}
-	</select>
+	
 </mapper>

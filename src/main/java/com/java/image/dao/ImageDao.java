@@ -17,9 +17,9 @@ public interface ImageDao {
 	public int imgInsertReview(ImageDto imageDto);
 
 	public List<ImageDto> imgList(String reviewCode);	
-
-	public int imgSelectDelete(ImageDto imageDto);
-
+	
 	public ImageDto imgSelect(ImageDto imageDelDto);
+
+	public int imgSelectDelete(ImageDto imageDto);	
 	
 }

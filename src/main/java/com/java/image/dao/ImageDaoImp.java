@@ -42,15 +42,14 @@ public class ImageDaoImp implements ImageDao {
 	public List<ImageDto> imgList(String referCode) {		
 		return sqlSession.selectList("dao.ImageMapper.imgListReview", referCode);
 	}	
+	
+	@Override
+	public ImageDto imgSelect(ImageDto imageDelDto) {		
+		return sqlSession.selectOne("dao.ImageMapper.imgSelect", imageDelDto);
+	}	
 
 	@Override
 	public int imgSelectDelete(ImageDto imageDto) {
 		return sqlSession.delete("dao.ImageMapper.imgSelectDelete", imageDto);
-	}
-
-	@Override
-	public ImageDto imgSelect(ImageDto imageDelDto) {		
-		return sqlSession.selectOne("dao.ImageMapper.imgSelect", imageDelDto);
-	}
-	
+	}	
 }

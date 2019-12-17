@@ -1,5 +1,7 @@
 package com.java.image.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,17 +19,38 @@ public class ImageDaoImp implements ImageDao {
 	}
 
 	@Override
-	public ImageDto imgRead(String foodCode) {		
-		return sqlSession.selectOne("dao.ImageMapper.imgRead", foodCode);
+	public ImageDto imgRead(String referCode) {		
+		return sqlSession.selectOne("dao.ImageMapper.imgRead", referCode);
 	}
 
 	@Override
-	public int imgDelete(String foodCode) {		
-		return sqlSession.delete("dao.ImageMapper.imgDelete", foodCode);
+	public int imgDelete(String referCode) {		
+		return sqlSession.delete("dao.ImageMapper.imgDelete", referCode);
 	}
 
 	@Override
 	public int imgUpdate(ImageDto imageDto) {	
 		return sqlSession.update("dao.ImageMapper.imgUpdate", imageDto);
 	}
+
+	@Override
+	public int imgInsertReview(ImageDto imageDto) {		
+		return sqlSession.insert("dao.ImageMapper.imgInsertReview",imageDto);
+	}
+
+	@Override
+	public List<ImageDto> imgList(String referCode) {		
+		return sqlSession.selectList("dao.ImageMapper.imgListReview", referCode);
+	}	
+
+	@Override
+	public int imgSelectDelete(ImageDto imageDto) {
+		return sqlSession.delete("dao.ImageMapper.imgSelectDelete", imageDto);
+	}
+
+	@Override
+	public ImageDto imgSelect(ImageDto imageDelDto) {		
+		return sqlSession.selectOne("dao.ImageMapper.imgSelect", imageDelDto);
+	}
+	
 }

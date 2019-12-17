@@ -13,4 +13,20 @@
  <select id="reviewFoodName" parameterType="String" resultType="String">
  	select food_name from food where food_code=#{foodCode}
  </select>
+ 
+ <select id="reviewGetCode" resultType="String">
+ 	select nvl(max(review_code),0) from review
+ </select>
+ 
+ <select id="reviewUpdate" parameterType="String" resultType="com.java.review.dto.ReviewDto">
+ 	select * from review where review_code = #{reviewCode}
+ </select>
+ 
+ <update id="reviewUpdateOk" parameterType="com.java.review.dto.ReviewDto">
+ 	update review set review_date=#{reviewDate}, review_cont=#{reviewCont}, review_score=#{reviewScore} where review_code=#{reviewCode}
+ </update>
+ 
+ <delete id="reviewDelete" parameterType="String">
+ 	delete from review where review_code = #{reviewCode}
+ </delete>
 </mapper>

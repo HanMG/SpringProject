@@ -12,6 +12,8 @@ public interface FoodService {
 
 	public void foodDelete(ModelAndView mav);
 
-	public void foodUpdateOk(ModelAndView mav);
+	public void foodUpdateOk(ModelAndView mav);	
+
+	public void foodReviewList(ModelAndView mav);
 
 }

@@ -11,13 +11,13 @@
 <body>
 	<c:if test="${check > 0 }">
 		<script>
-			alert("등록되었습니다.");
+			alert("리뷰등록되었습니다.");
 			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 	<c:if test="${check == 0 }">
 		<script>
-			alert("ERROR ! 등록되지않았습니다.");
+			alert("ERROR ! 리뷰등록되지않았습니다.");
 			location.href="${root}/index.jsp";
 		</script>
 	</c:if>

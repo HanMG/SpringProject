@@ -1,5 +1,7 @@
 package com.java.image.dao;
 
+import java.util.List;
+
 import com.java.image.dto.ImageDto;
 
 public interface ImageDao {	
@@ -11,4 +13,13 @@ public interface ImageDao {
 	public int imgDelete(String foodCode);
 
 	public int imgUpdate(ImageDto imageDto);
+
+	public int imgInsertReview(ImageDto imageDto);
+
+	public List<ImageDto> imgList(String reviewCode);	
+
+	public int imgSelectDelete(ImageDto imageDto);
+
+	public ImageDto imgSelect(ImageDto imageDelDto);
+	
 }

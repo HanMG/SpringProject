@@ -8,4 +8,12 @@ public interface ReviewDao {
 
 	public String getFoodName(String foodCode);
 
+	public String getReviewCode();
+
+	public ReviewDto reviewUpdate(String reviewCode);
+
+	public int reviewUpdateOk(ReviewDto reviewDto);
+
+	public int reviewDelete(String reviewCode);
+
 }

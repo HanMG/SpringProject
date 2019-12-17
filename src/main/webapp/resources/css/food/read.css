@@ -10,6 +10,177 @@
   color: pink;
 }
 
-body{
-	background-color: red;
+* {
+	margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+}
+#content {
+	margin : 10px auto;
+	width: 1240px;
+	overflow: hidden;
+   	border-bottom: 1px dotted;
+}
+/* 가게 상세 */
+.nav_1 {
+	width: 740px;
+	overflow: hidden;
+	background: tomato;
+	float: left;
+	margin: 0 30px;
+}
+/* 가게 대표 이미지, 지도 */
+.nav_2 {
+	width: 440px;
+	background: olive;
+	float: left;
+	overflow: hidden;
+}
+/* 가게명, 별점, 리뷰쓰기, 가고싶다 */
+.info_1 {
+	width: 740px;
+	height: 100px;
+	background: green;
+}
+/* 가게명, 별점 */
+.info_1 > span {
+	line-height: 100px;
+	font-size: 30px;
+}
+.info_1 > div {
+	width: 70px;
+	height: 100px;
+	background: yellow;
+	float: right;
+}
+/* 리뷰,가고 이미지 */
+.info_1 img {
+	width: 70px;
+	height: 70px;
+}
+/* 리뷰쓰기, 가고싶다 */
+.info_1 > div > span {
+	font-size: 12px;
+	line-height: 30px;
+}
+/* 조회수, 리뷰수, 즐겨찾기 */
+.info_2 {
+	width: 740px;
+	height: 50px;
+	background: aqua;
+	line-height: 50px;
+	border-bottom: 1px dotted;
+}
+/* 가게 상세설명 */
+.info_3 {
+	width: 740px;
+	height: 250px;
+	background: lime;
+	border-bottom: 1px dotted;
+}
+.info_3 > div {
+	margin: 10px 0;
+}
+.info_3 > div:last-child {
+	float: right;	
+}
+/* EAT 딜 */
+.coupon {
+	width: 740px;
+	height: 300px;
+	background: olive;
+	border-bottom: 1px dotted;
+}
+/* 텍스트 EAT딜 */
+.eat_1 {
+	width: 70px;
+	height: 300px;
+	background: orange;
+	text-align: center;
+	float: left;
+}
+/* 쿠폰 상세 설명 */
+.eat_2 {
+	width: 670px;
+	height: 300px;
+	background: fuchsia;
+	float: left;
+}
+.eat_2 img {
+	width: 300px;
+	height: 200px;
+}
+.eat_2 > div:nth-child(n+2) {
+	width: 300px;
+	height: 200px;
+	margin: 17px;
+	float: left;
+}
+/* 리뷰 */
+.review {
+	width: 740px;
+	overflow: hidden;
+	background: green;
+}
+/* 리뷰수, 별점(전체, 맛있다, 괜찮다, 별로) */
+.re_1 {
+	width: 740px;
+	height: 40px;
+	line-height: 40px;
+}
+/* 별점(전체, 맛있다, 괜찮다, 별로) */
+.re_1 > span:nth-child(n+2){
+	float: right;
+	margin: 0 5px;
+}
+/* 닉네임, 리뷰내용, 별점 */
+.re_2 {
+	width: 740px;
+	overflow: hidden;
+	background: olive;
+	margin: 10px 0;
+	border-bottom: 1px dotted;
+}
+/* 닉네임 */
+.re_2 > div:nth-child(1) {
+	width: 70px;
+	background: gray;
+	float: left;
+}
+/* 리뷰내용 */
+.re_2 > div:nth-child(2) {
+	width: 600px;
+	overflow: hidden;
+	background: maroon;
+	float: left;
+}
+/* 리뷰 내용 - 등록일 */
+.re_2 > div:nth-child(2) > span:first-child {
+	display: block;
+}
+/* 리뷰 이미지들 */
+.re_2 > div:nth-child(2) img {
+	width: 100px;
+	height: 100px;
+	margin: 5px;
+}
+/* 리뷰 별점 */
+.re_2 > div:nth-child(3) {
+	width: 70px;
+	background: orange;
+	float: left;
+}
+.img {
+	width: 400px;
+	height: 400px;
+	background: tomato;
+	margin: 0 20px;
+}
+.map {
+	width: 400px;
+	height: 400px;
+	background: orange;
+	margin: 0 20px;
 }

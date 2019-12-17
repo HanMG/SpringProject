@@ -7,9 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>음식점정보등록</title>
+<script>
+	function foodForm() {
+		var start = document.getElementById("start").value;
+		var end = document.getElementById("end").value;
+		document.getElementById("fTime").value = start + "~" + end;
+	}
+</script>
 </head>
 <body>
-	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="">
+	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="foodForm()">
 		<label>음식점명</label><input type="text" name="foodName" />
 		<br />	
 		<label>주소</label><input type="text" name="foodAddr" />
@@ -39,8 +46,10 @@
 		<label>대표 메뉴</label>
 		<input type="text" name="foodMenu" maxlength="12" />
 		<br />	
-		<label>영업 시간</label>
-		<input type="text" name="foodTime" />
+		<label>영업 시간 |</label>
+		<label>시작 시간</label><input type="time" id="start"/>
+		<label>종료 시간</label><input type="time" id="end" />
+		<input type="hidden" name="foodTime" id="fTime"/>
 		<br />	
 		<label>휴일</label>
 		<select name="foodBreak">

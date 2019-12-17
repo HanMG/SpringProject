@@ -24,6 +24,7 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	</definition>
 	
+	
 	<!-- 새창으로 띄우는 기능시 (idCheck, zipcode) -->
 	<definition name="empty" template="/WEB-INF/views/template/empty.jsp">
 		<put-attribute name="content" value=""></put-attribute>

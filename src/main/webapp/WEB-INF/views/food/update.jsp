@@ -14,10 +14,15 @@
 	document.getElementById("foodBreak").value = "${foodDto.foodBreak}";
 	document.getElementById("foodStatus").value = "${foodDto.foodStatus}";
 	}
+	function foodForm() {
+		var start = document.getElementById("start").value;
+		var end = document.getElementById("end").value;
+		document.getElementById("fTime").value = start + "~" + end;
+	}
 </script>
 </head>
 <body onload="selectUpdate()">
-	<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="">
+	<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="foodForm()">
 		<input type="hidden" name="foodCode" value="${foodDto.foodCode}" />
 		<input type="hidden" name="imageCode" value="${imageDto.imageCode}" />
 		<input type="hidden" name="referCode" value="${imageDto.referCode}" />
@@ -53,8 +58,10 @@
 		<label>대표 메뉴</label>
 		<input type="text" name="foodMenu" maxlength="12" value="${foodDto.foodMenu}"/>
 		<br />	
-		<label>영업 시간</label>
-		<input type="text" name="foodTime" value="${foodDto.foodTime}" />
+		<label>영업 시간 | 현재: ${foodDto.foodTime}</label><br />		
+		<label>시작 시간</label><input type="time" id="start"/>
+		<label>종료 시간</label><input type="time" id="end" />
+		<input type="hidden" name="foodTime" id="fTime"/>
 		<br />	
 		<label>휴일</label>
 		<select name="foodBreak" id="foodBreak">

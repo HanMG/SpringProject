@@ -5,21 +5,37 @@
    
   
 <mapper namespace="dao.ImageMapper">	
-	<insert id="imgInsert">
+	<insert id="imgInsert" parameterType="com.java.image.dto.ImageDto">
 	 <![CDATA[
 		insert into image values ('image'||LPAD(SEQimage.nextval,4,0), 'food'||LPAD(#{referCode},4,0), #{imageName}, #{imagePath}, #{imageSize})
 	]]> 
 	</insert> 	
 	
 	<select id="imgRead" parameterType="String" resultType="com.java.image.dto.ImageDto">
-		select * from image where refer_code = #{foodCode}
+		select * from image where refer_code = #{referCode} order by image_name
 	</select>
 	
 	<delete id="imgDelete" parameterType="String">
-		delete from image where refer_code = #{foodCode}
+		delete from image where refer_code = #{referCode}
 	</delete>
 	
 	<update id="imgUpdate" parameterType="com.java.image.dto.ImageDto">
 		update image set image_name=#{imageName}, image_size=#{imageSize},image_path=#{imagePath} where image_code=#{imageCode}
 	</update>
+	
+	<insert id="imgInsertReview" parameterType="com.java.image.dto.ImageDto">
+		insert into image values ('image'||LPAD(SEQimage.nextval,4,0), #{referCode}, #{imageName}, #{imagePath}, #{imageSize})
+	</insert>
+	
+	<select id="imgListReview" parameterType="String" resultType="com.java.image.dto.ImageDto">
+		select * from image where refer_code = #{referCode}
+	</select>
+	
+	<delete id="imgSelectDelete" parameterType="com.java.image.dto.ImageDto">
+		delete from image where refer_code = #{referCode} AND image_name = #{imageName}
+	</delete>
+	
+	<select id="imgSelect" parameterType="com.java.image.dto.ImageDto" resultType="com.java.image.dto.ImageDto">
+		select * from image where refer_code = #{referCode} AND image_name = #{imageName}
+	</select>
 </mapper>

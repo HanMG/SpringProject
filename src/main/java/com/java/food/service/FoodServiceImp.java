@@ -112,12 +112,12 @@ public class FoodServiceImp implements FoodService {
 	public void foodUpdate(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		String foodCode = request.getParameter("foodCode");
-		// 음식점 정보 가져오기
-		FoodDto foodDto = new FoodDto();
-		// 이미지 정보 가져오기
+		String foodCode = request.getParameter("foodCode");		
+		FoodDto foodDto = new FoodDto();		
 		ImageDto imageDto = new ImageDto(); 
+		// 음식점 정보 가져오기
 		foodDto = foodDao.foodRead(foodCode);
+		// 이미지 정보 가져오기
 		imageDto = imageDao.imgRead(foodCode);
 		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		JejuAspect.logger.info(JejuAspect.logMsg+imageDto);
@@ -200,6 +200,14 @@ public class FoodServiceImp implements FoodService {
 		
 		mav.addObject("check",check);
 		mav.setViewName("food/delete.tiles");		
+	}
+
+	@Override
+	public void foodReviewList(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String foodCode = request.getParameter("foodCode");
+		
 	}
 
 }

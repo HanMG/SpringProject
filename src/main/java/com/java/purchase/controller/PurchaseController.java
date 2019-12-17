@@ -25,14 +25,12 @@ public class PurchaseController {
 	
 	//구매 페이지 연결
 	@RequestMapping(value="/purchase/purchaseInsert.go", method = RequestMethod.GET)
-	public void purchaseInsert(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView purchaseInsert(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
-		//mav.addObject("")
 		
 		purchaseService.purchaseInsert(mav);
 		
-		
-		
+		return mav;
 	}
 }

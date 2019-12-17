@@ -40,5 +40,6 @@ public interface CouponDao {
 	//쿠폰 삭제
 	public int couponDeleteOk(String couponCode);
 	
-	
+	//쿠폰 구매 연결
+	public CouponDto purchaseSelect(String couponCode);
 }

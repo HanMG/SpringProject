@@ -7,6 +7,51 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 상세페이지</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			a {
+				text-decoration: none;
+			}
+			#content {
+				margin : 10px auto;
+				width: 1240px;
+				overflow: hidden;
+			}
+			.history {
+				width: 800px;
+				overflow: hidden;
+				margin: 220px;
+				background: olive;
+			}
+			.title {
+				width: 800px;
+				height: 50px;
+				background: tomato;
+				line-height: 50px;
+				font-size: 30px;
+				border-bottom: 1px dotted;
+			}
+			.eat {
+				width: 800px;
+				overflow: hidden;
+				background: skyblue;
+			}
+			.eat > div {
+				width: 600px;
+				margin: 10px 100px;
+			}
+			.img > img{
+				width: 600px;
+				height: 500px;
+			}
+			.eat > div > button {
+				width: 600px;
+				height: 50px;
+			}
+		</style>
 		<script type="text/javascript">
 			function phoneCheck(){
 				confirm("휴대폰 인증되었습니다.");
@@ -28,32 +73,60 @@
 		</script>
 	</head>
 	<body>
-		pageNumber: ${pageNumber}
-		<%-- <img alt="쿠폰이미지" src= "${path}" + "${couponDto.imageName}"> --%>
-		<p>쿠폰제목: ${couponDto.couponName}</p>
-		<p>쿠폰가격: ${couponDto.couponCostori}</p>
-		<p>쿠폰할인율: ${couponDto.couponCostsale}</p>
-		<p>쿠폰할인가: ${couponDto.couponSalerate}</p>
-		<p>음식점 이름: ${couponDto.foodName}</p>
-		<p>쿠폰 사용가능 기간: ${couponDto.couponStartdate}부터 ${couponDto.couponEnddate}까지</p>
-		<p>쿠폰내용: ${couponDto.couponIntro}</p>
-		
 		<!-- 관리자일 경우  -->		
 		<p><a href="${root}/coupon/couponUpdate.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">수정하기</a></p>
 		<p><a href="javascript:couponDelete('${root}','${couponDto.couponCode}','${couponDto.couponName}','${pageNumber}')">삭제하기</a></p>
 		
-		
 		<!-- 일반사용자일 경우 -->
-		<form action="${root}/purchase/purchaseInsert.go" method="post">
-			<input type="hidden" name="couponCode">
-			<!-- <input type="hidden" name="memberCode"> -->
-			
-			<input type="text" name="purchasePhone">
-			<input type="button" value="인증" onclick="phoneCheck()">
-			
-			<p><input type="submit" value="구매하기"></p>
-		</form>
 		<%-- <p><a href="${root}/purchase/purchaseInsert.go?couponCode=${couponDto.couponCode}&purchasePhone=${purchasePhone}">구매하기</a></p> --%>
+		<div id="content">
+			<div class="history">
+				<div class="title">
+					<span>쿠폰 구매창</span>
+				</div>
+				<div class="eat">
+					<div class="img">
+						<img alt="쿠폰이미지" src="list.jpg">
+					</div>
+					<div>
+						<span>쿠폰명</span>
+					</div>
+					<div>
+						<span>원가</span>
+					</div>
+					<div>
+						<span>할인가</span>
+					</div>
+					<div>
+						<span>사용기간 : 시작날짜 ~ 끝날짜</span>
+					</div>
+					<div>
+						<span>쿠폰소개</span>
+					</div>
+					<form action="${root}/purchase/purchaseInsert.go" method="get">
+					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
+					<!-- <input type="hidden" name="memberCode"> -->
+					
+					<c:if test="${session.getValue("id") != null}">
+					<div>
+						<span> * 휴대폰</span>
+						<input type="text" name="purchasePhone">
+						<input type="button" value="인증" onclick="phoneCheck()">
+					</div>
+					<div>
+						<!-- <button><a href="#">구매하기</a></button> -->
+						<input type="submit" value="구매하기">
+					</div>
+					</c:if>
+					<c:if test="${session.getValue("id") != null}">
+						<p>로그인 후 구매하실 수 있습니다.</p>
+						<a href="#">로그인하기</a>
+					</c:if>
+					</form>
+				</div>
+			</div>
+		</div>
+	
 	</body>
 	
 </html>

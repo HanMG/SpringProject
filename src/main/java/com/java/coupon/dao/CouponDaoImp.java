@@ -58,7 +58,7 @@ public class CouponDaoImp implements CouponDao {
 	//쿠폰상세리스트
 	@Override
 	public CouponDto couponRead(String couponCode) {
-		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponRead", couponCode);
+		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponSelect", couponCode);
 	}
 	
 	
@@ -89,4 +89,9 @@ public class CouponDaoImp implements CouponDao {
 		return check;
 	}
 	
+	
+	@Override
+	public CouponDto purchaseSelect(String couponCode) {
+		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponSelect",couponCode);
+	}
 }

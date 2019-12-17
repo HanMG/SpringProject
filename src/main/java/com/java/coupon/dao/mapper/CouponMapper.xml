@@ -68,7 +68,7 @@
 	</select>
 	
 	<!-- 쿠폰상세페이지 -->
-	<select id="couponRead" parameterType="String" resultMap="CouponDto">
+	<select id="couponSelect" parameterType="String" resultMap="CouponDto">
 		select coupon.coupon_code, coupon.food_code, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
 		TO_CHAR(coupon.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(coupon.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, 
 		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,

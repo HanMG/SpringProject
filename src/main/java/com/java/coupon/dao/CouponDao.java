@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.dto.SearchFoodCodeDto;
+import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 전지원
@@ -29,6 +30,15 @@ public interface CouponDao {
 	
 	//쿠폰 상세페이지
 	public CouponDto couponRead(String couponCode);
+	
+	//쿠폰 수정
+	public int couponUpdateOk(CouponDto couponDto);
+	
+	//쿠폰 이미지 수정
+	public int couponImageUpdateOk(ImageDto imageDto);
+	
+	//쿠폰 삭제
+	public int couponDeleteOk(String couponCode);
 	
 	
 }

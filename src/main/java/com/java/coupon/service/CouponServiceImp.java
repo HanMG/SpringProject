@@ -2,14 +2,11 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,23 +45,8 @@ public class CouponServiceImp implements CouponService {
 		CouponDto couponDto =(CouponDto) map.get("couponDto");
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
-		String couponStartdate = couponDto.getCouponStartdate();
-		String couponEnddate = couponDto.getCouponEnddate();
-		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date sDate = date.parse(couponStartdate);
-			Date eDate = date.parse(couponEnddate);
-			
-			JejuAspect.logger.info(JejuAspect.logMsg + "couponStartDate: " + sDate);
-			JejuAspect.logger.info(JejuAspect.logMsg + "couponEnddate: " + eDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
 		String couponCode = couponDao.couponInsert(couponDto);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
-		int check = 0;
 		if(couponCode != null) {
 			//TODO : 이미지 insert
 			MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
@@ -72,14 +54,19 @@ public class CouponServiceImp implements CouponService {
 			
 			long imageSize = upImage.getSize();
 			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
-			//File imagePath = new File("D:\\jeonjiwon\\project\\image");
-			//File imagePath = new File("X:\\imageDB");
-			File imagePath = new File("D:\\web\\project\\02_dev\\final\\src\\main\\webapp\\resources\\ftp");
+			
+			// 이미지 path 수정
+			String dir= "/ftp/";
+			ServletContext context = request.getSession().getServletContext();
+			String realFolder = context.getRealPath(dir);
+			File imagePath = new File(realFolder);
+			JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: " + imagePath);
 			imagePath.mkdir();
+			
 			
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: "+ imageSize);
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageName: "+ imageName);
-			JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: "+ imagePath);
+			JejuAspect.logger.info(JejuAspect.logMsg + "이미지 실제 저장경로: "+ imagePath);
 			
 			if(imagePath.exists() && imagePath.isDirectory()) {
 				File file = new File(imagePath, imageName);
@@ -94,14 +81,14 @@ public class CouponServiceImp implements CouponService {
 				imageDto.setImageName(imageName);
 				imageDto.setReferCode(couponCode);
 				imageDto.setImageSize(imageSize);
-				imageDto.setImagePath(file.getAbsolutePath());
+				imageDto.setImagePath(request.getContextPath()+dir+imageName);
 				JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
 				
-				check = imageDao.couponImageInsert(imageDto);
+				int check = imageDao.couponImageInsert(imageDto);
 				JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+				mav.addObject("check", check);
 			}
 		}
-		mav.addObject("check", check);
 		mav.setViewName("coupon/couponInsertOk.tiles");
 	}
 	
@@ -143,6 +130,7 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
 		
 		
+		
 		int scrollSize = 10;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage*scrollSize;
@@ -155,13 +143,17 @@ public class CouponServiceImp implements CouponService {
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
 			mav.addObject("couponList", couponList);
 		}
+		//TODO 이미지 경로
+		String path = request.getContextPath() + "\\ftp\\";
+		JejuAspect.logger.info(JejuAspect.logMsg + "path : "+ path);
+		
+		mav.addObject("path", path);
 		mav.addObject("count", count);
 		mav.addObject("pageNumber", pageNumber);
 		
 		mav.setViewName("coupon/couponList.tiles");
 	}
 	
-	// TODO Auto-generated method stub
 	//쿠폰상세페이지
 	@Override
 	public void couponRead(ModelAndView mav) {
@@ -181,6 +173,12 @@ public class CouponServiceImp implements CouponService {
 		}
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
 		
+		//TODO 이미지 경로
+		String path = request.getContextPath() + "\\ftp\\";
+		JejuAspect.logger.info(JejuAspect.logMsg + "path : "+ path);
+		
+		request.setAttribute("pageNumber", pageNumber);
+		mav.addObject("path", path);
 		mav.addObject("couponDto", couponDto);
 		mav.setViewName("coupon/couponDetail.tiles");
 	}
@@ -188,19 +186,103 @@ public class CouponServiceImp implements CouponService {
 	//쿠폰상품수정페이지
 	@Override
 	public void couponUpdate(ModelAndView mav) {
-		// TODO Auto-generated method stub
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String couponCode = request.getParameter("couponCode");
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode);
 		
 		CouponDto couponDto = couponDao.couponRead(couponCode);
 		
+		
+		request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("couponDto",couponDto);
 		mav.setViewName("coupon/couponUpdate.tiles");
 	}
 	
+	//쿠폰상품 수정
+	@Override
+	public void couponUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
+		MultipartFile upImage = request.getFile("imageFile");
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		
+		CouponDto couponDto =(CouponDto) map.get("couponDto");
+		ImageDto imageDto =(ImageDto) map.get("imageDto");
+		
+		String couponCode = couponDto.getCouponCode();
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
+		
+		Iterator<String> iter = request.getFileNames();
+		
+		int check = 0;
+		while(iter.hasNext()) {
+			MultipartFile upFile = request.getFile(iter.next());
+			long fileSize = upFile.getSize();
+			
+			if(upFile.isEmpty() == false) {
+				if(fileSize != 0) {
+					long imageSize = upImage.getSize();
+					String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();
+					
+					String dir= "/ftp/";
+					ServletContext context = request.getSession().getServletContext();
+					String realFolder = context.getRealPath(dir);
+					File imagePath = new File(realFolder);
+					imagePath.mkdir();
+					JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: " + imagePath);
+					
+					if(imagePath.exists() && imagePath.isDirectory()) {
+						File file = new File(imagePath, imageName);
+						try {
+							upImage.transferTo(file);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						imageDto.setImageName(imageName);
+						imageDto.setReferCode(couponCode);
+						imageDto.setImageSize(imageSize);
+						imageDto.setImagePath(request.getContextPath()+dir+imageName);
+						JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
+						
+						//쿠폰 이미지 수정
+						check = couponDao.couponImageUpdateOk(imageDto);
+						JejuAspect.logger.info(JejuAspect.logMsg + "쿠폰이미지 수정: "+ check);
+					}
+				} 
+			}
+			check = couponDao.couponUpdateOk(couponDto);
+			JejuAspect.logger.info(JejuAspect.logMsg + "쿠폰내용 수정: "+ check);
+			
+			mav.addObject("check", check);
+		}
+		
+		request.setAttribute("pageNumber", pageNumber);
+		mav.addObject("couponCode", couponCode);
+		mav.setViewName("coupon/couponUpdateOk.tiles");
+	}
 	
+	// TODO Auto-generated method stub
+	//쿠폰 삭제
+	@Override
+	public void couponDeleteOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String couponCode = request.getParameter("couponCode");
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
+		
+		int check = couponDao.couponDeleteOk(couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "check_3: " +check);
+		
+		request.setAttribute("pageNumber", pageNumber);
+		mav.addObject("check", check);
+		mav.setViewName("coupon/couponDeleteOk.tiles");
+	}
 	
 }

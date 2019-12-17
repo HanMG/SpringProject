@@ -32,13 +32,14 @@
 			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
 				<li>
 					<a href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">
-						<img src="${couponDto.imagePath}" alt="쿠폰상품이미지">
+						<img alt="쿠폰이미지" src="${path}${couponDto.imageName}">
+						
 						<p style="font-size: 16px;">쿠폰 명: ${couponDto.couponName}</p>
+						
 						<span style="font-size: 10px">유효기간: ${couponDto.couponStartdate}부터 ${couponDto.couponEnddate} 까지</span>
+						
 						<p>금액: <span style="text-decoration:line-through;">${couponDto.couponCostori}</span> => ${couponDto.couponCostsale}</p>
 					</a>
-					<%-- <fmt:formatDate value="${couponDto.couponStartdate}" pattern="yyyy-MM-dd"/>부터
-					<fmt:formatDate value="${couponDto.couponEnddate}" pattern="yyyy-MM-dd"/>까지 --%>
 				</li>
 			</c:forEach>
 		</ul>

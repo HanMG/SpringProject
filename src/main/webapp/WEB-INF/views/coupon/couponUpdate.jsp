@@ -26,7 +26,8 @@
 	<body>
 		<form action="${root}/coupon/couponUpdateOk.go" method="post" enctype="multipart/form-data" 
 		onsubmit="return insertForm(this)" name="couponForm">
-				<%-- <input type="hidden" name="sequenceLevel" value="${sequenceLevel}" /> --%>
+				<input type="hidden" name="couponCode" value="${couponDto.couponCode}" />
+				<input type="hidden" name="pageNumber" value="${pageNumber}" />
 				<ul class="write_box">
 					<li>
 						<p>상품명(쿠폰명)</p>

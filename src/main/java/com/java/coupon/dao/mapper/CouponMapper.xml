@@ -48,7 +48,7 @@
 			SELECT 'coupon'||LPAD(seqcoupon.nextval,4,0) As couponCode from dual
 		</selectKey>
 		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
-		VALUES('coupon'||LPAD(seqcoupon.CURRVAL,4,0), #{foodCode}, #{couponName}, #{couponStartdate}, #{couponEnddate}, #{couponCostori}, #{couponSalerate}, 
+		VALUES('coupon'||LPAD(seqcoupon.CURRVAL,4,0), #{foodCode}, #{couponName}, TO_DATE(#{couponStartdate}, 'YYYY-MM-DD'), TO_DATE(#{couponEnddate},'YYYY-MM-DD'), #{couponCostori}, #{couponSalerate}, 
 		#{couponCostsale}, #{couponIntro})
 	</insert>
 	
@@ -60,15 +60,17 @@
 	<!-- 쿠폰리스트 불러오기 -->
 	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
 		<![CDATA[
-		SELECT * FROM 
-		(SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code) A) B
+		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
+		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate
+		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code ORDER BY coupon_code DESC) A) B
 		WHERE B.num >= #{startRow} AND B.num <= #{endRow}
 		]]>
 	</select>
 	
 	<!-- 쿠폰상세페이지 -->
 	<select id="couponRead" parameterType="String" resultMap="CouponDto">
-		select coupon.*, 
+		select coupon.coupon_code, coupon.food_code, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
+		TO_CHAR(coupon.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(coupon.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, 
 		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,
 		(select image_name from image where refer_code = coupon.coupon_code) AS image_name, 
 		(select image_path from image where refer_code = coupon.coupon_code) AS image_path,
@@ -76,7 +78,20 @@
 		from coupon where coupon_code = #{couponCode}
 	</select>
 	
+	<!-- 쿠폰 수정 -->
+	<update id="couponUpdate" parameterType="com.java.coupon.dto.CouponDto">
+		UPDATE coupon
+		SET food_code= #{foodCode}, coupon_name=#{couponName}, 
+		coupon_startdate= TO_DATE(#{couponStartdate}), coupon_enddate=TO_DATE(#{couponEnddate}), 
+		coupon_costori= #{couponCostori}, coupon_salerate= #{couponSalerate}, 
+		coupon_costsale= #{couponCostsale}, 
+		coupon_intro=#{couponIntro}
+		WHERE coupon_code = #{couponCode}
+	</update>
 	
-	
+	<!-- 쿠폰 삭제 -->
+	<delete id="couponDelete" parameterType="String">
+		DELETE FROM coupon WHERE coupon_code = #{couponCode}
+	</delete>
 
 </mapper>

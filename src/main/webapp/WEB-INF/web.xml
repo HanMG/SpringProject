@@ -11,6 +11,7 @@
 		/WEB-INF/spring/appServlet/servlet-context.xml
 		/WEB-INF/spring/coupon-context.xml
 		/WEB-INF/spring/image-context.xml
+		/WEB-INF/spring/purchase-context.xml
 		</param-value>
 	</context-param>
 	
@@ -30,6 +31,7 @@
 			/WEB-INF/spring/root-context.xml
 			/WEB-INF/spring/coupon-context.xml
 			/WEB-INF/spring/image-context.xml
+			/WEB-INF/spring/purchase-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

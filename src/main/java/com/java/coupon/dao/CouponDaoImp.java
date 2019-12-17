@@ -8,8 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.dto.SearchFoodCodeDto;
+import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 전지원
@@ -57,6 +59,34 @@ public class CouponDaoImp implements CouponDao {
 	@Override
 	public CouponDto couponRead(String couponCode) {
 		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponRead", couponCode);
+	}
+	
+	
+	//쿠폰 이미지 수정
+	@Override
+	public int couponImageUpdateOk(ImageDto imageDto) {
+		return sqlSessionTemplate.update("dao.ImageMapper.couponUpdate", imageDto);
+	}
+	
+	//쿠폰 수정
+	@Override
+	public int couponUpdateOk(CouponDto couponDto) {
+		return sqlSessionTemplate.update("dao.CouponMapper.couponUpdate", couponDto);
+	}
+	
+	//쿠폰 삭제
+	@Override
+	public int couponDeleteOk(String couponCode) {
+		int check = 0;
+		check = sqlSessionTemplate.delete("dao.ImageMapper.couponDelete", couponCode);
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "check_1: " +check);
+		if(check > 0) {
+			sqlSessionTemplate.delete("dao.CouponMapper.couponDelete", couponCode);
+			JejuAspect.logger.info(JejuAspect.logMsg + "check_2: " +check);
+		}
+		
+		return check;
 	}
 	
 }

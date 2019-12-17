@@ -24,4 +24,10 @@ public interface CouponService {
 	
 	//쿠폰 수정 페이지
 	public void couponUpdate(ModelAndView mav);
+
+	//쿠폰 수정 메소드
+	public void couponUpdateOk(ModelAndView mav);
+	
+	//쿠폰 삭제
+	public void couponDeleteOk(ModelAndView mav);
 }

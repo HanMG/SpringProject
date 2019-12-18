@@ -62,9 +62,8 @@ public class CouponServiceImp implements CouponService {
 				e.printStackTrace();
 			}
 			
-			imageDto.setImage_name(imageName);
-			imageDto.setImage_path(file.getAbsolutePath());
-			imageDto.setImage_size(Integer.parseInt(imageName));
+			imageDto.setImageName(imageName);
+			imageDto.setImagePath(file.getAbsolutePath());
 			
 			String couponCode = null;			
 			couponCode = couponDao.couponInsert(couponDto);	//TODO

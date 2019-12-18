@@ -24,6 +24,7 @@
 	<!-- MyBatis -->
 	<bean id="sqlSessionFactoryBean"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mapperLocations" value="classpath:com/java/**/*.xml"/>		
 	</bean>
@@ -37,5 +38,17 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>	
 	
+	<!-- Transaction AOP 공통클래스-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>			
+		</tx:attributes>
+	</tx:advice>
+		
+	<!-- Transaction AOP 핵심클래스 -->
+	<aop:config>
+		<aop:pointcut expression="within(com.java..*)" id="pT"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pT"/>
+	</aop:config>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

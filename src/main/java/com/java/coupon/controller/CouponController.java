@@ -1,5 +1,8 @@
 package com.java.coupon.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.service.CouponService;
 import com.java.image.dto.ImageDto;
@@ -63,11 +66,15 @@ public class CouponController {
 	
 	//쿠폰리스트
 	@RequestMapping(value="/coupon/couponList.go", method=RequestMethod.GET)
+	@ResponseBody
 	public ModelAndView couponList(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		
 		couponService.couponList(mav);
+		
+		
+		
 		
 		return mav;
 	}
@@ -77,6 +84,7 @@ public class CouponController {
 	public ModelAndView couponRead(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		ModelAndView mav= new ModelAndView();
 		mav.addObject("request", request);
+		mav.addObject("response", response);	// 임시
 		
 		couponService.couponRead(mav);
 		

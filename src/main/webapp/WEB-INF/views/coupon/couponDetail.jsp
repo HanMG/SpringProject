@@ -89,25 +89,25 @@
 						<img alt="쿠폰이미지" src="list.jpg">
 					</div>
 					<div>
-						<span>쿠폰명</span>
+						<span>쿠폰명: ${couponDto.couponName}</span>
 					</div>
 					<div>
-						<span>원가</span>
+						<span>원가: ${couponDto.couponCostori}</span>
 					</div>
 					<div>
-						<span>할인가</span>
+						<span>할인가격: ${couponDto.couponCostsale}</span>
 					</div>
 					<div>
-						<span>사용기간 : 시작날짜 ~ 끝날짜</span>
+						<span>사용가능기간: ${couponDto.couponStartdate}부터 ${couponDto.couponEnddate} 까지</span>
 					</div>
 					<div>
-						<span>쿠폰소개</span>
+						<span>쿠폰소개: ${couponDto.couponIntro}</span>
 					</div>
+					
 					<form action="${root}/purchase/purchaseInsert.go" method="get">
 					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 					<!-- <input type="hidden" name="memberCode"> -->
-					
-					<c:if test="${session.getValue("id") != null}">
+					<%-- <c:if test="${session.getValue("id") != null}"> --%>
 					<div>
 						<span> * 휴대폰</span>
 						<input type="text" name="purchasePhone">
@@ -117,11 +117,11 @@
 						<!-- <button><a href="#">구매하기</a></button> -->
 						<input type="submit" value="구매하기">
 					</div>
-					</c:if>
-					<c:if test="${session.getValue("id") != null}">
+					<%-- </c:if> --%>
+					<%-- <c:if test="${session.getValue("id") != null}"> --%>
 						<p>로그인 후 구매하실 수 있습니다.</p>
 						<a href="#">로그인하기</a>
-					</c:if>
+					<%-- </c:if> --%>
 					</form>
 				</div>
 			</div>

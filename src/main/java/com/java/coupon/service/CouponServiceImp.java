@@ -2,12 +2,14 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -129,8 +131,6 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
 		
-		
-		
 		int scrollSize = 10;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage*scrollSize;
@@ -147,10 +147,23 @@ public class CouponServiceImp implements CouponService {
 		String path = request.getContextPath() + "\\ftp\\";
 		JejuAspect.logger.info(JejuAspect.logMsg + "path : "+ path);
 		
+		request.getParameter("pageNumber");		
 		mav.addObject("path", path);
 		mav.addObject("count", count);
 		mav.addObject("pageNumber", pageNumber);
 		
+		// TODO : 임시
+//		HttpServletResponse response= (HttpServletResponse) map.get("response");
+//		response.setContentType("application/txt;charset=utf-8");
+//		
+//		try {
+//			PrintWriter out = response.getWriter();
+//			out.print(mav);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		
+		//
 		mav.setViewName("coupon/couponList.tiles");
 	}
 	

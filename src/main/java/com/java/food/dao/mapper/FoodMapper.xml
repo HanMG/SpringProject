@@ -30,4 +30,19 @@
 		update food set food_read=food_read+1 where food_code=#{foodCode}
 		]]>
  	</update>
+ 	
+ 	<select id="foodReviewCount" parameterType="String" resultType="int">
+		select count(*) from review where food_code = #{foodCode}
+	</select>
+	
+	<select id="foodReviewList" parameterType="String" resultType="com.java.food.dto.FoodReviewDto">
+		<![CDATA[
+			select review.review_code, review.member_code, review.review_date, review.review_cont, review.review_score, image.*    
+			from review
+			LEFT JOIN image
+			ON review.food_code = image.refer_code			
+			ORDER BY review.review_code;
+		]]> 
+			
+	</select>
 </mapper>

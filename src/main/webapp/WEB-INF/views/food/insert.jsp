@@ -55,13 +55,13 @@
 		<label>휴일</label>
 		<select name="foodBreak">
 			<option value="">휴일선택</option>
-			<option value="월">월</option>
-			<option value="화">화</option>
-			<option value="수">수</option>
-			<option value="목">목</option>
-			<option value="금">금</option>			
-			<option value="토">토</option>
-			<option value="일">일</option>			
+			<option value="월">월요일</option>
+			<option value="화">화요일</option>
+			<option value="수">수요일</option>
+			<option value="목">목요일</option>
+			<option value="금">금요일</option>			
+			<option value="토">토요일</option>
+			<option value="일">일요일</option>			
 		</select>
 		<br />	
 		<label>음식점 대표이미지</label>

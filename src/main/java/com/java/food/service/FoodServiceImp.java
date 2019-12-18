@@ -3,9 +3,12 @@ package com.java.food.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.java.aop.JejuAspect;
 import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
+import com.java.food.dto.FoodReviewDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
 
@@ -92,12 +95,36 @@ public class FoodServiceImp implements FoodService {
 	public void foodRead(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
 		String foodCode = request.getParameter("foodCode");
 		FoodDto foodDto = new FoodDto();
 		ImageDto imageDto = new ImageDto();		
 		// 음식점 정보 가져오기
 		foodDto = foodDao.foodRead(foodCode);
-		foodDao.foodReadUpdate(foodCode);
+		Cookie[] cookies = request.getCookies();
+		// 비교하기 위해 새로운 쿠키
+        Cookie viewCookie = null; 
+        // 쿠키가 있을 경우 
+        if (cookies != null && cookies.length > 0) 
+        {
+            for (int i = 0; i < cookies.length; i++)
+            {
+                // Cookie의 name이 cookie + foodCode와 일치하는 쿠키를 viewCookie에 넣어줌 
+                if (cookies[i].getName().equals("cookie"+foodCode))
+                {                   
+                    viewCookie = cookies[i];
+                }
+            }
+        }
+        // 쿠키가 없을 경우
+        if (viewCookie == null) {                       
+            // 쿠키 생성(이름, 값)
+            Cookie newCookie = new Cookie("cookie"+foodCode, "|" + foodCode + "|");                            
+            // 쿠키 추가
+            response.addCookie(newCookie);
+            // 조회수 증가
+            foodDao.foodReadUpdate(foodCode);
+        }
 		// 이미지 정보 가져오기
 		imageDto = imageDao.imgRead(foodCode);
 		
@@ -207,6 +234,14 @@ public class FoodServiceImp implements FoodService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String foodCode = request.getParameter("foodCode");
+		int reviewCount = foodDao.foodReivewCount(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewCount);
+		List<FoodReviewDto> foodReviewList = null;
+		if (reviewCount > 0) {			
+			foodReviewList = foodDao.foodReviewList(foodCode);
+			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
+			mav.addObject("foodReviewList",foodReviewList);
+		}
 		
 	}
 

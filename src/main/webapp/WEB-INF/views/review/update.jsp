@@ -56,7 +56,7 @@
 			</c:if>
 			<input type="file" name="imgFile" multiple="multiple" accept="image/*" />
 		</div>
-		<input type="submit" value="수정" /> <input type="reset" value="취소" />
+		<input type="submit" value="수정" /> <input type="button" value="뒤로가기" onclick="history.back()"/>
 	</form>
 </body>
 </html>

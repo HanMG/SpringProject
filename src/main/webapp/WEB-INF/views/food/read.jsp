@@ -63,7 +63,7 @@
 				</div>
 				<div>
 					<span>휴일</span>
-					<span>${foodDto.foodBreak}</span>
+					<span>${foodDto.foodBreak}요일</span>
 				</div>
 				<div>
 					<span>업데이트</span>

@@ -81,9 +81,10 @@ public class FoodController {
 	public ModelAndView foodRead(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);	
+		mav.addObject("response",response);
 		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));
-		foodService.foodRead(mav);
 		foodService.foodReviewList(mav);
+		foodService.foodRead(mav);		
 		return mav;
 	}
 }

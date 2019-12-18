@@ -12,11 +12,8 @@ import com.java.image.dto.ImageDto;
  */
 
 public class FoodReviewDto {
-	private String reviewCode;	// 리뷰 코드
-	private String memberCode;	// 멤버 코드
-	private String memberName;	// 닉네임
-	private int reviewCount;	// 리뷰 전체 숫자	
-	private int reviewTotalScore;	// 리뷰 총 점수
+	private String reviewCode;	// 리뷰 코드	
+	private String memberCode;	// 멤버 코드				
 	private Date reviewDate;	// 리뷰 날짜
 	private String reviewCont;	// 리뷰 내용
 	private int reviewScore;	// 리뷰 점수 5,3,1
@@ -26,12 +23,9 @@ public class FoodReviewDto {
 
 	public FoodReviewDto(String reviewCode, String memberCode, String memberName, int reviewCount, int reviewTotalScore,
 			Date reviewDate, String reviewCont, int reviewScore, List<ImageDto> imageList) {
-		super();
+		
 		this.reviewCode = reviewCode;
-		this.memberCode = memberCode;
-		this.memberName = memberName;
-		this.reviewCount = reviewCount;
-		this.reviewTotalScore = reviewTotalScore;
+		this.memberCode = memberCode;	
 		this.reviewDate = reviewDate;
 		this.reviewCont = reviewCont;
 		this.reviewScore = reviewScore;
@@ -53,31 +47,6 @@ public class FoodReviewDto {
 	public void setMemberCode(String memberCode) {
 		this.memberCode = memberCode;
 	}
-
-	public String getMemberName() {
-		return memberName;
-	}
-
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
-
-	public int getReviewCount() {
-		return reviewCount;
-	}
-
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
-	}
-
-	public int getReviewTotalScore() {
-		return reviewTotalScore;
-	}
-
-	public void setReviewTotalScore(int reviewTotalScore) {
-		this.reviewTotalScore = reviewTotalScore;
-	}
-
 	public Date getReviewDate() {
 		return reviewDate;
 	}
@@ -112,10 +81,8 @@ public class FoodReviewDto {
 
 	@Override
 	public String toString() {
-		return "FoodReviewDto [reviewCode=" + reviewCode + ", memberCode=" + memberCode + ", memberName=" + memberName
-				+ ", reviewCount=" + reviewCount + ", reviewTotalScore=" + reviewTotalScore + ", reviewDate="
-				+ reviewDate + ", reviewCont=" + reviewCont + ", reviewScore=" + reviewScore + ", imageList="
-				+ imageList + "]";
+		return "FoodReviewDto [reviewCode=" + reviewCode + ", memberCode=" + memberCode + ", reviewDate=" + reviewDate
+				+ ", reviewCont=" + reviewCont + ", reviewScore=" + reviewScore + ", imageList=" + imageList + "]";
 	}
 	
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MainPage</title>
+<title>Eat The Jeju</title>
 </head>
 <body>
 <!-- header/menu -->

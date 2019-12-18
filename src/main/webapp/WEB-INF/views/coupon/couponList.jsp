@@ -63,44 +63,8 @@
 		</style>
 		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="${root}/resources/xhr.js"></script>
-		<!-- xhr -->
-		<script type="text/javascript">
-		function createXHR(){
-			if(window.XMLHttpRequest){
-				return new XMLHttpRequest();
-			} else {
-				return new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		}
-
-		var xhr = null;
-
-		function sendRequest(method, url, callback, param){
-			
-			var httpMethod = method.toUpperCase();
-			if(httpMethod != "GET" && httpMethod != "POST"){
-				httpMethod = "GET";		//에러방지
-			}
-			
-			var httpParam = (param == null || param == "") ? null : param;
-			
-			var httpUrl = url;
-			
-			if(httpMethod == "GET" && httpParam != null){
-				httpUrl += "?" + httpParam;
-			}
-			
-			xhr = createXHR();
-			xhr.open(httpMethod, httpUrl, true);
-			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr.send(httpMethod == "POST" ? httpParam : null);
-			xhr.onreadystatechange = callback;	//콜백함수 처리
-		}
-		
-		</script>
 		<!-- Ajax -->
 		<script type="text/javascript">
-			
 			var pageNumber = 1;
 				
 			$(function(){
@@ -111,7 +75,7 @@
 					toServer(pageNumber);
 					pageNumber++;
 					console.log(pageNumber);
-					$('.list').append()
+					//$('.list').append()
 				}
 			})
 			
@@ -123,24 +87,9 @@
 			function fromServer(){
 				if(xhr.readyState == 4 && xhr.status == 200){
 					console.log("pageNumber: "+ pageNumber);
-					var list = getElementsByClassName("list");
-					
+					//var list = getElementsByClassName("list");
 					if(pageNumber > 1){
-						/* var couponList = "${couponList}";
-						console.log(couponList.couponCode + "/ "+ couponList.foodName);
-						for(var i=1; i < couponList.size(); i++){
-							 couponList = {
-									 couponCode = "${couponCode}"
-							 }
-						}
-						
-						$(couponList).each(function(){
-							var couponInfo = couponList[i];
-							var text = couponInfo.couponCode;
-							
-							$(list).append(text);
-						}); */
-						
+						document.getElementById("inner").innerHTML = xhr.responseText;						
 					}
 				}
 			}
@@ -169,7 +118,7 @@
 				</c:if>
 				<c:if test="${count > 0}">
 					<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-					<div class="list">
+					<div id="inner" class="list">
 						<div>
 							<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}"> --%>
 						</div>

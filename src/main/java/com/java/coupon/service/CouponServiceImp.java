@@ -151,19 +151,6 @@ public class CouponServiceImp implements CouponService {
 		mav.addObject("path", path);
 		mav.addObject("count", count);
 		mav.addObject("pageNumber", pageNumber);
-		
-		// TODO : 임시
-//		HttpServletResponse response= (HttpServletResponse) map.get("response");
-//		response.setContentType("application/txt;charset=utf-8");
-//		
-//		try {
-//			PrintWriter out = response.getWriter();
-//			out.print(mav);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-		//
 		mav.setViewName("coupon/couponList.tiles");
 	}
 	

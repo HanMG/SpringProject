@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="dao.PurchaseMapper">
+	<resultMap type="com.java.purchase.dto.PurchaseDto" id="PurchaseDto">
+		<result column="purchase_code" property="purchaseCode"/>
+		<result column="coupon_code" property="couponCode"/>
+		<result column="member_code" property="memberCode"/>
+		<result column="purchase_phone" property="purchasePhone"/>
+		<result column="purchaseDate" property="purchaseDate"/>
+		<result column="purchase_cost" property="purchaseCost"/>
+	</resultMap>
+	
+	
+</mapper>

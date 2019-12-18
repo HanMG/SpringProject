@@ -4,12 +4,11 @@ public class ImageDto {
 	private String imageCode;
 	private String referCode;
 	private String imageName;
-	private Long imageSize;
+	private long imageSize;
 	private String imagePath;
-	
 	public ImageDto() {}
-	
-	public ImageDto(String imageCode, String referCode, String imageName, Long imageSize, String imagePath) {		
+	public ImageDto(String imageCode, String referCode, String imageName, long imageSize, String imagePath) {
+		super();
 		this.imageCode = imageCode;
 		this.referCode = referCode;
 		this.imageName = imageName;
@@ -44,8 +43,8 @@ public class ImageDto {
 	public long getImageSize() {
 		return imageSize;
 	}
-
-	public void setImageSize(Long imageSize) {
+	
+	public void setImageSize(long imageSize) {
 		this.imageSize = imageSize;
 	}
 

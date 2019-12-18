@@ -1,10 +1,17 @@
 package com.java.coupon.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
+import com.java.coupon.dto.SearchFoodCodeDto;
+import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 전지원
@@ -20,11 +27,71 @@ public class CouponDaoImp implements CouponDao {
 	//쿠폰상품 등록
 	@Override
 	public String couponInsert(CouponDto couponDto) {
-		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("dao.CouponMapper.insert", couponDto);
-		
-		String couponCode = sqlSessionTemplate.selectOne("dao.CouponMapper.codeSelect");
+		String couponCode = couponDto.getCouponCode();
+
 		return couponCode;
 	}
 	
+	//식당코드 검색
+	@Override
+	public List<SearchFoodCodeDto> searchFoodCode(String foodName) {
+		return sqlSessionTemplate.selectList("dao.CouponMapper.selFoodCode", foodName);
+	}
+	
+	//쿠폰 리스트 카운트
+	@Override
+	public int couponListCount() {
+		return sqlSessionTemplate.selectOne("dao.CouponMapper.listCount");
+	}
+	
+	//쿠폰리스트
+	@Override
+	public List<CouponDto> couponList(int startRow, int endRow) {
+		Map<String, Integer> listMap = new HashMap<String, Integer>();
+		listMap.put("startRow", startRow);		
+		listMap.put("endRow", endRow);		
+		
+		return sqlSessionTemplate.selectList("dao.CouponMapper.couponList", listMap);
+	}
+	
+	//쿠폰상세리스트
+	@Override
+	public CouponDto couponRead(String couponCode) {
+		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponSelect", couponCode);
+	}
+	
+	
+	//쿠폰 이미지 수정
+	@Override
+	public int couponImageUpdateOk(ImageDto imageDto) {
+		return sqlSessionTemplate.update("dao.ImageMapper.couponUpdate", imageDto);
+	}
+	
+	//쿠폰 수정
+	@Override
+	public int couponUpdateOk(CouponDto couponDto) {
+		return sqlSessionTemplate.update("dao.CouponMapper.couponUpdate", couponDto);
+	}
+	
+	//쿠폰 삭제
+	@Override
+	public int couponDeleteOk(String couponCode) {
+		int check = 0;
+		check = sqlSessionTemplate.delete("dao.ImageMapper.couponDelete", couponCode);
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "check_1: " +check);
+		if(check > 0) {
+			sqlSessionTemplate.delete("dao.CouponMapper.couponDelete", couponCode);
+			JejuAspect.logger.info(JejuAspect.logMsg + "check_2: " +check);
+		}
+		
+		return check;
+	}
+	
+	
+	@Override
+	public CouponDto purchaseSelect(String couponCode) {
+		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponSelect",couponCode);
+	}
 }

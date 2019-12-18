@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.java.image.dto.ImageDto;
 
+
 public interface ImageDao {	
 
 	public int imgInsert(ImageDto imageDto);
@@ -22,4 +23,6 @@ public interface ImageDao {
 
 	public int imgSelectDelete(ImageDto imageDto);	
 	
+	public int couponImageInsert(ImageDto imageDto);
+
 }

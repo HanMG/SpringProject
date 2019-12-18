@@ -6,7 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import com.java.image.dto.ImageDto;
+
+import com.java.aop.JejuAspect;
+
 
 @Component
 public class ImageDaoImp implements ImageDao {
@@ -52,4 +56,13 @@ public class ImageDaoImp implements ImageDao {
 	public int imgSelectDelete(ImageDto imageDto) {
 		return sqlSession.delete("dao.ImageMapper.imgSelectDelete", imageDto);
 	}	
+
+	//쿠폰이미지 삽입
+	@Override
+	public int couponImageInsert(ImageDto imageDto) {
+		int check = sqlSession.insert("dao.ImageMapper.couponImageInsert", imageDto);
+		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+		return check;
+	}
+
 }

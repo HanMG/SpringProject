@@ -37,7 +37,24 @@
 	
 	<delete id="imgSelectDelete" parameterType="com.java.image.dto.ImageDto">
 		delete from image where refer_code = #{referCode} AND image_name = #{imageName}
-	</delete>
+	</delete>   
+
+   <insert id="couponImageInsert" parameterType="com.java.image.dto.ImageDto">
+   	INSERT INTO image(image_code, refer_Code, image_name, image_size, image_path)
+   	VALUES ('image'||LPAD(SEQImage.nextval,4,0), #{referCode}, #{imageName}, #{imageSize}, #{imagePath})
+   </insert>
+   
+   <!-- 쿠폰 이미지 수정 -->
+	<update id="couponUpdate" parameterType="com.java.image.dto.ImageDto">
+		UPDATE image
+		SET image_name = #{imageName}, image_size = #{imageSize}, 
+		image_path = #{imagePath}
+		WHERE refer_code = #{referCode}
+	</update>
 	
+	<!-- 쿠폰 이미지 삭제 -->
+	<delete id="couponDelete" parameterType="String">
+		DELETE FROM image WHERE refer_code = #{couponCode}
+	</delete>
 	
 </mapper>

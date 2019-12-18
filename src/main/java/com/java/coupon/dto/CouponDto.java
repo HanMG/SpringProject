@@ -1,102 +1,166 @@
 package com.java.coupon.dto;
 
-import java.util.Date;
-
 /**
  * @작성자 : 전지원
- * @작업일 : 2019. 12. 12.
- * @작업 내용 :  CouponDto 생성
- */
+ * @작업일 : 2019. 12. 13.
+ * @작업 내용 :  couponStartdate, couponEnddate 데이터타입 String으로 변환
+*/
 public class CouponDto {
-	private int coupon_code;				// 쿠폰코드
-	private int food_code;				// 식당코드
-	private String coupon_name;			// 쿠폰명(상품명)
-	private Date coupon_startdate;		// 쿠폰유효기간(시작)
-	private Date coupon_enddate;			// 쿠폰유효기간(마감)
-	private String coupon_intro;			// 쿠폰소개
-	private int coupon_costori;			// 쿠폰 원가
-	private int coupon_costsale;			// 쿠폰 할인가
-	private int coupon_salerate;				// 쿠폰 할인률
+	private String couponCode;				// 쿠폰코드
+	private String foodCode;				// 식당코드
+	private String couponName;			// 쿠폰명(상품명)
+	private String couponStartdate;		// 쿠폰유효기간(시작)
+	private String couponEnddate;			// 쿠폰유효기간(마감)
+	private String couponIntro;			// 쿠폰소개
+	private int couponCostori;			// 쿠폰 원가
+	private int couponCostsale;			// 쿠폰 할인가
+	private int couponSalerate;				// 쿠폰 할인률
+	private String imageCode;
+	private String imageName;
+	private long imageSize;
+	private String imagePath;
+	private String foodName;
 	
 	public CouponDto() {}
-	
-	public int getCoupon_code() {
-		return coupon_code;
+
+	public CouponDto(String couponCode, String foodCode, String couponName, String couponStartdate,
+			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate,
+			String imageCode, String imageName, long imageSize, String imagePath, String foodName) {
+		super();
+		this.couponCode = couponCode;
+		this.foodCode = foodCode;
+		this.couponName = couponName;
+		this.couponStartdate = couponStartdate;
+		this.couponEnddate = couponEnddate;
+		this.couponIntro = couponIntro;
+		this.couponCostori = couponCostori;
+		this.couponCostsale = couponCostsale;
+		this.couponSalerate = couponSalerate;
+		this.imageCode = imageCode;
+		this.imageName = imageName;
+		this.imageSize = imageSize;
+		this.imagePath = imagePath;
+		this.foodName = foodName;
 	}
 
-	public void setCoupon_code(int coupon_code) {
-		this.coupon_code = coupon_code;
+	public String getCouponCode() {
+		return couponCode;
 	}
 
-	public int getFood_code() {
-		return food_code;
+	public void setCouponCode(String couponCode) {
+		this.couponCode = couponCode;
 	}
 
-	public void setFood_code(int food_code) {
-		this.food_code = food_code;
+	public String getFoodCode() {
+		return foodCode;
 	}
 
-	public String getCoupon_name() {
-		return coupon_name;
+	public void setFoodCode(String foodCode) {
+		this.foodCode = foodCode;
 	}
 
-	public void setCoupon_name(String coupon_name) {
-		this.coupon_name = coupon_name;
+	public String getCouponName() {
+		return couponName;
 	}
 
-	public Date getCoupon_startdate() {
-		return coupon_startdate;
+	public void setCouponName(String couponName) {
+		this.couponName = couponName;
 	}
 
-	public void setCoupon_startdate(Date coupon_startdate) {
-		this.coupon_startdate = coupon_startdate;
+	public String getCouponStartdate() {
+		return couponStartdate;
 	}
 
-	public Date getCoupon_enddate() {
-		return coupon_enddate;
+	public void setCouponStartdate(String couponStartdate) {
+		this.couponStartdate = couponStartdate;
 	}
 
-	public void setCoupon_enddate(Date coupon_enddate) {
-		this.coupon_enddate = coupon_enddate;
+	public String getCouponEnddate() {
+		return couponEnddate;
 	}
 
-	public String getCoupon_intro() {
-		return coupon_intro;
+	public void setCouponEnddate(String couponEnddate) {
+		this.couponEnddate = couponEnddate;
 	}
 
-	public void setCoupon_intro(String coupon_intro) {
-		this.coupon_intro = coupon_intro;
+	public String getCouponIntro() {
+		return couponIntro;
 	}
 
-	public int getCoupon_costori() {
-		return coupon_costori;
+	public void setCouponIntro(String couponIntro) {
+		this.couponIntro = couponIntro;
 	}
 
-	public void setCoupon_costori(int coupon_costori) {
-		this.coupon_costori = coupon_costori;
+	public int getCouponCostori() {
+		return couponCostori;
 	}
 
-	public int getCoupon_costsale() {
-		return coupon_costsale;
+	public void setCouponCostori(int couponCostori) {
+		this.couponCostori = couponCostori;
 	}
 
-	public void setCoupon_costsale(int coupon_costsale) {
-		this.coupon_costsale = coupon_costsale;
+	public int getCouponCostsale() {
+		return couponCostsale;
 	}
 
-	public int getCoupon_salerate() {
-		return coupon_salerate;
+	public void setCouponCostsale(int couponCostsale) {
+		this.couponCostsale = couponCostsale;
 	}
 
-	public void setCoupon_salerate(int coupon_salerate) {
-		this.coupon_salerate = coupon_salerate;
+	public int getCouponSalerate() {
+		return couponSalerate;
+	}
+
+	public void setCouponSalerate(int couponSalerate) {
+		this.couponSalerate = couponSalerate;
+	}
+
+	public String getImageCode() {
+		return imageCode;
+	}
+
+	public void setImageCode(String imageCode) {
+		this.imageCode = imageCode;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public long getImageSize() {
+		return imageSize;
+	}
+
+	public void setImageSize(long imageSize) {
+		this.imageSize = imageSize;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
 	}
 
 	@Override
 	public String toString() {
-		return "CouponDto [coupon_code=" + coupon_code + ", food_code=" + food_code + ", coupon_name=" + coupon_name
-				+ ", coupon_startdate=" + coupon_startdate + ", coupon_enddate=" + coupon_enddate + ", coupon_intro="
-				+ coupon_intro + ", coupon_costori=" + coupon_costori + ", coupon_costsale=" + coupon_costsale
-				+ ", coupon_salerate=" + coupon_salerate + "]";
+		return "CouponDto [couponCode=" + couponCode + ", foodCode=" + foodCode + ", couponName=" + couponName
+				+ ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro="
+				+ couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale
+				+ ", couponSalerate=" + couponSalerate + ", imageCode=" + imageCode + ", imageName=" + imageName
+				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + ", foodName=" + foodName + "]";
 	}
 }

@@ -17,25 +17,13 @@
 <body>	
 	<div class="container">
 	<c:choose>
-		<c:when test="${id == null }">
-			<a href="${root}/member/signIn.do">회원가입</a>
+		<c:when test="${check == null }">
 			<a href="${root}/member/login.do">로그인</a>
+			<a href="${root}/member/signIn.do">회원가입</a>
 		</c:when>
-		<c:when test="${id != null }">
-			<a href="${root}/fileBoard/write.do">파일 글쓰기</a>
-			<a href="${root}/fileBoard/list.do">파일 글목록</a>
-			<br />
-			<br />
-			<a href="${root}/guest/write.do">방명록</a>
-			<br />
-			<br />
-			<a href="${root}/board/write.do">글쓰기</a>
-			<a href="${root}/board/list.do">글목록</a>
-			<br />
-			<br />
+		<c:when test="${check != null }">
 			<a href="${root}/member/logout.do">로그아웃</a>
-			<a href="${root}/member/update.do">회원수정</a>
-			<a href="${root}/member/dropOut.do">탈퇴</a>
+			<a href="${root}/member/myPage.do">마이페이지</a>
 		</c:when>
 	</c:choose>
 	</div>

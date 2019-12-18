@@ -14,7 +14,7 @@
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
-		values('member'||LPAD(seq_Member.nextval,4,0),
+		values('member'||LPAD(seqMember.nextval,4,0),
 		#{memberDate},
 		#{memberMail},
 		#{memberPwd},
@@ -32,7 +32,7 @@
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
-		values('member'||LPAD(seq_Member.nextval,4,0),
+		values('member'||LPAD(seqMember.nextval,4,0),
 		#{mail},
 		#{nickname},
 		sysdate
@@ -49,7 +49,7 @@
 	
 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
 		insert into food(FOOD_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ) 
-		values('food'||LPAD(seq_Food.nextval,4,0),
+		values('food'||LPAD(seqFood.nextval,4,0),
 		#{foodName},
 		#{foodAddr},
 		#{foodKind},

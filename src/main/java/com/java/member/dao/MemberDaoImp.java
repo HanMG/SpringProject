@@ -19,7 +19,7 @@ public class MemberDaoImp implements MemberDao {
 	@Override
 	public int memberInsert(MemberDto memberDto) {
 	
-		return sqlSessionTemplate.insert("insert", memberDto);
+		return sqlSessionTemplate.insert("memberMapper.insert", memberDto);
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class MemberDaoImp implements MemberDao {
 		Map<String, String> hMap=new HashMap<String, String>();
 		hMap.put("mail", mail);
 		hMap.put("pwd", pwd);
-		return sqlSessionTemplate.selectOne("login", hMap);
+		return sqlSessionTemplate.selectOne("memberMapper.login", hMap);
 	}
 	
 	@Override
 	public MemberDto memberUpdate(String mail) {
 		
-		return sqlSessionTemplate.selectOne("memberInfo", mail);
+		return sqlSessionTemplate.selectOne("memberMapper.memberInfo", mail);
 	}
 
 	@Override
@@ -44,23 +44,23 @@ public class MemberDaoImp implements MemberDao {
 		
 		
 		
-		return sqlSessionTemplate.insert("insertKakao", hashMap);
+		return sqlSessionTemplate.insert("memberMapper.insertKakao", hashMap);
 	}
 	
 	@Override
 	public int emailCheck(String mail) {
 		
-		return sqlSessionTemplate.selectOne("emailCheck", mail);
+		return sqlSessionTemplate.selectOne("memberMapper.emailCheck", mail);
 	}
 	
 	@Override
 	public int memberUpdateOk(MemberDto memberDto) {
 		
-		return sqlSessionTemplate.update("memberUpdate", memberDto);
+		return sqlSessionTemplate.update("memberMapper.memberUpdate", memberDto);
 	}
 	
 	@Override
 	public int foodInsert(FoodDto foodDto) {
-		return sqlSessionTemplate.insert("foodInsert", foodDto);
+		return sqlSessionTemplate.insert("memberMapper.foodInsert", foodDto);
 	}
 }

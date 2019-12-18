@@ -3,14 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-	<resultMap type="com.java.member.dto.MemberDto" id="memberDto">
-		<result column="MEMBER_CODE" property="memberCode"/>
-		<result column="MEMBER_DATE" property="memberDate"/>
-		<result column="MEMBER_MAIL" property="memberMail"/>
-		<result column="MEMBER_PWD" property="memberPwd"/>
-		<result column="MEMBER_NAME" property="memberName"/>
-		<result column="MEMBER_PHONE" property="memberPhone"/>
-	</resultMap>	
+	<resultMap type="com.java.member.dto.MemberDto" id="memberDto"/>	
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
@@ -48,13 +41,14 @@
 	</update>
 	
 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
-		insert into food(FOOD_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ) 
+		insert into food(FOOD_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, FOOD_PHONE) 
 		values('food'||LPAD(seqFood.nextval,4,0),
 		#{foodName},
 		#{foodAddr},
 		#{foodKind},
 		'0',
 		sysdate,
+		'0',
 		'0'
 		)
 	</insert>

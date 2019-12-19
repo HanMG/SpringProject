@@ -80,11 +80,19 @@ public class FoodController {
 	@RequestMapping(value = "/food/read.go", method = RequestMethod.GET)
 	public ModelAndView foodRead(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("request",request);		
+		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));		
+		foodService.foodRead(mav);		
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/food/foodReviewList.go", method = RequestMethod.GET)
+	public ModelAndView foodReviewList(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);	
 		mav.addObject("response",response);
-		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));
-		foodService.foodReviewList(mav);
-		foodService.foodRead(mav);		
+		foodService.foodReviewList(mav);				
 		return mav;
 	}
 }

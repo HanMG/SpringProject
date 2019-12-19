@@ -69,6 +69,7 @@
 		<br />
 		<label>음식점 소개</label>
 		<textarea name="foodIntro" cols="30" rows="10" style="width:100%; height: 100px; resize:none;" required></textarea>
+		<input type="hidden" name="memberCode" value="${memberCode}" />		
 		<input type="submit" value="등록"/>
 		<input type="reset" value="취소"/>				
 	</form>	

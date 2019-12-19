@@ -6,7 +6,7 @@
   
 <mapper namespace="dao.FoodMapper"> 
  	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
- 		insert into food values ('food'||LPAD(#{foodCode},4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodKind}, #{foodPhone}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus}, #{memberCode})
+ 		insert into food values ('food'||LPAD(SEQFOOD.nextval,4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodKind}, #{foodPhone}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus}, #{memberCode})
  	</insert> 
  	
  	<select id="foodMax" resultType="String">

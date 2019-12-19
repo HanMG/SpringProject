@@ -36,8 +36,10 @@
 			when food_name like ('%'||#{keyword}||'%') then 0
 			when food_menu like ('%'||#{keyword}||'%') then 1
 			when food_kind like ('%'||#{keyword}||'%') then 2
-			else 3 end asc) fo, image 
-			WHERE fo.food_code = image.refer_code(+))A)
+			else 3 end asc) fo, image, (SELECT food_code review_food, AVG(review_score) review_score, COUNT(review_code) review_count FROM review GROUP BY food_code) rv
+			WHERE fo.food_code = image.refer_code(+)
+			AND fo.food_code = rv.review_food(+)
+			)A)
 			WHERE rnum >=#{startRow} and rnum <=#{endRow}
 		]]>
 	</select>
@@ -76,11 +78,9 @@
 	
 	
 	<select id="tagList" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
-		<![CDATA[
 			SELECT * FROM 
 			(SELECT ROWNUM rnum, A.* FROM
 			(SELECT * FROM food
-			<if test="tagType != ''">
 				<if test="tagType.equals('addr')">
 				WHERE food_addr like ('%'||#{tagValue}||'%')
 				</if>
@@ -93,8 +93,8 @@
 				<if test="tagType.equals('area')">
 				WHERE food_area like ('%'||#{tagValue}||'%')
 				</if>
-			</if>
 			ORDER BY food_read)A)
+		<![CDATA[
 			WHERE rnum >=1 and rnum <=10
 		]]>
 	</select>

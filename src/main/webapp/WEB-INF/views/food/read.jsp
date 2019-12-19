@@ -49,7 +49,7 @@
 			</div>
 			<div class="info_2">
 				<span>조회수 ${foodDto.foodRead }</span>
-				<span>리뷰수</span>
+				<span>리뷰수 ${reviewCount}</span>
 				<span>즐겨찾기</span>
 			</div>
 			<div class="info_3">
@@ -112,7 +112,14 @@
 		</div>
 		<div class="nav_2">
 			<div class="img">
-				<img src="${root}/resources/ftp/${imageDto.imageName}" alt="" style="width:400px;"/>
+				<c:choose>
+					<c:when test="${foodDto.foodStatus == '완료'}">
+						<img src="${root}/resources/ftp/${imageDto.imageName}" alt="" style="width:400px;"/>
+					</c:when>
+					<c:when test="${foodDto.foodStatus == '검토중'}">
+						<h3>검토중입니다.</h3>
+					</c:when>
+				</c:choose>	
 			</div>
 			<div class="map"></div>
 		</div>

@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 	<resultMap type="com.java.member.dto.MemberDto" id="memberDto"/>	
+	<resultMap type="com.java.food.dto.FoodDto" id="foodDto"/>
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
@@ -24,7 +25,7 @@
 	</select>
 	
 	<select id="memberInfo" parameterType="String" resultMap="memberDto" >
-		select * from member where MEMBER_MAIL =#{mail}
+		select * from member where MEMBER_CODE=#{memberCode}
 	</select>
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
@@ -36,26 +37,31 @@
 		)
 	</insert>
 	
-		<select id="emailCheck" parameterType="String" resultType="int" >
+	<select id="emailCheck" parameterType="String" resultType="int" >
 		select count(*) from member where MEMBER_MAIL =#{mail}
 	</select>
 	
 	<update id="memberUpdate" parameterType="com.java.member.dto.MemberDto">
-		update member set MEMBER_PWD=#{memberPwd}, MEMBER_NAME=#{memberName}, MEMBER_PHONE=#{memberPhone} where MEMBER_MAIL=#{memberMail}
+		update member set MEMBER_PWD=#{memberPwd}, MEMBER_NAME=#{memberName}, MEMBER_PHONE=#{memberPhone} where MEMBER_CODE=#{memberCode}
 	</update>
 	
 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
-		insert into food(FOOD_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, FOOD_PHONE) 
+		insert into food(FOOD_CODE, MEMBER_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, FOOD_PHONE) 
 		values('food'||LPAD(seqFood.nextval,4,0),
+		#{memberCode},
 		#{foodName},
 		#{foodAddr},
 		#{foodKind},
-		'0',
+		'검토중',
 		sysdate,
 		'0',
 		'0'
 		)
 	</insert>
+	
+	<select id="foodInfo" parameterType="String" resultMap="foodDto">
+		select * from food where MEMBER_CODE=#{memberCode}
+	</select>
 </mapper>
 
 

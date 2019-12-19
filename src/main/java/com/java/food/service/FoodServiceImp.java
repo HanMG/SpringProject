@@ -2,7 +2,6 @@ package com.java.food.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,25 +43,22 @@ public class FoodServiceImp implements FoodService {
 		Map<String, Object> map = mav.getModelMap();
 		FoodDto foodDto = (FoodDto) map.get("foodDto");
 		int check = 0;
-		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");	
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
+		// 등록날짜 설정
 		foodDto.setFoodDate(new Date());
+		// 조회수 0 으로 설정
 		foodDto.setFoodRead(0);
-		foodDto.setFoodStatus("검토중");
-		// food_code의 마지막 값 가져옴
-		String str = foodDao.foodMax();
-		// ex) food0001 에서 d 다음의 값을 가져와서 플러스를 통해 다음 번호를 넣음
-		int max = Integer.parseInt(str.substring(str.lastIndexOf("d")+1)) + 1;
+		// 음식점 공개상태는 처음시 검토중으로
+		foodDto.setFoodStatus("검토중");	
 		
-		//JejuAspect.logger.info(JejuAspect.logMsg+max);
-		
-		foodDto.setFoodCode(Integer.toString(max));
 		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		check = foodDao.foodInsert(foodDto);
-		
+		// food_code의 마지막 값 가져옴
+		String str = foodDao.foodMax();	
 		
 		ImageDto imageDto = new ImageDto();
 		if(check > 0) {			
-			imageDto.setReferCode(Integer.toString(max));  
+			imageDto.setReferCode(str);  
 		}
 		MultipartFile upFile = request.getFile("imgFile"); // write.jsp의 input type file의 name으로 확인
 		long fileSize = upFile.getSize();		
@@ -130,8 +126,10 @@ public class FoodServiceImp implements FoodService {
 		// 이미지 정보 가져오기
 		imageDto = imageDao.imgRead(foodCode);
 		
-		//JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
-		//JejuAspect.logger.info(JejuAspect.logMsg+imageDto);
+		// 리뷰 카운트
+		int reviewCount = foodDao.foodReivewCount(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCount);
+		mav.addObject("reviewCount",reviewCount);		
 		mav.addObject("foodDto", foodDto);	
 		mav.addObject("imageDto", imageDto);
 		mav.setViewName("food/read.tiles");		
@@ -214,17 +212,20 @@ public class FoodServiceImp implements FoodService {
 		String foodCode = request.getParameter("foodCode");
 		int check = 0;		
 		
-		ImageDto imageDto = imageDao.imgRead(foodCode);		
+		// 삭제할 이미지 정보를 가져옴
+		ImageDto imageDto = imageDao.imgRead(foodCode);	
 		
-		JejuAspect.logger.info(JejuAspect.logMsg + imageDto.getImageName());
-
+		// 가져온 이미지 정보가 있을 경우 해당 경로의 파일을 삭제
 		if (imageDto.getImageName() != null) {
 			File checkFile = new File(imageDto.getImagePath());
 			if (checkFile.exists() && checkFile.isFile()) {
 				checkFile.delete();
 			}
 		}
+		// 음식점 코드를 통해 DB에서 음식점 정보 삭제
 		check += foodDao.foodDelete(foodCode);
+		
+		// 음식점 코드를 통해 DB에서 이미지 정보 삭제
 		check += imageDao.imgDelete(foodCode);
 		
 		mav.addObject("check",check);
@@ -244,6 +245,7 @@ public class FoodServiceImp implements FoodService {
 			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
 			mav.addObject("foodReviewList",foodReviewList);			
 		}		
+		mav.addObject("reviewCount",reviewCount);
 		mav.addObject("foodReviewList",foodReviewList);
 		mav.setViewName("review/list.empty");
 		

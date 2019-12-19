@@ -63,7 +63,7 @@ a {
 				<span>식당 등록</span>
 			</div>
 			<div class="register">
-				<form action="${root}/member/myFoodWrite.do" method="post">
+				<form action="${root}/member/myFoodWrite.go" method="post">
 					<div class="reg_1">
 						<span>식당 이름과 위치를 알려주세요.</span>
 					</div>

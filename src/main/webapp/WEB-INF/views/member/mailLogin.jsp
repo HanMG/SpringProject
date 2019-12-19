@@ -69,7 +69,7 @@ a {
 			<a href="#"></a>
 			<span>이메일로 로그인</span>
 		</div>
-		<form action=${root}/member/mailLoginOk.do method="post">
+		<form action=${root}/member/mailLoginOk.go method="post">
 		<div class="login">
 			<div>
 				<label>이메일</label>
@@ -81,7 +81,7 @@ a {
 			</div>
 			<div>
 				<input type="submit" value="로그인"/>
-				<a href="${root}/member/signIn.do">회원가입</a>
+				<a href="${root}/member/signIn.go">회원가입</a>
 			</div>
 		</div>
 		</form>

@@ -22,34 +22,34 @@ public class Membercontroller {
 	private MemberService memberService;
 	
 	
-	@RequestMapping(value="member/login.do", method=RequestMethod.GET)
+	@RequestMapping(value="member/login.go", method=RequestMethod.GET)
 	public ModelAndView memberLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("member/login.tiles");
 		return mav;
 	}
-	@RequestMapping(value="member/mailLogin.do", method=RequestMethod.GET)
+	@RequestMapping(value="member/mailLogin.go", method=RequestMethod.GET)
 	public ModelAndView memberMailLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("member/mailLogin.tiles");
 		return mav;
 	}
 	
-	@RequestMapping(value="/kakaoLogin.do", method = RequestMethod.GET)
+	@RequestMapping(value="/kakaoLogin.go", method = RequestMethod.GET)
 	public ModelAndView insertKakao(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		memberService.insertKakao(mav);
 		return mav;
 	}
-	@RequestMapping(value="/member/signIn.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/signIn.go", method=RequestMethod.GET)
 	public ModelAndView memberSignIn(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("member/signIn.tiles");
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/signInOk.do", method=RequestMethod.POST)
+	@RequestMapping(value="/member/signInOk.go", method=RequestMethod.POST)
 	public ModelAndView memberSignInOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto) {
 		
 		ModelAndView mav=new ModelAndView();
@@ -59,15 +59,16 @@ public class Membercontroller {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/mailLoginOk.do", method=RequestMethod.POST)
-	public ModelAndView memberMailLoginOk(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value="/member/mailLoginOk.go", method=RequestMethod.POST)
+	public ModelAndView memberMailLoginOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
+		mav.addObject("memberDto", memberDto);
 		memberService.memberMailLoginOk(mav);
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/main.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/main.go", method=RequestMethod.GET)
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session=request.getSession();
 		request.getSession().invalidate();
@@ -77,12 +78,12 @@ public class Membercontroller {
 		return "/member/main.tiles";
 	}
 	
-	@RequestMapping(value="/member/logout.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/logout.go", method=RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		return "/member/logout.tiles";
 	}
 	
-	@RequestMapping(value="/member/myPage.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myPage.go", method=RequestMethod.GET)
 	public ModelAndView memberMyPage(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
@@ -91,7 +92,7 @@ public class Membercontroller {
 	}
 
 	
-	@RequestMapping(value="/member/memberUpdate.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/memberUpdate.go", method=RequestMethod.GET)
 	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
@@ -100,7 +101,7 @@ public class Membercontroller {
 	
 	}
 	
-	@RequestMapping(value="/member/memberUpdateOk.do", method=RequestMethod.POST)
+	@RequestMapping(value="/member/memberUpdateOk.go", method=RequestMethod.POST)
 	public ModelAndView memberUpdateOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
@@ -109,7 +110,7 @@ public class Membercontroller {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/myFood.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myFood.go", method=RequestMethod.GET)
 	public ModelAndView myFood(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
@@ -117,33 +118,34 @@ public class Membercontroller {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/myFoodIn.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myFoodIn.go", method=RequestMethod.GET)
 	public String myFoodIn(HttpServletRequest request, HttpServletResponse response) {
 		return "/member/myFoodIn.tiles";
 	}
-	@RequestMapping(value="/member/myFoodWrite.do", method=RequestMethod.POST)
-	public void myFoodWrite(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
+	@RequestMapping(value="/member/myFoodWrite.go", method=RequestMethod.POST)
+	public ModelAndView myFoodWrite(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("foodDto", foodDto);
 		memberService.myFoodWrite(mav);
+		return mav;
 		
 	}
-	@RequestMapping(value="/member/myEd.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myEd.go", method=RequestMethod.GET)
 	public ModelAndView myEd(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
 		memberService.myEd(mav);
 		return mav;
 	}
-	@RequestMapping(value="/member/myReView.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myReView.go", method=RequestMethod.GET)
 	public ModelAndView myReView(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
 		memberService.myReView(mav);
 		return mav;
 	}
-	@RequestMapping(value="/member/myFavorite.do", method=RequestMethod.GET)
+	@RequestMapping(value="/member/myFavorite.go", method=RequestMethod.GET)
 	public ModelAndView myFavorite(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);

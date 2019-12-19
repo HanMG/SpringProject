@@ -24,10 +24,10 @@ public class MemberDaoImp implements MemberDao {
 
 	@Override
 	public int login(String mail, String pwd) {
-		Map<String, String> hMap=new HashMap<String, String>();
-		hMap.put("mail", mail);
-		hMap.put("pwd", pwd);
-		return sqlSessionTemplate.selectOne("memberMapper.login", hMap);
+		Map<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("mail", mail);
+		hashMap.put("pwd", pwd);
+		return sqlSessionTemplate.selectOne("memberMapper.login", hashMap);
 	}
 	
 	@Override
@@ -62,5 +62,9 @@ public class MemberDaoImp implements MemberDao {
 	@Override
 	public int foodInsert(FoodDto foodDto) {
 		return sqlSessionTemplate.insert("memberMapper.foodInsert", foodDto);
+	}
+	@Override
+	public MemberDto getMemberCode(String mail) {
+		return sqlSessionTemplate.selectOne("memberMapper.getMemberCode", mail);
 	}
 }

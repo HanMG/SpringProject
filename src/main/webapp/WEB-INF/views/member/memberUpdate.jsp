@@ -55,7 +55,7 @@ a {
 </style>
 </head>
 <body>
-	<form action="${root}/member/memberUpdateOk.do" method="post">
+	<form action="${root}/member/memberUpdateOk.go" method="post">
 		<input type="hidden" value="${memberDto.memberCode}" name="memberCode"/>		
 		<div id="content">
 			<div class="title">

@@ -18,5 +18,7 @@ public interface MemberDao {
 
 	public int foodInsert(FoodDto foodDto);
 
+	public MemberDto getMemberCode(String mail);
+
 	
 }

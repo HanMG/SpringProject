@@ -14,9 +14,9 @@
 		<a href="${root}/coupon/couponList.go">상품리스트</a>
 		
 	<c:choose>
-		<c:when test="${check == null }">
-			<a href="${root}/member/login.do">로그인</a>
-			<a href="${root}/member/signIn.do">회원가입</a>
+		<c:when test="${memberCode == null }">
+			<a href="${root}/member/login.go">로그인</a>
+			<a href="${root}/member/signIn.go">회원가입</a>
 			<a href="${root}/food/insert.go">음식정보등록</a>
 			<a href="${root}/food/update.go?foodCode=food0468">음식정보수정</a>
 			<a href="${root}/food/delete.go?foodCode=food0467">음식정보삭제</a>			
@@ -26,9 +26,11 @@
 			<a href="${root}/review/update.go?reviewCode=review0042">리뷰수정</a>
 			<a href="${root}/review/delete.go?reviewCode=review0041">리뷰삭제</a>
 		</c:when>
-		<c:when test="${check != null }">
-			<a href="${root}/member/logout.do">로그아웃</a>
-			<a href="${root}/member/myPage.do">마이페이지</a>
+		<c:when test="${memberCode != null }">
+			<a href="${root}/member/logout.go">로그아웃</a>
+			<a href="${root}/member/myPage.go">마이페이지</a>
+			${memberCode}
+			
 		</c:when>
 	</c:choose>
 	</div>

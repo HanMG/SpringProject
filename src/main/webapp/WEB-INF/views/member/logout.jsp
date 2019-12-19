@@ -16,7 +16,7 @@
 		alert("로그아웃 되었습니다.");
 		Kakao.init('f30f46c40f26ed513be4c81611d91389');
 		Kakao.Auth.logout();
-		location.href="${root}/member/main.do";
+		location.href="${root}/member/main.go";
 	</script>
 </body>
 </html>

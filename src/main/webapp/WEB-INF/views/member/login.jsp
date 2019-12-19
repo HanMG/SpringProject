@@ -67,7 +67,7 @@ button {
 		</div>
 		<div class="login">
 			<img alt="로고" src="${root}/resources/css/list.jpg">
-			<button style="width:180pt;height:35pt;"><a href="${root}/member/mailLogin.do">이메일 로그인</a></button>
+			<button style="width:180pt;height:35pt;"><a href="${root}/member/mailLogin.go">이메일 로그인</a></button>
 			<button style="width:180pt;height:35pt;" onclick="loginForm()">카카오 로그인</button>
 			<a href="${root}/jeju.go">건너뛰기</a>
 		</div>
@@ -90,7 +90,7 @@ button {
 			    			type: "get",
 			    			dataType: "text",
 			    			success: function(data) {
-			    				window.location.href = "${root}" + "/kakaoLogin.do?nickname=" + res.properties['nickname'] + "&mail=" + res.kakao_account.email;
+			    				window.location.href = "${root}" + "/kakaoLogin.go?nickname=" + res.properties['nickname'] + "&mail=" + res.kakao_account.email;
 			    	        }
 			    		});
     				}

@@ -100,7 +100,7 @@ a {
 		<div class="title">
 			<span>이메일 회원가입</span>
 		</div>
-		<form action="${root}/member/signInOk.do" method="post"  onsubmit="return signForm(this)">
+		<form action="${root}/member/signInOk.go" method="post"  onsubmit="return signForm(this)">
 			<div class="join">
 				<div>
 					<span>이메일</span>
@@ -122,7 +122,7 @@ a {
 					<input class="btn btn_small" type="submit" value="가입">
 					<input class="btn btn_small" type="reset" value="취소">
 				</div>
-				<a href="${root}/member/login.do">뒤로가기</a>
+				<a href="${root}/member/login.go">뒤로가기</a>
 			</div>
 		</form>
 	</div>

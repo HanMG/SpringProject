@@ -19,6 +19,10 @@
 		select count(*) from member where MEMBER_MAIL=#{mail} and MEMBER_PWD=#{pwd}
 	</select>
 	
+	<select id="getMemberCode" parameterType="String" resultType="com.java.member.dto.MemberDto">
+		SELECT * from member WHERE MEMBER_MAIL=#{mail}
+	</select>
+	
 	<select id="memberInfo" parameterType="String" resultMap="memberDto" >
 		select * from member where MEMBER_MAIL =#{mail}
 	</select>

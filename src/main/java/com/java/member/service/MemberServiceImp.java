@@ -45,17 +45,48 @@ public class MemberServiceImp implements MemberService{
 	public void memberMailLoginOk(ModelAndView mav) {
 		Map<String, Object> map=mav.getModelMap();
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		
 		String mail=request.getParameter("mail");
 		String pwd=request.getParameter("pwd");
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + mail + "\t\t" + pwd);
 		int check=memberDao.login(mail, pwd);
+		MemberDto memberDto = null;
+		if (check == 1) {
+			memberDto = memberDao.getMemberCode(mail);
+		}
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
+		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
 		mav.addObject("check", check);
-		mav.addObject("mail", mail);
+		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/mailLoginOk.tiles");
+	}
+	
+	@Override
+	public void insertKakao(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String nickname = request.getParameter("nickname");
+		String mail = request.getParameter("mail");
+		int emailCheck = memberDao.emailCheck(mail);
+		int check = 0;
+		if (emailCheck == 0) {
+			check = memberDao.insertKakao(nickname, mail);
+		} else {
+			check = emailCheck;
+		}
+		MemberDto memberDto = null;
+		if (check == 1) {
+			memberDto = memberDao.getMemberCode(mail);
+		}
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + check);
+		JejuAspect.logger.info(JejuAspect.logMsg + mail);
+		mav.addObject("check", check);
+		mav.addObject("memberDto", memberDto);
+		mav.setViewName("member/mailLoginOk.tiles");
+		
 	}
 
 
@@ -77,28 +108,7 @@ public class MemberServiceImp implements MemberService{
 		
 	}
 	
-	@Override
-	public void insertKakao(ModelAndView mav) {
-		Map<String, Object> map = mav.getModelMap();
-		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		
-		String nickname = request.getParameter("nickname");
-		String mail = request.getParameter("mail");
-		int emailCheck = memberDao.emailCheck(mail);
-		int check = 0;
-		if (emailCheck == 0) {
-			check = memberDao.insertKakao(nickname, mail);
-		} else {
-			check = emailCheck;
-		}
-		
-		JejuAspect.logger.info(JejuAspect.logMsg + check);
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
-		mav.addObject("check", check);
-		mav.addObject("mail", mail);
-		mav.setViewName("member/mailLoginOk.tiles");
-		
-	}
+	
 
 
 	@Override
@@ -146,6 +156,7 @@ public class MemberServiceImp implements MemberService{
 		int check=memberDao.foodInsert(foodDto);
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
 		mav.addObject("check", check);
+		mav.setViewName("member/myFoodOk.tiles");
 	}
 	
 	@Override

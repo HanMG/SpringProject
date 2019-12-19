@@ -68,7 +68,7 @@ a {
 				<div>
 					<span>이메일</span>
 					<span>${memberDto.memberMail}</span>
-					<button><a href="${root}/member/memberUpdate.do">수정</a></button>
+					<button><a href="${root}/member/memberUpdate.go">수정</a></button>
 				</div>
 				<div>
 					<span>휴대폰</span>
@@ -77,19 +77,19 @@ a {
 			</div>
 			<div class="nav_2">
 				<span>구매한 EAT 딜</span>
-				<button><a href="${root}/member/myEd.do">></a></button>
+				<button><a href="${root}/member/myEd.go">></a></button>
 			</div>
 			<div class="nav_3">
 				<span>리뷰</span>
-				<button><a href="${root}/member/myReView.do">></a></button>
+				<button><a href="${root}/member/myReView.go">></a></button>
 			</div>
 			<div class="nav_4">
 				<span>가고싶다</span>
-				<button><a href="${root}/member/myFavorite.do">></a></button>
+				<button><a href="${root}/member/myFavorite.go">></a></button>
 			</div>
 			<div class="nav_5">
 				<span>내가 등록한 식당</span>
-				<button><a href="${root}/member/myFood.do">></a></button>
+				<button><a href="${root}/member/myFood.go">></a></button>
 			</div>
 		</div>
 	</div>

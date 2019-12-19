@@ -12,6 +12,8 @@
 	<div class="container">
 		<a href="${root}/coupon/couponInsert.go">상품등록</a>
 		<a href="${root}/coupon/couponList.go">상품리스트</a>
+		<a href="${root}/search.go">검색</a>
+		<a href="${root}/food/list.go">음식점 리스트</a>
 		
 	<c:choose>
 		<c:when test="${memberCode == null }">

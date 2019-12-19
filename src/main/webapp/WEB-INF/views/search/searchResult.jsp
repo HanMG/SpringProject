@@ -112,7 +112,7 @@ a {
 			<a href="#"><img alt="음식 이미지" src="${searchFoodDto.imageName}"></a>
 			<div>
 				<span>${searchFoodDto.foodName}</span>
-				<span>별점</span>
+				<span>${searchFoodDto.reviewScore}</span>
 			</div>
 			<div>
 				<span>${searchFoodDto.foodArea}</span> -
@@ -120,7 +120,7 @@ a {
 			</div>
 			<div>
 				<span>${searchFoodDto.foodRead}</span>
-				<span>리뷰수</span>
+				<span>${searchFoodDto.reviewCount}</span>
 			</div>
 		</div>
 		</c:forEach>

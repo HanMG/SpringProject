@@ -86,12 +86,17 @@ a {
 		<div class="list">
 		
 			<div class="page">
-				<div style="background-image: url('list.jpg');">
-					<span>1. 우도 관련 가게</span>
-				</div>
+				<c:forEach var = "searchFoodDto" items="${foodList}">
+					<div style="background-image: url('${searchFoodDto.imageName}');">
+						<span>${searchFoodDto.foodName}</span>
+					</div>
+				</c:forEach>
 			</div>
 
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>

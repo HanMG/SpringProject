@@ -29,6 +29,7 @@ public class SearchFoodDto {
 	private String reviewDate;
 	private String reviewCont;
 	private String reviewScore;
+	private String reviewCount;
 	
 	private String imageCode;	//	이미지 코드
 	private String referCode;
@@ -37,11 +38,23 @@ public class SearchFoodDto {
 	private String imagePath;	//	이미지 경로
 	
 	public SearchFoodDto() {}
+	
+
+	public String getReviewCount() {
+		return reviewCount;
+	}
+
+
+	public void setReviewCount(String reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+
 	public SearchFoodDto(String member_code, String foodCode, String foodName, String foodAddr, String foodArea,
 			String foodPhone, String foodKind, String foodMenu, String foodTime, String foodBreak, String foodIntro,
 			Date foodDate, int foodRead, String foodStatus, String reviewCode, String reviewDate, String reviewCont,
-			String reviewScore, String imageCode, String referCode, String imageName, long imageSize,
-			String imagePath) {
+			String reviewScore, String reviewCount, String imageCode, String referCode, String imageName,
+			long imageSize, String imagePath) {
 		super();
 		this.member_code = member_code;
 		this.foodCode = foodCode;
@@ -61,12 +74,15 @@ public class SearchFoodDto {
 		this.reviewDate = reviewDate;
 		this.reviewCont = reviewCont;
 		this.reviewScore = reviewScore;
+		this.reviewCount = reviewCount;
 		this.imageCode = imageCode;
 		this.referCode = referCode;
 		this.imageName = imageName;
 		this.imageSize = imageSize;
 		this.imagePath = imagePath;
 	}
+
+
 	public String getMember_code() {
 		return member_code;
 	}
@@ -207,13 +223,14 @@ public class SearchFoodDto {
 	}
 	@Override
 	public String toString() {
-		return "SearchFood [member_code=" + member_code + ", foodCode=" + foodCode + ", foodName=" + foodName
+		return "SearchFoodDto [member_code=" + member_code + ", foodCode=" + foodCode + ", foodName=" + foodName
 				+ ", foodAddr=" + foodAddr + ", foodArea=" + foodArea + ", foodPhone=" + foodPhone + ", foodKind="
 				+ foodKind + ", foodMenu=" + foodMenu + ", foodTime=" + foodTime + ", foodBreak=" + foodBreak
 				+ ", foodIntro=" + foodIntro + ", foodDate=" + foodDate + ", foodRead=" + foodRead + ", foodStatus="
 				+ foodStatus + ", reviewCode=" + reviewCode + ", reviewDate=" + reviewDate + ", reviewCont="
-				+ reviewCont + ", reviewScore=" + reviewScore + ", imageCode=" + imageCode + ", referCode=" + referCode
-				+ ", imageName=" + imageName + ", imageSize=" + imageSize + ", imagePath=" + imagePath + "]";
+				+ reviewCont + ", reviewScore=" + reviewScore + ", reviewCount=" + reviewCount + ", imageCode="
+				+ imageCode + ", referCode=" + referCode + ", imageName=" + imageName + ", imageSize=" + imageSize
+				+ ", imagePath=" + imagePath + "]";
 	}
 	
 }

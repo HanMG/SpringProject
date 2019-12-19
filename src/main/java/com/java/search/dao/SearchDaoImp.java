@@ -46,10 +46,8 @@ public class SearchDaoImp implements SearchDao {
 	@Override
 	public List<SearchFoodDto> tagList(String tagValue, String tagType) {
 		Map<String, String> map = new HashMap<String, String>();
-		if (tagValue != null && tagType != null) {
-			map.put("tagValue", tagValue);
-			map.put("tagType", tagType);
-		}
+		map.put("tagValue", tagValue);
+		map.put("tagType", tagType);
 		return sqlSessionTemplate.selectList("tagList", map);
 	}
 

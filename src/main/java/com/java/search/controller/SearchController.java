@@ -41,10 +41,14 @@ public class SearchController {
 		
 		String tagValue = request.getParameter("tagValue");
 		String tagType = request.getParameter("tagType");
+		if (tagValue == null && tagType == null) {
+			tagType = "read";
+			tagValue = "10";
+		}
 		
+		mav.addObject("tagValue", tagValue);
+		mav.addObject("tagType", tagType);
 		mav.addObject("request", request);
-		mav.addObject("hashTag", tagValue);
-		mav.addObject("hashTag", tagType);
 		
 		searchService.foodList(mav);
 		return mav;

@@ -12,4 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 public interface PurchaseService {
 	//구매 페이지 연결
 	public void purchaseInsert(ModelAndView mav);
+	
+	//구매하기
+	public void purchaseInsertOk(ModelAndView mav);
+	
+	//구매내역
+	public void purchaseListAll(ModelAndView mav);
 }

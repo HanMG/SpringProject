@@ -107,21 +107,26 @@
 					<form action="${root}/purchase/purchaseInsert.go" method="get">
 					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 					<!-- <input type="hidden" name="memberCode"> -->
-					<%-- <c:if test="${session.getValue("id") != null}"> --%>
-					<div>
-						<span> * 휴대폰</span>
-						<input type="text" name="purchasePhone">
-						<input type="button" value="인증" onclick="phoneCheck()">
-					</div>
-					<div>
-						<!-- <button><a href="#">구매하기</a></button> -->
-						<input type="submit" value="구매하기">
-					</div>
-					<%-- </c:if> --%>
-					<%-- <c:if test="${session.getValue("id") != null}"> --%>
+					<% 	
+						String memberCode = (String) session.getAttribute("memberCode");
+						if(memberCode != null){ 
+					%>
+						<div>
+							<span> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
+							<input type="text" name="purchasePhone">
+							<input type="button" value="인증" onclick="phoneCheck()">
+						</div>
+						<div>
+							<input type="submit" value="구매하기">
+						</div>
+					<% 
+					} if(memberCode == null){ 	
+					%>
 						<p>로그인 후 구매하실 수 있습니다.</p>
-						<a href="#">로그인하기</a>
-					<%-- </c:if> --%>
+						<a href="${root}/member/login.go">로그인하기</a>
+					<% 
+					} 
+					%>
 					</form>
 				</div>
 			</div>

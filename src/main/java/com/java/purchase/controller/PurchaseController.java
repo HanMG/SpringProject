@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.purchase.dto.PurchaseDto;
 import com.java.purchase.service.PurchaseService;
 
 /**
@@ -30,6 +31,29 @@ public class PurchaseController {
 		mav.addObject("request", request);
 		
 		purchaseService.purchaseInsert(mav);
+		
+		return mav;
+	}
+	
+	//구매하기
+	@RequestMapping(value="/purchase/purchaseInsertOk.go", method = RequestMethod.POST)
+	public ModelAndView purchaseInsertOk(HttpServletRequest request, HttpServletResponse response, PurchaseDto purchaseDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("purchaseDto", purchaseDto);
+		
+		purchaseService.purchaseInsertOk(mav);
+		
+		return mav;
+	}
+	
+	//구매내역
+	@RequestMapping(value="/purchase/purchaseList.go", method= RequestMethod.GET)
+	public ModelAndView purchaseList(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		purchaseService.purchaseListAll(mav);
 		
 		return mav;
 	}

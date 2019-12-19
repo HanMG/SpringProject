@@ -1,5 +1,8 @@
 package com.java.purchase.service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,44 +17,102 @@ import com.java.coupon.dao.CouponDao;
 import com.java.coupon.dto.CouponDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
+import com.java.member.dao.MemberDao;
+import com.java.member.dto.MemberDto;
 import com.java.purchase.dao.PurchaseDao;
-
+import com.java.purchase.dto.PurchaseDto;
+import com.java.purchase.dto.PurchaseListDto;
 
 /**
  * @작성자 : 전지원
- * @작업일 : 2019. 12. 17.
- * @작업 내용 :  PurchaseServiceImp
+ * @작업일 : 2019. 12. 19.
+ * @작업 내용 :  
 */
-
 @Component
 public class PurchaseServiceImp implements PurchaseService {
-	//@Autowired
-	//private PurchaseDao purchaseDao;
+	@Autowired
+	private PurchaseDao purchaseDao;
 	
 	@Autowired
 	private CouponDao couponDao;
 	
-	// TODO Auto-generated method stub
 	// 구매 페이지 연결
 	@Override
 	public void purchaseInsert(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String couponCode = request.getParameter("couponCode");
+		String purchasePhone = request.getParameter("purchasePhone");
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		CouponDto couponDto = couponDao.purchaseSelect(couponCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
 		//세션으로 회원정보 가져오기
-		//HttpSession httpSession =  request.getSession(true);
-		//MemberDto memberDto = (MemberDto) httpSession.getAttribute("memberDto");
-		//if(memberDto != null) {memberDto.getMemberCode();}
+		HttpSession session =  request.getSession(false);
+		String memberCode = (String) session.getAttribute("memberCode");
+		if(memberCode != null) {
+			JejuAspect.logger.info(JejuAspect.logMsg + "memberCode: "+ memberCode);
+			MemberDto memberDto = purchaseDao.purchaseMember(memberCode);
+			
+			JejuAspect.logger.info(JejuAspect.logMsg + "memberDto: "+ memberDto.toString());
+			mav.addObject("memberDto", memberDto);
+		}
 		
-		String memberCode = request.getRequestedSessionId();
-		
+		mav.addObject("purchasePhone", purchasePhone);
 		mav.addObject("couponDto", couponDto);
 		mav.setViewName("purchase/purchaseDetail.tiles");
+	}
+	
+	//구매하기
+	@Override
+	public void purchaseInsertOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		purchaseDto.setPurchaseDate(new Date());
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
+		
+		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCode: "+ purchaseCode);
+		
+		int check = 0;
+		if(purchaseCode != null) {
+			check = 1;
+			CouponDto couponDto = purchaseDao.purchaseCouponSelect(purchaseCode);
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+			mav.addObject("couponDto", couponDto);
+		}
+		
+		mav.addObject("check",check);
+		mav.setViewName("purchase/purchaseInsertOk.tiles");
+	}
+	
+	// TODO Auto-generated method stub
+	//구매내역
+	@Override
+	public void purchaseListAll(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		HttpSession session =  request.getSession(false);
+		String memberCode = (String) session.getAttribute("memberCode");
+		
+		String pageNumber = request.getParameter("pageNumber");
+		if(pageNumber == null) pageNumber = "1";
+		int currentPage = Integer.parseInt(pageNumber);
+
+		int boardSize = 6;
+		int startRow = (currentPage-1)*boardSize+1;
+		int endRow = currentPage*boardSize;
+		
+		List<PurchaseListDto> purchaseList = purchaseDao.purchaseSelectAll(memberCode, startRow, endRow);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
+		
+		mav.addObject("purchaseList", purchaseList);
+		mav.setViewName("purchase/purchaseList.tiles");
 	}
 	
 }

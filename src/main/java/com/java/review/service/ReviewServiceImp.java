@@ -35,7 +35,8 @@ public class ReviewServiceImp implements ReviewService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String foodCode = request.getParameter("foodCode");
 		String foodName = reviewDao.getFoodName(foodCode);		
-		mav.addObject("foodName", foodName);		
+		mav.addObject("foodName", foodName);
+		mav.addObject("foodCode",foodCode);
 		mav.setViewName("review/insert.tiles");
 	}
 

@@ -80,7 +80,8 @@ public class FoodController {
 	@RequestMapping(value = "/food/read.go", method = RequestMethod.GET)
 	public ModelAndView foodRead(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("request",request);		
+		mav.addObject("request",request);	
+		mav.addObject("response",response);
 		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));		
 		foodService.foodRead(mav);		
 		return mav;
@@ -90,8 +91,7 @@ public class FoodController {
 	@RequestMapping(value="/food/foodReviewList.go", method = RequestMethod.GET)
 	public ModelAndView foodReviewList(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("request",request);	
-		mav.addObject("response",response);
+		mav.addObject("request",request);			
 		foodService.foodReviewList(mav);				
 		return mav;
 	}

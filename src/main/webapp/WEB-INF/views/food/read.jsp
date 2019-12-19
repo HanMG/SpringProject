@@ -21,14 +21,13 @@
 		}	
 		function load(root){
 			let url = root+"/food/foodReviewList.go"
-			let param = "foodCode=${foodDto.foodCode}";
-			alert(param);
-			//sendRequest("GET", url , fromServer, params);
+			let params = "foodCode=${foodDto.foodCode}"
+			sendRequest("GET", url , fromServer, params);
 		}
 		function fromServer(){
 			if(xhr.readyState == 4 && xhr.status == 200){			
-				let resultDisplay = document.getElementById("review");
-				resultDisplay.innerHTML = xhr.responseText;				
+				let reviewDisplay = document.getElementById("review");
+				reviewDisplay.innerHTML = xhr.responseText;				
 			}
 		}
 	</script>

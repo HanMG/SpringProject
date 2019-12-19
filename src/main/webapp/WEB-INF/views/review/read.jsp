@@ -8,20 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰수정</title>
+<title>리뷰상세페이지</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
-<script>
-	function reviewUpdate() {
-		$("input:radio[name='reviewScore']:radio[value='${reviewDto.reviewScore}']").prop('checked', true);
-	}
-	function deleteFun(root, reviewCode, imageName) {
-		var url=root+"/review/imageDelete.go?reviewCode="+reviewCode+"&imageName=" +imageName;	
-		
-		//alert(url);
-		
-		location.href=url;
-	}
-</script>
 </head>
 <body onload="reviewUpdate()">
 	<p>

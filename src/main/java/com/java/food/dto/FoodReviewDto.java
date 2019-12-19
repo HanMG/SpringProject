@@ -17,19 +17,19 @@ public class FoodReviewDto {
 	private Date reviewDate;	// 리뷰 날짜
 	private String reviewCont;	// 리뷰 내용
 	private int reviewScore;	// 리뷰 점수 5,3,1
-	private	List<ImageDto> imageList; // 리뷰 이미지 리스트
+	private	String imageName; // 리뷰 이미지 리스트
 	
 	public FoodReviewDto() {}
 
-	public FoodReviewDto(String reviewCode, String memberCode, String memberName, int reviewCount, int reviewTotalScore,
-			Date reviewDate, String reviewCont, int reviewScore, List<ImageDto> imageList) {
-		
+	public FoodReviewDto(String reviewCode, String memberCode, Date reviewDate, String reviewCont, int reviewScore,
+			String imageName) {
+		super();
 		this.reviewCode = reviewCode;
-		this.memberCode = memberCode;	
+		this.memberCode = memberCode;
 		this.reviewDate = reviewDate;
 		this.reviewCont = reviewCont;
 		this.reviewScore = reviewScore;
-		this.imageList = imageList;
+		this.imageName = imageName;
 	}
 
 	public String getReviewCode() {
@@ -47,6 +47,7 @@ public class FoodReviewDto {
 	public void setMemberCode(String memberCode) {
 		this.memberCode = memberCode;
 	}
+
 	public Date getReviewDate() {
 		return reviewDate;
 	}
@@ -71,18 +72,17 @@ public class FoodReviewDto {
 		this.reviewScore = reviewScore;
 	}
 
-	public List<ImageDto> getImageList() {
-		return imageList;
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setImageList(List<ImageDto> imageList) {
-		this.imageList = imageList;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	@Override
 	public String toString() {
 		return "FoodReviewDto [reviewCode=" + reviewCode + ", memberCode=" + memberCode + ", reviewDate=" + reviewDate
-				+ ", reviewCont=" + reviewCont + ", reviewScore=" + reviewScore + ", imageList=" + imageList + "]";
-	}
-	
+				+ ", reviewCont=" + reviewCont + ", reviewScore=" + reviewScore + ", imageName=" + imageName + "]";
+	}	
 }

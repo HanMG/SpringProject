@@ -14,9 +14,9 @@
 </head>
 <body>		
 	<p><strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</p>
-	<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data">	
-		<input type="hidden" name="foodCode" value="food0467" />
-		<input type="hidden" name="memberCode" value="test1" />
+	<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data">			
+		<input type="hidden" name="foodCode" value="${foodCode}" />
+		<input type="hidden" name="memberCode" value="${memberCode}" />
 		<label for="good">맛있어요</label><input type="radio" id="good" name="reviewScore" value="5"/>
 		<label for="soso">괜찮아요</label><input type="radio" id="soso" name="reviewScore" value="3"/>
 		<label for="bad">별로에요</label><input type="radio" id="bad" name="reviewScore" value="1"/>

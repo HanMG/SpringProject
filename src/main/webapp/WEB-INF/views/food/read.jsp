@@ -21,7 +21,9 @@
 		}	
 		function load(root){
 			let url = root+"/food/foodReviewList.go"
-			sendRequest("GET", url , fromServer, params);
+			let param = "foodCode=${foodDto.foodCode}";
+			alert(param);
+			//sendRequest("GET", url , fromServer, params);
 		}
 		function fromServer(){
 			if(xhr.readyState == 4 && xhr.status == 200){			

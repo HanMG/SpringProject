@@ -13,12 +13,12 @@
 		<a href="${root}/coupon/couponInsert.go">상품등록</a>
 		<a href="${root}/coupon/couponList.go">상품리스트</a>
 		<a href="${root}/search.go">검색</a>
+		<a href="${root}/food/read.go?foodCode=food0468">음식상세페이지 </a>			
+		<a href="${root}/review/read.go?reviewCode=review0042">리뷰상세페이지</a>	
 	<c:choose>
 		<c:when test="${memberCode == null }">
 			<a href="${root}/member/login.go">로그인</a>
-			<a href="${root}/member/signIn.go">회원가입</a>						
-			<a href="${root}/food/read.go?foodCode=food0468">음식상세페이지 </a>			
-			<a href="${root}/review/read.go?reviewCode=review0042">리뷰상세페이지</a>		
+			<a href="${root}/member/signIn.go">회원가입</a>			
 		</c:when>
 		<c:when test="${memberCode != null }">
 			<a href="${root}/member/logout.go">로그아웃</a>

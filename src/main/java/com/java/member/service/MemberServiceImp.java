@@ -56,7 +56,6 @@ public class MemberServiceImp implements MemberService{
 		}
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
-		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
 		mav.addObject("check", check);
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/mailLoginOk.tiles");
@@ -82,7 +81,6 @@ public class MemberServiceImp implements MemberService{
 		}
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
 		mav.addObject("check", check);
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/mailLoginOk.tiles");
@@ -93,41 +91,22 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public void memberUpdate(ModelAndView mav) {
 		Map<String, Object> map=mav.getModelMap();
+		MemberDto memberDto=(MemberDto) map.get("memberDto");
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		
 		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("mail");
+		String memberCode = (String) session.getAttribute("memberCode");
 		
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		
-		MemberDto memberDto = memberDao.memberUpdate(mail);
+		memberDto = memberDao.memberUpdate(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
 		mav.addObject("memberDto", memberDto);
 		
 		mav.setViewName("member/memberUpdate.tiles");
 		
 	}
-	
-	
 
-
-	@Override
-	public void memberMypage(ModelAndView mav) {
-		Map<String, Object> map=mav.getModelMap();
-		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		
-		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("mail");
-		
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
-		
-		MemberDto memberDto = memberDao.memberUpdate(mail);
-		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
-		mav.addObject("memberDto", memberDto);
-		
-		mav.setViewName("member/myPage.tiles");
-		
-	}
 	@Override
 	public void memberUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -141,9 +120,35 @@ public class MemberServiceImp implements MemberService{
 		mav.setViewName("member/memberUpdateOk.tiles");
 	}
 	@Override
+	public void memberMypage(ModelAndView mav) {
+		Map<String, Object> map=mav.getModelMap();
+		MemberDto memberDto=(MemberDto) map.get("memberDto");
+		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		
+		HttpSession session = request.getSession();
+		String memberCode = (String) session.getAttribute("memberCode");
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
+		
+		memberDto = memberDao.memberUpdate(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
+		mav.addObject("memberDto", memberDto);
+		
+		mav.setViewName("member/myPage.tiles");	
+	}
+	@Override
 	public void myFood(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
+		FoodDto foodDto=(FoodDto) map.get("foodDto");
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		
+		HttpSession session = request.getSession();
+		String memberCode = (String) session.getAttribute("memberCode");
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
+		
+		foodDto=memberDao.foodInfo(memberCode);
+		mav.addObject("foodDto", foodDto);
 		mav.setViewName("member/myFood.tiles");
 	}
 
@@ -152,6 +157,10 @@ public class MemberServiceImp implements MemberService{
 		Map<String, Object> map = mav.getModelMap();
 		FoodDto foodDto=(FoodDto)map.get("foodDto");
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		HttpSession session = request.getSession();
+		String memberCode = (String) session.getAttribute("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
+		foodDto.setMemberCode(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + foodDto.toString());
 		int check=memberDao.foodInsert(foodDto);
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
@@ -164,8 +173,8 @@ public class MemberServiceImp implements MemberService{
 		Map<String, Object> map=mav.getModelMap();
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("mail");
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
+		String memberCode = (String) session.getAttribute("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		mav.setViewName("member/myEd.tiles");
 	}
 	@Override
@@ -173,8 +182,8 @@ public class MemberServiceImp implements MemberService{
 		Map<String, Object> map=mav.getModelMap();
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("mail");
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
+		String memberCode = (String) session.getAttribute("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		mav.setViewName("member/myReView.tiles");
 	}
 	@Override
@@ -182,8 +191,8 @@ public class MemberServiceImp implements MemberService{
 		Map<String, Object> map=mav.getModelMap();
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("mail");
-		JejuAspect.logger.info(JejuAspect.logMsg + mail);
+		String memberCode = (String) session.getAttribute("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		mav.setViewName("member/myFavorite.tiles");
 	}
 	

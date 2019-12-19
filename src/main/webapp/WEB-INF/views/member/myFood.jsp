@@ -90,13 +90,16 @@ a {
 				<div class="reg">
 					<div class="reg_1">
 						<div>
-							<span>음식점명</span>
+							<span>음식점명 : </span>
+							<span>${foodDto.foodName}</span>
 						</div>
 						<div>
-							<span>주소명</span>
+							<span>주소명 : </span>
+							<span>${foodDto.foodAddr}</span>
 						</div>
 						<div>
-							<span>음식 종류</span>
+							<span>음식 종류 : </span>
+							<span>${foodDto.foodKind}</span>
 						</div>
 					</div>
 					<div class="reg_2">

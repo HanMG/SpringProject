@@ -29,6 +29,7 @@
 		<input type="hidden" name="imageName" value="${imageDto.imageName}" />
 		<input type="hidden" name="imageSize" value="${imageDto.imageSize}" />
 		<input type="hidden" name="imagePath" value="${imageDto.imagePath}" />
+		<input type="hidden" name="memberCode" value="${foodDto.memberCode}" />
 		<label>음식점명</label><input type="text" name="foodName" value="${foodDto.foodName}" />
 		<br />	
 		<label>주소</label><input type="text" name="foodAddr" value="${foodDto.foodAddr}" />
@@ -87,6 +88,8 @@
 			<option value="검토중">검토중</option>
 			<option value="완료">완료</option>
 		</select>
+		<label>등록자</label>
+		<input type="text" value="${foodDto.memberCode}" readonly="readonly" />
 		<input type="submit" value="수정"/>
 		<input type="button" value="뒤로가기" onclick="history.back()"/>				
 	</form>	

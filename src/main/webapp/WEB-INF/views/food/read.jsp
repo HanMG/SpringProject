@@ -8,6 +8,7 @@
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${root}/resources/css/food/read.css" />
+<script src="${root}/resources/xhr.js"></script>
 <meta charset="UTF-8">
 <title>음식점상세페이지</title>
 	<script>
@@ -17,10 +18,20 @@
 			}else{
 				x.className = "fa fa-heart-o";
 			}			
+		}	
+		function load(root){
+			let url = root+"/food/foodReviewList.go"
+			sendRequest("GET", url , fromServer, params);
+		}
+		function fromServer(){
+			if(xhr.readyState == 4 && xhr.status == 200){			
+				let resultDisplay = document.getElementById("review");
+				resultDisplay.innerHTML = xhr.responseText;				
+			}
 		}
 	</script>
 </head>
-<body>
+<body onload="load('${root}')">
 	<div id="content">
 		<div class="nav_1">
 			<div class="info_1">
@@ -94,62 +105,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="review">
-				<div class="re_1">
-					<span>리뷰(숫자)</span>
-					<span>별로(숫자)</span>
-					<span>괜찮다(숫자)</span>
-					<span>맛있다(숫자)</span>
-					<span>전체(숫자)</span>
-				</div>
-				<div class="re_2">
-					<div>
-						<span>이름(닉)</span>
-					</div>
-					<div>
-						<span>작성일</span>
-						<span>친구가 왕추천한 피스타치오맛은 찐이다. 고소한맛 좋아하는 사람들은 무조건 좋아할 수 밖에 없는 맛!!소금과 쌀은 생각처럼 은은했고 백향과는 상콤한 맛을 잘 살렸다. 가격도 부담없고 맛도 좋고 보기에도 좋아서 바글바글 할 수 밖에 없는듯 :)</span>
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-					</div>
-					<div>
-						<img alt="별점" src="icon.PNG">
-						<span>별점(5)</span>
-					</div>
-				</div>
-				<div class="re_2">
-					<div>
-						<span>이름(닉)</span>
-					</div>
-					<div>
-						<span>작성일</span>
-						<span>친구가 왕추천한 피스타치오맛은 찐이다. 고소한맛 좋아하는 사람들은 무조건 좋아할 수 밖에 없는 맛!!소금과 쌀은 생각처럼 은은했고 백향과는 상콤한 맛을 잘 살렸다. 가격도 부담없고 맛도 좋고 보기에도 좋아서 바글바글 할 수 밖에 없는듯 :)</span>
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-					</div>
-					<div>
-						<img alt="별점" src="icon.PNG">
-						<span>별점(5)</span>
-					</div>
-				</div>
-				<div class="re_2">
-					<div>
-						<span>이름(닉)</span>
-					</div>
-					<div>
-						<span>작성일</span>
-						<span>친구가 왕추천한 피스타치오맛은 찐이다. 고소한맛 좋아하는 사람들은 무조건 좋아할 수 밖에 없는 맛!!소금과 쌀은 생각처럼 은은했고 백향과는 상콤한 맛을 잘 살렸다. 가격도 부담없고 맛도 좋고 보기에도 좋아서 바글바글 할 수 밖에 없는듯 :)</span>
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-						<img alt="이미지" src="list.jpg">
-					</div>
-					<div>
-						<img alt="별점" src="icon.PNG">
-						<span>별점(5)</span>
-					</div>
-				</div>
+			<div id="review">				
+			
 			</div>
 		</div>
 		<div class="nav_2">

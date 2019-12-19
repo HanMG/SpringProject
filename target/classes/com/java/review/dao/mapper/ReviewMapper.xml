@@ -6,7 +6,7 @@
 <mapper namespace="dao.ReviewMapper">
  <insert id="reviewInsert" parameterType="com.java.review.dto.ReviewDto">
  	 <![CDATA[
- 	 insert into review values ('review'||LPAD(reviewSEQ.nextval,4,0), #{foodCode}, #{memberCode}, #{reviewDate}, #{reviewCont}, #{reviewScore})
+ 	 insert into review values ('review'||LPAD(SEQREVIEW.nextval,4,0), #{foodCode}, #{memberCode}, #{reviewDate}, #{reviewCont}, #{reviewScore})
  	 ]]>
  </insert> 
  

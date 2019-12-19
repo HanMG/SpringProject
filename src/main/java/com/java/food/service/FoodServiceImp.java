@@ -55,6 +55,7 @@ public class FoodServiceImp implements FoodService {
 		//JejuAspect.logger.info(JejuAspect.logMsg+max);
 		
 		foodDto.setFoodCode(Integer.toString(max));
+		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		check = foodDao.foodInsert(foodDto);
 		
 		

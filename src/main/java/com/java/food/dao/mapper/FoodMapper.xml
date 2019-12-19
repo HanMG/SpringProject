@@ -6,7 +6,7 @@
   
 <mapper namespace="dao.FoodMapper"> 
  	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
- 		insert into food values ('food'||LPAD(#{foodCode},4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodPhone}, #{foodKind}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus})
+ 		insert into food values ('food'||LPAD(#{foodCode},4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodKind}, #{foodPhone}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus}, #{memberCode})
  	</insert> 
  	
  	<select id="foodMax" resultType="String">
@@ -37,11 +37,11 @@
 	
 	<select id="foodReviewList" parameterType="String" resultType="com.java.food.dto.FoodReviewDto">
 		<![CDATA[
-			select review.review_code, review.member_code, review.review_date, review.review_cont, review.review_score, image.*    
-			from review
-			LEFT JOIN image
-			ON review.food_code = image.refer_code			
-			ORDER BY review.review_code;
+			SELECT REVIEW_CODE, FOOD_CODE, MEMBER_CODE, REVIEW_DATE, REVIEW_CONT, REVIEW_SCORE, REFER_CODE, LISTAGG(IMAGE_NAME, ',')WITHIN GROUP (ORDER BY IMAGE_NAME) AS IMAGE_NAME
+			FROM REVIEW, IMAGE
+			WHERE REVIEW_CODE = REFER_CODE AND FOOD_CODE = 'food0467' 
+			GROUP BY REVIEW_CODE, FOOD_CODE, MEMBER_CODE, REVIEW_DATE, REVIEW_CONT, REVIEW_SCORE, REFER_CODE
+			ORDER BY REVIEW_CODE;
 		]]> 
 			
 	</select>

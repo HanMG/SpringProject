@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="search.dao.mapper.SearchMapper">
+<mapper namespace="dao.mapper.SearchMapper">
 
 	<select id="foodCount" parameterType="String" resultType="int">
 		SELECT count(distinct food_code) from (
@@ -60,10 +60,11 @@
 	</select>
 	
 	<select id="couponList" parameterType="String" resultType="com.java.search.dto.SearchCouponDto">
-		<![CDATA[
-		SELECT * FROM coupon, food, image 
+		SELECT 
+			*
+		FROM coupon, food, image 
 			WHERE coupon.food_code = food.food_code
-  			AND coupon.coupon_code = image.refer_code
+  			AND coupon.coupon_code = image.refer_code(+)
 			AND (
 			coupon_name like ('%'||#{keyword}||'%')
 			or
@@ -73,7 +74,6 @@
 			or
 			food_menu like ('%'||#{keyword}||'%')
 			)
-		]]>
 	</select>
 	
 	

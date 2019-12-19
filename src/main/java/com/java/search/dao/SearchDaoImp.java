@@ -34,12 +34,12 @@ public class SearchDaoImp implements SearchDao {
 
 	@Override
 	public int couponCount(String keyword) {
-		return sqlSessionTemplate.selectOne("couponCount", keyword);
+		return sqlSessionTemplate.selectOne("dao.mapper.SearchMapper.couponCount", keyword);
 	}
 
 	@Override
 	public List<SearchCouponDto> couponList(String keyword) {
-		return sqlSessionTemplate.selectList("couponList", keyword);
+		return sqlSessionTemplate.selectList("dao.mapper.SearchMapper.couponList", keyword);
 
 	}
 

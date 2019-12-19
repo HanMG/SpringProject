@@ -109,13 +109,13 @@ a {
 		<c:if test="${foodCount > 0}">
 		<c:forEach var = "searchFoodDto" items="${foodList}">
 		<div class="list">
-			<a href="#"><img alt="음식 이미지" src="${searchFoodDto.imageName}"></a>
+			<a href="${root}/food/read.go?foodCode=${searchFoodDto.foodCode}"><img alt="음식 이미지" src="${searchFoodDto.imageName}"></a>
 			<div>
 				<span>${searchFoodDto.foodName}</span>
 				<span>${searchFoodDto.reviewScore}</span>
 			</div>
 			<div>
-				<span>${searchFoodDto.foodArea}</span> -
+				<span>${searchFoodDto.foodArea}</span>
 				<span>${searchFoodDto.foodKind}</span>
 			</div>
 			<div>

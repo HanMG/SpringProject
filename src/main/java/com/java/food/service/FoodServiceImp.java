@@ -68,7 +68,7 @@ public class FoodServiceImp implements FoodService {
 		if (fileSize != 0) {
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 
-			File path = new File("C:\\Spring\\workspace\\springProject\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
 			path.mkdir();
@@ -173,7 +173,7 @@ public class FoodServiceImp implements FoodService {
 		if (fileSize != 0) {
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 
-			File path = new File("C:\\Spring\\workspace\\springProject\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
 			path.mkdir();	
@@ -243,6 +243,8 @@ public class FoodServiceImp implements FoodService {
 			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
 			mav.addObject("foodReviewList",foodReviewList);
 		}
+		mav.addObject("foodReviewList",foodReviewList);
+		mav.setViewName("review/list.tiles");
 		
 	}
 

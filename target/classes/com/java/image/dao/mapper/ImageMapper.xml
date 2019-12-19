@@ -7,7 +7,7 @@
 <mapper namespace="dao.ImageMapper">	
 	<insert id="imgInsert" parameterType="com.java.image.dto.ImageDto">
 	 <![CDATA[
-		insert into image values ('image'||LPAD(SEQimage.nextval,4,0), 'food'||LPAD(#{referCode},4,0), #{imageName}, #{imagePath}, #{imageSize})
+		insert into image(image_code,refer_code,image_name,image_size,image_path) values ('image'||LPAD(SEQimage.nextval,4,0), 'food'||LPAD(#{referCode},4,0), #{imageName}, #{imageSize}, #{imagePath})
 	]]> 
 	</insert> 	
 	

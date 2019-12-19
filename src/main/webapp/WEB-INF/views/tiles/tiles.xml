@@ -34,8 +34,4 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>		
 	</definition>
 	
-	<definition name="*/*.empty" extends="empty">
-		<put-attribute name="content" value="/WEB-INF/views/review/list.jsp"/>		
-	</definition>
-	
 </tiles-definitions>       

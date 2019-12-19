@@ -13,7 +13,7 @@
 </head>
 <body onload="reviewUpdate()">
 	<p>
-		<strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.
+		<strong>${foodName}</strong>에 대한 솔직한 리뷰 입니다.
 	</p>
 	<div>
 		평점: ${reviewDto.reviewScore} <br /><br />

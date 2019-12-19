@@ -24,7 +24,7 @@
 	</update>
 	
 	<insert id="imgInsertReview" parameterType="com.java.image.dto.ImageDto">
-		insert into image values ('image'||LPAD(SEQimage.nextval,4,0), #{referCode}, #{imageName}, #{imagePath}, #{imageSize})
+		insert into image(image_code,refer_code,image_name,image_size,image_path) values ('image'||LPAD(SEQimage.nextval,4,0), #{referCode}, #{imageName}, #{imageSize}, #{imagePath})
 	</insert>
 	
 	<select id="imgListReview" parameterType="String" resultType="com.java.image.dto.ImageDto">

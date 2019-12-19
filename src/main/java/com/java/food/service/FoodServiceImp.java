@@ -2,6 +2,7 @@ package com.java.food.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -241,10 +242,10 @@ public class FoodServiceImp implements FoodService {
 		if (reviewCount > 0) {			
 			foodReviewList = foodDao.foodReviewList(foodCode);
 			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
-			mav.addObject("foodReviewList",foodReviewList);
-		}
+			mav.addObject("foodReviewList",foodReviewList);			
+		}		
 		mav.addObject("foodReviewList",foodReviewList);
-		mav.setViewName("review/list.tiles");
+		mav.setViewName("review/list.empty");
 		
 	}
 

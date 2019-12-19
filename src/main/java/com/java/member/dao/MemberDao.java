@@ -8,7 +8,7 @@ public interface MemberDao {
 	
 	public int login(String mail, String pwd);
 
-	public MemberDto memberUpdate(String mail);
+	public MemberDto memberUpdate(String memberCode);
 
 	public int insertKakao(String nickname, String mail);
 
@@ -20,5 +20,5 @@ public interface MemberDao {
 
 	public MemberDto getMemberCode(String mail);
 
-	
+	public FoodDto foodInfo(String memberCode);
 }

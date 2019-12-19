@@ -77,7 +77,6 @@ public class SearchServiceImp implements SearchService {
 	public void foodList(ModelAndView mav) {
 
 		Map<String, Object> map = mav.getModelMap();
-		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String tagValue = (String) map.get("tagValue");
 		String tagType = (String) map.get("tagType");
@@ -86,6 +85,8 @@ public class SearchServiceImp implements SearchService {
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
 		foodList = searchDao.tagList(tagValue, tagType);
 		JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
+		
+		mav.addObject("foodList", foodList);
 		
 		mav.setViewName("food/list.tiles");		
 	}

@@ -1,6 +1,7 @@
 package com.java.member.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -43,10 +44,7 @@ public class MemberDaoImp implements MemberDao {
 		hashMap.put("mail", mail);
 		return sqlSessionTemplate.insert("memberMapper.insertKakao", hashMap);
 	}
-	@Override
-	public MemberDto getMemberCode(String mail) {
-		return sqlSessionTemplate.selectOne("memberMapper.getMemberCode", mail);
-	}
+	
 	@Override
 	public int emailCheck(String mail) {
 		
@@ -63,9 +61,15 @@ public class MemberDaoImp implements MemberDao {
 	public int foodInsert(FoodDto foodDto) {
 		return sqlSessionTemplate.insert("memberMapper.foodInsert", foodDto);
 	}
-
 	@Override
-	public FoodDto foodInfo(String memberCode) {
-		return sqlSessionTemplate.selectOne("memberMapper.foodInfo", memberCode);
+	public MemberDto getMemberCode(String mail) {
+		return sqlSessionTemplate.selectOne("memberMapper.getMemberCode", mail);
+	}@Override
+	public List<FoodDto> getMyFood(String memberCode) {
+		return sqlSessionTemplate.selectList("memberMapper.getMyFood", memberCode);
+	}
+	@Override
+	public int myFoodDel(String foodCode) {
+		return sqlSessionTemplate.delete("memberMapper.myFoodDel", foodCode);
 	}
 }

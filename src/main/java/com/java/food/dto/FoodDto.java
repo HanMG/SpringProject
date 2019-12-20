@@ -49,103 +49,78 @@ public class FoodDto {
 	public String getFoodCode() {
 		return foodCode;
 	}
-
 	public void setFoodCode(String foodCode) {
 		this.foodCode = foodCode;
 	}
-
 	public String getFoodName() {
 		return foodName;
 	}
-
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
 	}
-
 	public String getFoodAddr() {
 		return foodAddr;
 	}
-
 	public void setFoodAddr(String foodAddr) {
 		this.foodAddr = foodAddr;
 	}
-
 	public String getFoodArea() {
 		return foodArea;
 	}
-
 	public void setFoodArea(String foodArea) {
 		this.foodArea = foodArea;
 	}
-
 	public String getFoodPhone() {
 		return foodPhone;
 	}
-
 	public void setFoodPhone(String foodPhone) {
 		this.foodPhone = foodPhone;
 	}
-
 	public String getFoodKind() {
 		return foodKind;
 	}
-
 	public void setFoodKind(String foodKind) {
 		this.foodKind = foodKind;
 	}
-
 	public String getFoodMenu() {
 		return foodMenu;
 	}
-
 	public void setFoodMenu(String foodMenu) {
 		this.foodMenu = foodMenu;
 	}
-
 	public String getFoodTime() {
 		return foodTime;
 	}
-
 	public void setFoodTime(String foodTime) {
 		this.foodTime = foodTime;
 	}
-
 	public String getFoodBreak() {
 		return foodBreak;
 	}
-
 	public void setFoodBreak(String foodBreak) {
 		this.foodBreak = foodBreak;
 	}
-
 	public String getFoodIntro() {
 		return foodIntro;
 	}
-
 	public void setFoodIntro(String foodIntro) {
 		this.foodIntro = foodIntro;
 	}
-
 	public Date getFoodDate() {
 		return foodDate;
 	}
-
 	public void setFoodDate(Date foodDate) {
 		this.foodDate = foodDate;
 	}
-
 	public int getFoodRead() {
 		return foodRead;
 	}
-
 	public void setFoodRead(int foodRead) {
 		this.foodRead = foodRead;
 	}
-
 	public String getFoodStatus() {
 		return foodStatus;
 	}
-
 	public void setFoodStatus(String foodStatus) {
 		this.foodStatus = foodStatus;
 	}
@@ -165,5 +140,6 @@ public class FoodDto {
 				+ ", foodTime=" + foodTime + ", foodBreak=" + foodBreak + ", foodIntro=" + foodIntro + ", foodDate="
 				+ foodDate + ", foodRead=" + foodRead + ", foodStatus=" + foodStatus + ", memberCode=" + memberCode
 				+ "]";
+
 	}	
 }

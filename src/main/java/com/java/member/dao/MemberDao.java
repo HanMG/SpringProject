@@ -1,5 +1,7 @@
 package com.java.member.dao;
 
+import java.util.List;
+
 import com.java.food.dto.FoodDto;
 import com.java.member.dto.MemberDto;
 
@@ -12,7 +14,7 @@ public interface MemberDao {
 
 	public int insertKakao(String nickname, String mail);
 
-	public int emailCheck(String mail);
+	public int emailCheck(String memberCode);
 
 	public int memberUpdateOk(MemberDto memberDto);
 
@@ -20,5 +22,10 @@ public interface MemberDao {
 
 	public MemberDto getMemberCode(String mail);
 
-	public FoodDto foodInfo(String memberCode);
+	public List<FoodDto> getMyFood(String memberCode);
+
+	public int myFoodDel(String foodCode);
+
+
+	
 }

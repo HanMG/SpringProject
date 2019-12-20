@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="memberInfo" parameterType="String" resultMap="memberDto" >
-		select * from member where MEMBER_CODE=#{memberCode}
+		select * from member where MEMBER_CODE = #{memberCode}
 	</select>
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
@@ -37,8 +37,9 @@
 		)
 	</insert>
 	
+
 	<select id="emailCheck" parameterType="String" resultType="int" >
-		select count(*) from member where MEMBER_MAIL =#{mail}
+		select count(*) from member where MEMBER_MAIL=#{mail}
 	</select>
 	
 	<update id="memberUpdate" parameterType="com.java.member.dto.MemberDto">
@@ -46,7 +47,7 @@
 	</update>
 	
 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
-		insert into food(FOOD_CODE, MEMBER_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, FOOD_PHONE) 
+		insert into food(FOOD_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, food_phone, MEMBER_CODE)
 		values('food'||LPAD(seqFood.nextval,4,0),
 		#{memberCode},
 		#{foodName},
@@ -54,14 +55,19 @@
 		#{foodKind},
 		'검토중',
 		sysdate,
+		0,
 		'0',
-		'0'
+		#{memberCode}
 		)
 	</insert>
 	
-	<select id="foodInfo" parameterType="String" resultMap="foodDto">
-		select * from food where MEMBER_CODE=#{memberCode}
+	<select id="getMyFood" parameterType="String" resultType="com.java.food.dto.FoodDto">
+		SELECT * FROM FOOD WHERE MEMBER_CODE = #{memberCode}
 	</select>
+	
+	<delete id="myFoodDel" parameterType="String">
+		DELETE FROM FOOD WHERE FOOD_CODE = #{foodCode}
+	</delete>
 </mapper>
 
 

@@ -640,7 +640,7 @@ a {
 						<div>
 							<span>음식 종류 선택</span>
 						</div>
-						<div class="container">
+						<div class="container_1">
 							<div class="radio-tile-group">
 								<div class="input-container">
 									<input id="walk" class="radio-button" type="radio" name="foodKind" value="한식"/>

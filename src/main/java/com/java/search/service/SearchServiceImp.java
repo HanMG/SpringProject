@@ -1,11 +1,14 @@
 package com.java.search.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -74,7 +77,7 @@ public class SearchServiceImp implements SearchService {
 	}
 
 	@Override
-	public void foodList(ModelAndView mav) {
+	public String foodList(ModelAndView mav) {
 
 		Map<String, Object> map = mav.getModelMap();
 		
@@ -85,10 +88,23 @@ public class SearchServiceImp implements SearchService {
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
 		foodList = searchDao.tagList(tagValue, tagType);
 		JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
-		
-		mav.addObject("foodList", foodList);
-		
-		mav.setViewName("food/list.tiles");		
-	}
 
+		JSONArray arr = new JSONArray();
+		for(SearchFoodDto sFoodDto : foodList) {
+			HashMap<String, Object> jMap = new HashMap<String, Object>();
+			jMap.put("foodCode", sFoodDto.getFoodCode());
+			jMap.put("foodName", sFoodDto.getFoodName());
+			jMap.put("foodMenu", sFoodDto.getFoodMenu());
+			jMap.put("foodKind", sFoodDto.getFoodKind());
+			jMap.put("foodAddr", sFoodDto.getFoodAddr());
+			jMap.put("imageName", sFoodDto.getImageName());
+			jMap.put("imagePath", sFoodDto.getImagePath());
+			arr.add(jMap);
+			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
+		}
+		String jsonText = JSONValue.toJSONString(arr);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
 }

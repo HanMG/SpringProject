@@ -1,5 +1,6 @@
 package com.java.coupon.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public interface CouponDao {
 	public int couponListCount();
 
 	//쿠폰 리스트
-	public List<CouponDto> couponList(int startRow, int endRow);
+	public List<CouponDto> couponList(int startRow, int endRow, Date today);
 	
 	//쿠폰 상세페이지
 	public CouponDto couponRead(String couponCode);

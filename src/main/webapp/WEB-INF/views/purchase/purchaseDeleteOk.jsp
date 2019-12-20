@@ -5,14 +5,13 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>쿠폰 상품 수정 완료</title>
+		<meta charset="UTF-8">
+		<title>쿠폰 구매 상세페이지</title>
 	</head>
 	<body>
-		
 		<c:if test="${check > 0}">
 			<script type="text/javascript">
-				alert("취소 요청되었습니다.");
+				alert("정상적으로 취소요청되었습니다.");
 				opener.document.location.href="${root}/purchase/purchaseList.go?pageNumber=${pageNumber}";
 				self.close();
 			</script>
@@ -20,7 +19,7 @@
 		
 		<c:if test="${check == 0}">
 			<script type="text/javascript">
-				alert("취소 요청이 실패하였습니다. 관리자에게 문의해주세요.");
+				alert("취소처리가 실패했습니다. 관리자에게 문의해주세요.");
 				opener.document.location.href="${root}/purchase/purchaseList.go?pageNumber=${pageNumber}";
 				self.close();
 			</script>

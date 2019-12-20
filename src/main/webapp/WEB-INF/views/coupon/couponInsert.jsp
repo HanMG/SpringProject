@@ -98,8 +98,7 @@
 				
 				var oriCost = parseInt($('input[name=couponCostori]').val() || 0);
 				var salePer = parseInt($('input[name=couponSalerate]').val() || 0);
-				var result = (oriCost - (oriCost * (salePer * 0.01)));
-				//var result = Math.round(oriCost - oriCost * (salePer * 0.01));
+				var result = Math.ceil((oriCost - (oriCost * (salePer * 0.01))));
 				
 				$('input[name=couponCostsale]').val(result);
 			});

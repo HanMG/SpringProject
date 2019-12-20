@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.purchase.dto.PurchaseDto;
 import com.java.purchase.service.PurchaseService;
 
 /**
@@ -33,4 +34,62 @@ public class PurchaseController {
 		
 		return mav;
 	}
+	
+	//구매하기
+	@RequestMapping(value="/purchase/purchaseInsertOk.go", method = RequestMethod.POST)
+	public ModelAndView purchaseInsertOk(HttpServletRequest request, HttpServletResponse response, PurchaseDto purchaseDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("purchaseDto", purchaseDto);
+		
+		purchaseService.purchaseInsertOk(mav);
+		
+		return mav;
+	}
+	
+	//구매내역
+	@RequestMapping(value="/purchase/purchaseList.go", method= RequestMethod.GET)
+	public ModelAndView purchaseList(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		purchaseService.purchaseListAll(mav);
+		
+		return mav;
+	}
+
+	//구매 취소
+	@RequestMapping(value="/purchase/purchaseDelete.go", method=RequestMethod.GET)
+	public ModelAndView purchaseDelete(HttpServletRequest request, HttpServletResponse response) {
+		String couponCode = request.getParameter("couponCode");
+		String couponName = request.getParameter("couponName");
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		
+		ModelAndView mav =  new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("couponCode", couponCode);
+		mav.addObject("couponName", couponName);
+		mav.addObject("pageNumber", pageNumber);
+		
+		mav.setViewName("purchase/purchaseDelete.empty");
+		
+		return mav;
+	}
+	@RequestMapping(value="/purchase/purchaseDeleteOk.go", method=RequestMethod.POST)
+	public ModelAndView purchaseDeleteOk(HttpServletRequest request, HttpServletResponse response) {
+		String couponCode = request.getParameter("couponCode");
+		String couponName = request.getParameter("couponName");
+		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		
+		ModelAndView mav =  new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("couponCode", couponCode);
+		mav.addObject("couponName", couponName);
+		mav.addObject("pageNumber", pageNumber);
+		
+		purchaseService.purchaseDeleteOk(mav);
+		
+		return mav;
+	}
 }
+

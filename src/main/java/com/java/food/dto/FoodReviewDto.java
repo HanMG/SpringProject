@@ -11,7 +11,8 @@ import java.util.Date;
 public class FoodReviewDto {
 	private String reviewCode;	// 리뷰 코드
 	private String foodCode;	// 음식점 코드
-	private String memberCode;	// 멤버 코드				
+	private String memberCode;	// 멤버 코드	
+	private String memberName;	// 멤버 이름
 	private Date reviewDate;	// 리뷰 날짜
 	private String reviewCont;	// 리뷰 내용
 	private int reviewScore;	// 리뷰 점수 5,3,1
@@ -20,12 +21,13 @@ public class FoodReviewDto {
 	
 	public FoodReviewDto() {}
 
-	public FoodReviewDto(String reviewCode, String foodCode, String memberCode, Date reviewDate, String reviewCont,
-			int reviewScore, String referCode, String imageName) {
+	public FoodReviewDto(String reviewCode, String foodCode, String memberCode, String memberName, Date reviewDate,
+			String reviewCont, int reviewScore, String referCode, String imageName) {
 		super();
 		this.reviewCode = reviewCode;
 		this.foodCode = foodCode;
 		this.memberCode = memberCode;
+		this.memberName = memberName;
 		this.reviewDate = reviewDate;
 		this.reviewCont = reviewCont;
 		this.reviewScore = reviewScore;
@@ -55,6 +57,14 @@ public class FoodReviewDto {
 
 	public void setMemberCode(String memberCode) {
 		this.memberCode = memberCode;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 
 	public Date getReviewDate() {
@@ -100,7 +110,7 @@ public class FoodReviewDto {
 	@Override
 	public String toString() {
 		return "FoodReviewDto [reviewCode=" + reviewCode + ", foodCode=" + foodCode + ", memberCode=" + memberCode
-				+ ", reviewDate=" + reviewDate + ", reviewCont=" + reviewCont + ", reviewScore=" + reviewScore
-				+ ", referCode=" + referCode + ", imageName=" + imageName + "]";
-	}	
+				+ ", memberName=" + memberName + ", reviewDate=" + reviewDate + ", reviewCont=" + reviewCont
+				+ ", reviewScore=" + reviewScore + ", referCode=" + referCode + ", imageName=" + imageName + "]";
+	}
 }

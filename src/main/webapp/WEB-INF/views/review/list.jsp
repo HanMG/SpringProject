@@ -21,18 +21,17 @@
 			<c:forEach var="foodReviewDto" items="${foodReviewList}">
 				<div class="re_2">
 					<div>
-						<span>${foodReviewDto.memberCode}</span>
+						<span>${foodReviewDto.memberName}</span>
 					</div>
 
 					<div>
 						<a href="${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}">
 							<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span> <span>${foodReviewDto.reviewCont}</span>
-							<div>
+							
 								<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 								<c:forEach var="imgList" items="${img}">
 									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" />
-								</c:forEach>
-							</div>
+								</c:forEach>							
 						</a>
 					</div>
 

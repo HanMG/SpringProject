@@ -80,7 +80,7 @@ public class ReviewServiceImp implements ReviewService {
 				}
 			}
 		}
-
+		mav.addObject("foodCode",reviewDto.getFoodCode());
 		mav.addObject("check", check);
 		mav.setViewName("review/insertOk.tiles");
 	}

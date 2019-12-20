@@ -93,7 +93,8 @@
 				<if test="tagType.equals('area')">
 				WHERE food_area like ('%'||#{tagValue}||'%')
 				</if>
-			ORDER BY food_read)A)
+			ORDER BY food_read)A, image
+			WHERE A.food_code = image.refer_code(+))
 		<![CDATA[
 			WHERE rnum >=1 and rnum <=10
 		]]>

@@ -6,6 +6,6 @@ public interface SearchService {
 
 	void searchKeyword(ModelAndView mav);
 
-	void foodList(ModelAndView mav);
+	String foodList(ModelAndView mav);
 
 }

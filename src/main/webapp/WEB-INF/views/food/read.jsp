@@ -54,7 +54,7 @@ div.scrollmenu a:hover {
 	<div id="content">
 		<div class="nav_1">
 			<div class="info_1">
-				<span>${foodDto.foodName}</span> <span>별점</span>
+				<span>${foodDto.foodName}</span> <c:if test="${reviewAvg != 0 }"><span>별점${reviewAvg}</span></c:if>
 				<div>
 					<a href="${root}/review/insert.go?foodCode=${foodDto.foodCode}"><i
 						class="fa fa-pencil-square-o"></i><br /></a> <span>리뷰쓰기</span>

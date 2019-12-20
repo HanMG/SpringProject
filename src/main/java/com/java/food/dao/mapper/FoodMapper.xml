@@ -61,6 +61,12 @@
 		]]> 
 	</select>
 	
+	<select id="foodReviewAvg" parameterType="String" resultType="float">
+	<![CDATA[	
+		select ROUND(nvl(AVG(review_score),0),2) from review where food_code=#{foodCode}
+	]]>	
+	</select>
+	
 	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
 		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
 	</select>

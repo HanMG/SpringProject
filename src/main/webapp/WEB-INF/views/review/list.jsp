@@ -26,7 +26,7 @@
 
 					<div>
 						<a href="${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}">
-							<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span> <span>${foodReviewDto.reviewCont}</span>
+							<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd HH:mm" /></span> <span>${foodReviewDto.reviewCont}</span>
 							
 								<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 								<c:forEach var="imgList" items="${img}">

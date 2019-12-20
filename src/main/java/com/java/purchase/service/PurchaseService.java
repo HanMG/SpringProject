@@ -18,4 +18,7 @@ public interface PurchaseService {
 	
 	//구매내역
 	public void purchaseListAll(ModelAndView mav);
+	
+	//구매삭제
+	public void purchaseDeleteOk(ModelAndView mav);
 }

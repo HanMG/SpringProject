@@ -64,6 +64,7 @@
 		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="${root}/resources/xhr.js"></script>
 		<!-- Ajax -->
+		<!-- 
 		<script type="text/javascript">
 			var pageNumber = 1;
 				
@@ -93,10 +94,9 @@
 					}
 				}
 			}
-		</script>
+		</script> -->
 	</head>
 	<body>
-		pageNumber: ${pageNumber}
 		<input type="hidden" name="pageNumber" value="${pageNumber}">
 		<!-- 판매 중인 쿠폰 리스트 불러오기  -->
 		<div id="content">

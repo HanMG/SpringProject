@@ -44,9 +44,15 @@ public class PurchaseDaoImp implements PurchaseDao {
 		return sqlsessionTemplate.selectOne("dao.PurchaseMapper.purchaseCouponSelect", purchaseCode);
 	}
 	
+	//구매내역 카운트
+	@Override
+	public int getCount(String memberCode) {
+		return sqlsessionTemplate.selectOne("dao.PurchaseMapper.getCount", memberCode);
+	}
+	
 	//구매내역
 	@Override
-	public List<PurchaseListDto> purchaseSelectAll(String memberCode, int startRow,int endRow) {
+	public List<PurchaseListDto> purchaseSelectAll(String memberCode, int startRow, int endRow) {
 		Map<String, Object> allMap = new HashMap<String, Object>();
 		allMap.put("memberCode", memberCode);
 		allMap.put("startRow", startRow);
@@ -54,5 +60,17 @@ public class PurchaseDaoImp implements PurchaseDao {
 		
 		return sqlsessionTemplate.selectList("dao.PurchaseMapper.purchaseList", allMap);
 	}
+	
+	// TODO Auto-generated method stub
+	// 구매취소
+	@Override
+	public int purchaseDelete(String couponCode, String memberCode) {
+		Map<String, String> pdMap = new HashMap<String, String>();
+		pdMap.put("couponCode", couponCode);
+		pdMap.put("memberCode", memberCode);
+		
+		return sqlsessionTemplate.update("dao.PurchaseMapper.purchaseDelete", pdMap);
+	}
+	
 	
 }

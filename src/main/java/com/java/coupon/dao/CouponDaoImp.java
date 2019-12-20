@@ -1,5 +1,6 @@
 package com.java.coupon.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +48,11 @@ public class CouponDaoImp implements CouponDao {
 	
 	//쿠폰리스트
 	@Override
-	public List<CouponDto> couponList(int startRow, int endRow) {
-		Map<String, Integer> listMap = new HashMap<String, Integer>();
+	public List<CouponDto> couponList(int startRow, int endRow, Date today) {
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		listMap.put("startRow", startRow);		
 		listMap.put("endRow", endRow);		
+		listMap.put("today", today);		
 		
 		return sqlSessionTemplate.selectList("dao.CouponMapper.couponList", listMap);
 	}
@@ -78,13 +80,9 @@ public class CouponDaoImp implements CouponDao {
 	@Override
 	public int couponDeleteOk(String couponCode) {
 		int check = 0;
-		check = sqlSessionTemplate.delete("dao.ImageMapper.couponDelete", couponCode);
 		
-		JejuAspect.logger.info(JejuAspect.logMsg + "check_1: " +check);
-		if(check > 0) {
-			sqlSessionTemplate.delete("dao.CouponMapper.couponDelete", couponCode);
-			JejuAspect.logger.info(JejuAspect.logMsg + "check_2: " +check);
-		}
+		check = sqlSessionTemplate.update("dao.CouponMapper.couponDelete", couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "check: " +check);
 		
 		return check;
 	}

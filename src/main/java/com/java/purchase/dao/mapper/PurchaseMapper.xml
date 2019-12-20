@@ -38,8 +38,8 @@
 		<selectKey keyProperty="purchaseCode" resultType="String" order="BEFORE">
 			SELECT 'pc'||LPAD(seqpurchase.nextval,4,0) As purchase_code from dual
 		</selectKey>
-		INSERT INTO purchase(purchase_code, coupon_code, member_code, purchase_phone, purchase_date, purchase_cost)
-		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, TO_DATE(#{purchaseDate},'YYYY-MM-DD HH24:MI:SS'), #{purchaseCost})
+		INSERT INTO purchase(purchase_code, coupon_code, member_code, purchase_phone, purchase_date, purchase_cost, purchase_status)
+		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, TO_DATE(SYSDATE,'yyyy.mm.dd hh24:mi'), #{purchaseCost}, 'Y')
 	</insert>
 	
 	<!--구매 완료 후 정보 출력 -->
@@ -47,23 +47,28 @@
 		SELECT * FROM coupon WHERE coupon_code = (SELECT coupon_code FROM purchase WHERE purchase_code = #{purchaseCode})
 	</select>
 	
-	<!-- 구매내역(마이페이지) -->
-	<!-- 
-	<select id="purchaseList" parameterType="String" resultMap="PurchaseListDto">
-		SELECT coupon_name, coupon_costori, coupon_costsale, TO_char(purchase_date, 'YYYY-MM-DD') purchasePhone, image_name, image_path, image_code FROM(
-		SELECT purchase.*, coupon.*, image.* FROM purchase 
-		INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON  purchase.coupon_code = coupon.coupon_code)
-		WHERE  member_code = #{memberCode}
-	</select>
-	 -->
-	<select id="purchaseList" parameterType="String" resultMap="PurchaseListDto">
-		SELECT * FROM
-    	(SELECT ROWNUM AS NUM, A.* FROM (
-    	SELECT coupon_name, coupon_costori, coupon_costsale, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
-        SELECT purchase.*, coupon.*, image.* FROM purchase 
-    	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
-    	WHERE  member_code = #{memberCode} ORDER BY purchase_date DESC) A)
+	<!-- 해당 회원의 구매내역 카운트 -->
+	<select id="getCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM purchase WHERE  member_code = #{memberCode}
 	</select>
 	
+	<!-- 구매내역(마이페이지) -->
+	<select id="purchaseList" parameterType="java.util.Map" resultMap="PurchaseListDto">
+		<![CDATA[
+		SELECT * FROM
+    	(SELECT ROWNUM AS numb, A.* FROM (
+    	SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
+        SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
+    	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
+    	WHERE  member_code = #{memberCode} AND purchase_status = 'Y' ORDER BY purchase_date ASC) A) B 
+    	WHERE B.numb >= #{startRow} AND B.numb <= #{endRow}
+		]]>
+	</select>
+	
+	<!-- 구매 취소 -->
+	<update id="purchaseDelete" parameterType="String">
+		UPDATE purchase
+		SET purchase_status='N' WHERE coupon_code = #{couponCode} AND member_code = #{memberCode}
+	</update>
 	
 </mapper>

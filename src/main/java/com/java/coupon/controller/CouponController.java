@@ -73,9 +73,6 @@ public class CouponController {
 		
 		couponService.couponList(mav);
 		
-		
-		
-		
 		return mav;
 	}
 	

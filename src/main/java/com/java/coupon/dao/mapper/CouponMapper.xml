@@ -27,14 +27,7 @@
 		
 		<result column="food_name" property="foodName"/>
 	</resultMap>
-	<resultMap type="com.java.image.dto.ImageDto" id="ImageDto">
-		<result column="image_code" property="imageCode"/>
-		<result column="refer_code" property="referCode"/>
-		<result column="image_name" property="imageName"/>
-		<result column="image_size" property="imageSize"/>
-		<result column="image_path" property="imagePath"/>
-	</resultMap>
-	
+	<resultMap type="com.java.image.dto.ImageDto" id="ImageDto" />
 	
 	<!-- 식당코드 검색 -->
 	<select id="selFoodCode" parameterType="String" resultMap="SearchFoodCodeDto">
@@ -47,9 +40,9 @@
 		<selectKey keyProperty="couponCode" resultType="String" order="BEFORE">
 			SELECT 'coupon'||LPAD(seqcoupon.nextval,4,0) As couponCode from dual
 		</selectKey>
-		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro)
+		INSERT INTO coupon(coupon_code, food_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro, coupon_status)
 		VALUES('coupon'||LPAD(seqcoupon.CURRVAL,4,0), #{foodCode}, #{couponName}, TO_DATE(#{couponStartdate}, 'YYYY-MM-DD'), TO_DATE(#{couponEnddate},'YYYY-MM-DD'), #{couponCostori}, #{couponSalerate}, 
-		#{couponCostsale}, #{couponIntro})
+		#{couponCostsale}, #{couponIntro}, 'Y')
 	</insert>
 	
 	<!-- 쿠폰리스트 카운트 -->
@@ -58,11 +51,20 @@
 	</select>
 	
 	<!-- 쿠폰리스트 불러오기 -->
-	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
+	<!-- <select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
 		<![CDATA[
 		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
 		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
 		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code ORDER BY coupon_code DESC) A) B
+		WHERE B.num >= #{startRow} AND B.num <= #{endRow}
+		]]>
+	</select>
+	-->
+	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
+		<![CDATA[
+		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
+		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
+		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code AND coupon_enddate >= #{today} AND coupon_status = 'Y' ORDER BY coupon_code DESC) A) B
 		WHERE B.num >= #{startRow} AND B.num <= #{endRow}
 		]]>
 	</select>
@@ -91,7 +93,8 @@
 	
 	<!-- 쿠폰 삭제 -->
 	<delete id="couponDelete" parameterType="String">
-		DELETE FROM coupon WHERE coupon_code = #{couponCode}
+		UPDATE coupon
+		SET coupon_status='N' WHERE coupon_code = #{couponCode}
 	</delete>
 
 </mapper>

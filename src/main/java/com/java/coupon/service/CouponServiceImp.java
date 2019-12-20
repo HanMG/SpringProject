@@ -3,6 +3,7 @@ package com.java.coupon.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -136,9 +137,13 @@ public class CouponServiceImp implements CouponService {
 		
 		List<CouponDto> couponList = null;
 		
+		//현재 날짜 출력
+		Date today = new Date();
+		JejuAspect.logger.info(JejuAspect.logMsg + "date: "+ today);
+		
 		if(count > 0) {
 			//쿠폰 리스트 가져오기
-			couponList = couponDao.couponList(startRow, endRow);
+			couponList = couponDao.couponList(startRow, endRow, today);
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
 			mav.addObject("couponList", couponList);
 		}

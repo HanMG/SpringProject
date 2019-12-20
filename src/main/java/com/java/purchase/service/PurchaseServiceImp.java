@@ -89,7 +89,6 @@ public class PurchaseServiceImp implements PurchaseService {
 		mav.setViewName("purchase/purchaseInsertOk.tiles");
 	}
 	
-	// TODO Auto-generated method stub
 	//구매내역
 	@Override
 	public void purchaseListAll(ModelAndView mav) {
@@ -102,17 +101,46 @@ public class PurchaseServiceImp implements PurchaseService {
 		String pageNumber = request.getParameter("pageNumber");
 		if(pageNumber == null) pageNumber = "1";
 		int currentPage = Integer.parseInt(pageNumber);
+		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber/currentPage: "+ pageNumber +"/"+ currentPage);
 
+		int count = purchaseDao.getCount(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		
 		int boardSize = 6;
 		int startRow = (currentPage-1)*boardSize+1;
 		int endRow = currentPage*boardSize;
+		JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
 		
 		List<PurchaseListDto> purchaseList = purchaseDao.purchaseSelectAll(memberCode, startRow, endRow);
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
 		
+		mav.addObject("pageNumber", pageNumber);
+		mav.addObject("boardSize", boardSize);
+		mav.addObject("count", count);
 		mav.addObject("purchaseList", purchaseList);
 		mav.setViewName("purchase/purchaseList.tiles");
+	}
+	
+	// TODO Auto-generated method stub
+	// 구매 취소
+	@Override
+	public void purchaseDeleteOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String couponCode = (String) map.get("couponCode");
+		int pageNumber = (Integer) map.get("pageNumber");
+		
+		HttpSession session =  request.getSession(false);
+		String memberCode = (String) session.getAttribute("memberCode");
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberCode: "+ memberCode);
+		int check = purchaseDao.purchaseDelete(couponCode, memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
+		
+		mav.addObject("check", check);
+		mav.addObject("pageNumber", pageNumber);
+		mav.setViewName("purchase/purchaseDeleteOk.tiles");
 	}
 	
 }

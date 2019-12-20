@@ -31,8 +31,14 @@
 		]]>
  	</update>
  	
- 	<select id="foodReviewCount" parameterType="String" resultType="int">
-		select count(*) from review where food_code = #{foodCode}
+ 	<select id="foodReviewCount" parameterType="String" resultType="com.java.review.dto.ReviewCountDto">
+ 	<![CDATA[
+		select a.good, b.soso, c.bad, d.whole
+		FROM (select count(*) as good from review where  food_code=#{foodCode} AND review_score = 5) a,
+		(select count(*) as soso from review where food_code=#{foodCode} AND review_score = 3) b,
+		(select count(*) as bad from review where food_code=#{foodCode} AND review_score = 1) c,
+		(select count(*) as whole from review where food_code=#{foodCode}) d
+	]]> 
 	</select>
 	
 	<select id="foodReviewList" parameterType="String" resultType="com.java.food.dto.FoodReviewDto">
@@ -41,8 +47,21 @@
 			FROM REVIEW, IMAGE, MEMBER
 			WHERE REVIEW_CODE = REFER_CODE(+) AND review.MEMBER_CODE = member.member_code  AND FOOD_CODE = #{foodCode}
 			GROUP BY REVIEW.REVIEW_CODE,  REVIEW.FOOD_CODE, review.member_code, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE
-			ORDER BY REVIEW_CODE
+			ORDER BY REVIEW_CODE DESC
+		]]> 			
+	</select>
+	
+	<select id="foodReviewListScore" parameterType="java.util.HashMap" resultType="com.java.food.dto.FoodReviewDto">
+		<![CDATA[
+			SELECT REVIEW.REVIEW_CODE, REVIEW.FOOD_CODE, REVIEW.MEMBER_CODE, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE, LISTAGG(IMAGE_NAME, ',')WITHIN GROUP (ORDER BY IMAGE_NAME) AS IMAGE_NAME
+			FROM REVIEW, IMAGE, MEMBER
+			WHERE REVIEW_CODE = REFER_CODE(+) AND review.MEMBER_CODE = member.member_code  AND FOOD_CODE = #{foodCode} AND REVIEW.REVIEW_SCORE = ${selScore}
+			GROUP BY REVIEW.REVIEW_CODE,  REVIEW.FOOD_CODE, review.member_code, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE
+			ORDER BY REVIEW_CODE DESC
 		]]> 
-			
+	</select>
+	
+	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
+		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
 	</select>
 </mapper>

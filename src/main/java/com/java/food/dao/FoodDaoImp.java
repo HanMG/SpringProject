@@ -1,13 +1,16 @@
 package com.java.food.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
 import com.java.food.dto.FoodReviewDto;
+import com.java.review.dto.ReviewCountDto;
 
 @Component
 public class FoodDaoImp implements FoodDao {
@@ -46,13 +49,28 @@ public class FoodDaoImp implements FoodDao {
 	}
 
 	@Override
-	public int foodReivewCount(String foodCode) {		
-		return sqlSession.selectOne("dao.FoodMapper.foodReviewCount", foodCode);
+	public List<FoodReviewDto> foodReviewList(String foodCode, String selScore) {
+		HashMap<String, Object> hMap = new HashMap(); 
+		hMap.put("foodCode", foodCode);
+		hMap.put("selScore", selScore);
+		
+		if(selScore.equals("0")) {
+			return sqlSession.selectList("dao.FoodMapper.foodReviewList", foodCode);
+		}
+		else {
+			return sqlSession.selectList("dao.FoodMapper.foodReviewListScore", hMap);
+		}
+		
 	}
 
 	@Override
-	public List<FoodReviewDto> foodReviewList(String foodCode) {		
-		return sqlSession.selectList("dao.FoodMapper.foodReviewList", foodCode);
+	public List<CouponDto> foodCouponList(String foodCode) {		
+		return sqlSession.selectList("dao.FoodMapper.foodCouponList", foodCode);
+	}
+
+	@Override
+	public ReviewCountDto foodReivewCount(String foodCode) {
+		return sqlSession.selectOne("dao.FoodMapper.foodReviewCount", foodCode);
 	}	
 
 	

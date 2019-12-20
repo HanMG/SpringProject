@@ -8,12 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰등록OK</title>
+<title>리뷰리스트</title>
 </head>
 <body>
 	<div class="re_1">
-		<span>리뷰(${reviewCount})</span> <span>별로(숫자)</span> <span>괜찮다(숫자)</span>
-		<span>맛있다(숫자)</span> <span>전체(${reviewCount})</span>
+		<span>리뷰(${reviewCountDto.whole})</span> <span>별로(<a href="javascript:void(0)" onclick="reviewList('${root}','1')">${reviewCountDto.bad}</a>)</span> <span>괜찮다(<a href="javascript:void(0)" onclick="reviewList('${root}','3')">${reviewCountDto.soso}</a>)</span>
+		<span>맛있다(<a href="javascript:void(0)" onclick="reviewList('${root}','5')">${reviewCountDto.good}</a>)</span> <span>전체(<a href="javascript:void(0)" onclick="reviewList('${root}','0')">${reviewCountDto.whole}</a>)</span>
 	</div>
 	<c:choose>
 		<c:when test="${foodReviewList != null}">

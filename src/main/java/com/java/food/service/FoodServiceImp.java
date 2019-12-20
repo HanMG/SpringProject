@@ -17,11 +17,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.aop.JejuAspect;
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
 import com.java.food.dto.FoodReviewDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
+import com.java.review.dto.ReviewCountDto;
 
 /**
  * @작성자 : 한문구
@@ -96,9 +98,15 @@ public class FoodServiceImp implements FoodService {
 		HttpServletResponse response = (HttpServletResponse) map.get("response");
 		String foodCode = request.getParameter("foodCode");
 		FoodDto foodDto = new FoodDto();
-		ImageDto imageDto = new ImageDto();		
+		ImageDto imageDto = new ImageDto();
+		ReviewCountDto reviewCountDto = new ReviewCountDto();
+		
 		// 음식점 정보 가져오기
 		foodDto = foodDao.foodRead(foodCode);
+		// 음식점 이미지 정보 가져오기
+		imageDto = imageDao.imgRead(foodCode);
+		// 쿠폰정보
+		List<CouponDto> couponDtoList = foodDao.foodCouponList(foodCode); 
 		Cookie[] cookies = request.getCookies();
 		// 비교하기 위해 새로운 쿠키
         Cookie viewCookie = null; 
@@ -123,13 +131,13 @@ public class FoodServiceImp implements FoodService {
             // 조회수 증가
             foodDao.foodReadUpdate(foodCode);
         }
-		// 이미지 정보 가져오기
-		imageDto = imageDao.imgRead(foodCode);
+		
 		
 		// 리뷰 카운트
-		int reviewCount = foodDao.foodReivewCount(foodCode);
-		JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCount);
-		mav.addObject("reviewCount",reviewCount);		
+        reviewCountDto = foodDao.foodReivewCount(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCountDto.toString());
+		mav.addObject("reviewCountDto",reviewCountDto);	
+		mav.addObject("couponDtoList", couponDtoList);
 		mav.addObject("foodDto", foodDto);	
 		mav.addObject("imageDto", imageDto);
 		mav.setViewName("food/read.tiles");		
@@ -237,15 +245,16 @@ public class FoodServiceImp implements FoodService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String foodCode = request.getParameter("foodCode");
-		int reviewCount = foodDao.foodReivewCount(foodCode);
-		JejuAspect.logger.info(JejuAspect.logMsg + reviewCount);
+		String selScore = request.getParameter("selScore");
+		ReviewCountDto reviewCountDto = foodDao.foodReivewCount(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewCountDto.toString());
 		List<FoodReviewDto> foodReviewList = null;
-		if (reviewCount > 0) {			
-			foodReviewList = foodDao.foodReviewList(foodCode);
+		if (reviewCountDto != null) {			
+			foodReviewList = foodDao.foodReviewList(foodCode, selScore);
 			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
 			mav.addObject("foodReviewList",foodReviewList);			
 		}		
-		mav.addObject("reviewCount",reviewCount);
+		mav.addObject("reviewCountDto",reviewCountDto);
 		mav.addObject("foodReviewList",foodReviewList);
 		mav.setViewName("review/list.empty");
 		

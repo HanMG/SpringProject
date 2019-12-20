@@ -2,8 +2,10 @@ package com.java.food.dao;
 
 import java.util.List;
 
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
 import com.java.food.dto.FoodReviewDto;
+import com.java.review.dto.ReviewCountDto;
 
 public interface FoodDao {
 
@@ -19,8 +21,10 @@ public interface FoodDao {
 
 	public void foodReadUpdate(String foodCode);
 
-	public int foodReivewCount(String foodCode);
+	public ReviewCountDto foodReivewCount(String foodCode);
 
-	public List<FoodReviewDto> foodReviewList(String foodCode);
+	public List<FoodReviewDto> foodReviewList(String foodCode, String selScore);
+
+	public List<CouponDto> foodCouponList(String foodCode);
 
 }

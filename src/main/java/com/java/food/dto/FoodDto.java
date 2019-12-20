@@ -22,15 +22,13 @@ public class FoodDto {
 	private Date foodDate;	// 음식점 등록일
 	private int foodRead;	// 음식점 조회 카운트
 	private String foodStatus;	//	음식점 상태  ex) 검토중, 완료	
+	private String memberCode;
 	
-	public FoodDto() {}
-	
-	
-
+	public FoodDto() {
+	}
 	public FoodDto(String foodCode, String foodName, String foodAddr, String foodArea, String foodPhone,
 			String foodKind, String foodMenu, String foodTime, String foodBreak, String foodIntro, Date foodDate,
-			int foodRead, String foodStatus) {
-		super();
+			int foodRead, String foodStatus, String memberCode) {
 		this.foodCode = foodCode;
 		this.foodName = foodName;
 		this.foodAddr = foodAddr;
@@ -44,121 +42,99 @@ public class FoodDto {
 		this.foodDate = foodDate;
 		this.foodRead = foodRead;
 		this.foodStatus = foodStatus;
+		this.memberCode = memberCode;
 	}
-
-
-
 	public String getFoodCode() {
 		return foodCode;
 	}
-
 	public void setFoodCode(String foodCode) {
 		this.foodCode = foodCode;
 	}
-
 	public String getFoodName() {
 		return foodName;
 	}
-
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
 	}
-
 	public String getFoodAddr() {
 		return foodAddr;
 	}
-
 	public void setFoodAddr(String foodAddr) {
 		this.foodAddr = foodAddr;
 	}
-
 	public String getFoodArea() {
 		return foodArea;
 	}
-
 	public void setFoodArea(String foodArea) {
 		this.foodArea = foodArea;
 	}
-
 	public String getFoodPhone() {
 		return foodPhone;
 	}
-
 	public void setFoodPhone(String foodPhone) {
 		this.foodPhone = foodPhone;
 	}
-
 	public String getFoodKind() {
 		return foodKind;
 	}
-
 	public void setFoodKind(String foodKind) {
 		this.foodKind = foodKind;
 	}
-
 	public String getFoodMenu() {
 		return foodMenu;
 	}
-
 	public void setFoodMenu(String foodMenu) {
 		this.foodMenu = foodMenu;
 	}
-
 	public String getFoodTime() {
 		return foodTime;
 	}
-
 	public void setFoodTime(String foodTime) {
 		this.foodTime = foodTime;
 	}
-
 	public String getFoodBreak() {
 		return foodBreak;
 	}
-
 	public void setFoodBreak(String foodBreak) {
 		this.foodBreak = foodBreak;
 	}
-
 	public String getFoodIntro() {
 		return foodIntro;
 	}
-
 	public void setFoodIntro(String foodIntro) {
 		this.foodIntro = foodIntro;
 	}
-
 	public Date getFoodDate() {
 		return foodDate;
 	}
-
 	public void setFoodDate(Date foodDate) {
 		this.foodDate = foodDate;
 	}
-
 	public int getFoodRead() {
 		return foodRead;
 	}
-
 	public void setFoodRead(int foodRead) {
 		this.foodRead = foodRead;
 	}
-
 	public String getFoodStatus() {
 		return foodStatus;
 	}
-
 	public void setFoodStatus(String foodStatus) {
 		this.foodStatus = foodStatus;
 	}
-
-
-
+	public String getMemberCode() {
+		return memberCode;
+	}
+	public void setMemberCode(String memberCode) {
+		this.memberCode = memberCode;
+	}
 	@Override
 	public String toString() {
 		return "FoodDto [foodCode=" + foodCode + ", foodName=" + foodName + ", foodAddr=" + foodAddr + ", foodArea="
 				+ foodArea + ", foodPhone=" + foodPhone + ", foodKind=" + foodKind + ", foodMenu=" + foodMenu
 				+ ", foodTime=" + foodTime + ", foodBreak=" + foodBreak + ", foodIntro=" + foodIntro + ", foodDate="
-				+ foodDate + ", foodRead=" + foodRead + ", foodStatus=" + foodStatus + "]";
-	}	
+				+ foodDate + ", foodRead=" + foodRead + ", foodStatus=" + foodStatus + ", memberCode=" + memberCode
+				+ "]";
+	}
+	
 }

@@ -9,9 +9,10 @@
 <title>메뉴</title>
 </head>
 <body>	
-	<div class="container">
+	<div class="container_1">
 		<a href="${root}/coupon/couponInsert.go">상품등록</a>
 		<a href="${root}/coupon/couponList.go">상품리스트</a>
+		
 		
 	<c:choose>
 		<c:when test="${memberCode == null }">

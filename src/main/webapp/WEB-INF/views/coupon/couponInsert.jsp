@@ -7,8 +7,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 상품 등록</title>
-		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
 		<script type="text/javascript">
 			//유효성 체크
 			function insertForm(obj){
@@ -20,7 +22,29 @@
 				var url = root + "/coupon/searchFoodCode.go";
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
-			
+		</script>
+		<script>
+			$(function(){
+				$('#datepickStart, #datepickEnd').datepicker({
+					dateFormat: 'yy-mm-dd',
+					showOn: 'both',
+					prevText: '이전 달',
+				    nextText: '다음 달',
+					monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		    		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			    	dayNames: ['일','월','화','수','목','금','토'],
+				    dayNamesShort: ['일','월','화','수','목','금','토'],
+				    dayNamesMin: ['일','월','화','수','목','금','토'],
+				    showMonthAfterYear: true,
+				    changeMonth: true,
+				    changeYear: true,
+				    yearSuffix: '년'
+				});
+				$('#datepickStart').datepicker('setDate', 'today');
+				$('#datepickEnd').datepicker('setDate','+1D');
+				
+				
+			})
 		</script>
 	</head>
 	<body>
@@ -31,7 +55,7 @@
 					<li>
 						<p>상품명(쿠폰명)</p>
 						<p>
-							<input type="text" name="couponName" value="강남">
+							<input type="text" name="couponName" value="test">
 						</p>
 					</li>
 					<li>
@@ -46,9 +70,9 @@
 					<li>
 						<p>유효 기간</p>
 						<p>
-							<input type="text" name="couponStartdate" value="2019-12-12">
+							<input id="datepickStart" type="text" name="couponStartdate">
 							<span>~</span>
-							<input type="text" name="couponEnddate"  value="2019-12-31">
+							<input id="datepickEnd"  type="text" name="couponEnddate">
 						</p>
 					</li>
 					<li>

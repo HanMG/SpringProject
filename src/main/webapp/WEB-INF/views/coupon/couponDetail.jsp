@@ -61,15 +61,6 @@
 				var url = root + "/coupon/couponDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
-			
-			/* function couponDeleteConfirm(root, couponCode, couponName, pageNumber){
-				var url = root + "/coupon/couponDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
-				var bool = confirm("정말로 삭제하시겠습니까?");
-				if(bool == true){
-					location.href=url;					
-				}
-			}
-			 */
 		</script>
 	</head>
 	<body>
@@ -113,7 +104,7 @@
 					%>
 						<div>
 							<span> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
-							<input type="text" name="purchasePhone">
+							<input type="text" name="purchasePhone" maxlength="11">
 							<input type="button" value="인증" onclick="phoneCheck()">
 						</div>
 						<div>

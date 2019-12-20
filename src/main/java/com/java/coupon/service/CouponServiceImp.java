@@ -46,24 +46,24 @@ public class CouponServiceImp implements CouponService {
 	public void couponInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		CouponDto couponDto =(CouponDto) map.get("couponDto");
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
 		String couponCode = couponDao.couponInsert(couponDto);
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
+		//JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
+		
 		if(couponCode != null) {
 			//TODO : 이미지 insert
 			MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 			MultipartFile upImage = request.getFile("imageFile");
 			
 			long imageSize = upImage.getSize();
-			String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();			
 
 			// 이미지 path 수정
-			String dir= "/ftp/";
-			ServletContext context = request.getSession().getServletContext();
-			String realFolder = context.getRealPath(dir);
-			File imagePath = new File(realFolder);
-			JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: " + imagePath);
+			String rootPath = request.getSession().getServletContext().getRealPath("/");
+	        String attachPath = "resources/ftp/";
+	        String imageName = Long.toString(System.currentTimeMillis())+"_"+ upImage.getOriginalFilename();			
+
+	        File imagePath = new File(rootPath+attachPath);
 			imagePath.mkdir();		
 			
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: "+ imageSize);
@@ -83,7 +83,7 @@ public class CouponServiceImp implements CouponService {
 				imageDto.setImageName(imageName);
 				imageDto.setReferCode(couponCode);
 				imageDto.setImageSize(imageSize);
-				imageDto.setImagePath(request.getContextPath()+dir+imageName);
+				imageDto.setImagePath(imagePath.getAbsolutePath()+imageName);
 				JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: "+ imageDto.toString());
 				
 				int check = imageDao.couponImageInsert(imageDto);
@@ -147,12 +147,6 @@ public class CouponServiceImp implements CouponService {
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
 			mav.addObject("couponList", couponList);
 		}
-		//TODO 이미지 경로
-		String path = request.getContextPath() + "\\ftp\\";
-		JejuAspect.logger.info(JejuAspect.logMsg + "path : "+ path);
-		
-		request.getParameter("pageNumber");		
-		mav.addObject("path", path);
 		mav.addObject("count", count);
 		mav.addObject("pageNumber", pageNumber);
 		mav.setViewName("coupon/couponList.tiles");

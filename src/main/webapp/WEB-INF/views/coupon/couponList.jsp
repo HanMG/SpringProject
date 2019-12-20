@@ -120,7 +120,7 @@
 					<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
 					<div id="inner" class="list">
 						<div>
-							<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}"> --%>
+							<img alt="쿠폰 이미지" src="${root}/resources/ftp/${couponDto.imageName}">
 						</div>
 						<div>
 							<span>${couponDto.couponName}</span>

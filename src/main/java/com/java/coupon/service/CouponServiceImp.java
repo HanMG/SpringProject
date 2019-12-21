@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -149,8 +153,60 @@ public class CouponServiceImp implements CouponService {
 		}
 		mav.addObject("count", count);
 		mav.addObject("pageNumber", pageNumber);
-		mav.setViewName("coupon/couponList.tiles");
 	}
+	
+	//쿠폰 리스트(Ajax 새로고침) TODO
+	@Override
+	@ResponseBody
+	public String couponListAjax(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String pageNumber = request.getParameter("pageNumber");
+		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumberAjax: "+ pageNumber);
+		
+		int currentPage = Integer.parseInt(pageNumber);
+		
+		//쿠폰 리스트 카운트
+		int count = couponDao.couponListCount();
+		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		
+		int scrollSize = 4;
+		int startRow = (currentPage - 1) * scrollSize + 1;
+		int endRow = currentPage*scrollSize;
+		JejuAspect.logger.info(JejuAspect.logMsg + "startRow: "+ startRow +" endRow:"+endRow);
+		List<CouponDto> couponList = null;
+		
+		Date today = new Date();
+		JejuAspect.logger.info(JejuAspect.logMsg + "date: "+ today);
+		
+		if(count > 0) {
+			//쿠폰 리스트 가져오기
+			couponList = couponDao.couponListAjax(startRow, endRow, today);
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.toString());
+		}
+		
+		JSONArray arr = new JSONArray();
+		for(CouponDto couponDto : couponList) {
+			HashMap<String, Object> CommonMap = new HashMap<String, Object>();
+			CommonMap.put("couponCode", couponDto.getCouponCode());
+			CommonMap.put("foodCode", couponDto.getFoodCode());
+			CommonMap.put("couponName", couponDto.getCouponName());
+			CommonMap.put("couponStartdate", couponDto.getCouponStartdate());
+			CommonMap.put("couponEnddate", couponDto.getCouponEnddate());
+			CommonMap.put("couponCostori", couponDto.getCouponCostori());
+			CommonMap.put("couponCostsale", couponDto.getCouponCostsale());
+			CommonMap.put("imageName", couponDto.getImageName());
+			arr.add(CommonMap);
+			JejuAspect.logger.info(JejuAspect.logMsg + CommonMap.toString());
+		}
+		String jsonText = JSONValue.toJSONString(arr);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
+		
 	
 	//쿠폰상세페이지
 	@Override

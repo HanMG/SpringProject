@@ -8,6 +8,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
@@ -57,12 +58,22 @@ public class CouponDaoImp implements CouponDao {
 		return sqlSessionTemplate.selectList("dao.CouponMapper.couponList", listMap);
 	}
 	
+	@Override
+	@ResponseBody
+	public List<CouponDto> couponListAjax(int startRow, int endRow, Date today) {
+		Map<String, Object> listMap = new HashMap<String, Object>();
+		listMap.put("startRow", startRow);		
+		listMap.put("endRow", endRow);		
+		listMap.put("today", today);	
+		
+		return sqlSessionTemplate.selectList("dao.CouponMapper.couponList", listMap);
+	}
+	
 	//쿠폰상세리스트
 	@Override
 	public CouponDto couponRead(String couponCode) {
 		return sqlSessionTemplate.selectOne("dao.CouponMapper.couponSelect", couponCode);
 	}
-	
 	
 	//쿠폰 이미지 수정
 	@Override

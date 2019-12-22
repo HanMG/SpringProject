@@ -57,10 +57,23 @@
 				confirm("휴대폰 인증되었습니다.");
 			}
 			
+			function purchaseForm(obj){
+//				if(obj.purchasePhone.length < 10){
+//					alert("번호는 10자리 또는 11자리로 입력해주세요.");
+//					return false;
+//				} 
+				if(obj.purchasePhone.value==""){
+					alert("휴대폰 번호를 인증해주세요.");
+					obj.purchasePhone.focus();
+					return false;
+				}
+			}
+			
 			function couponDelete(root, couponCode, couponName, pageNumber){
 				var url = root + "/coupon/couponDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
+			
 		</script>
 	</head>
 	<body>
@@ -95,7 +108,7 @@
 						<span>쿠폰소개: ${couponDto.couponIntro}</span>
 					</div>
 					
-					<form action="${root}/purchase/purchaseInsert.go" method="get">
+					<form action="${root}/purchase/purchaseInsert.go" method="get" onsubmit="return purchaseForm(this)">
 					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 					<!-- <input type="hidden" name="memberCode"> -->
 					<% 	

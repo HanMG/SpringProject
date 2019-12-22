@@ -70,13 +70,14 @@
 			$(function(){
 				toServer(pageNumber);
 			});
+			
 			$(window).scroll(function(){
 				if($(window).scrollTop() >= $(document).height()-$(window).height()){
 					pageNumber++;
 					toServer(pageNumber);
 				}
 			})
-			 
+			
 			//pageNumber 던져주는 곳
 			function toServer(pageNumber){
 				var param = "pageNumber=" + pageNumber;
@@ -92,7 +93,6 @@
 					console.log("length:"+ data.length);
 					
 					for(var i=0; i< data.length; i++){
-						console.log("HI"+i);
 						var list = '<div class="list"><div><span>'+data[i].couponName+'</span></div>';
 						list += '<div><img alt="쿠폰 이미지" src="'+data[i].imageName+'"></div><div><span>${couponDto.couponName}</span></div>';
 						list += '<div><span>사용가능기간: '+data[i].couponStartdate+'부터 '+data[i].couponEnddate+'까지</span></div>';

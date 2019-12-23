@@ -72,7 +72,7 @@ public class FoodServiceImp implements FoodService {
 			// 파일 생성위치 
 			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가...
-			path.mkdir();
+			path.mkdirs();
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			//path.mkdirs();
 
@@ -145,6 +145,7 @@ public class FoodServiceImp implements FoodService {
 		mav.addObject("reviewAvg", reviewAvg);
 		mav.addObject("reviewCountDto",reviewCountDto);	
 		mav.addObject("couponDtoList", couponDtoList);
+		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	
 		mav.addObject("imageDto", imageDto);
 		mav.setViewName("food/read.tiles");		
@@ -163,8 +164,10 @@ public class FoodServiceImp implements FoodService {
 		imageDto = imageDao.imgRead(foodCode);
 		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		JejuAspect.logger.info(JejuAspect.logMsg+imageDto);
-		mav.addObject("foodDto", foodDto);		;
-		mav.addObject("imageDto", imageDto);
+		mav.addObject("foodDto", foodDto);		
+		if(imageDto != null) {
+			mav.addObject("imageDto", imageDto);
+		}
 		mav.setViewName("food/update.tiles");
 	}
 	
@@ -172,7 +175,8 @@ public class FoodServiceImp implements FoodService {
 	public void foodUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		FoodDto foodDto = (FoodDto) map.get("foodDto");
-		ImageDto imageDto = (ImageDto) map.get("imageDto");
+		ImageDto originImageDto = imageDao.imgRead(foodDto.getFoodCode());
+		
 		int check = 0;
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		
@@ -182,6 +186,7 @@ public class FoodServiceImp implements FoodService {
 		// food 업데이트
 		check = foodDao.foodUpdate(foodDto);
 		
+		ImageDto updateImageDto = new ImageDto();
 		MultipartFile upFile = request.getFile("imgFile"); // input type file의 name으로 확인
 		long fileSize = upFile.getSize();		
 		if (fileSize != 0) {
@@ -190,15 +195,16 @@ public class FoodServiceImp implements FoodService {
 			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
-			path.mkdir();	
+			path.mkdirs();	
 			
-			JejuAspect.logger.info(JejuAspect.logMsg+imageDto.getImageName());
-			if (imageDto.getImageName() != null) {
-				JejuAspect.logger.info(JejuAspect.logMsg+imageDto.getImagePath());
-				File checkFile = new File(imageDto.getImagePath());
+			
+			if (originImageDto != null) {
+				JejuAspect.logger.info(JejuAspect.logMsg+originImageDto.getImagePath());
+				File checkFile = new File(originImageDto.getImagePath());
 				if (checkFile.exists() && checkFile.isFile()) {
 					checkFile.delete();
 				}
+				imageDao.imgDelete(originImageDto.getReferCode());
 			}
 
 			if (path.exists() && path.isDirectory()) {
@@ -208,11 +214,12 @@ public class FoodServiceImp implements FoodService {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}				
-				imageDto.setImagePath(file.getAbsolutePath());
-				imageDto.setImageSize(fileSize);
-				imageDto.setImageName(fileName);
-				JejuAspect.logger.info(JejuAspect.logMsg+imageDto.toString());
-				check += imageDao.imgUpdate(imageDto);				
+				updateImageDto.setReferCode(foodDto.getFoodCode());  
+				updateImageDto.setImagePath(file.getAbsolutePath());
+				updateImageDto.setImageSize(fileSize);
+				updateImageDto.setImageName(fileName);
+				JejuAspect.logger.info(JejuAspect.logMsg+updateImageDto.toString());				
+				check += imageDao.imgInsert(updateImageDto);			
 			}			
 		}
 		

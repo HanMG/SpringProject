@@ -8,31 +8,71 @@
 <meta charset="UTF-8">
 <title>음식점정보등록</title>
 <script>
-	function foodForm() {
+	function foodForm(obj) {		 
+		if(obj.foodName.value==""){
+			alert("음식점명을 입력하세요.");
+			obj.foodName.focus();
+			return false;
+		}
+		if(obj.foodAddr.value==""){
+			alert("음식점주소를 입력하세요.");
+			obj.foodAddr.focus();
+			return false;
+		}
+		if(obj.foodPhone.value==""){
+			alert("전화번호를 입력하세요.");
+			obj.foodPhone.focus();
+			return false;
+		}		
+		/* if(obj.foodKind.value==""){
+			alert("음식종류를 입력하세요.");
+			return false;
+		}
+		if(obj.foodMenu.value==""){
+			alert("대표메뉴를 입력하세요.");
+			obj.foodMenu.focus();
+			return false;
+		}
 		var start = document.getElementById("start").value;
 		var end = document.getElementById("end").value;
-		document.getElementById("fTime").value = start + "~" + end;
+		if(start!=null && end!=null){
+			obj.foodTime.value = start + "~" + end;
+		}		
+		if(obj.foodTime.value==""){
+			alert("영업시간을 입력하세요.");		
+			return false;
+		} */
+		if(obj.foodIntro.value==""){
+			alert("가게 소개");
+			return false;
+		}
 	}
 </script>
 </head>
 <body>
-	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="foodForm()">
+	<c:if test="${memberCode==null }">
+		<script>
+			alert("로그인 후 가능합니다!");
+			history.back();
+		</script>
+	</c:if>
+	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
 		<label>음식점명</label><input type="text" name="foodName" />
 		<br />	
 		<label>주소</label><input type="text" name="foodAddr" />
 		<br />	
 		<label>지역</label>
-		<select name="foodArea">
-			<option value="">지역선택</option>
+		<select name="foodArea" class="required">
+			<option value="" >지역선택</option>
 			<option value="제주시">제주시</option>			
 			<option value="서귀포시">서귀포시</option>			
 		</select>
 		<br>		
 		<label>전화번호(-빼고 넣어주세요.)</label>
-		<input type="text" name="foodPhone" />
+		<input type="text" name="foodPhone"/>
 		<br>
 		<label>음식 종류</label>
-		<select name="foodKind">
+		<select name="foodKind" >
 			<option value="">종류선택</option>
 			<option value="한식">한식</option>
 			<option value="중식">중식</option>

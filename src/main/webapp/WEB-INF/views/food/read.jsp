@@ -92,7 +92,7 @@ div.scrollmenu a:hover {
 				</div>
 			</div>
 			<!-- 쿠폰 공간 -->
-			<c:if test="${couponDtoList != null}">
+			<c:if test="${couponDtoList[0] != null}">
 				<div class="coupon">
 					<div class="eat_1">
 						<span>EAT딜</span>

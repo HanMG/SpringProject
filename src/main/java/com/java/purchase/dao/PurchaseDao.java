@@ -32,6 +32,12 @@ public interface PurchaseDao {
 	// 구매내역
 	public List<PurchaseListDto> purchaseSelectAll(String memberCode, int startRow, int endRow);
 	
+	// 구매내역 카운트(관리자)
+	public int getCountAll();
+	
+	// 구매내역(관리자)
+	public List<PurchaseListDto> purchaseListAll(int startRow, int endRow);
+	
 	// 구매취소
 	public int purchaseDelete(String couponCode, String memberCode);
 }

@@ -9,6 +9,12 @@
 <title>음식점정보등록</title>
 <script>
 	function foodForm(obj) {		 
+		var start = document.getElementById("start").value;
+		var end = document.getElementById("end").value;
+		if(start!=null && end!=null){
+			obj.foodTime.value = start + "~" + end;
+		}	
+		
 		if(obj.foodName.value==""){
 			alert("음식점명을 입력하세요.");
 			obj.foodName.focus();
@@ -32,18 +38,14 @@
 			alert("대표메뉴를 입력하세요.");
 			obj.foodMenu.focus();
 			return false;
-		}
-		var start = document.getElementById("start").value;
-		var end = document.getElementById("end").value;
-		if(start!=null && end!=null){
-			obj.foodTime.value = start + "~" + end;
-		}		
+		}			
 		if(obj.foodTime.value==""){
 			alert("영업시간을 입력하세요.");		
 			return false;
 		} */
 		if(obj.foodIntro.value==""){
-			alert("가게 소개");
+			alert("가게 소개를 입력하세요.");
+			obj.foodIntro.focus();
 			return false;
 		}
 	}
@@ -88,8 +90,8 @@
 		<input type="text" name="foodMenu" maxlength="12" />
 		<br />	
 		<label>영업 시간 |</label>
-		<label>시작 시간</label><input type="time" id="start"/>
-		<label>종료 시간</label><input type="time" id="end" />
+		<label>시작 시간 </label><input type="time" id="start" value="08:00"/>
+		<label>종료 시간 </label><input type="time" id="end" value="18:00"/>
 		<input type="hidden" name="foodTime" id="fTime"/>
 		<br />	
 		<label>휴일</label>

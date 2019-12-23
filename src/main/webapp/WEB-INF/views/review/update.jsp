@@ -19,13 +19,25 @@
 		document.getElementById("deleteImg").value += imgName+",";
 		document.getElementById(tdId).style.display = "none";
 	}
+	function reviewUpdateForm(obj){
+		if(obj.reviewScore.value==""){
+			alert("리뷰 스코어를 입력해주세요.");
+			obj.reviewScore[0].focus();
+			return false;
+		}
+		if(obj.reviewCont.value==""){
+			alert("리뷰 내용을 입력해주세요.");
+			obj.reviewCont.focus();
+			return false;
+		}
+	}
 </script>
 </head>
 <body onload="reviewUpdate()">
 	<p>
 		<strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.
 	</p>
-	<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data">
+	<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data" onsubmit="return reviewUpdateForm(this)">
 		<input type="hidden" name="reviewCode" value="${reviewDto.reviewCode }" />
 		<input type="hidden" name="foodCode" value="${reviewDto.foodCode}" /> 
 		<input type="hidden" name="memberCode" value="${reviewDto.memberCode }" />

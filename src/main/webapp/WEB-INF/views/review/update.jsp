@@ -10,34 +10,20 @@
 <meta charset="UTF-8">
 <title>리뷰수정</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+<script src="${root}/resources/javascript/review/review.js"></script>
 <script>
-	function reviewUpdate() {
-		$("input:radio[name='reviewScore']:radio[value='${reviewDto.reviewScore}']").prop('checked', true);
-	}
-	function delImage(tdId,imgName) {
-		alert(tdId+","+imgName);
-		document.getElementById("deleteImg").value += imgName+",";
-		document.getElementById(tdId).style.display = "none";
-	}
-	function reviewUpdateForm(obj){
-		if(obj.reviewScore.value==""){
-			alert("리뷰 스코어를 입력해주세요.");
-			obj.reviewScore[0].focus();
-			return false;
-		}
-		if(obj.reviewCont.value==""){
-			alert("리뷰 내용을 입력해주세요.");
-			obj.reviewCont.focus();
-			return false;
-		}
-	}
+//라디오 버튼 체크 (el때문에 js로 이동불가)
+function reviewUpdate() {
+	$("input:radio[name='reviewScore']:radio[value='${reviewDto.reviewScore}']")
+			.prop('checked', true);
+}
 </script>
 </head>
 <body onload="reviewUpdate()">
 	<p>
 		<strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.
 	</p>
-	<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data" onsubmit="return reviewUpdateForm(this)">
+	<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data" onsubmit="return reviewForm(this)">
 		<input type="hidden" name="reviewCode" value="${reviewDto.reviewCode }" />
 		<input type="hidden" name="foodCode" value="${reviewDto.foodCode}" /> 
 		<input type="hidden" name="memberCode" value="${reviewDto.memberCode }" />

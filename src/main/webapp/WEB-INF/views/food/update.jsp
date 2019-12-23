@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>음식점정보수정</title>
 <script>
+	// select 업데이트용 (el때문에 js로 이동불가)
 	function selectUpdate(){ 
 		document.getElementById("foodArea").value = "${foodDto.foodArea}";
 		document.getElementById("foodKind").value = "${foodDto.foodKind}";
@@ -16,52 +17,11 @@
 		document.getElementById("start").value="${foodDto.foodTime}".substring(0,5);
 		document.getElementById("end").value="${foodDto.foodTime}".substring(6,11);
 	}
-	function foodUpdateForm(obj) {	
-		var start = document.getElementById("start").value;
-		var end = document.getElementById("end").value;
-		obj.foodTime.value = start + "~" + end;
-		alert(start + "~" + end);	
-		
-		
-		if(obj.foodName.value==""){
-			alert("음식점명을 입력하세요.");
-			obj.foodName.focus();
-			return false;
-		}
-		if(obj.foodAddr.value==""){
-			alert("음식점주소를 입력하세요.");
-			obj.foodAddr.focus();
-			return false;
-		}
-		if(obj.foodPhone.value==""){
-			alert("전화번호를 입력하세요.");
-			obj.foodPhone.focus();
-			return false;
-		}		
-		/* if(obj.foodKind.value==""){
-			alert("음식종류를 입력하세요.");
-			return false;
-		}
-		if(obj.foodMenu.value==""){
-			alert("대표메뉴를 입력하세요.");
-			obj.foodMenu.focus();
-			return false;
-		}
-		
-		if(obj.foodTime.value==""){
-			alert("영업시간을 입력하세요.");		
-			return false;
-		} */
-		if(obj.foodIntro.value==""){
-			alert("가게 소개를 입력하세요.");
-			obj.foodIntro.focus();
-			return false;
-		}
-	}
 </script>
+<script src="${root}/resources/javascript/food/food.js"></script>
 </head>
 <body onload="selectUpdate()">	
-	<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodUpdateForm(this)">
+	<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
 		<input type="hidden" name="foodCode" value="${foodDto.foodCode}" />
 		<input type="hidden" name="imageCode" value="${imageDto.imageCode}" />
 		<input type="hidden" name="referCode" value="${imageDto.referCode}" />

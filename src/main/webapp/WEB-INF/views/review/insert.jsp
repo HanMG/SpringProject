@@ -11,20 +11,7 @@
 <style>
 	strong {font-size: 20px;}
 </style>
-<script>
-	function reviewForm(obj) {
-		if(obj.reviewScore.value==""){
-			alert("리뷰 스코어를 입력해주세요.");
-			obj.reviewScore[0].focus();
-			return false;
-		}
-		if(obj.reviewCont.value==""){
-			alert("리뷰 내용을 입력해주세요.");
-			obj.reviewCont.focus();
-			return false;
-		}
-	}
-</script>
+<script src="${root}/resources/javascript/review/review.js"></script>
 </head>
 <body>		
 	<p><strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</p>

@@ -99,5 +99,19 @@
 			WHERE rnum >=1 and rnum <=10
 		]]>
 	</select>
+	
+	<select id="keywordList" parameterType="String" resultType="com.java.search.dto.SearchFoodDto">
+		SELECT food_name FROM
+		(SELECT rownum rn, B.food_name food_name FROM 
+		(SELECT food_name from food WHERE food_name like '%'||#{keyword}||'%'
+		ORDER BY (CASE
+			WHEN food_name like #{keyword}||'%' THEN 0
+			WHEN food_name like '%'||#{keyword} THEN 1
+			ELSE 3 END) ASC
+		) B)
+		<![CDATA[
+			WHERE rn >= 1 AND rn <= 5
+		]]>
+	</select>
 
 </mapper>

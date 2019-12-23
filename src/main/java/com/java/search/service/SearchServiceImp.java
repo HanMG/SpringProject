@@ -107,4 +107,25 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
+
+	@Override
+	public String keywordAuto(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		
+		String keyword = (String) map.get("keyword");
+		JejuAspect.logger.info(JejuAspect.logMsg + "keyword: " + keyword);
+		
+		List<SearchFoodDto> keywordList = new ArrayList<SearchFoodDto>();
+		keywordList = searchDao.keywordList(keyword);
+		JejuAspect.logger.info(JejuAspect.logMsg + keywordList.size());
+
+		JSONArray arr = new JSONArray();
+		for(SearchFoodDto sFoodDto : keywordList) {
+			arr.add(sFoodDto.getFoodName());
+		}
+		String jsonText = JSONValue.toJSONString(arr);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
 }

@@ -28,7 +28,7 @@ public class FavoriteDaoImp implements FavoriteDao {
 		map.put("foodCode", foodCode);
 		System.out.println(favorStatus);
 		int countBefore = sqlSessionTemplate.selectOne("favorCheck", map);
-		if (favorStatus.equals("on") && countBefore > 1) {
+		if (favorStatus.equals("on") && countBefore > 0) {
 			sqlSessionTemplate.delete("favorDelete", map);
 		} else if (favorStatus.equals("off") && countBefore == 0) {
 			sqlSessionTemplate.insert("favorInsert", map);

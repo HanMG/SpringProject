@@ -32,10 +32,10 @@ function favorCheck() {
 		data : { "memberCode" : memberCode, "foodCode" : foodCode},
 		success : function(data) {
 			favorStatus = data;
-			if (data == "on") {
-				$("#favorite").className = "fa fa-heart";
-			} else if (data == "off") {
-				$("#favorite").className = "fa fa-heart-o";
+			if (favorStatus === "on") {
+				$("#favorite").attr('class', 'fa fa-heart');
+			} else if (favorStatus === "off") {
+				$("#favorite").attr('class', 'fa fa-heart-o');
 			}
 		}, error: function (request, status, error) {
 			alert("error");
@@ -59,10 +59,10 @@ function favorSwitch(x) {
 			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
 			success : function(data) {
 				favorStatus = data;
-				if (data == "on") {
-					$("#favorite").className = "fa fa-heart";
-				} else if (data == "off") {
-					$("#favorite").className = "fa fa-heart-o";
+				if (favorStatus === "on") {
+					$("#favorite").attr('class', 'fa fa-heart');
+				} else if (favorStatus === "off") {
+					$("#favorite").attr('class', 'fa fa-heart-o');
 				}
 			}, error: function (request, status, error) {
 				alert("error");

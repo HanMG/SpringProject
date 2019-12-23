@@ -17,7 +17,7 @@
 		<p>결제금액: ${couponDto.couponSalerate}</p>
 
 		<p>쿠폰 받을 번호</p>
-		<p>${purchaseDto.purchasePhone}</p>
+		${purchaseDto.purchasePhone}
 	</c:if>
 	<c:if test="${check == 0}">
 		<h3>상품 구매가 완료되지 않았습니다. 처음부터 다시 시도해주세요.</h3>

@@ -117,12 +117,12 @@
 				<span>EAT 딜</span>
 			</div>
 			<!-- 검색 했을 경우 : 템플릿 들어갈 것-->
-			<div>
+			<!-- <div>
 				<input type="text" name="search">
 			</div>
 			<div>
 				<h3>[검색어]로 검색한 결과입니다.</h3>
-			</div>
+			</div> -->
 			<div class="eat">
 				<c:if test="${count == 0}">
 					<div>

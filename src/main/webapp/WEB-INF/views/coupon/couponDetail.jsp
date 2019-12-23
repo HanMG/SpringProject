@@ -54,14 +54,10 @@
 		</style>
 		<script type="text/javascript">
 			function phoneCheck(){
-				confirm("휴대폰 인증되었습니다.");
+				confirm("휴대폰으로 인증번호가 발송되었습니다.");
 			}
 			
 			function purchaseForm(obj){
-//				if(obj.purchasePhone.length < 10){
-//					alert("번호는 10자리 또는 11자리로 입력해주세요.");
-//					return false;
-//				} 
 				if(obj.purchasePhone.value==""){
 					alert("휴대폰 번호를 인증해주세요.");
 					obj.purchasePhone.focus();
@@ -73,16 +69,40 @@
 				var url = root + "/coupon/couponDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
-			
+			function inputPhone(obj){
+				var num = obj.value.replace(/[^0-9]/g,"");
+				var phone = "";
+				
+				if(num.length <= 11){
+					phone += num.substr(0,3);
+					phone += "-";
+					phone += num.substr(3,4);
+					phone += "-";
+					phone += num.substr(7);
+				} else if(num.length == 10){
+					phone += num.substr(0,3);
+					phone += "-";
+					phone += num.substr(3,3);
+					phone += "-";
+					phone += num.substr(7);
+				} else if(num.length > 11){
+					alert("11자리 이내로 입력해주세요.")
+					obj.focus();
+					return false;
+				} else if(num.length < 9){
+					alert("휴대폰 번호를 올바르게 입력해주세요.")
+					obj.focus();
+					return false;
+				}
+				obj.value = phone;									
+			}
+		
 		</script>
 	</head>
 	<body>
-		<!-- 관리자일 경우  -->		
-		<p><a href="${root}/coupon/couponUpdate.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">수정하기</a></p>
-		<p><a href="javascript:couponDelete('${root}','${couponDto.couponCode}','${couponDto.couponName}','${pageNumber}')">삭제하기</a></p>
+		
 		
 		<!-- 일반사용자일 경우 -->
-		<%-- <p><a href="${root}/purchase/purchaseInsert.go?couponCode=${couponDto.couponCode}&purchasePhone=${purchasePhone}">구매하기</a></p> --%>
 		<div id="content">
 			<div class="history">
 				<div class="title">
@@ -109,20 +129,26 @@
 					</div>
 					
 					<form action="${root}/purchase/purchaseInsert.go" method="get" onsubmit="return purchaseForm(this)">
-					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
-					<!-- <input type="hidden" name="memberCode"> -->
+						<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 					<% 	
 						String memberCode = (String) session.getAttribute("memberCode");
 						if(memberCode != null){ 
 					%>
 						<div>
-							<span> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
-							<input type="text" name="purchasePhone" maxlength="11">
-							<input type="button" value="인증" onclick="phoneCheck()">
+							<span> *휴대폰번호(해당 번호로 구매한 쿠폰이 전송됩니다.)</span>
+							<span> "-"을 제외한 번호만 입력해주세요.</span>
+							<input type="text" name="purchasePhone" maxlength="13" onChange="inputPhone(this)">
+							<input type="button" value="인증번호 받기" onclick="phoneCheck()">
+							
 						</div>
 						<div>
 							<input type="submit" value="구매하기">
 						</div>
+					</form>
+					
+					<!-- 관리자일 경우  -->
+					<p><a href="${root}/coupon/couponUpdate.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">수정하기</a></p>
+					<p><a href="javascript:couponDelete('${root}','${couponDto.couponCode}','${couponDto.couponName}','${pageNumber}')">삭제하기</a></p>
 					<% 
 					} if(memberCode == null){ 	
 					%>
@@ -131,7 +157,6 @@
 					<% 
 					} 
 					%>
-					</form>
 				</div>
 			</div>
 		</div>

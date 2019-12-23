@@ -44,8 +44,14 @@
 					obj.couponSalerate.focus();
 					return false;
 				}
+				if(obj.couponSalerate.value < 0 || obj.couponSalerate.value > 100){
+					alert("0부터 100으로 입력해주세요.");
+					obj.couponSalerate.focus();
+					return false;
+				}
+				
 				if(obj.imageFile.value==""){
-					alert("쿠폰 이미지를 등록해주세요.");
+					alert("이미지를 첨부해주세요.");
 					obj.imageFile.focus();
 					return false;
 				}
@@ -79,12 +85,12 @@
 				//$('#datepickStart').datepicker('setDate', 'today');
 				//$('#datepickEnd').datepicker('setDate','+1D');
 			})
+			
 		</script>
 	</head>
 	<body>
 		<form action="${root}/coupon/couponInsertOk.go" method="post" enctype="multipart/form-data" 
-		onsubmit="return insertForm(this)" name="couponForm">
-				<%-- <input type="hidden" name="sequenceLevel" value="${sequenceLevel}" /> --%>
+		onsubmit="return insertForm(this)" name="couponForm" autocomplete="off">
 				<ul class="write_box">
 					<li>
 						<p>상품명(쿠폰명)</p>

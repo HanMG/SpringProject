@@ -43,10 +43,12 @@ public class PurchaseServiceImp implements PurchaseService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String couponCode = request.getParameter("couponCode");
 		String purchasePhone = request.getParameter("purchasePhone");
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchasePhone: "+ purchasePhone);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		CouponDto couponDto = couponDao.purchaseSelect(couponCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		
 		
 		//세션으로 회원정보 가져오기
 		HttpSession session =  request.getSession(false);
@@ -71,11 +73,13 @@ public class PurchaseServiceImp implements PurchaseService {
 		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
+		//String purchasePhone = purchaseDto.getPurchasePhone();
+		//purchaseDto.setPurchasePhone(purchaseDto.getPurchasePhone().replace("-",""));
+		
 		purchaseDto.setPurchaseDate(new Date());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
 		
 		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
-		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCode: "+ purchaseCode);
 		
 		int check = 0;
 		if(purchaseCode != null) {

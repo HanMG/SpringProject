@@ -50,10 +50,9 @@ public class CouponServiceImp implements CouponService {
 	public void couponInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		CouponDto couponDto =(CouponDto) map.get("couponDto");
-		//JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		//couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n","<br/>"));
 		
 		String couponCode = couponDao.couponInsert(couponDto);
-		//JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		if(couponCode != null) {
 			//TODO : 이미지 insert
@@ -219,6 +218,7 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode + " pageNumber: " + pageNumber);
 		
 		CouponDto couponDto =couponDao.couponRead(couponCode);
+		couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n","<br/>"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : "+ couponDto.toString());
 		
 		if(couponDto.getImageName() != null) {
@@ -247,8 +247,7 @@ public class CouponServiceImp implements CouponService {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode);
 		
-		CouponDto couponDto = couponDao.couponRead(couponCode);
-		
+		CouponDto couponDto = couponDao.couponRead(couponCode);		
 		
 		request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("couponDto",couponDto);

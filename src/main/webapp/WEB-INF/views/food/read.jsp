@@ -12,14 +12,66 @@
 <script src="${root}/resources/xhr.js"></script>
 <meta charset="UTF-8">
 <title>음식점상세페이지</title>
+<script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
 <script>
-	function favorite(x) {
-		if (x.className === "fa fa-heart-o") {
-			x.className = "fa fa-heart";
-		} else {
-			x.className = "fa fa-heart-o";
+var root = "${root}";
+var memberCode = "${memberCode}";
+var foodCode = "${foodDto.foodCode}";
+var favorStatus = "";
+
+$(function() {
+	if (memberCode != "") {
+		favorCheck();
+	} 
+})
+
+function favorCheck() {
+	$.ajax({
+		type : "POST",
+		url : root + "/favorite/check.do",
+		data : { "memberCode" : memberCode, "foodCode" : foodCode},
+		success : function(data) {
+			favorStatus = data;
+			if (data == "on") {
+				$("#favorite").className = "fa fa-heart";
+			} else if (data == "off") {
+				$("#favorite").className = "fa fa-heart-o";
+			}
+		}, error: function (request, status, error) {
+			alert("error");
 		}
+	});
+}
+
+function favorSwitch(x) {
+	if (memberCode == "") {
+		// 로그인
+		alert("로그인하세요");
+	} else if (memberCode != "") {
+		if (x.className == "fa fa-heart") {
+			favorStatus = "on";
+		} else {
+			favorStatus = "off";
+		}
+		$.ajax({
+			type : "POST",
+			url : root + "/favorite/switch.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			success : function(data) {
+				favorStatus = data;
+				if (data == "on") {
+					$("#favorite").className = "fa fa-heart";
+				} else if (data == "off") {
+					$("#favorite").className = "fa fa-heart-o";
+				}
+			}, error: function (request, status, error) {
+				alert("error");
+			}
+		});
 	}
+}
+	
+	
 	function reviewList(root, selScore) {
 		let url = root + "/food/foodReviewList.go";
 		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
@@ -51,6 +103,7 @@ div.scrollmenu a:hover {
 </style>
 </head>
 <body onload="reviewList('${root}','0')">
+	<input type="hidden" name="memberCode" value="${memberCode}" />
 	<div id="content">
 		<div class="nav_1">
 			<div class="info_1">
@@ -60,7 +113,7 @@ div.scrollmenu a:hover {
 						class="fa fa-pencil-square-o"></i><br /></a> <span>리뷰쓰기</span>
 				</div>
 				<div>
-					<i onclick="favorite(this)" class="fa fa-heart-o"></i><br /> <span>가고싶다</span>
+					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"></i><br /> <span>가고싶다</span>
 				</div>
 			</div>
 			<div class="info_2">

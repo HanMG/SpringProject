@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="dao.mapper.FavoriteMapper">
+
+	<select id="favorCheck" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) FROM favorite
+		WHERE member_code = #{memberCode}
+		AND food_code = #{foodCode}
+	</select>
+	
+	<insert id="favorInsert" parameterType="java.util.Map">
+		INSERT INTO favorite
+		VALUES ( #{foodCode}, #{memberCode}, sysdate)
+	</insert>
+	
+	<delete id="favorDelete" parameterType="java.util.Map">
+		DELETE FROM favorite
+		WHERE member_code = #{memberCode}
+		AND food_code = #{foodCode}
+	</delete>
+</mapper>

@@ -17,4 +17,6 @@ public interface SearchDao {
 
 	List<SearchFoodDto> tagList(String tagValue, String tagType);
 
+	List<SearchFoodDto> keywordList(String keyword);
+
 }

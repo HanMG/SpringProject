@@ -50,6 +50,7 @@
 			<option value="중식">중식</option>
 			<option value="양식">양식</option>
 			<option value="일식">일식</option>
+			<option value="까페">까페</option>
 			<option value="식육(숯불구이)">식육(숯불구이)</option>			
 			<option value="회집">회집</option>
 			<option value="뷔페">뷔페</option>			

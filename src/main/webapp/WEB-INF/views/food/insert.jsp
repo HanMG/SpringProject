@@ -10,7 +10,7 @@
 <script src="${root}/resources/javascript/food/food.js"></script>
 </head>
 <body>
-	<c:if test="${memberCode==null }">
+	<c:if test="${memberCode==null}">
 		<script>
 			alert("로그인 후 가능합니다!");
 			history.back();

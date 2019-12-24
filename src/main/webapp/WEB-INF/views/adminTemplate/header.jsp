@@ -100,6 +100,9 @@ $(document).ready(function() {
 			<li class="nav-item"><a class="nav-link" href="${root}/admin/purchase.go">
 					<i class="fas fa-fw fa-table"></i> <span>구매관리</span>
 			</a></li>
+			<li class="nav-item"><a class="nav-link" href="${root}/admin/review.go">
+					<i class="fas fa-fw fa-table"></i> <span>리뷰관리</span>
+			</a></li>
 		</ul>
 		
 		<!-- /.content-wrapper -->

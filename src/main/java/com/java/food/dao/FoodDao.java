@@ -31,4 +31,6 @@ public interface FoodDao {
 	
 	public float foodReviewAvg(String foodCode);
 
+	public List<FoodDto> foodDtoList();
+
 }

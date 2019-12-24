@@ -67,7 +67,7 @@ public class FoodServiceImp implements FoodService {
 		check = foodDao.foodInsert(foodDto);
 		// food_code의 마지막 값 가져옴
 		String str = foodDao.foodMax();	
-		
+		JejuAspect.logger.info(JejuAspect.logMsg+ "str : " +str);
 		// 이미지 데이터를 넣을 DTO 
 		ImageDto imageDto = new ImageDto();
 		// 음식점 등록이 되면 이미지DTO.참조코드에 foodCode의 마지막 값을 넣음
@@ -97,6 +97,7 @@ public class FoodServiceImp implements FoodService {
 				imageDto.setImagePath(file.getAbsolutePath());
 				imageDto.setImageSize(fileSize);
 				imageDto.setImageName(fileName);
+				JejuAspect.logger.info(JejuAspect.logMsg+ "imageDto : " +imageDto);
 				check += imageDao.imgInsert(imageDto);				
 			}					
 		}		
@@ -312,6 +313,14 @@ public class FoodServiceImp implements FoodService {
 		mav.addObject("reviewCountDto",reviewCountDto);		
 		mav.setViewName("review/list.empty");
 		
+	}
+
+	@Override
+	public void adminFoodList(ModelAndView mav) {		
+		List<FoodDto> foodDtoList = foodDao.foodDtoList();		
+		JejuAspect.logger.info(JejuAspect.logMsg+foodDtoList.toString());
+		mav.addObject("foodDtoList",foodDtoList);
+		mav.setViewName("admin/food.admin");		
 	}
 
 }

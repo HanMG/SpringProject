@@ -13,13 +13,13 @@
 		<c:when test="${check > 0 }">
 			<script>
 				alert("삭제되었습니다.");
-				location.href = "${root}/index.jsp";
+				location.href = "${root}/admin/review.go";
 			</script>
 		</c:when>
 		<c:when test="${check == 0 }">
 			<script>
 				alert("ERROR ! 삭제되지않았습니다.");
-				location.href = "${root}/index.jsp";
+				location.href = "${root}/admin/review.go";
 			</script>
 		</c:when>
 	</c:choose>

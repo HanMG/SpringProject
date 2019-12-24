@@ -3,6 +3,7 @@ package com.java.review.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
+import com.java.food.dto.FoodReviewDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
 import com.java.review.dao.ReviewDao;
@@ -229,6 +231,7 @@ public class ReviewServiceImp implements ReviewService {
 		Map<String, Object> map = mav.getModel();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String reviewCode = request.getParameter("reviewCode");
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewCode);
 		int check = 0;
 		List<ImageDto> imageList = imageDao.imgList(reviewCode);
 		for(int i = 0; i< imageList.size(); i++) {
@@ -241,6 +244,7 @@ public class ReviewServiceImp implements ReviewService {
 		}		
 		check = reviewDao.reviewDelete(reviewCode);
 		check += imageDao.imgDelete(reviewCode);
+		mav.addObject("check",check);
 		mav.setViewName("review/delete.tiles");
 	}
 
@@ -258,8 +262,69 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("review/update.tiles?reviewCode="+reviewCode);		
 	}
 
+	@Override
+	public void adminReviewList(ModelAndView mav) {
+		List<ReviewDto> reviewDtoList = reviewDao.reviewDtoList();
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewDtoList.toString());
+		mav.addObject("reviewDtoList",reviewDtoList);
+		mav.setViewName("admin/review.admin");		
+	}
 
+	@Override
+	public void adminReviewRead(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String reviewCode = request.getParameter("reviewCode");
+		ReviewDto reviewDto = new ReviewDto();
+		reviewDto = reviewDao.reviewUpdate(reviewCode);
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString());
+		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
+		List<ImageDto> listImage = imageDao.imgList(reviewCode);		
+		JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
+		mav.addObject("foodName",foodName);
+		mav.addObject("reviewDto",reviewDto);
+		mav.addObject("listImage",listImage);		
+	}
 
-
-
+	@Override
+	public void getReview(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		String reviewCode = request.getParameter("reviewCode");
+		ReviewDto reviewDto = reviewDao.reviewUpdate(reviewCode);
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());		
+		List<ImageDto> listImage = imageDao.imgList(reviewCode);
+		System.out.println(listImage);
+		JSONArray jsonArr = new JSONArray();
+		for(ImageDto imgDto : listImage) {
+			JSONObject jsonImgDto = new JSONObject();
+			jsonImgDto.put("imageName", imgDto.getImageName());
+			jsonArr.add(jsonImgDto);
+		}
+		
+		JSONObject jsonReviewDto = new JSONObject();
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString()+","+listImage.toString());
+		jsonReviewDto.put("reviewCode", reviewDto.getReviewCode());
+		jsonReviewDto.put("foodCode", reviewDto.getFoodCode());
+		jsonReviewDto.put("memberCode", reviewDto.getMemberCode());
+		jsonReviewDto.put("reviewDate", date.format(reviewDto.getReviewDate()));
+		jsonReviewDto.put("reviewCont", reviewDto.getReviewCont());
+		jsonReviewDto.put("reviewScore", reviewDto.getReviewScore());
+		jsonReviewDto.put("listImage", jsonArr);
+		String jsonText = jsonReviewDto.toJSONString();
+		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);
+		
+		response.setContentType("application/x-json;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(jsonText);
+			out.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+	}
 }

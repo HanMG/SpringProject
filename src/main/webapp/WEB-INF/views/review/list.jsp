@@ -9,11 +9,17 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰리스트</title>
+<style type="text/css">
+	
+</style>
 </head>
 <body>
 	<div class="re_1">
-		<span>리뷰(${reviewCountDto.whole})</span> <span>별로(<a href="javascript:void(0)" onclick="reviewList('${root}','1')">${reviewCountDto.bad}</a>)</span> <span>괜찮다(<a href="javascript:void(0)" onclick="reviewList('${root}','3')">${reviewCountDto.soso}</a>)</span>
-		<span>맛있다(<a href="javascript:void(0)" onclick="reviewList('${root}','5')">${reviewCountDto.good}</a>)</span> <span>전체(<a href="javascript:void(0)" onclick="reviewList('${root}','0')">${reviewCountDto.whole}</a>)</span>
+		<span>리뷰(${reviewCountDto.whole})</span> 
+		<a href="javascript:void(0)" onclick="reviewList('${root}','1')"><span>별로(${reviewCountDto.bad})</span></a> 
+		<a href="javascript:void(0)" onclick="reviewList('${root}','3')"><span>괜찮다(${reviewCountDto.soso})</span></a> 
+		<a href="javascript:void(0)" onclick="reviewList('${root}','5')"><span>맛있다(${reviewCountDto.good})</span></a> 
+		<a href="javascript:void(0)" onclick="reviewList('${root}','0')"><span>전체(${reviewCountDto.whole})</span></a> 
 	</div>
 	<c:choose>
 		<c:when test="${foodReviewList != null}">
@@ -25,20 +31,23 @@
 					</div>
 
 					<div>
-						<a href="${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}">
-							<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span> <span>${foodReviewDto.reviewCont}</span>
-							
+						<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
+						<a href="#" class="reviewInfoClick">
+							<div class="reviewCont">
+								<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span>
+								<span>${foodReviewDto.reviewCont}</span>
+							</div>
+							<div class="reviewImg">
 								<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 								<c:forEach var="imgList" items="${img}">
-									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" />
-								</c:forEach>							
+									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+								</c:forEach>
+							</div>							
 						</a>
 					</div>
 
 					<div>
-						<img alt="별점" src="icon.PNG"> <span>별점<br />
-							(${foodReviewDto.reviewScore})
-						</span>
+						<span>(${foodReviewDto.reviewScore})</span>
 					</div>
 				</div>
 			</c:forEach>

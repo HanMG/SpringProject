@@ -47,12 +47,6 @@ html {
 </style>
 </head>
 <body>
-
-	<div id="menu">
-		<a href="#">로그인</a>
-		<a href="#">EAT딜</a>
-		<a href="#">맛집리스트</a>
-	</div>
 	<div id="search">
 		<input type="text" id="searchInput" name="searchInput" placeholder="검색어를 입력하여 주세요" />
 		<input type="button" id="searchButton" value="검색">

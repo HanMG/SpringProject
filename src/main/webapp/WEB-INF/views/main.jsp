@@ -9,6 +9,6 @@
 <title>Eat The JEJU</title>
 </head>
 <body>
-	
+	<h3>확인용~~~</h3>
 </body>
 </html>

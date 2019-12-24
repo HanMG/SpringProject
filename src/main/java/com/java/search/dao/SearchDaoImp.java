@@ -50,6 +50,11 @@ public class SearchDaoImp implements SearchDao {
 		map.put("tagType", tagType);
 		return sqlSessionTemplate.selectList("tagList", map);
 	}
+	
+	@Override
+	public SearchFoodDto getReviewScore(String foodCode) {
+		return sqlSessionTemplate.selectOne("getReviewScore", foodCode);
+	}
 
 
 }

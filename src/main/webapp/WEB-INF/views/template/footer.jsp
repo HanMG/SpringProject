@@ -35,7 +35,7 @@
 </style>
 </head>
 <body>
-	<div id="footer">
+	<%-- <div id="footer">
 		<div>
 			<img alt="로고" src="${root}/resources/css/list.jpg">
 		</div>
@@ -50,6 +50,6 @@
 				© 2019 MangoPlate Co., Ltd. All rights reserved.	<br/>
 			</p>
 		</div>
-	</div>
+	</div> --%>
 </body>
 </html>

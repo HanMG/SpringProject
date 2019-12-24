@@ -72,6 +72,10 @@ public class FoodDaoImp implements FoodDao {
 	public ReviewCountDto foodReivewCount(String foodCode) {
 		return sqlSession.selectOne("dao.FoodMapper.foodReviewCount", foodCode);
 	}	
+	@Override
+	public List<FoodReviewDto> reviewList(String foodCode) {
+		return sqlSession.selectList("dao.FoodMapper.foodReviewList", foodCode);
+	}
 
 	
 	

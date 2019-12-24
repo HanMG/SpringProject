@@ -70,4 +70,8 @@
 	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
 		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
 	</select>
+	
+	<select id="AdminfoodList" resultType="com.java.food.dto.FoodDto">
+		select * from food
+	</select>
 </mapper>

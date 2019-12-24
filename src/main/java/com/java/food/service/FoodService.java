@@ -16,4 +16,6 @@ public interface FoodService {
 
 	public void foodReviewList(ModelAndView mav);
 
+	public void adminFoodList(ModelAndView mav);
+
 }

@@ -1,5 +1,7 @@
 package com.java.review.dao;
 
+import java.util.List;
+
 import com.java.review.dto.ReviewDto;
 
 public interface ReviewDao {
@@ -14,6 +16,8 @@ public interface ReviewDao {
 
 	public int reviewUpdateOk(ReviewDto reviewDto);
 
-	public int reviewDelete(String reviewCode);
+	public int reviewDelete(String reviewCode);	
+
+	public List<ReviewDto> reviewDtoList();
 
 }

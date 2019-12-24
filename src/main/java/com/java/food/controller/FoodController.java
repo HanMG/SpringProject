@@ -83,8 +83,7 @@ public class FoodController {
 		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));		
 		foodService.foodRead(mav);		
 		return mav;
-	}
-	
+	}	
 	
 	@RequestMapping(value="/food/foodReviewList.go", method = RequestMethod.GET)
 	public ModelAndView foodReviewList(HttpServletRequest request, HttpServletResponse response) {

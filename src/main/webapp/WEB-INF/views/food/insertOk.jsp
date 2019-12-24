@@ -12,13 +12,13 @@
 	<c:if test="${check > 0 }">
 		<script>
 			alert("등록되었습니다.");
-			location.href="${root}/index.jsp";
+			location.href="${root}/admin/food.go";
 		</script>
 	</c:if>
 	<c:if test="${check == 0 }">
 		<script>
 			alert("ERROR ! 등록되지않았습니다.");
-			location.href="${root}/index.jsp";
+			location.href="${root}/admin/food.go";
 		</script>
 	</c:if>
 </body>

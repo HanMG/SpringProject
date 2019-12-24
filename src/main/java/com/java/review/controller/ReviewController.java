@@ -68,7 +68,7 @@ public class ReviewController {
 	}
 	
 	// 리뷰 삭제
-	@RequestMapping(value = "/review/delete.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/review/delete.go", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView reviewDelete(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);	
@@ -82,6 +82,13 @@ public class ReviewController {
 		mav.addObject("request",request);
 		reviewService.imageDelete(mav);
 		return mav;
-	}
+	}	
 	
+	@RequestMapping(value="/review/adminReviewRead.go",method = RequestMethod.GET)
+	public ModelAndView adminReviewRead(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request",request);
+		reviewService.adminReviewRead(mav);
+		return mav;
+	}
 }

@@ -18,6 +18,12 @@ public interface ReviewService {
 
 	public void reviewRead(ModelAndView mav);
 
+	public void adminReviewList(ModelAndView mav);
+
+	public void adminReviewRead(ModelAndView mav);
+
+	public void getReview(ModelAndView mav);
+
 	
 	
 }

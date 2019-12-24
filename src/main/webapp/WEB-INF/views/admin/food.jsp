@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +20,7 @@
     background-color: #EFB730;
 }
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 }
@@ -34,12 +37,12 @@
 	font-size: 23px;
 }
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 식당관련 */
@@ -132,9 +135,15 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.nodisplay{
+	display:none;
+}
+
 </style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
+<script src="${root}/resources/javascript/food/food.js"></script>
+<script src="${root}/resources/jquery-3.4.1.js"></script>
 </head>
 <body>
 	<div id="content">
@@ -156,25 +165,19 @@
 					</tr>				
 				</thead>
 				<tbody>
-					<tr id="foodClick">
-						<th>foodCode</th>
-						<th>foodArea</th>
-						<th>foodName</th>
-						<th>foodMenu</th>
-						<th>foodKind</th>
-						<th>foodAddr</th>
-						<th>foodDate</th>
-					</tr>
-					<tr>
-						<th>foodsss</th>
-						<th>foodArea</th>
-						<th>foodName</th>
-						<th>foodMenu</th>
-						<th>foodddd</th>
-						<th>foodAddr</th>
-						<th>foodDate</th>
-						
-					</tr>
+					<c:if test="${foodDtoList != null }">
+					<c:forEach var="foodDto" items="${foodDtoList}">
+					<tr class="foodClick">
+						<th class="foodCode">${foodDto.foodCode}</th>
+						<th class="foodArea">${foodDto.foodArea}</th>
+						<th class="foodName">${foodDto.foodName}</th>
+						<th class="foodMenu">${foodDto.foodMenu}</th>
+						<th class="foodKind">${foodDto.foodKind}</th>
+						<th class="foodAddr">${foodDto.foodAddr}</th>
+						<th class="foodDate"><fmt:formatDate value="${foodDto.foodDate}" pattern="yyyy-MM-dd" /></th>
+					</tr>					
+					</c:forEach>	
+					</c:if>				
 				</tbody>
 			</table>
 		</div>	
@@ -185,27 +188,30 @@
 			<div class="content_modal">
 				<div class="title_modal">
 					<span>식당 등록</span>
-					<span class="close">&times;</span>
+					<span class="close foodInClose">&times;</span>
 				</div>
-				<form action="#" method="post">
-				<div class="food">
+				<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
+				<input type="hidden" name="memberCode" value="${memberCode}" />
+				<div class="food">		
 					<div>
-						<span>식당코드</span>
-						<input type="text" name="foodCode" value=""/>
-					</div>
+						<span>가게명</span>
+						<input type="text" name="foodName" value=""/>
+					</div>		
+					<div>
+						<span>주소</span>
+						<input type="text" name="foodAddr" id="sample5_address">
+						<button type="button" class="button" onclick="sample5_execDaumPostcode()" style="font-size: 16px">지도</button>
+					</div>	
+					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none"></div>
 					<div>
 						<span>지역</span>
 						<input type="radio" name="foodArea" value="제주시"><label>제주시</label>
 						<input type="radio" name="foodArea" value="서귀포시"><label>서귀포시</label>
-					</div>
+					</div>		
 					<div>
-						<span>가게명</span>
-						<input type="text" name="foodName" value=""/>
-					</div>
-					<div>
-						<span>대표음식</span>
-						<input type="text" name="foodMenu" value="">
-					</div>
+						<span>전화번호</span>
+						<input type="text" name="foodPhone" value="">
+					</div>			
 					<div>
 						<span>종류</span>
 						<input type="radio" name="foodKind" value="한식"><label>한식</label>
@@ -216,15 +222,9 @@
 						<input type="radio" name="foodKind" value="기타"><label>기타</label>
 					</div>
 					<div>
-						<span>주소</span>
-						<input type="text" name="foodAddr" id="sample5_address">
-						<button type="button" class="button" onclick="sample5_execDaumPostcode()" style="font-size: 16px">지도</button>
-					</div>
-					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none"></div>
-					<div>
-						<span>전화번호</span>
-						<input type="text" name="foodPhone" value="">
-					</div>
+						<span>대표음식</span>
+						<input type="text" name="foodMenu" value="">
+					</div>				
 					<div>
 						<span>영업시간</span>
 						<input type="text" name="foodTime" value="">
@@ -262,12 +262,21 @@
 			<div class="content_modal">
 				<div class="title_modal">
 					<span>식당 관리</span>
-					<span class="close">&times;</span>
+					<span class="close foodClose">&times;</span>
 				</div>
-				<form action="#" method="post">
+				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
+				<input type="hidden" name="memberCode" value="" />
 				<div class="food">
 					<div>
 						<span>식당코드 : foodCode</span>
+					</div>
+					<div>
+						<span>가게명</span>
+						<input type="text" name="foodName" value=""/>
+					</div>
+					<div>
+						<span>주소</span>
+						<input type="text" name="foodAddr" value=""/>					
 					</div>
 					<div>
 						<span>지역</span>
@@ -275,13 +284,9 @@
 						<input type="radio" name="foodArea" value="서귀포시"><label>서귀포시</label>
 					</div>
 					<div>
-						<span>가게명</span>
-						<input type="text" name="foodName" value=""/>
-					</div>
-					<div>
-						<span>대표음식</span>
-						<input type="text" name="foodMenu" value="">
-					</div>
+						<span>전화번호</span>
+						<input type="text" name="foodPhone" value="">
+					</div>					
 					<div>
 						<span>종류</span>
 						<input type="radio" name="foodKind" value="한식"><label>한식</label>
@@ -290,17 +295,10 @@
 						<input type="radio" name="foodKind" value="양식"><label>양식</label>
 						<input type="radio" name="foodKind" value="카페"><label>카페</label>
 						<input type="radio" name="foodKind" value="기타"><label>기타</label>
-					</div>
+					</div>				
 					<div>
-						<span>주소</span>
-						<input type="text" name="foodAddr" id="sample5_address">
-						<button type="button" class="button" onclick="sample5_execDaumPostcode()" style="font-size: 16px">지도</button>
-					</div>
-					
-					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none"></div>
-					<div>
-						<span>전화번호</span>
-						<input type="text" name="foodPhone" value="">
+						<span>대표음식</span>
+						<input type="text" name="foodMenu" value="">
 					</div>
 					<div>
 						<span>영업시간</span>
@@ -324,8 +322,7 @@
 						<input type="radio" name="foodStatus" value="n"><label>비활성화</label>
 					</div>
 					<div class="btn">
-						<input class="button" type="submit" value="수정하기"></input>
-						<input class="button" type="reset" value="초기화"></input>
+						<input class="button" type="submit" value="수정하기"></input>						
 						<button class="button">삭제하기</button>
 					</div>
 				</div>
@@ -336,25 +333,21 @@
 
 <script type="text/javascript">
 /*  게시판  클릭시 작동 */
-var foodModal = document.getElementById("foodModal");
-var foodClick = document.getElementById("foodClick");
-var span = document.getElementsByClassName("close")[1];
-foodClick.onclick = function() {
-	foodModal.style.display = "block";
-	}
-span.onclick = function() {
-	foodModal.style.display = "none";
-	}
+ 
+$(".foodClick").click(function(){
+	$("#foodModal").css("display","block");
+});
+$(".foodClose").click(function(){
+	$("#foodModal").css("display","none");
+});
 /*  식당 등록 클릭시 작동 */
-var foodInModal = document.getElementById("foodInModal");
-var foodInClick = document.getElementById("foodInClick");
-var span = document.getElementsByClassName("close")[0];
-foodInClick.onclick = function() {
-	foodInModal.style.display = "block";
-	}
-span.onclick = function() {
-	foodInModal.style.display = "none";
-	}
+$("#foodInClick").click(function(){
+	$("#foodInModal").css("display","block");
+});
+$(".foodInClose").click(function(){
+	$("#foodInModal").css("display","none");
+});
+
 	
 /* 지도 */
 /* 지도 검색 */

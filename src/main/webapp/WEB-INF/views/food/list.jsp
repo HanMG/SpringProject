@@ -88,8 +88,6 @@ a {
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${root}/resources/xhr.js"></script>
 <script type="text/javascript">
 var tagType = "";
 var tagValue = "";

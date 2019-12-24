@@ -60,11 +60,11 @@ public class ReviewController {
 		return mav;
 	}
 	@RequestMapping(value = "/review/read.go", method = RequestMethod.GET)
-	public ModelAndView reviewRead(HttpServletRequest request) {
+	public void reviewRead(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
+		mav.addObject("response",response);
 		reviewService.reviewRead(mav);
-		return mav;
 	}
 	
 	// 리뷰 삭제

@@ -2,23 +2,33 @@ package com.java.review.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
 import com.java.review.dao.ReviewDao;
 import com.java.review.dto.ReviewDto;
+import com.java.review.dto.ReviewImgDto;
 
 @Component
 public class ReviewServiceImp implements ReviewService {
@@ -43,10 +53,16 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public void reviewInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
+		HttpServletRequest requestSession = (HttpServletRequest) map.get("request");
+		HttpSession session = requestSession.getSession();
+		String memberCode = (String) session.getAttribute("memberCode");
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");		
 		List<MultipartFile> files = request.getFiles("imgFile");
+		
 		ReviewDto reviewDto = (ReviewDto) map.get("reviewDto");
+		JejuAspect.logger.info(JejuAspect.logMsg + "files : " +files.toString());
 		reviewDto.setReviewDate(new Date());
+		reviewDto.setMemberCode(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewDto);
 		int check = reviewDao.reviewInsertOk(reviewDto);
 		String reviewCode = reviewDao.getReviewCode();
@@ -61,7 +77,7 @@ public class ReviewServiceImp implements ReviewService {
 					File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
-					path.mkdir();					
+					path.mkdirs();					
 
 					if (path.exists() && path.isDirectory()) {
 						File file = new File(path, fileName);
@@ -73,9 +89,9 @@ public class ReviewServiceImp implements ReviewService {
 						imageDto.setImagePath(file.getAbsolutePath());
 						imageDto.setImageSize(fileSize);
 						imageDto.setImageName(fileName);
-						JejuAspect.logger.info(JejuAspect.logMsg + imageDto.toString());
 						JejuAspect.logger.info(JejuAspect.logMsg+check);
 						check += imageDao.imgInsertReview(imageDto);
+						JejuAspect.logger.info(JejuAspect.logMsg + "imageDto : "+ imageDto.toString());
 					}
 				}
 			}
@@ -167,16 +183,45 @@ public class ReviewServiceImp implements ReviewService {
 	public void reviewRead(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
 		String reviewCode = request.getParameter("reviewCode");
 		ReviewDto reviewDto = new ReviewDto();
+		JejuAspect.logger.info(JejuAspect.logMsg+" reviewCode : "+reviewCode);
 		reviewDto = reviewDao.reviewUpdate(reviewCode);
-		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
-		List<ImageDto> listImage = imageDao.imgList(reviewCode);		
-		JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
-		mav.addObject("foodName",foodName);
-		mav.addObject("reviewDto",reviewDto);
-		mav.addObject("listImage",listImage);
-		mav.setViewName("review/read.tiles");			
+		
+		
+		  
+		  JSONObject jo = new JSONObject();
+		  jo.put("reviewCont", reviewDto.getReviewCont()); 
+		  jo.put("reviewScore", reviewDto.getReviewScore()); 
+		  
+//		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
+		List<ImageDto> listImage = imageDao.imgList(reviewCode);
+//
+		JSONArray arr = new JSONArray();
+		for(ImageDto imageDto : listImage) {
+			HashMap<String, Object> hmap = new HashMap<String, Object>();
+			hmap.put("imageCode", imageDto.getImageCode());
+			hmap.put("referCode", imageDto.getReferCode());
+			hmap.put("imageName", imageDto.getImageName());
+			hmap.put("imageSize", imageDto.getImageSize());
+			hmap.put("imagePath", imageDto.getImagePath());
+			arr.add(hmap);
+		}
+		jo.put("imgList",arr);
+		
+		String jsonText = jo.toJSONString();
+		System.out.println(jsonText);
+		response.setContentType("application/x-json;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(jsonText);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Override

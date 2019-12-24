@@ -9,14 +9,13 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
-	<c:remove var="mail" scope="session"/>
-	<c:remove var="check" scope="session"/>
+	<c:remove var="memberCode" scope="session"/>
 	<c:set var="root" value="${pageContext.request.contextPath}"/>
 	<script type="text/javascript">
 		alert("로그아웃 되었습니다.");
 		Kakao.init('f30f46c40f26ed513be4c81611d91389');
 		Kakao.Auth.logout();
-		location.href="${root}/member/main.go";
+		location.href="${root}/index.jsp";
 	</script>
 </body>
 </html>

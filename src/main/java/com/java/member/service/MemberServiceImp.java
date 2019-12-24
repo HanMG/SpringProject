@@ -56,10 +56,10 @@ public class MemberServiceImp implements MemberService{
 		MemberDto memberDto = null;
 		if (check == 1) {
 			memberDto = memberDao.getMemberCode(mail);
+			JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
 		}
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + check);
-		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
 		mav.addObject("check", check);
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/mailLoginOk.tiles");
@@ -72,10 +72,13 @@ public class MemberServiceImp implements MemberService{
 		
 		String nickname = request.getParameter("nickname");
 		String mail = request.getParameter("mail");
+		// DB 저장하기전에 카카오에서 주는 mail값으로 현재 DB에 있는지 체크한다.
 		int emailCheck = memberDao.emailCheck(mail);
 		int check = 0;
+		// 만약 emailCheck 0이면 DB에 존재하지 않으므로 DB에 추가하는 과정을 하고 
 		if (emailCheck == 0) {
 			check = memberDao.insertKakao(nickname, mail);
+			// emailCheck 이미 존재해서 체크값이 1이면 그 값을 체크값에 주어서 넘어간다
 		} else {
 			check = emailCheck;
 		}

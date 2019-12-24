@@ -100,6 +100,10 @@
 		]]>
 	</select>
 	
+	<select id="getReviewScore" resultType="com.java.search.dto.SearchFoodDto" parameterType="String">
+		SELECT AVG(review_score) as reviewScore FROM review WHERE FOOD_CODE = #{foodCode} GROUP BY FOOD_CODE
+	</select>
+	
 	<select id="keywordList" parameterType="String" resultType="com.java.search.dto.SearchFoodDto">
 		SELECT food_name FROM
 		(SELECT rownum rn, B.food_name food_name FROM 

@@ -77,6 +77,10 @@ public class FoodDaoImp implements FoodDao {
 	public float foodReviewAvg(String foodCode) {		
 		return sqlSession.selectOne("dao.FoodMapper.foodReviewAvg", foodCode);
 	}	
+	@Override
+	public List<FoodReviewDto> reviewList(String foodCode) {
+		return sqlSession.selectList("dao.FoodMapper.foodReviewList", foodCode);
+	}
 
 	
 	

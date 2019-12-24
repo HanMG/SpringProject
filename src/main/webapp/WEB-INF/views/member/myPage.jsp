@@ -34,7 +34,7 @@ a {
 .myPage {
 	width: 1000px;
 	overflow: hidden;
-	margin: 0 120px;
+	margin: 40px 120px;
 	background: #F2F4EF;
 }
 .myPage > div:nth-child(n+2) {
@@ -589,14 +589,15 @@ a {
 							<div class="reg_1">
 								<div>
 									<span>${foodList.foodName }</span>
-									<c:choose>
+									<%-- <c:choose>
 										<c:when test="${foodList.foodStatus == 0 }">
 											<span>등록중</span>
 										</c:when>
 										<c:when test="${foodList.foodStatus != 0 }">
 											<span>등록됨</span>
 										</c:when>
-									</c:choose>
+									</c:choose> --%>
+									<span>${foodList.foodStatus}</span>
 								</div>
 								<div>
 									<span>${foodList.foodKind}</span>

@@ -149,21 +149,22 @@ a {
 			<h4>필터</h4>
 			<label>조회 기준</label>
 			<select>
-				<option value="">평점순(평점)</option>
-				<option value="">인기순(조회)</option>
+				<option value="평점">평점순</option>
+				<option value="조회수">인기순</option>
 			</select>
 			<label>음식점 지역</label>
 			<select>
-				<option value="">제주시</option>
-				<option value="">서귀포시</option>
+				<option value="제주시">제주시</option>
+				<option value="서귀포시">서귀포시</option>
 			</select>
 			<label>음식 종류</label>
 			<select>
-				<option value="">한식</option>
-				<option value="">양식</option>
-				<option value="">일식</option>
-				<option value="">중식</option>
-				<option value="">카페</option>
+				<option value="한식">한식</option>
+				<option value="회집">회집</option>
+				<option value="일식">일식</option>
+				<option value="양식">양식</option>
+				<option value="중국식">중식</option>
+				<option value="까페">까페</option>
 			</select>
 			<input type="button" value="적용">
 		</div>
@@ -199,4 +200,13 @@ a {
 	</div>
 		
 </body>
+<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+function search() {
+	var param = $("#searchInput").val()
+	url = "${root}/searchKeyword.go?keyword=" + param;
+	location.href = url;
+}
+
+</script>
 </html>

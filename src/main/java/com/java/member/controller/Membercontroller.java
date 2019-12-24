@@ -39,7 +39,7 @@ public class Membercontroller {
 		return mav;
 	}
 	// 카카오, 이메일 성공시
-	@RequestMapping(value="/member/mailLoginOk.go", method=RequestMethod.POST)
+	@RequestMapping(value="/member/mailLoginOk.go", method= {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView memberMailLoginOk(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
@@ -94,6 +94,21 @@ public class Membercontroller {
 		mav.addObject("response", response);
 		memberService.myFoodDel(mav);
 	}
+	
+	
+	
+	
+	
+	// 관리자
+	
+	// 회원 관리 관련
+		@RequestMapping(value = "/admin/member.go", method = RequestMethod.GET)
+		public ModelAndView member(HttpServletRequest request, HttpServletResponse response) {
+			ModelAndView mav = new ModelAndView();
+			memberService.adminMember(mav);
+			mav.setViewName("admin/member.admin");		
+			return mav;		
+		}
 	
 }
 

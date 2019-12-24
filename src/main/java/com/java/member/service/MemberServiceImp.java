@@ -15,10 +15,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.aop.JejuAspect;
-import com.java.food.dao.FoodDao;
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
+import com.java.image.dto.ImageDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
+import com.java.member.dto.MemberFavoriteDto;
+import com.java.review.dto.ReviewDto;
 
 @Component
 public class MemberServiceImp implements MemberService{
@@ -114,10 +117,19 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("foodList", foodList);
 		
 		// 가고싶다
+		List<MemberFavoriteDto> favoriteList = memberDao.getMyFavorite(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + favoriteList.size());
+		mav.addObject("favoriteList", favoriteList);
 		
 		// 리뷰
+		List<ReviewDto> reviewList = memberDao.getMyReview(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.size());
+		mav.addObject("reviewList",reviewList);
 		
 		// EAT딜
+		List<CouponDto> couponList = memberDao.getMyCoupon(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
+		mav.addObject("couponList", couponList);
 		
 		mav.setViewName("member/myPage.tiles");
 		
@@ -173,6 +185,16 @@ public class MemberServiceImp implements MemberService{
 		}
 		
 		
+	}
+	
+	
+	//관리자
+	@Override
+	public void adminMember(ModelAndView mav) {
+		Map<String, Object> map=mav.getModelMap();
+		MemberDto memberDto = (MemberDto) map.get("memberDto");
+		List<MemberDto> memberList = memberDao.getMember(memberDto);
+		mav.addObject("memberList", memberList);
 	}
 	
 }

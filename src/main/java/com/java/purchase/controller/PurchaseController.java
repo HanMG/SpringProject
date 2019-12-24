@@ -53,11 +53,24 @@ public class PurchaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		
-		purchaseService.purchaseListAll(mav);
+		purchaseService.purchaseList(mav);
 		
 		return mav;
 	}
-
+	
+	//구매 내역 전체 리스트(관리자)
+	@RequestMapping(value="/purchase/purchaseListAll.go", method=RequestMethod.GET)
+	public ModelAndView purchaseListAll(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		purchaseService.purchaseListAll(mav);
+		mav.setViewName("purchase/purchaseListAll.tiles");
+		
+		return mav;
+	}
+	
+	
 	//구매 취소
 	@RequestMapping(value="/purchase/purchaseDelete.go", method=RequestMethod.GET)
 	public ModelAndView purchaseDelete(HttpServletRequest request, HttpServletResponse response) {
@@ -75,6 +88,7 @@ public class PurchaseController {
 		
 		return mav;
 	}
+	//구매 취소
 	@RequestMapping(value="/purchase/purchaseDeleteOk.go", method=RequestMethod.POST)
 	public ModelAndView purchaseDeleteOk(HttpServletRequest request, HttpServletResponse response) {
 		String couponCode = request.getParameter("couponCode");
@@ -91,5 +105,9 @@ public class PurchaseController {
 		
 		return mav;
 	}
+	
+	
+	
+	
 }
 

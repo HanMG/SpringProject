@@ -7,12 +7,54 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 상품 등록</title>
-		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
+		<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
 		<script type="text/javascript">
 			//유효성 체크
 			function insertForm(obj){
-				alert("insertForm Ok");
+				if(obj.couponName.value==""){
+					alert("등록하실 쿠폰상품명을 입력해주세요.");
+					obj.couponName.focus();
+					return false;
+				}
+				if(obj.foodCode.value==""){
+					alert("등록하실 식당명을 입력해주세요.");
+					obj.foodCode.focus();
+					return false;
+				}
+				if(obj.couponStartdate.value==""){
+					alert("쿠폰의 유효기간 시작일을 입력해주세요.");
+					obj.couponStartdate.focus();
+					return false;
+				}
+				if(obj.couponEnddate.value==""){
+					alert("쿠폰의 유효기간 마감일을 입력해주세요.");
+					obj.couponEnddate.focus();
+					return false;
+				}
+				if(obj.couponCostori.value==""){
+					alert("판매금액을 입력해주세요.");
+					obj.couponCostori.focus();
+					return false;
+				}
+				if(obj.couponSalerate.value==""){
+					alert("할인율을 입력해주세요");
+					obj.couponSalerate.focus();
+					return false;
+				}
+				if(obj.couponSalerate.value < 0 || obj.couponSalerate.value > 100){
+					alert("0부터 100으로 입력해주세요.");
+					obj.couponSalerate.focus();
+					return false;
+				}
+				
+				if(obj.imageFile.value==""){
+					alert("이미지를 첨부해주세요.");
+					obj.imageFile.focus();
+					return false;
+				}
 			}
 	
 			//식당코드 리스트 출력
@@ -21,17 +63,39 @@
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
 			
+			$(function(){
+				$.datepicker.setDefaults({
+					dateFormat: 'yy-mm-dd',
+					showOn: 'both',
+					prevText: '이전',
+				    nextText: '다음',
+					monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		    		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			    	dayNames: ['일','월','화','수','목','금','토'],
+				    dayNamesShort: ['일','월','화','수','목','금','토'],
+				    dayNamesMin: ['일','월','화','수','목','금','토'],
+				    showMonthAfterYear: true,
+				    showButtonPanel:true,
+				    changeMonth: true,
+				    changeYear: true,
+				    yearSuffix: '년'
+				})
+				$('#datepickStart').datepicker();
+				$('#datepickEnd').datepicker();
+				//$('#datepickStart').datepicker('setDate', 'today');
+				//$('#datepickEnd').datepicker('setDate','+1D');
+			})
+			
 		</script>
 	</head>
 	<body>
 		<form action="${root}/coupon/couponInsertOk.go" method="post" enctype="multipart/form-data" 
-		onsubmit="return insertForm(this)" name="couponForm">
-				<%-- <input type="hidden" name="sequenceLevel" value="${sequenceLevel}" /> --%>
+		onsubmit="return insertForm(this)" name="couponForm" autocomplete="off">
 				<ul class="write_box">
 					<li>
 						<p>상품명(쿠폰명)</p>
 						<p>
-							<input type="text" name="couponName" value="강남">
+							<input type="text" name="couponName">
 						</p>
 					</li>
 					<li>
@@ -46,9 +110,9 @@
 					<li>
 						<p>유효 기간</p>
 						<p>
-							<input type="text" name="couponStartdate" value="2019-12-12">
+							<input id="datepickStart" type="text" name="couponStartdate">
 							<span>~</span>
-							<input type="text" name="couponEnddate"  value="2019-12-31">
+							<input id="datepickEnd"  type="text" name="couponEnddate">
 						</p>
 					</li>
 					<li>
@@ -66,7 +130,7 @@
 					<li>
 						<p>할인율</p>
 						<p>
-							<input id="saleRate" type="text" name="couponSalerate">
+							<input id="saleRate" type="text" name="couponSalerate" maxlength="3">
 						</p>
 					</li>
 					<li>

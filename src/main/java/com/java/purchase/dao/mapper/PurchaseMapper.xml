@@ -39,17 +39,17 @@
 			SELECT 'pc'||LPAD(seqpurchase.nextval,4,0) As purchase_code from dual
 		</selectKey>
 		INSERT INTO purchase(purchase_code, coupon_code, member_code, purchase_phone, purchase_date, purchase_cost, purchase_status)
-		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, TO_DATE(SYSDATE,'yyyy.mm.dd hh24:mi'), #{purchaseCost}, 'Y')
+		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, SYSDATE, #{purchaseCost}, 'Y')
 	</insert>
-	
 	<!--구매 완료 후 정보 출력 -->
 	<select id="purchaseCouponSelect" parameterType="String" resultMap="CouponDto">
-		SELECT * FROM coupon WHERE coupon_code = (SELECT coupon_code FROM purchase WHERE purchase_code = #{purchaseCode})
+		SELECT coupon_code, food_code, coupon_name, TO_CHAR(coupon_startdate, 'YYYY-MM-DD') as coupon_startdate, TO_CHAR(coupon_enddate, 'YYYY-MM-DD') as coupon_enddate, coupon_costori, coupon_salerate, coupon_costsale, coupon_intro
+		FROM coupon WHERE coupon_code = (SELECT coupon_code FROM purchase WHERE purchase_code = #{purchaseCode})
 	</select>
 	
 	<!-- 해당 회원의 구매내역 카운트 -->
 	<select id="getCount" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM purchase WHERE  member_code = #{memberCode}
+		SELECT NVL(COUNT(*),0) FROM purchase WHERE  member_code = #{memberCode} AND purchase_status = 'Y'
 	</select>
 	
 	<!-- 구매내역(마이페이지) -->
@@ -60,7 +60,25 @@
     	SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
         SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
     	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
-    	WHERE  member_code = #{memberCode} AND purchase_status = 'Y' ORDER BY purchase_date ASC) A) B 
+    	WHERE  member_code = #{memberCode} AND purchase_status = 'Y' ORDER BY purchase_date DESC) A) B 
+    	WHERE B.numb >= #{startRow} AND B.numb <= #{endRow}
+		]]>
+	</select>
+	
+	<!-- 구매내역 전체 카운트 -->
+	<select id="getCountAll" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM purchase WHERE purchase_status = 'Y'
+	</select>
+	
+	<!-- 구매내역(관리자) -->
+	<select id="purchaseListAll" parameterType="java.util.Map" resultMap="PurchaseListDto">
+		<![CDATA[
+		SELECT * FROM
+    	(SELECT ROWNUM AS numb, A.* FROM (
+    	SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
+        SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
+    	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
+    	WHERE purchase_status = 'Y' ORDER BY purchase_date DESC) A) B 
     	WHERE B.numb >= #{startRow} AND B.numb <= #{endRow}
 		]]>
 	</select>

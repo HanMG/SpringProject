@@ -43,10 +43,12 @@ public class PurchaseServiceImp implements PurchaseService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String couponCode = request.getParameter("couponCode");
 		String purchasePhone = request.getParameter("purchasePhone");
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchasePhone: "+ purchasePhone);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		CouponDto couponDto = couponDao.purchaseSelect(couponCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		
 		
 		//세션으로 회원정보 가져오기
 		HttpSession session =  request.getSession(false);
@@ -71,11 +73,13 @@ public class PurchaseServiceImp implements PurchaseService {
 		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
+		//String purchasePhone = purchaseDto.getPurchasePhone();
+		//purchaseDto.setPurchasePhone(purchaseDto.getPurchasePhone().replace("-",""));
+		
 		purchaseDto.setPurchaseDate(new Date());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
 		
 		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
-		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCode: "+ purchaseCode);
 		
 		int check = 0;
 		if(purchaseCode != null) {
@@ -91,7 +95,7 @@ public class PurchaseServiceImp implements PurchaseService {
 	
 	//구매내역
 	@Override
-	public void purchaseListAll(ModelAndView mav) {
+	public void purchaseList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
@@ -122,7 +126,35 @@ public class PurchaseServiceImp implements PurchaseService {
 		mav.setViewName("purchase/purchaseList.tiles");
 	}
 	
-	// TODO Auto-generated method stub
+	//구매내역전체(관리자)
+	@Override
+	public void purchaseListAll(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String pageNumber = request.getParameter("pageNumber");
+		if(pageNumber == null) pageNumber = "1";
+		int currentPage = Integer.parseInt(pageNumber);
+		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber/currentPage: "+ pageNumber +"/"+ currentPage);
+
+		int count = purchaseDao.getCountAll();
+		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		
+		int boardSize = 10;
+		int startRow = (currentPage-1)*boardSize+1;
+		int endRow = currentPage*boardSize;
+		JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
+		
+		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll(startRow, endRow);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
+		
+		mav.addObject("pageNumber", pageNumber);
+		mav.addObject("boardSize", boardSize);
+		mav.addObject("count", count);
+		mav.addObject("purchaseList", purchaseList);
+	}
+	
+	
 	// 구매 취소
 	@Override
 	public void purchaseDeleteOk(ModelAndView mav) {

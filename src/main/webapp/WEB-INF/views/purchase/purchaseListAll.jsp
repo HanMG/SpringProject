@@ -89,10 +89,10 @@ a {
 	<div id="content">
 		<div class="history">
 			<div class="title">
-				<span>구매한 EAT딜</span>
+				<span>구매된 EAT딜</span>
 			</div>
 			<c:if test="${count == 0 || purchaseList.size() == 0}">
-				<p>구매한 EAT딜이 없습니다.</p>
+				<p>EAT딜이 없습니다.</p>
 			</c:if>
 			
 			<c:if test="${count > 0}">

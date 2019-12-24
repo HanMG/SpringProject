@@ -15,6 +15,9 @@ public interface CouponService {
 	
 	//식당 코드 검색
 	public void searchFoodCode(ModelAndView mav);
+
+	//쿠폰 리스트[관리자]
+	public void couponListAdmin(ModelAndView mav);
 	
 	//쿠폰 리스트
 	public void couponList(ModelAndView mav);

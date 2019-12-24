@@ -26,65 +26,66 @@ import com.java.image.dto.ImageDto;
 public class CouponController {
 	@Autowired
 	private CouponService couponService;
-	
-	//쿠폰상품 등록 페이지
-	@RequestMapping(value="/coupon/couponInsert.go", method= RequestMethod.GET)
-	public ModelAndView couponInsert(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("coupon/couponInsert.tiles");
-		
-		return mav;
-	}
-	
-	//쿠폰상품 등록
-	@RequestMapping(value="/coupon/couponInsertOk.go", method= RequestMethod.POST)
+
+	// 쿠폰상품 등록 페이지
+//	@RequestMapping(value="/coupon/couponInsert.go", method= RequestMethod.GET)
+//	public ModelAndView couponInsert(HttpServletRequest request, HttpServletResponse response) {
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("coupon/couponInsert.tiles");
+//		
+//		return mav;
+//	}
+//	
+	// 쿠폰상품 등록
+	@RequestMapping(value = "/coupon/couponInsertOk.go", method = RequestMethod.POST)
 	public ModelAndView couponInsertOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		String imageFile = request.getParameter("imageFile");
-		//JejuAspect.logger.info(JejuAspect.logMsg + "imageFile: "+ imageFile);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponDto", couponDto);
 		mav.addObject("imageFile", imageFile);
-		
+
 		couponService.couponInsertOk(mav);
-		
+
 		return mav;
 	}
-	
-	//식당코드 검색 
-	@RequestMapping(value="/coupon/searchFoodCode.go", method=RequestMethod.GET)
+
+	// 식당코드 검색
+	@RequestMapping(value = "/coupon/searchFoodCode.go", method = RequestMethod.GET)
 	public ModelAndView readFoodCode(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		String foodName = request.getParameter("foodName");
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("foodName", foodName);
 		couponService.searchFoodCode(mav);
-		
+
+		mav.setViewName("coupon/searchFoodCode.empty");
+
 		return mav;
 	}
-	
-	//쿠폰리스트
-	@RequestMapping(value="/coupon/couponList.go", method=RequestMethod.GET)
+
+	// 쿠폰리스트
+	@RequestMapping(value = "/coupon/couponList.go", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView couponList(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
-		
+
 		couponService.couponList(mav);
 		mav.setViewName("coupon/couponList.tiles");
 		return mav;
 	}
-	
-	//쿠폰 리스트(Ajax 새로고침)
-	@RequestMapping(value="/coupon/couponListAjax.go", method=RequestMethod.GET)
+
+	// 쿠폰 리스트(Ajax 새로고침)
+	@RequestMapping(value = "/coupon/couponListAjax.go", method = RequestMethod.GET)
 	public @ResponseBody void couponListAjax(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
-		
-		//Map<String, Object> CommonMap = new HashMap<String, Object>();	
+
+		// Map<String, Object> CommonMap = new HashMap<String, Object>();
 		String jsonText = couponService.couponListAjax(mav);
-		
+
 		if (jsonText != null) {
 			response.setContentType("application/x-json;charset=utf-8");
 			try {
@@ -98,83 +99,82 @@ public class CouponController {
 			}
 		}
 	}
-	
-	//쿠폰 상세페이지
-	@RequestMapping(value="/coupon/couponRead.go", method=RequestMethod.GET)
+
+	// 쿠폰 상세페이지
+	@RequestMapping(value = "/coupon/couponRead.go", method = RequestMethod.GET)
 	public ModelAndView couponRead(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
-		ModelAndView mav= new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
-		mav.addObject("response", response);	// 임시
-		
+		mav.addObject("response", response); // 임시
+
 		couponService.couponRead(mav);
-		
+
 		return mav;
 	}
-	
-	//쿠폰상품 불러오기(수정)
-	@RequestMapping(value="/coupon/couponUpdate.go", method=RequestMethod.GET)
+
+	// 쿠폰상품 불러오기(수정)
+	@RequestMapping(value = "/coupon/couponUpdate.go", method = RequestMethod.GET)
 	public ModelAndView couponUpdate(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		
+
 		String couponCode = request.getParameter("couponCode");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponCode", couponCode);
 		mav.addObject("pageNumber", pageNumber);
 		couponService.couponUpdate(mav);
-		
+
 		return mav;
 	}
-	
-	//쿠폰상품 수정
-	@RequestMapping(value="/coupon/couponUpdateOk.go", method=RequestMethod.POST)
-	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto, ImageDto imageDto) {
+
+	// 쿠폰상품 수정
+	@RequestMapping(value = "/coupon/couponUpdateOk.go", method = RequestMethod.POST)
+	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto,
+			ImageDto imageDto) {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponDto", couponDto);
 		mav.addObject("imageDto", imageDto);
 		mav.addObject("pageNumber", pageNumber);
-		
+
 		couponService.couponUpdateOk(mav);
-		
+
 		return mav;
 	}
-	
-	
-	//쿠폰상품 삭제창
-	@RequestMapping(value="/coupon/couponDelete.go", method=RequestMethod.GET)
+
+	// 쿠폰상품 삭제창
+	@RequestMapping(value = "/coupon/couponDelete.go", method = RequestMethod.GET)
 	public ModelAndView couponDelete(HttpServletRequest request, HttpServletResponse response) {
 		String couponCode = request.getParameter("couponCode");
 		String couponName = request.getParameter("couponName");
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponCode", couponCode);
 		mav.addObject("couponName", couponName);
 		mav.addObject("pageNumber", pageNumber);
-		
-		
+
 		mav.setViewName("coupon/couponDelete.empty");
-		
-		return mav;	
-		
+
+		return mav;
+
 	}
-	
-	//쿠폰상품 삭제
-	@RequestMapping(value="/coupon/couponDeleteOk.go", method=RequestMethod.POST)
+
+	// 쿠폰상품 삭제
+	@RequestMapping(value = "/coupon/couponDeleteOk.go", method = RequestMethod.POST)
 	public ModelAndView couponDeleteOk(HttpServletRequest request, HttpServletResponse response) {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		
-		ModelAndView mav = new  ModelAndView();
+
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("pageNumber", pageNumber);
-		
+
 		couponService.couponDeleteOk(mav);
-		
+
 		return mav;
 	}
-	
+
 }

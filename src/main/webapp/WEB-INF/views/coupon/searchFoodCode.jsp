@@ -26,10 +26,10 @@
 		
 		//식당코드 기입
 		function sendFoodCode(foodCode, foodName, foodAddr){
-			opener.couponForm.foodCode.value= foodCode;
-			opener.couponForm.foodName.value= foodName;
+			opener.couponFormInsert.foodCode.value= foodCode;
+			opener.couponFormInsert.foodName.value= foodName;
 			self.close();
-		}
+		} 
 		</script>
 	</head>
 	<body>

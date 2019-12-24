@@ -50,7 +50,6 @@ public class CouponServiceImp implements CouponService {
 	public void couponInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		CouponDto couponDto =(CouponDto) map.get("couponDto");
-		//couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n","<br/>"));
 		
 		String couponCode = couponDao.couponInsert(couponDto);
 		
@@ -114,7 +113,44 @@ public class CouponServiceImp implements CouponService {
 			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList 사이즈: "+ searchFoodCodeList.size());
 			mav.addObject("foodCodeList", searchFoodCodeList);
 		}
-		mav.setViewName("coupon/searchFoodCode.empty");
+		
+	}
+	
+	
+	//쿠폰리스트[관리자]
+	@Override
+	public void couponListAdmin(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		String pageNumber = request.getParameter("pageNumber");
+		
+		if(pageNumber == null) pageNumber = "1";
+		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber: "+ pageNumber);
+		int currentPage = Integer.parseInt(pageNumber);
+		
+		//쿠폰 리스트 카운트
+		int count = couponDao.couponListCount();
+		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		
+		int scrollSize = 10;
+		int startRow = (currentPage - 1) * scrollSize + 1;
+		int endRow = currentPage*scrollSize;
+		
+		List<CouponDto> couponList = null;
+		
+		//현재 날짜 출력
+		Date today = new Date();
+		JejuAspect.logger.info(JejuAspect.logMsg + "date: "+ today);
+		
+		if(count > 0) {
+			//쿠폰 리스트 가져오기
+			couponList = couponDao.couponList(startRow, endRow, today);
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
+			mav.addObject("couponList", couponList);
+		}
+		mav.addObject("count", count);
+		mav.addObject("pageNumber", pageNumber);
 	}
 	
 	

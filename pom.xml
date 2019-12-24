@@ -264,6 +264,12 @@
 		    <version>2.9.8</version>
 		</dependency>
 		
+		<!-- send mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 		
 		
 	</dependencies>

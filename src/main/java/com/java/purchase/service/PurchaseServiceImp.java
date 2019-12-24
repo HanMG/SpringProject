@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +22,7 @@ import com.java.coupon.dao.CouponDao;
 import com.java.coupon.dto.CouponDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
+import com.java.mailing.dto.MailDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
 import com.java.purchase.dao.PurchaseDao;
@@ -35,6 +41,9 @@ public class PurchaseServiceImp implements PurchaseService {
 	
 	@Autowired
 	private CouponDao couponDao;
+	
+	@Inject
+	JavaMailSender mailSender;
 	
 	// 구매 페이지 연결
 	@Override
@@ -73,8 +82,8 @@ public class PurchaseServiceImp implements PurchaseService {
 		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
-		//String purchasePhone = purchaseDto.getPurchasePhone();
-		//purchaseDto.setPurchasePhone(purchaseDto.getPurchasePhone().replace("-",""));
+		String memberMail = request.getParameter("memberMail");
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberMail: "+ memberMail);
 		
 		purchaseDto.setPurchaseDate(new Date());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
@@ -82,11 +91,34 @@ public class PurchaseServiceImp implements PurchaseService {
 		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
 		
 		int check = 0;
+		CouponDto couponDto = null;
 		if(purchaseCode != null) {
 			check = 1;
-			CouponDto couponDto = purchaseDao.purchaseCouponSelect(purchaseCode);
+			couponDto = purchaseDao.purchaseCouponSelect(purchaseCode);
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 			mav.addObject("couponDto", couponDto);
+		}
+		
+		String couponName = couponDto.getCouponName();	
+		int couponCost = couponDto.getCouponCostsale();	
+		
+		String subject = "구매해주셔서 감사합니다.";
+		String mailContent = "결제가 완료되었습니다." + "구매하신 상품: "+ couponName + "결제된 금액: "+ couponCost;
+		
+		if(check > 0) {
+			try {
+				MimeMessage msg = mailSender.createMimeMessage();
+				MailDto mailDto = new MailDto();
+				msg.addRecipient(RecipientType.TO, new InternetAddress(memberMail));
+				msg.addFrom(new InternetAddress[] {new InternetAddress("labelle410@gmail.com")});
+				msg.setSubject(subject, "utf-8");								
+				msg.setText(mailContent, "utf-8");									
+				
+				mailSender.send(msg);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		mav.addObject("check",check);

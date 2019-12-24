@@ -64,37 +64,50 @@
 		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="${root}/resources/xhr.js"></script>
 		<!-- Ajax -->
-		<!-- 
 		<script type="text/javascript">
 			var pageNumber = 1;
-				
+			
 			$(function(){
 				toServer(pageNumber);
 			});
+			
 			$(window).scroll(function(){
 				if($(window).scrollTop() >= $(document).height()-$(window).height()){
-					toServer(pageNumber);
 					pageNumber++;
-					console.log(pageNumber);
-					//$('.list').append()
+					toServer(pageNumber);
 				}
 			})
 			
+			//pageNumber 던져주는 곳
 			function toServer(pageNumber){
 				var param = "pageNumber=" + pageNumber;
-				sendRequest("GET","couponList.go", fromServer, param);
+				console.log("param:" +param);
+				sendRequest("GET","couponListAjax.go", fromServer, param);
 			}
 			
-			function fromServer(){
+			//받기
+			function fromServer(data){
 				if(xhr.readyState == 4 && xhr.status == 200){
-					console.log("pageNumber: "+ pageNumber);
-					//var list = getElementsByClassName("list");
-					if(pageNumber > 1){
-						document.getElementById("inner").innerHTML = xhr.responseText;						
+					var data = JSON.parse(xhr.responseText);
+					console.log(data);
+					console.log("length:"+ data.length);
+					
+					for(var i=0; i< data.length; i++){
+						var list = '<div class="list"><div><span>'+data[i].couponName+'</span></div>';
+						list += '<div><img alt="쿠폰 이미지" src="'+data[i].imageName+'"></div><div><span>${couponDto.couponName}</span></div>';
+						list += '<div><span>사용가능기간: '+data[i].couponStartdate+'부터 '+data[i].couponEnddate+'까지</span></div>';
+						list += '<div><span style="text-decoration:line-through;">원가격: '+data[i].couponCostori+'</span></div>';
+						list += '<div><span>할인가격:'+data[i].couponCostsale+'</span><a href="${root}/coupon/couponRead.go?couponCode='+data[i].couponCode+'${couponDto.couponCode}&pageNumber='+pageNumber+'">구매하기</a></div>';
+						$('#next').append(list);
 					}
 				}
 			}
-		</script> -->
+				
+			function addNext(couponListNext){
+				console.log(couponListNext);
+				
+			}
+		</script>
 	</head>
 	<body>
 		<input type="hidden" name="pageNumber" value="${pageNumber}">
@@ -104,12 +117,12 @@
 				<span>EAT 딜</span>
 			</div>
 			<!-- 검색 했을 경우 : 템플릿 들어갈 것-->
-			<div>
+			<!-- <div>
 				<input type="text" name="search">
 			</div>
 			<div>
 				<h3>[검색어]로 검색한 결과입니다.</h3>
-			</div>
+			</div> -->
 			<div class="eat">
 				<c:if test="${count == 0}">
 					<div>
@@ -117,26 +130,7 @@
 					</div>
 				</c:if>
 				<c:if test="${count > 0}">
-					<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-					<div id="inner" class="list">
-						<div>
-							<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}"> --%>
-						</div>
-						<div>
-							<span>${couponDto.couponName}</span>
-						</div>
-						<div>
-							<span>사용가능기간: ${couponDto.couponStartdate}부터 ${couponDto.couponEnddate} 까지</span>
-						</div>
-						<div>
-							<span style="text-decoration:line-through;">원가격: ${couponDto.couponCostori}</span>
-						</div>
-						<div>
-							<span>할인가격: ${couponDto.couponCostsale}</span>
-							<a href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">구매하기</a>
-						</div>
-					</div>
-					</c:forEach>
+					<div id="next"></div>
 				</c:if>
 			</div>
 		</div><!-- // #content -->

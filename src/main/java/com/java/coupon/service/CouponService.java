@@ -19,6 +19,9 @@ public interface CouponService {
 	//쿠폰 리스트
 	public void couponList(ModelAndView mav);
 	
+	//쿠폰 ajax로 리스트 불러오기
+	public String couponListAjax(ModelAndView mav);
+	
 	//쿠폰 상세페이지
 	public void couponRead(ModelAndView mav);
 	

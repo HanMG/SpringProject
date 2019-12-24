@@ -72,8 +72,31 @@ public class CouponController {
 		mav.addObject("request", request);
 		
 		couponService.couponList(mav);
-		
+		mav.setViewName("coupon/couponList.tiles");
 		return mav;
+	}
+	
+	//쿠폰 리스트(Ajax 새로고침)
+	@RequestMapping(value="/coupon/couponListAjax.go", method=RequestMethod.GET)
+	public @ResponseBody void couponListAjax(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		//Map<String, Object> CommonMap = new HashMap<String, Object>();	
+		String jsonText = couponService.couponListAjax(mav);
+		
+		if (jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			try {
+				PrintWriter out;
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//쿠폰 상세페이지

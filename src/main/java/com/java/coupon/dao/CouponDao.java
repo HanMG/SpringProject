@@ -29,6 +29,9 @@ public interface CouponDao {
 	//쿠폰 리스트
 	public List<CouponDto> couponList(int startRow, int endRow, Date today);
 	
+	//쿠폰 ajax로 리스트 불러오기
+	public List<CouponDto> couponListAjax(int startRow, int endRow, Date today);
+	
 	//쿠폰 상세페이지
 	public CouponDto couponRead(String couponCode);
 	
@@ -43,4 +46,5 @@ public interface CouponDao {
 	
 	//쿠폰 구매 연결
 	public CouponDto purchaseSelect(String couponCode);
+
 }

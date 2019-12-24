@@ -9,14 +9,19 @@
 		<put-attribute name="content" value=""></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"></put-attribute>
 	</definition>
-	
+	<!-- 메인화면 용 -->
+	<definition name="main" template="/WEB-INF/views/template/main.jsp">
+		<put-attribute name="mainHeader" value="/WEB-INF/views/template/mainHeader.jsp"></put-attribute>
+		<put-attribute name="content" value=""></put-attribute>
+	</definition>
+
 	<!-- Content -->
 	
-	<definition name="*.tiles" extends="layout" >
+	<definition name="*.tiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
 	</definition>
 	
-	<definition name="*/*.tiles" extends="layout" >
+	<definition name="*/*.tiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 	
@@ -30,8 +35,43 @@
 		<put-attribute name="content" value=""></put-attribute>
 	</definition>
 	
+	<definition name="*.empty" extends="empty">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	
 	<definition name="*/*.empty" extends="empty">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>		
+	</definition>
+	
+	<!-- 메인화면 용 -->
+	<definition name="*.main" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	<definition name="*/*.main" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	<definition name="*/*/*.main" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	</definition>
+	
+	<!-- 관리자 -->
+	<definition name="adminLayout" template="/WEB-INF/views/adminTemplate/adminLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/adminTemplate/header.jsp"></put-attribute>
+		<put-attribute name="menu" value="/WEB-INF/views/adminTemplate/menu.jsp"></put-attribute>
+		<put-attribute name="content" value=""></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/adminTemplate/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="*.admin" extends="adminLayout" >
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	
+	<definition name="*/*.admin" extends="adminLayout" >
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<definition name="*/*/*.admin" extends="adminLayout">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	</definition>
 	
 </tiles-definitions>       

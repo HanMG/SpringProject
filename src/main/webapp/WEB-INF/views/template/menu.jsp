@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>메뉴</title>
+<style type="text/css">
+</style>
 </head>
 <body>	
 
@@ -47,5 +49,10 @@
 		</c:when>
 	</c:choose>
 	</div>
+	
+	
 </body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script> -->
 </html>

@@ -20,27 +20,42 @@ a {
 	text-decoration: none;
 }
 #header {
-	width: 1240px;
+	width: 100%;
 	height: 50px;
-	margin: 0 auto;
+	position: fixed;
+	background-color: #F2F4EF;
+	z-index: 999;
+	box-shadow: 0 4px 11px rgba(0,0,0,0.1);
+	
 }	
 #header > div {
 	float: left;
 }
+#header > div * {
+	color: #EFB730;
+}
+#header > div:nth-child(1) {
+	margin-left: 280px;
+}
 #header > div:nth-child(n+3) {
-	width: 100px;
 	height: 50px; 
 	text-align: center;
 	line-height: 50px;
-	font-size: 20px;
+	font-size: 25px;
+	margin: 0 15px;
 }
-#header > div input {
-	width: 100%;
+#header > div > input {
+	width: 740px; 
 	height: 50px;
 	border: none;
-	min-width: 600px;
+	font-size: 25px;
+	background-color: #F2F4EF;
+	padding-left: 20px;
 }
-#header > div > img {
+#header > div > input::placeholder {
+	color: #EFB730;
+}
+#header > div > a > img {
 	width: 100px;
 	height: 50px;
 }
@@ -152,6 +167,7 @@ a {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  z-index: 10;
 }
 
 /* The Close Button */
@@ -172,21 +188,61 @@ a {
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
+<link rel="stylesheet" type="text/css" href="${root}/resources/css/radioButton.css" />
+<link rel="stylesheet" type="text/css" href="${root}/resources/css/fileButton.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <!-- body부분에도 엔터 이벤트를 추가하면 input태그 외의 공간에서도 엔터 이벤트가 발생  -->
-<body onkeypress="if(event.keyCode == 13){searchDate();}">
+<body>
+
+	<div class="container">
+
+		<a href="${root}/coupon/couponInsert.go">상품등록</a>
+		<a href="${root}/coupon/couponList.go">상품리스트</a>
+		<a href="${root}/search.go">검색</a>
+		<a href="${root}/food/list.go">음식점 리스트</a>
+		<a href="${root}/food/read.go?foodCode=food0472">음식상세페이지 </a>			
+		<a href="${root}/review/read.go?reviewCode=review0011">리뷰상세페이지</a>	
+		<a href="${root}/purchase/purchaseList.go">구매내역</a>
+		
+		
+	<c:choose>
+		<c:when test="${memberCode == null }">
+			<a href="${root}/member/login.go">로그인</a>
+			<a href="${root}/member/signIn.go">회원가입</a>
+		</c:when>
+		<c:when test="${memberCode != null }">
+			<a href="${root}/member/logout.go">로그아웃</a>
+			<a href="${root}/member/myPage.go">마이페이지</a>
+			<a href="${root}/food/insert.go">음식정보등록</a>
+			<a href="${root}/food/update.go?foodCode=food0472">음식정보수정</a>
+			<a href="${root}/food/insert.go">음식정보등록</a>
+			<a href="${root}/coupon/couponInsert.go">상품등록</a>
+			<a href="${root}/food/update.go?foodCode=food0468">음식정보수정</a>
+			<a href="${root}/food/delete.go?foodCode=food0467">음식정보삭제</a>			
+			<a href="${root}/review/update.go?reviewCode=review0011">리뷰수정</a>
+			<a href="${root}/review/delete.go?reviewCode=review0041">리뷰삭제</a>
+			<a href="${root}/admin/main.go">관리자!!</a>
+			
+		</c:when>
+		<c:when test="${memberCode != null }">
+			<a href="${root}/member/logout.go">로그아웃</a>
+			<a href="${root}/member/myPage.go">마이페이지</a>
+			<a href="${root}/purchase/purchaseList.go">구매내역</a>
+			${memberCode}
+		</c:when>
+	</c:choose>
+	</div>
 	<div id="header">
 		<div>
-			<img alt="로고" src="${root}/resources/css/icon.PNG">
+			<a href="${root}/index.jsp">
+				<img alt="로고" src="${root}/resources/css/jeju.png" >
+			</a>
 		</div>
 		<div>
 			<!-- form 안에 text 타입의 input 박스가 하나만 존재 할 경우 (hidden 제외) input 박스에서 엔터를 치면 자동으로 form submit이 된다고 함 
-				그걸 방지하기 위해서는 form onsubmit="return false" 처리를 해주어야 자동으로 submit 되는 것을 막을 수 있기함
-			-->
-			<form action="" method="get">
-				<input type="text" id="search" name="search" value="" onkeypress="if(event.keyCode == 13){searchDate();}"/>
-			</form>
+				그걸 방지하기 위해서는 form onsubmit="return false" 처리를 해주어야 자동으로 submit 되는 것을 막을 수 있기함 -->
+			<input type="text" id="searchInput" name="searchInput" placeholder="검색어를 입력하여 주세요"/>
 		</div>
 		<c:choose>
 			<c:when test="${memberCode == null }">
@@ -201,14 +257,13 @@ a {
 				<div>
 					<a href="${root}/member/myPage.go">마이페이지</a>
 				</div>
-				${memberCode}
 			</c:when>
 		</c:choose>
 		<div>
-			<a href="#">EAT딜</a>
+			<a href="${root}/coupon/couponList.go">EAT딜</a>
 		</div>
 		<div>
-			<a href="#">맛집리스트</a>
+			<a href="${root}/food/list.go">맛집리스트</a>
 		</div>
 	</div>
 	<!-- 로그인 -->
@@ -219,7 +274,7 @@ a {
 				<span class="close">&times;</span>
 			</div>
 			<div class="login">
-				<img alt="로고" src="${root}/resources/css/list.jpg">
+				<img alt="로고" src="${root}/resources/css/jeju.png">
 				<button class="button" id="emailClick" style="width:180pt;height:35pt;">이메일 로그인</button>
 				<button class="button" style="width:180pt;height:35pt;" onclick="loginForm()">카카오 로그인</button>
 			</div>
@@ -284,10 +339,30 @@ a {
 	
 	
 <script type="text/javascript">
+	var url = null;
+	
+	function search() {
+		var param = $("#searchInput").val()
+		url = "${root}/searchKeyword.go?keyword=" + param;
+		location.href = url;
+	}
+	
+	$("#searchInput").keypress(function(event) {
+		if (event.which == 13) {
+			search();
+		}
+	})
+	
+	$(document).ready(function() {
+		$("#searchInput").on("change", function() {
+			getKeywordList($("#testInput").val());
+			
+			$('#testInput').autocomplete({
+			});
+		});
+	});
+	
 
-	function searchDate(){
-		alert("??");
-	};
 	/* 메인화면 로그인 클릭시 작동 */
 	var modal = document.getElementById("myModal");
 	var loginClick = document.getElementById("loginClick");
@@ -386,6 +461,7 @@ a {
     		}
     	});
     }
+
 </script>	
 </body>
 </html>

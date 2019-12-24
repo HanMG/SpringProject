@@ -24,7 +24,7 @@
 					<tr>
 						<c:forEach var="imageDto" items="${listImage}">							
 							<td><img src="${root}/resources/ftp/${imageDto.imageName}"
-								alt="image" style="width: 100px; height: 100px;" /><br /><label>${fn:substringAfter(imageDto.imageName,'_')}</label>								
+								alt="image" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br /><label>${fn:substringAfter(imageDto.imageName,'_')}</label>								
 							</td>
 						</c:forEach>
 					</tr>

@@ -81,6 +81,7 @@ a {
 		var url = root + "/purchase/purchaseDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
 		open(url, "", "width= 500, height=300, scrollbars=yes");
 	} 
+	
 
 </script>
 </head>
@@ -127,7 +128,7 @@ a {
 								<a href="javascript:purchaseDelete('${root}','${purchaseDto.couponCode}','${purchaseDto.couponName}','${pageNumber}')">취소</a>
 							</div>
 							<div>
-								<%-- <span>입력받은 번호: ${purchaseDto.purchasePhone}</span> --%>
+								<span id="selPhone">입력받은 번호: ${purchaseDto.purchasePhone}</span>
 							</div>
 						</div>
 					</div>
@@ -136,11 +137,9 @@ a {
 			<!-- 페이지네이트 -->
 			<c:if test="${count > 0}">
 				<div>
-					<fmt:parseNumber var="pageCount" integerOnly="true"
-						value="${count/boardSize + (count % boardSize == 0 ? 0 :1)}" />
+					<fmt:parseNumber var="pageCount" integerOnly="true" value="${count/boardSize + (count % boardSize == 0 ? 0 : 1)}" />
 					<c:set var="pageBlock" value="${10}" />
-					<fmt:parseNumber var="result"
-						value="${(currentPage - 1)/pageBlock}" integerOnly="true" />
+					<fmt:parseNumber var="result" value="${(currentPage - 1)/pageBlock}" integerOnly="true" />
 					<c:set var="startPage" value="${result*pageBlock+1}" />
 					<c:set var="endPage" value="${startPage + pageBlock - 1}" />
 					<c:if test="${endPage > pageCount}">

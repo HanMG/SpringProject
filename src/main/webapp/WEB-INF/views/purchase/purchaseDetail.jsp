@@ -7,6 +7,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 구매 상세페이지</title>
+		<script type="text/javascript">
+			/*  function phoneChange(obj){
+				var num = obj.purchasePhone.value.replace(/[^0-9]/g,"");
+				var phone = "";
+				phone += num.split("-");
+				console.log("num:"+num +"/ phone:"+phone);
+				obj.purchasePhone.value = phone;
+			} */
+		</script>
 	</head>
 	<body>
 		<p>쿠폰명: ${couponDto.couponName}</p>
@@ -19,17 +28,18 @@
 		<p>결제금액: ${couponDto.couponCostsale}</p>
 		
 		<!-- 결제 -->
-		<form action="${root}/purchase/purchaseInsertOk.go" method="post">
+		<form action="${root}/purchase/purchaseInsertOk.go" method="post" onsubmit="return phoneChange(this)">
 			<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 			<input type="hidden" name="memberCode" value="${memberCode}">
 			<input type="hidden" name="purchasePhone" value="${purchasePhone}">
 			<input type="hidden" name="purchaseCost" value="${couponDto.couponCostsale}">
 			<p>구매자 정보</p>
-			<input type="text" value="${memberDto.memberName}" disabled>
-			<input type="text" value="${memberDto.memberMail}" disabled>
+			<span>구매자 이름: ${memberDto.memberName}</span>
+			<span>구매자 이메일: ${memberDto.memberMail}</span>
 			
 			<p>쿠폰 받을 번호</p>
-			<input type="text" name="purchasePhone" value="${purchasePhone}" disabled>
+			
+			<span>${purchasePhone}</span>
 			<p><input type="submit" value="결제하기"></p>
 		</form>
 	</body>

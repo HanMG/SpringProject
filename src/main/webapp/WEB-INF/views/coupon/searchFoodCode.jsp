@@ -10,8 +10,12 @@
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 		<script type="text/javascript">
 		//유효성 체크
-		function insertForm(obj){
-			alert("insertForm Ok");
+		function searchForm(obj){
+			if(obj.foodName.value==""){
+				alert("검색하실 식당명을 입력해주세요.");
+				obj.foodName.focus();
+				return false;
+			}
 		}
 
 		//식당코드 리스트 출력
@@ -29,7 +33,7 @@
 		</script>
 	</head>
 	<body>
-		<form action="${root}/coupon/searchFoodCode.go" method="get">
+		<form action="${root}/coupon/searchFoodCode.go" method="get" onsubmit="return searchForm(this)">
 			<div>
 				<input type="text" name="foodName">
 				<input type="submit" value="검색">

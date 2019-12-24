@@ -2,6 +2,7 @@ package com.java.food.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,11 @@ import com.java.food.dto.FoodDto;
 import com.java.food.dto.FoodReviewDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
+import com.java.review.dao.ReviewDao;
 import com.java.review.dto.ReviewCountDto;
+import com.java.review.dto.ReviewDto;
+import com.java.search.dao.SearchDao;
+import com.java.search.dto.SearchFoodDto;
 
 /**
  * @작성자 : 한문구
@@ -38,6 +43,12 @@ public class FoodServiceImp implements FoodService {
 	
 	@Autowired
 	private ImageDao imageDao;
+	
+	@Autowired
+	private SearchDao searchDao;
+	
+	@Autowired
+	private ReviewDao reviewDao;
 	
 	// 음식점 등록, 대표이미지등록
 	@Override
@@ -104,9 +115,37 @@ public class FoodServiceImp implements FoodService {
 		FoodDto foodDto = new FoodDto();
 		ImageDto imageDto = new ImageDto();
 		ReviewCountDto reviewCountDto = new ReviewCountDto();
+		// 리뷰 리스트 가져오기 위한 Dao
+		List<FoodReviewDto> reviewList = null;
+		reviewList = foodDao.reviewList(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg+ "reviewList : " +reviewList.toString());
+		mav.addObject("reviewList",reviewList);
+		String reviewCode = null;
+		// 리뷰코드를 통해 리뷰 상세페이지를 가져오기 위한 Dao
+		for (int i = 0; i < reviewList.size(); i++) {
+			reviewCode = reviewList.get(i).getReviewCode();
+			JejuAspect.logger.info(JejuAspect.logMsg+ "reviewCode : " +reviewCode);
+			mav.addObject("reviewCode",reviewCode);
+		}
 		
+		ReviewDto reviewDto = new ReviewDto();
+		if (reviewCode != null) {
+			reviewDto = reviewDao.reviewUpdate(reviewCode);
+			List<ImageDto> listImage = imageDao.imgList(reviewCode);		
+			JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
+			mav.addObject("listImage",listImage);
+		}
+		mav.addObject("reviewDto",reviewDto);
+		
+		// 별점을 가져오기 위한 Dao
+		SearchFoodDto searchFoodDto = new SearchFoodDto();
+		searchFoodDto = searchDao.getReviewScore(foodCode);
+		if (searchFoodDto != null) {
+			mav.addObject("searchFoodDto",searchFoodDto);
+		}
 		// 음식점 정보 가져오기
 		foodDto = foodDao.foodRead(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		// 음식점 이미지 정보 가져오기
 		imageDto = imageDao.imgRead(foodCode);
 		// 쿠폰정보
@@ -144,6 +183,7 @@ public class FoodServiceImp implements FoodService {
         // 보낼 데이터
 		mav.addObject("reviewAvg", reviewAvg);
 		mav.addObject("reviewCountDto",reviewCountDto);	
+			
 		mav.addObject("couponDtoList", couponDtoList);
 		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	

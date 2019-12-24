@@ -8,8 +8,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.coupon.dto.CouponDto;
+import com.java.favorite.dto.FavoriteDto;
 import com.java.food.dto.FoodDto;
+import com.java.image.dto.ImageDto;
 import com.java.member.dto.MemberDto;
+import com.java.member.dto.MemberFavoriteDto;
+import com.java.review.dto.ReviewDto;
 
 @Component
 public class MemberDaoImp implements MemberDao {
@@ -71,5 +76,25 @@ public class MemberDaoImp implements MemberDao {
 	@Override
 	public int myFoodDel(String foodCode) {
 		return sqlSessionTemplate.delete("memberMapper.myFoodDel", foodCode);
+	}
+	@Override
+	public List<CouponDto> getMyCoupon(String memberCode) {
+		return sqlSessionTemplate.selectList("memberMapper.getMyCoupon", memberCode);
+	}
+	
+	@Override
+	public List<ReviewDto> getMyReview(String memberCode) {
+		return sqlSessionTemplate.selectList("memberMapper.getMyReview", memberCode);
+	}
+	
+	@Override
+	public List<MemberFavoriteDto> getMyFavorite(String memberCode) {
+		return sqlSessionTemplate.selectList("memberMapper.getMyFavorite", memberCode);
+	}
+	
+	//관리자
+	@Override
+	public List<MemberDto> getMember(MemberDto memberDto) {
+		return sqlSessionTemplate.selectList("memberMapper.getMember", memberDto);
 	}
 }

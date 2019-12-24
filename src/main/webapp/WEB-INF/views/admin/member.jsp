@@ -143,26 +143,23 @@
 					<tr>
 						<th>멤버코드</th>
 						<th>이메일</th>
+						<th>닉네임</th>
 						<th>가입일</th>
 						<th>휴대폰번호</th>
 						<th>회원상태</th>
 					</tr>				
 				</thead>
-				<tbody>
-					<tr id="memberClick">
-						<th>MemberCode</th>
-						<th>memberMail</th>
-						<th>MemberDate</th>
-						<th>MemberPhone</th>
-						<th>MemberStatus</th>
-					</tr>
-					<tr>
-						<th>MemberCode</th>
-						<th>memberMail</th>
-						<th>MemberDate</th>
-						<th>MemberPhone</th>
-						<th>MemberStatus</th>
-					</tr>
+					<tbody>
+					<c:forEach var="memberList" items="${memberList}">
+						<tr id="memberClick">
+							<th>${memberList.memberCode}</th>
+							<th>${memberList.memberMail}</th>
+							<th>${memberList.memberName}</th>
+							<th>${memberList.memberDate}</th>
+							<th>${memberList.memberPhone}</th>
+							<th>${memberList.memberStatus}</th>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>	

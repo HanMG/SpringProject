@@ -67,6 +67,40 @@
 	<delete id="myFoodDel" parameterType="String">
 		DELETE FROM FOOD WHERE FOOD_CODE = #{foodCode}
 	</delete>
+	
+	<select id="getMyCoupon" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
+		select coupon.coupon_code, coupon.food_code, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
+		TO_CHAR(coupon.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(coupon.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, 
+		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,
+		(select image_name from image where refer_code = coupon.coupon_code) AS image_name, 
+		(select image_path from image where refer_code = coupon.coupon_code) AS image_path,
+		(select food_name from food Where food_code = coupon.food_code) AS food_name
+		from coupon where coupon_code in (select coupon_code from purchase where member_code=#{memberCode}) 
+	</select>
+	
+	<select id="getMyReview" parameterType="String" resultType="com.java.review.dto.ReviewDto">
+		SELECT REVIEW.REVIEW_CODE, REVIEW.FOOD_CODE, REVIEW.MEMBER_CODE, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE, LISTAGG(IMAGE_NAME, ',')WITHIN GROUP (ORDER BY IMAGE_NAME) AS IMAGE_NAME
+		FROM REVIEW, IMAGE, MEMBER
+		WHERE REVIEW_CODE = REFER_CODE(+) AND review.MEMBER_CODE = member.member_code  AND member.member_code=#{memberCode}
+		GROUP BY REVIEW.REVIEW_CODE,  REVIEW.FOOD_CODE, review.member_code, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE
+		ORDER BY REVIEW_CODE DESC
+	</select>
+	
+	
+	<select id="getMyFavorite" parameterType="String" resultType="com.java.member.dto.MemberFavoriteDto">
+        select food.food_code, food.food_area, food.food_name, food.food_read,
+        (select image_name from image where refer_code = food.food_code) AS image_name, 
+		(select image_path from image where refer_code = food.food_code) AS image_path,
+        (select count(*) from review where food_code=food.food_code) as count,
+        (select avg(review_score) from review where food_code=food.food_code) as avg
+        from food, favorite, member
+		where food.food_code = favorite.food_code and member.member_code=#{memberCode}
+    </select>
+
+	
+	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
+		select * from member	
+	</select>
 </mapper>
 
 

@@ -417,46 +417,30 @@ a {
 					<span>구매한 EAT딜</span>
 					<span class="close">&times;</span>
 				</div>
-				<div class="eat">
-					<div class="info_1">
-						<img alt="쿠폰" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="info_2">
-						<div>
-							<span>쿠폰명</span>
+				
+				<c:forEach var="couponList" items="${couponList}">
+					<div class="eat">
+						<div class="info_1">
+							<img alt="쿠폰" src="${couponList.imagePath}">
 						</div>
-						<div>
-							<span>쿠폰소개</span>
-						</div>
-						<div>
-							<span>가격</span>
-						</div>
-						<div>
-							<span>할인가</span>
-							<button class="button"><a href="#">취소</a></button>
-						</div>
-					</div>
-				</div>
-				<div class="eat">
-					<div class="info_1">
-						<img alt="쿠폰" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="info_2">
-						<div>
-							<span>쿠폰명</span>
-						</div>
-						<div>
-							<span>쿠폰소개</span>
-						</div>
-						<div>
-							<span>가격</span>
-						</div>
-						<div>
-							<span>할인가</span>
-							<button class="button"><a href="#">취소</a></button>
+						<div class="info_2">
+							<div>
+								<span>${couponList.couponName}</span>
+							</div>
+							<div>
+								<span>${couponList.couponIntro}</span>
+							</div>
+							<div>
+								<span>${couponList.couponCostori}</span>
+							</div>
+							<div>
+								<span>${couponList.couponCostsale}</span>
+								<button class="button"><a href="#">취소</a></button>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
+				
 			</div>
 		</div>
 	</div>
@@ -468,48 +452,22 @@ a {
 					<span>리뷰 내역</span>
 					<span class="close">&times;</span>
 				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
+				
+				<c:forEach var="reviewList" items="${reviewList}">
+					<div class="review">
+						<div class="review_1">
+							<div>${reviewList.reviewDate}</div>
+							<div>${reviewList.reviewCont}</div>
+							<div>
+								<img alt="리뷰" src="#">
+							</div>
+						</div>
+						<div class="review_2">
+							<span>${reviewList.reviewScore}</span>
 						</div>
 					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-						</div>
-					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-						</div>
-					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
+				</c:forEach>
+				
 			</div>
 		</div>
 	</div>
@@ -522,51 +480,25 @@ a {
 					<span>가고싶다</span>
 					<span class="close">&times;</span>
 				</div>
-				<div class="like">
-					<div class="like_1">
-						<img alt="가게" src="${root}/resources/css/list.jpg">
+				
+				<c:forEach var="favoriteList" items="${favoriteList}">
+					<div class="like">
+						<div class="like_1">
+							<img alt="가게" src="${root}/resources/ftp/${favoriteList.imageName}">
+						</div>
+						<div class="like_2">
+							<div>지역군: ${favoriteList.foodArea}</div>
+							<div>음식점명: ${favoriteList.foodName}</div>
+							<div>평점: ${favoriteList.avg}</div>
+							<div>조회수: ${favoriteList.foodRead}</div>
+							<div>리뷰수: ${favoriteList.count}</div>
+						</div>
+						<div class="like_3">
+							<img alt="별점" src="${root}/resources/css/icon.PNG">
+						</div>
 					</div>
-					<div class="like_2">
-						<div>지역군</div>
-						<div>음식점명</div>
-						<div>별점</div>
-						<div>조회수</div>
-						<div>리뷰수</div>
-					</div>
-					<div class="like_3">
-						<img alt="별점" src="${root}/resources/css/icon.PNG">
-					</div>
-				</div>
-				<div class="like">
-					<div class="like_1">
-						<img alt="가게" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="like_2">
-						<div>지역군</div>
-						<div>음식점명</div>
-						<div>별점</div>
-						<div>조회수</div>
-						<div>리뷰수</div>
-					</div>
-					<div class="like_3">
-						<img alt="별점" src="${root}/resources/css/icon.PNG">
-					</div>
-				</div>
-				<div class="like">
-					<div class="like_1">
-						<img alt="가게" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="like_2">
-						<div>지역군</div>
-						<div>음식점명</div>
-						<div>별점</div>
-						<div>조회수</div>
-						<div>리뷰수</div>
-					</div>
-					<div class="like_3">
-						<img alt="별점" src="${root}/resources/css/icon.PNG">
-					</div>
-				</div>
+				</c:forEach>
+			
 			</div>
 		</div>
 	</div>
@@ -588,7 +520,7 @@ a {
 						<div class="reg" id="${foodList.foodCode}">
 							<div class="reg_1">
 								<div>
-									<span>${foodList.foodName }</span>
+									<span>${foodList.foodName}</span>
 									<%-- <c:choose>
 										<c:when test="${foodList.foodStatus == 0 }">
 											<span>등록중</span>

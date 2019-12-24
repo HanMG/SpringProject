@@ -2,11 +2,12 @@ package com.java.admion.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+
 
 @Controller
 public class AdminController {
@@ -18,13 +19,7 @@ public class AdminController {
 		mav.setViewName("admin/main.admin");		
 		return mav;		
 	}
-	// 음식점 정보 등록 관련
-	@RequestMapping(value = "/admin/member.go", method = RequestMethod.GET)
-	public ModelAndView member(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/member.admin");		
-		return mav;		
-	}
+	
 	// 음식점 정보 등록 관련
 	@RequestMapping(value = "/admin/food.go", method = RequestMethod.GET)
 	public ModelAndView food(HttpServletRequest request, HttpServletResponse response) {

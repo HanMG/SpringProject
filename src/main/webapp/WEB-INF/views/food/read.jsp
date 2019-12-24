@@ -63,7 +63,7 @@ function favorCheck() {
 	});
 }
 
-function favorSwitch(x) {
+function favorSwitch() {
 	if (memberCode == "") {
 		// 로그인
 		alert("로그인하세요");
@@ -504,8 +504,8 @@ a {
 					</script>
 				</div>
 				<div>
-					<i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i>
-					<!-- <i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"></i><br /> <span>가고싶다</span> -->
+					<!-- <i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i> -->
+					<i onclick="favorSwitch()" id="favorite" class="fa fa-heart-o"></i><br /> <span>가고싶다</span>
 				</div>
 			</div>
 			<div class="info_2">
@@ -841,7 +841,6 @@ a {
 	  slides[slideIndex-1].style.display = "block";  
 	  dots[slideIndex-1].className += " active";
 	}
-		}
 </script>
 </body>
 </html>

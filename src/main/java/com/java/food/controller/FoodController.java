@@ -54,11 +54,10 @@ public class FoodController {
 	}
 	
 	@RequestMapping(value = "/food/updateOk.go", method = RequestMethod.POST)
-	public ModelAndView foodUpdateOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto, ImageDto imageDto) {
+	public ModelAndView foodUpdateOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
-		mav.addObject("foodDto",foodDto);
-		mav.addObject("imageDto",imageDto);
+		mav.addObject("foodDto",foodDto);	
 		// 서비스에 model and view 보냄
 		foodService.foodUpdateOk(mav);
 		return mav;

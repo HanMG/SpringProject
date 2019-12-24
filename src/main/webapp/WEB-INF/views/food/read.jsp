@@ -14,6 +14,7 @@
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>음식점상세페이지</title>
+<script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
 <script>
 	$(function(){
 
@@ -33,10 +34,64 @@
 	function favorite(x) {
 		if (x.className === "fa fa-heart-o") {
 			x.className = "fa fa-heart";
-		} else {
-			x.className = "fa fa-heart-o";
+var root = "${root}";
+var memberCode = "${memberCode}";
+var foodCode = "${foodDto.foodCode}";
+var favorStatus = "";
+
+$(function() {
+	if (memberCode != "") {
+		favorCheck();
+	} 
+})
+
+function favorCheck() {
+	$.ajax({
+		type : "POST",
+		url : root + "/favorite/check.do",
+		data : { "memberCode" : memberCode, "foodCode" : foodCode},
+		success : function(data) {
+			favorStatus = data;
+			if (favorStatus === "on") {
+				$("#favorite").attr('class', 'fa fa-heart');
+			} else if (favorStatus === "off") {
+				$("#favorite").attr('class', 'fa fa-heart-o');
+			}
+		}, error: function (request, status, error) {
+			alert("error");
 		}
+	});
+}
+
+function favorSwitch(x) {
+	if (memberCode == "") {
+		// 로그인
+		alert("로그인하세요");
+	} else if (memberCode != "") {
+		if (x.className == "fa fa-heart") {
+			favorStatus = "on";
+		} else {
+			favorStatus = "off";
+		}
+		$.ajax({
+			type : "POST",
+			url : root + "/favorite/switch.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			success : function(data) {
+				favorStatus = data;
+				if (favorStatus === "on") {
+					$("#favorite").attr('class', 'fa fa-heart');
+				} else if (favorStatus === "off") {
+					$("#favorite").attr('class', 'fa fa-heart-o');
+				}
+			}, error: function (request, status, error) {
+				alert("error");
+			}
+		});
 	}
+}
+	
+	
 	function reviewList(root, selScore) {
 		let url = root + "/food/foodReviewList.go";
 		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
@@ -450,6 +505,7 @@ a {
 				</div>
 				<div>
 					<i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i>
+					<!-- <i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"></i><br /> <span>가고싶다</span> -->
 				</div>
 			</div>
 			<div class="info_2">
@@ -757,8 +813,8 @@ a {
 });    
 	
 	
-	</script>
-	<script type="text/javascript">
+</script>
+<script type="text/javascript">
 	var slideIndex = 1;
 	showSlides(slideIndex);
 
@@ -782,9 +838,10 @@ a {
 	  for (i = 0; i < dots.length; i++) {
 	      dots[i].className = dots[i].className.replace(" active", "");
 	  }
-	  //slides[slideIndex-1].style.display = "block";  
-	  //dots[slideIndex-1].className += " active";
+	  slides[slideIndex-1].style.display = "block";  
+	  dots[slideIndex-1].className += " active";
 	}
-	</script>
+		}
+</script>
 </body>
 </html>

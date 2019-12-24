@@ -56,5 +56,10 @@ public class SearchDaoImp implements SearchDao {
 		return sqlSessionTemplate.selectOne("getReviewScore", foodCode);
 	}
 
+	@Override
+	public List<SearchFoodDto> keywordList(String keyword) {
+		return sqlSessionTemplate.selectList("keywordList", keyword);
+	}
+
 
 }

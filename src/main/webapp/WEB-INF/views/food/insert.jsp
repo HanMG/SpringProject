@@ -7,32 +7,32 @@
 <head>
 <meta charset="UTF-8">
 <title>음식점정보등록</title>
-<script>
-	function foodForm() {
-		var start = document.getElementById("start").value;
-		var end = document.getElementById("end").value;
-		document.getElementById("fTime").value = start + "~" + end;
-	}
-</script>
+<script src="${root}/resources/javascript/food/food.js"></script>
 </head>
 <body>
-	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="foodForm()">
+	<c:if test="${memberCode==null}">
+		<script>
+			alert("로그인 후 가능합니다!");
+			history.back();
+		</script>
+	</c:if>
+	<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
 		<label>음식점명</label><input type="text" name="foodName" />
 		<br />	
 		<label>주소</label><input type="text" name="foodAddr" />
 		<br />	
 		<label>지역</label>
-		<select name="foodArea">
-			<option value="">지역선택</option>
+		<select name="foodArea" class="required">
+			<option value="" >지역선택</option>
 			<option value="제주시">제주시</option>			
 			<option value="서귀포시">서귀포시</option>			
 		</select>
 		<br>		
 		<label>전화번호(-빼고 넣어주세요.)</label>
-		<input type="text" name="foodPhone" />
+		<input type="text" name="foodPhone"/>
 		<br>
 		<label>음식 종류</label>
-		<select name="foodKind">
+		<select name="foodKind" >
 			<option value="">종류선택</option>
 			<option value="한식">한식</option>
 			<option value="중식">중식</option>
@@ -48,8 +48,8 @@
 		<input type="text" name="foodMenu" maxlength="12" />
 		<br />	
 		<label>영업 시간 |</label>
-		<label>시작 시간</label><input type="time" id="start"/>
-		<label>종료 시간</label><input type="time" id="end" />
+		<label>시작 시간 </label><input type="time" id="start" value="08:00"/>
+		<label>종료 시간 </label><input type="time" id="end" value="18:00"/>
 		<input type="hidden" name="foodTime" id="fTime"/>
 		<br />	
 		<label>휴일</label>

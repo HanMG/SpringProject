@@ -7,7 +7,6 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css"> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
 * {
@@ -55,7 +54,6 @@ html {
 </body>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script> -->
 <script type="text/javascript">
 
 var url = null;
@@ -66,62 +64,30 @@ function search() {
 	location.href = url;
 }
 
-$("#searchInput").keypress(function(event) {
-	if (event.which == 13) {
-		search();
-	}
-})
-
 $("#searchButton").click(function() {
 	search();
 })
 
-$(document).ready(function() {
-	$("#searchInput").on("change", function() {
-		// 1.
-		getKeywordList($("#testInput").val());
-		
-		$('#testInput').autocomplete({
-// 		    source: countries,
-		    
-		});
-		
-		// 2.
-		/* $('#testInput').autocomplete({
-		    source: function() {
-				$.ajax~~~
-			},
-		    
-		}); */
-	});
-	
-	
+$("#searchInput").keypress(function(event) {
+	if (event.which == 13) {
+		search();
+	}
 });
 
-function getKeywordList(val) {
-	/* $.ajax(function() {
-		data : {"keyword" : val}
-	}).success(data){
-		
-		
-		for (var i = 0; i < data.resyltList.length; i++) {
-			countries[i] = data.resyltList.foodName;
-		}
-	} */
-	
-	/* $.ajax({
-		url:"/searchKeyword.do",
-		type:"GET",
-		data : {"keyword" : $("#testInput").val()},
+$("#searchInput").on("change keyup paste", function() {
+	var keywordList = [];
+	$.ajax({
+		type : "POST",
+		url : "${root}/searchAutoAjax.do",
+		data : {"keyword" : $("#searchInput").val()},
 		dataType:"json",
-		success:function(data) {debugger;
-			
-			for (var i = 0; i < data.resyltList.length; i++) {
-				countries[i] = data.resyltList.foodName;
-			}
+		success : function(data){
+			$('#searchInput').autocomplete({
+			    source: data
+			});
 		}
-	}) */
-	
-}
+	}); 
+});
+
 </script>
 </html>

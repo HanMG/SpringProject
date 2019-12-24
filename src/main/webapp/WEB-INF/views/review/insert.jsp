@@ -11,12 +11,14 @@
 <style>
 	strong {font-size: 20px;}
 </style>
+<script src="${root}/resources/javascript/review/review.js"></script>
 </head>
 <body>		
 	<p><strong>${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</p>
-	<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data">			
+	<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data" onsubmit="return reviewForm(this)">			
 		<input type="hidden" name="foodCode" value="${foodCode}" />
-		<label for="good">맛있어요</label><input type="radio" id="good" name="reviewScore" value="5"/>
+		<input type="hidden" name="memberCode" value="${memberCode}" />
+		<label for="good">맛있어요</label><input type="radio" id="good" name="reviewScore" value="5" checked/>
 		<label for="soso">괜찮아요</label><input type="radio" id="soso" name="reviewScore" value="3"/>
 		<label for="bad">별로에요</label><input type="radio" id="bad" name="reviewScore" value="1"/>
 		<textarea name="reviewCont" id="" cols="30" rows="10" style="width:100%; height:100px; resize:none;" placeholder="식당의 분위기, 서비스가 궁금해요!"></textarea>

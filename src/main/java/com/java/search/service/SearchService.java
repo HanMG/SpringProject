@@ -8,4 +8,6 @@ public interface SearchService {
 
 	String foodList(ModelAndView mav);
 
+	String keywordAuto(ModelAndView mav);
+
 }

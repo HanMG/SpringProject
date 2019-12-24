@@ -62,26 +62,30 @@ public class FoodServiceImp implements FoodService {
 		// 조회수 0 으로 설정
 		foodDto.setFoodRead(0);
 		// 음식점 공개상태는 처음시 검토중으로
-		foodDto.setFoodStatus("검토중");	
-		
-		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
+		foodDto.setFoodStatus("검토중");		
+		// 음식점 등록
 		check = foodDao.foodInsert(foodDto);
 		// food_code의 마지막 값 가져옴
 		String str = foodDao.foodMax();	
 		
+		// 이미지 데이터를 넣을 DTO 
 		ImageDto imageDto = new ImageDto();
+		// 음식점 등록이 되면 이미지DTO.참조코드에 foodCode의 마지막 값을 넣음
 		if(check > 0) {			
 			imageDto.setReferCode(str);  
 		}
-		MultipartFile upFile = request.getFile("imgFile"); // write.jsp의 input type file의 name으로 확인
+		// input type file의 name(imgFile)으로 확인
+		MultipartFile upFile = request.getFile("imgFile"); 
 		long fileSize = upFile.getSize();		
 		if (fileSize != 0) {
+			// 파일명 = 현재시간을 초단위로 변환한 값 + 올려질때 파일명
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
-
+			// 파일 생성위치 
 			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
-			//C://Spring//workspace//springProject//resources//ftp
-			//C:\\ftp\\
-			path.mkdir();
+			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가...
+			path.mkdirs();
+			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
+			//path.mkdirs();
 
 			if (path.exists() && path.isDirectory()) {
 				File file = new File(path, fileName);
@@ -169,15 +173,19 @@ public class FoodServiceImp implements FoodService {
             response.addCookie(newCookie);
             // 조회수 증가
             foodDao.foodReadUpdate(foodCode);
-        }
-		
+        }		
 		
 		// 리뷰 카운트
         reviewCountDto = foodDao.foodReivewCount(foodCode);
-		JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCountDto.toString());
+        JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCountDto.toString());
+        // 리뷰 평균 점수
+        float reviewAvg = foodDao.foodReviewAvg(foodCode);
+        // 보낼 데이터
+		mav.addObject("reviewAvg", reviewAvg);
 		mav.addObject("reviewCountDto",reviewCountDto);	
 			
 		mav.addObject("couponDtoList", couponDtoList);
+		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	
 		mav.addObject("imageDto", imageDto);
 		mav.setViewName("food/read.tiles");		
@@ -196,8 +204,10 @@ public class FoodServiceImp implements FoodService {
 		imageDto = imageDao.imgRead(foodCode);
 		JejuAspect.logger.info(JejuAspect.logMsg+foodDto);
 		JejuAspect.logger.info(JejuAspect.logMsg+imageDto);
-		mav.addObject("foodDto", foodDto);		;
-		mav.addObject("imageDto", imageDto);
+		mav.addObject("foodDto", foodDto);		
+		if(imageDto != null) {
+			mav.addObject("imageDto", imageDto);
+		}
 		mav.setViewName("food/update.tiles");
 	}
 	
@@ -205,7 +215,8 @@ public class FoodServiceImp implements FoodService {
 	public void foodUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		FoodDto foodDto = (FoodDto) map.get("foodDto");
-		ImageDto imageDto = (ImageDto) map.get("imageDto");
+		ImageDto originImageDto = imageDao.imgRead(foodDto.getFoodCode());
+		
 		int check = 0;
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		
@@ -215,6 +226,7 @@ public class FoodServiceImp implements FoodService {
 		// food 업데이트
 		check = foodDao.foodUpdate(foodDto);
 		
+		ImageDto updateImageDto = new ImageDto();
 		MultipartFile upFile = request.getFile("imgFile"); // input type file의 name으로 확인
 		long fileSize = upFile.getSize();		
 		if (fileSize != 0) {
@@ -223,15 +235,16 @@ public class FoodServiceImp implements FoodService {
 			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
-			path.mkdir();	
+			path.mkdirs();	
 			
-			JejuAspect.logger.info(JejuAspect.logMsg+imageDto.getImageName());
-			if (imageDto.getImageName() != null) {
-				JejuAspect.logger.info(JejuAspect.logMsg+imageDto.getImagePath());
-				File checkFile = new File(imageDto.getImagePath());
+			
+			if (originImageDto != null) {
+				JejuAspect.logger.info(JejuAspect.logMsg+originImageDto.getImagePath());
+				File checkFile = new File(originImageDto.getImagePath());
 				if (checkFile.exists() && checkFile.isFile()) {
 					checkFile.delete();
 				}
+				imageDao.imgDelete(originImageDto.getReferCode());
 			}
 
 			if (path.exists() && path.isDirectory()) {
@@ -241,11 +254,12 @@ public class FoodServiceImp implements FoodService {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}				
-				imageDto.setImagePath(file.getAbsolutePath());
-				imageDto.setImageSize(fileSize);
-				imageDto.setImageName(fileName);
-				JejuAspect.logger.info(JejuAspect.logMsg+imageDto.toString());
-				check += imageDao.imgUpdate(imageDto);				
+				updateImageDto.setReferCode(foodDto.getFoodCode());  
+				updateImageDto.setImagePath(file.getAbsolutePath());
+				updateImageDto.setImageSize(fileSize);
+				updateImageDto.setImageName(fileName);
+				JejuAspect.logger.info(JejuAspect.logMsg+updateImageDto.toString());				
+				check += imageDao.imgInsert(updateImageDto);			
 			}			
 		}
 		
@@ -292,11 +306,10 @@ public class FoodServiceImp implements FoodService {
 		if (reviewCountDto != null) {			
 			foodReviewList = foodDao.foodReviewList(foodCode, selScore);
 			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
-			mav.addObject("foodReviewList",foodReviewList);			
-			JejuAspect.logger.info(JejuAspect.logMsg + foodReviewList.toString());
+			mav.addObject("foodReviewList",foodReviewList);
+			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.toString());
 		}		
-		mav.addObject("reviewCountDto",reviewCountDto);
-		mav.addObject("foodReviewList",foodReviewList);
+		mav.addObject("reviewCountDto",reviewCountDto);		
 		mav.setViewName("review/list.empty");
 		
 	}

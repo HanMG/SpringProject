@@ -28,5 +28,7 @@ public interface FoodDao {
 	public List<CouponDto> foodCouponList(String foodCode);
 
 	public List<FoodReviewDto> reviewList(String foodCode);
+	
+	public float foodReviewAvg(String foodCode);
 
 }

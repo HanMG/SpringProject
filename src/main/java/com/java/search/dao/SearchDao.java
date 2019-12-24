@@ -18,5 +18,7 @@ public interface SearchDao {
 	List<SearchFoodDto> tagList(String tagValue, String tagType);
 
 	SearchFoodDto getReviewScore(String foodCode);
+	
+	List<SearchFoodDto> keywordList(String keyword);
 
 }

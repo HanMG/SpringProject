@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
 import com.java.coupon.service.CouponService;
 import com.java.image.dto.ImageDto;
@@ -54,10 +55,12 @@ public class CouponController {
 	@RequestMapping(value = "/coupon/searchFoodCode.go", method = RequestMethod.GET)
 	public ModelAndView readFoodCode(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		String foodName = request.getParameter("foodName");
+		String cInsert = request.getParameter("cInsert");
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("foodName", foodName);
+		mav.addObject("cInsert", cInsert);
 		couponService.searchFoodCode(mav);
 
 		mav.setViewName("coupon/searchFoodCode.empty");
@@ -112,21 +115,41 @@ public class CouponController {
 		return mav;
 	}
 
-	// 쿠폰상품 불러오기(수정)
+	// 쿠폰상품 불러오기(수정) TODO
 	@RequestMapping(value = "/coupon/couponUpdate.go", method = RequestMethod.GET)
-	public ModelAndView couponUpdate(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
+	@ResponseBody
+	public void couponUpdate(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		String couponCode = request.getParameter("couponCode");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
+		mav.addObject("response", response);
 		mav.addObject("couponCode", couponCode);
 		mav.addObject("pageNumber", pageNumber);
-		couponService.couponUpdate(mav);
-
-		return mav;
+		
+		String jsonText = couponService.couponUpdate(mav);
+		
+		if(jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		//return mav;
 	}
 
+	
+	
+	
+	
 	// 쿠폰상품 수정
 	@RequestMapping(value = "/coupon/couponUpdateOk.go", method = RequestMethod.POST)
 	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto,
@@ -148,6 +171,8 @@ public class CouponController {
 	@RequestMapping(value = "/coupon/couponDelete.go", method = RequestMethod.GET)
 	public ModelAndView couponDelete(HttpServletRequest request, HttpServletResponse response) {
 		String couponCode = request.getParameter("couponCode");
+		System.out.println("couponCode: "+couponCode);
+		
 		String couponName = request.getParameter("couponName");
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 

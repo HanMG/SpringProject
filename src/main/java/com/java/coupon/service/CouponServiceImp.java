@@ -106,6 +106,9 @@ public class CouponServiceImp implements CouponService {
 		String foodName = request.getParameter("foodName");
 		JejuAspect.logger.info(JejuAspect.logMsg + "검색 내용: "+ foodName);
 		
+		String cInsert = request.getParameter("cInsert");
+		request.setAttribute("cInsert", cInsert);
+		
 		if(foodName != null) {
 			//검색어로 식당코드 찾기
 			List<SearchFoodCodeDto> searchFoodCodeList = couponDao.searchFoodCode(foodName);
@@ -154,7 +157,7 @@ public class CouponServiceImp implements CouponService {
 	}
 	
 	
-	//쿠폰리스트 TODO
+	//쿠폰리스트
 	@Override
 	public void couponList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -275,7 +278,7 @@ public class CouponServiceImp implements CouponService {
 	
 	//쿠폰상품수정페이지
 	@Override
-	public void couponUpdate(ModelAndView mav) {
+	public String couponUpdate(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
@@ -283,11 +286,31 @@ public class CouponServiceImp implements CouponService {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : "+ couponCode);
 		
-		CouponDto couponDto = couponDao.couponRead(couponCode);		
-		
+		CouponDto couponDto = couponDao.couponRead(couponCode);	
 		request.setAttribute("pageNumber", pageNumber);
+		
+		Map<String, Object> upMap = new HashMap<String, Object>();
+		upMap.put("couponCode", couponDto.getCouponCode());
+		upMap.put("foodCode", couponDto.getFoodCode());
+		upMap.put("foodName", couponDto.getFoodName());
+		upMap.put("couponName", couponDto.getCouponName());
+		upMap.put("couponStartdate", couponDto.getCouponStartdate());
+		upMap.put("couponEnddate", couponDto.getCouponEnddate());
+		upMap.put("couponCostori", couponDto.getCouponCostori());
+		upMap.put("couponCostsale", couponDto.getCouponCostsale());
+		upMap.put("imageName", couponDto.getImageName());
+		upMap.put("couponSalerate", couponDto.getCouponSalerate());
+		upMap.put("couponIntro", couponDto.getCouponIntro());
+		upMap.put("pageNumber", pageNumber);
+		JejuAspect.logger.info(JejuAspect.logMsg + upMap.toString());
+		
+		String jsonText = JSONValue.toJSONString(upMap);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
 		mav.addObject("couponDto",couponDto);
 		mav.setViewName("coupon/couponUpdate.tiles");
+		
+		return jsonText;
 	}
 	
 	//쿠폰상품 수정

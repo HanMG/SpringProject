@@ -188,16 +188,27 @@
 					return false;
 				}
 				
-				if(obj.imageFile.value==""){
-					alert("이미지를 첨부해주세요.");
-					obj.imageFile.focus();
-					return false;
+				if(obj.formSort.value == "in"){
+					if(obj.imageFile.value==""){
+						alert("이미지를 첨부해주세요.");
+						obj.imageFile.focus();
+						return false;
+					}
 				}
 			}
 	
 			//식당코드 리스트 출력
-			function foodcodeRead(root){
-				var url = root + "/coupon/searchFoodCode.go";
+			function foodcodeRead(root, cInsert){
+				console.log(cInsert);
+				if(cInsert == null){
+					cInsert = 2;
+					console.log("cInsert: "+ cInsert);
+				}
+				if(cInsert == 0){
+					console.log("cInsert: " +cInsert);
+				}
+				cInsert = cInsert;
+				var url = root + "/coupon/searchFoodCode.go?cInsert="+cInsert;
 				open(url, "", "width= 500, height=500, scrollbars=yes");
 			}
 			
@@ -229,6 +240,7 @@
 		</script>
 </head>
 <body>
+	<c:set var="cInsert" value="0" />
 	<div id="content">
 		<div id="title">
 			<span>쿠폰 관리</span>
@@ -251,8 +263,8 @@
 					<c:if test="${count > 0}">
 						<c:forEach var="couponDto" items="${couponList}" begin="0"
 							step="1">
-							<tr id="couponClick">
-								<th>${couponDto.couponCode}</th>
+							<tr>
+								<th id="sendCouponCode">${couponDto.couponCode}</th>
 								<th>${couponDto.foodCode}</th>
 								<th>${couponDto.couponName}</th>
 								<th>${couponDto.couponStartdate}~
@@ -267,7 +279,41 @@
 		</div>
 	</div>
 
-
+<script type="text/javascript">
+	$(function(){
+		$('#list tbody tr').on('click', function(){
+			var couponId = $(this).children('#sendCouponCode').text();
+			//var cId = $(this).attr("id");
+			var sendData = "couponCode="+couponId+"&pageNumber="+${pageNumber};
+			var dataUrl = "${root}/coupon/couponUpdate.go?"+sendData;
+			$.ajax({
+				url: dataUrl,
+				type: 'GET',
+				dataType:'json',
+				success: function(data){
+					//var obj = JSON.parse(data);
+					$('#couponModal input[name=couponCode]').val(data.couponCode);
+					$('#couponModal input[name=couponName]').val(data.couponName);
+					$('#couponModal input[name=foodCode]').val(data.foodCode);
+					$('#couponModal input[name=foodName]').val(data.foodName);
+					$('#couponModal #imageName').text(data.imageName);
+					$('#couponModal input[name=couponEnddate]').val(data.couponEnddate);
+					$('#couponModal input[name=couponStartdate]').val(data.couponStartdate);
+					$('#couponModal input[name=couponCostsale]').val(data.couponCostsale);
+					$('#couponModal input[name=couponSalerate]').val(data.couponSalerate);
+					$('#couponModal input[name=couponCostori]').val(data.couponCostori);
+					$('#couponModal textarea[name=couponIntro]').text(data.couponIntro);
+					
+					$('.couponModal').show();
+				},error : function(){
+					console.log("실패");
+				}
+			})
+		});
+		
+	})
+</script>
+	pageNumber: ${pageNumber}
 	<!-- 쿠폰 모달 -->
 	<div id="couponModal" class="couponModal">
 		<div id="content_modal">
@@ -275,53 +321,54 @@
 				<div class="title_modal">
 					<span>쿠폰 관리</span> <span class="close _close_update">&times;</span>
 				</div>
-				<form action="${root}/admin/couponUpdateOk.go" method="post"
+				<form action="${root}/coupon/couponUpdateOk.go" method="post"
 					enctype="multipart/form-data" onsubmit="return insertForm(this)" name="couponForm">
-					<input type="hidden" name="couponCode" value="${couponDto.couponCode}" />
+					
+					<input type="hidden" id="upCouponCode" name="couponCode" />
 					<input type="hidden" name="pageNumber" value="${pageNumber}" />
 					<div class="coupon">
 						<div>
 							<span>쿠폰명</span>
-							<input type="text" name="couponName" value="${couponDto.couponName}" />
+							<input id="upCouponName" type="text" name="couponName" />
 						</div>
 						<div>
 							<span>가게코드</span>
-							<input type="text" name="foodCode" value="${couponDto.foodCode}">
+							<input type="text" name="foodCode">
 							<input class="button" type="button" value="식당검색" onclick="foodcodeRead('${root}')">
-							<input type="text" name="foodName" value="${couponDto.foodName}" disabled>
+							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
 							<span>쿠폰내용</span>
-							<textarea rows="3" cols="55" name="couponIntro">${couponDto.couponIntro}</textarea>
+							<textarea rows="3" cols="55" name="couponIntro"></textarea>
 						</div>
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
 							<input id="datepickStart" type="text" name="couponStartdate"
 								value="${couponDto.couponStartdate}">
-							<input id="datepickEnd" type="text" name="couponEnddate""${couponDto.couponEnddate}">
+							<input id="datepickEnd" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>
-							<input id="cost" type="text" name="couponCostori" value="${couponDto.couponCostori}">
+							<input id="cost" type="text" name="couponCostori">
 						</div>
 						<div>
 							<span>할인율</span>
-							<input id="saleRate" type="text" name="couponSalerate" maxlength="3" value="${couponDto.couponSalerate}">
+							<input id="saleRate" type="text" name="couponSalerate" maxlength="3">
 						</div>
 						<div>
 							<span>할인가</span>
-							<input type="text" name="couponCostsale" value="${couponDto.couponCostsale}">
+							<input type="text" name="couponCostsale">
 						</div>
 						<div>
 							<span>쿠폰 이미지</span>
 							<input type="file" name="imageFile">
-							<span>${couponDto.imageName}</span>
+							<span id="imageName"></span>
 						</div>
 						<div class="btn">
 							<input class="button" type="submit" value="수정하기">
 							<input class="button" type="reset" value="초기화">
-							<a class="button" href="${root}/coupon/couponDelete.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">삭제하기</a>
+							<a class="button" href="javascript:couponDeleteCheck('${root}','upCouponCode.value','upCouponName.value','${pageNumber}')">삭제하기</a>
 							<!-- <button class="button">삭제하기</button> -->
 						</div>
 					</div>
@@ -330,6 +377,14 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		//쿠폰 삭제 확인
+		function couponDeleteCheck(root, couponCode, couponName, pageNumber){
+			//var couponCode = 
+			
+			var url = root + "/coupon/couponDelete.go?couponCode="+upCouponCode.value+"&couponName="+upCouponName.value+"&pageNumber="+pageNumber;
+			open(url, "", "width= 400, height=200, scrollbars=no");
+		}
+	
 		$(function(){
 			$('.couponModal #cost, .couponModal #saleRate').on('change', function(){
 				var oriCost = parseInt($('.couponModal input[name=couponCostori]').val() || 0);
@@ -356,8 +411,9 @@
 				<div class="title_modal">
 					<span>쿠폰 등록</span> <span class="close _close">&times;</span>
 				</div>
-				<form action="${root}/admin/couponInsertOk.go" method="post" enctype="multipart/form-data" onsubmit="return insertForm(this)"
+				<form action="${root}/coupon/couponInsertOk.go" method="post" enctype="multipart/form-data" onsubmit="return insertForm(this)"
 					name="couponFormInsert" autocomplete="off">
+					<input type="hidden" name="formSort" value="in" />
 					<div class="coupon">
 						<div>
 							<span>쿠폰명</span> <input type="text" name="couponName" />
@@ -365,7 +421,7 @@
 						<div>
 							<span>가게코드</span>
 							<input type="text" name="foodCode"> 
-							<input class="button" type="button" value="식당검색" onclick="foodcodeRead('${root}')">
+							<input class="button" type="button" value="식당검색" onclick="foodcodeRead('${root}','${cInsert}')">
 							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
@@ -409,7 +465,6 @@
 	<script type="text/javascript">
 	 $(function(){
 		 /*  쿠폰 등록 클릭시 작동 */
-		 
 		$('._open').click(function(){
 			$('.couponInModal').show();	
 		});
@@ -419,7 +474,7 @@
 		
 		/*  게시판  클릭시 작동 */
 		$('#list tbody tr').click(function(){
-			$('.couponModal').show();
+			//$('.couponModal').show();
 		});
 		$('._close_update').click(function(){
 			$('.couponModal').hide();

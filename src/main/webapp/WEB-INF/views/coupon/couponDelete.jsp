@@ -9,7 +9,6 @@
 		<title>삭제 재확인</title>
 	</head>
 	<body>
-	pageNumber : ${pageNumber}
 		<p><strong>${couponCode} ${couponName}</strong> 쿠폰 상품 (을)를 <br>
 			정말로 삭제하시겠습니까?</p>
 		<form action="${root}/coupon/couponDeleteOk.go" method="post">

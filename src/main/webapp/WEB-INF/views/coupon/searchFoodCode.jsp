@@ -19,15 +19,20 @@
 		}
 
 		//식당코드 리스트 출력
-		function foodcodeRead (root){
+		/* function foodcodeRead (root){
 			var url = root + "/coupon/searchFoodCode.go";
 			open(url, "", "width= 800, height=500, scrollbars=yes");
-		}
+		} */
 		
 		//식당코드 기입
-		function sendFoodCode(foodCode, foodName, foodAddr){
-			opener.couponFormInsert.foodCode.value= foodCode;
-			opener.couponFormInsert.foodName.value= foodName;
+		function sendFoodCode(foodCode, foodName, foodAddr, cInsert){
+			if(cInsert == 0){
+				opener.couponFormInsert.foodCode.value= foodCode;
+				opener.couponFormInsert.foodName.value= foodName;
+			} else if(cInsert == 2){
+				opener.couponForm.foodCode.value= foodCode;
+				opener.couponForm.foodName.value= foodName;
+			}
 			self.close();
 		} 
 		</script>
@@ -35,6 +40,7 @@
 	<body>
 		<form action="${root}/coupon/searchFoodCode.go" method="get" onsubmit="return searchForm(this)">
 			<div>
+				<input type="hidden" name="cInsert" value="${cInsert}">
 				<input type="text" name="foodName">
 				<input type="submit" value="검색">
 			</div>
@@ -48,7 +54,7 @@
 				
 				<c:forEach var="searchFoodCodeDto" items="${foodCodeList}">
 				<li>
-					<a href="javascript:sendFoodCode('${searchFoodCodeDto.foodCode}','${searchFoodCodeDto.foodName}','${searchFoodCodeDto.foodAddr}')">
+					<a href="javascript:sendFoodCode('${searchFoodCodeDto.foodCode}','${searchFoodCodeDto.foodName}','${searchFoodCodeDto.foodAddr}','${cInsert}')">
 						- ${searchFoodCodeDto.foodCode} / ${searchFoodCodeDto.foodName} / ${searchFoodCodeDto.foodAddr}
 					</a>
 				</li>

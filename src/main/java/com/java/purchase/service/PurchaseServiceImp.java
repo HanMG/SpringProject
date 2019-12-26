@@ -170,7 +170,9 @@ public class PurchaseServiceImp implements PurchaseService {
 		if(pageNumber == null) pageNumber = "1";
 		int currentPage = Integer.parseInt(pageNumber);
 
+		
 		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll();
+		
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		
@@ -200,6 +202,7 @@ public class PurchaseServiceImp implements PurchaseService {
 		pDeleteMap.put("purchaseDate", purchaseDate);
 		pDeleteMap.put("couponName", purchaseListDto.getCouponName());
 		pDeleteMap.put("couponCostsale", purchaseListDto.getCouponCostsale());
+		pDeleteMap.put("purchaseStatus", purchaseListDto.getPurchaseStatus());
 		
 		String jsonText = JSONValue.toJSONString(pDeleteMap);
 		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);

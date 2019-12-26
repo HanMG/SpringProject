@@ -132,14 +132,6 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber: "+ pageNumber);
 		int currentPage = Integer.parseInt(pageNumber);
 		
-		//쿠폰 리스트 카운트
-		//int count = couponDao.couponListCount();
-		//JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
-		
-		//int scrollSize = 10;
-		//int startRow = (currentPage - 1) * scrollSize + 1;
-		//int endRow = currentPage*scrollSize;
-		
 		//현재 날짜 출력
 		Date today = new Date();
 		JejuAspect.logger.info(JejuAspect.logMsg + "date: "+ today);
@@ -284,6 +276,9 @@ public class CouponServiceImp implements CouponService {
 		CouponDto couponDto = couponDao.couponRead(couponCode);	
 		request.setAttribute("pageNumber", pageNumber);
 		
+		String couponStatus = couponDto.getCouponStatus();
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponStatus : "+ couponStatus);
+		
 		Map<String, Object> upMap = new HashMap<String, Object>();
 		upMap.put("couponCode", couponDto.getCouponCode());
 		upMap.put("foodCode", couponDto.getFoodCode());
@@ -296,6 +291,7 @@ public class CouponServiceImp implements CouponService {
 		upMap.put("imageName", couponDto.getImageName());
 		upMap.put("couponSalerate", couponDto.getCouponSalerate());
 		upMap.put("couponIntro", couponDto.getCouponIntro());
+		upMap.put("couponStatus", couponDto.getCouponStatus());
 		upMap.put("pageNumber", pageNumber);
 		JejuAspect.logger.info(JejuAspect.logMsg + upMap.toString());
 		

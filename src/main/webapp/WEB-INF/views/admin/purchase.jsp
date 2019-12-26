@@ -152,7 +152,7 @@
 						<th>구매날짜</th>
 						<th>구매가격</th>
 						<th>휴대폰</th>
-						<!-- <th>쿠폰상태</th> -->
+						<th>구매상태</th>
 					</tr>				
 				</thead>
 				<tbody>
@@ -164,6 +164,12 @@
 						<th><fmt:formatDate value="${purchaseDto.purchaseDate}" pattern="YYYY년 MM월 dd일 HH:mm" /></th>
 						<th>${purchaseDto.couponCostsale}원</th>
 						<th>${purchaseDto.purchasePhone}</th>
+						<c:if test="${purchaseDto.purchaseStatus == 'N'}">
+							<th style="coloc: red;">취소</th>
+						</c:if>
+						<c:if test="${purchaseDto.purchaseStatus == 'Y'}">
+							<th style="coloc: red;">사용가능</th>
+						</c:if>
 					</tr>
 				</c:forEach>
 				</tbody>
@@ -191,6 +197,7 @@
 					$('.purchaseModal .pDate').text('구매날짜 : '+data.purchaseDate);
 					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
 					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
+					var pStatus = data.purchasePhone;
 					
 					$('.purchaseModal').show();
 					
@@ -246,9 +253,11 @@
 						<input type="radio" name="purchaseStatus" value="y"><label>활성화</label>
 						<input type="radio" name="purchaseStatus" value="n"><label>비활성화</label>
 					</div> -->
+					<c:if test="${pStatus == 'Y'}">
 					<div class="btn">
-						<input class="button _close" type="submit" value="삭제하기">
+						<input class="button _close" type="submit" value="취소하기">
 					</div>
+					</c:if>
 				</div>
 				</form>
 			</div>

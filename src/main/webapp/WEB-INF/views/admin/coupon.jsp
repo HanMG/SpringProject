@@ -195,6 +195,18 @@
 						return false;
 					}
 				}
+				
+				var radioCheck = false;
+				for (var i=0; i < obj.couponStatus.length; i++){
+					if(obj.couponStatus[i].checked == true){
+						radioCheck = true;
+					}
+				}
+				
+				if(radioCheck == false){
+					alert("상품 활성화 상태를 선택해주세요.");
+					return false;
+				}
 			}
 	
 			//식당코드 리스트 출력
@@ -230,8 +242,8 @@
 				    changeYear: true,
 				    yearSuffix: '년'
 				}); */
-				$('#datepickStart').datepicker();
-				$('#datepickEnd').datepicker();
+				//$('#datepickStart').datepicker();
+				//$('#datepickEnd').datepicker();
 				//$('#datepickStart').datepicker('setDate', 'today');
 				//$('#datepickEnd').datepicker('setDate','+1D');
 				
@@ -257,6 +269,7 @@
 						<th>유효기간</th>
 						<th>할인가</th>
 						<th>가격</th>
+						<th>쿠폰 활성화 상태</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -270,6 +283,7 @@
 								${couponDto.couponEnddate}</th>
 							<th>${couponDto.couponSalerate}</th>
 							<th>${couponDto.couponCostsale}</th>
+							<th>${couponDto.couponStatus}</th>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -302,6 +316,11 @@
 					$('#couponModal input[name=couponCostori]').val(data.couponCostori);
 					$('#couponModal textarea[name=couponIntro]').text(data.couponIntro);
 					
+					//var couponStatusUp = data.couponStatus;
+					//alert(couponStatusUp);
+					
+					$("input:radio[name='couponStatusUp']:input[value="+data.couponStatus+"]").attr("checked", true);
+					
 					$('.couponModal').show();
 				}, error : function(request,status,error){
 					console.log("실패");
@@ -309,8 +328,6 @@
 				}
 			})
 		});
-		
-		
 	})
 </script>
 	<!-- 쿠폰 모달 -->
@@ -357,12 +374,17 @@
 						</div>
 						<div>
 							<span>할인가</span>
-							<input type="text" name="couponCostsale">
+							<input type="text" name="couponCostsale">%
 						</div>
 						<div>
 							<span>쿠폰 이미지</span>
 							<input type="file" name="imageFile">
 							<span id="imageName"></span>
+						</div>
+						<div>
+							<span>쿠폰 상태</span>
+							<input type="radio" name="couponStatusUp" value="Y"><label>활성화</label>
+							<input type="radio" name="couponStatusUp" value="N"><label>비활성화</label>
 						</div>
 						<div class="btn">
 							<input class="button" type="submit" value="수정하기">
@@ -434,24 +456,20 @@
 							<input id="datepickEndInsert" type="text" name="couponEnddate">
 						</div>
 						<div>
-							<span>원가격</span> <input id="cost" type="text"
-								name="couponCostori">
+							<span>원가격</span>
+							<input id="cost" type="text" name="couponCostori">
 						</div>
 						<div>
-							<span>할인율</span> <input id="saleRate" type="text"
-								name="couponSalerate" maxlength="3">
+							<span>할인율</span>
+							<input id="saleRate" type="text" name="couponSalerate" maxlength="3">
 						</div>
 						<div>
-							<span>할인가</span> <input type="text" name="couponCostsale">
+							<span>할인가</span>
+							<input type="text" name="couponCostsale">%
 						</div>
 						<div>
-							<span>쿠폰 이미지</span> <input type="file" name="imageFile">
+							<span>쿠폰 이미지</span><input type="file" name="imageFile">
 						</div>
-						<!-- <div>
-						<span>쿠폰상태</span>
-						<input type="radio" name="couponStatus" value="y"><label>활성화</label>
-						<input type="radio" name="couponStatus" value="n"><label>비활성화</label>
-					</div> -->
 						<div class="btn">
 							<input class="button _close" type="submit" value="등록하기"></input>
 							<input class="button" type="reset" value="초기화"></input>

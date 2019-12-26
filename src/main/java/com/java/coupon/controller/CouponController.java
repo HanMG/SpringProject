@@ -106,7 +106,7 @@ public class CouponController {
 		return mav;
 	}
 
-	// 쿠폰상품 불러오기(수정) TODO
+	// 쿠폰상품 불러오기(수정)
 	@RequestMapping(value = "/coupon/couponUpdate.go", method = RequestMethod.GET)
 	@ResponseBody
 	public void couponUpdate(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {

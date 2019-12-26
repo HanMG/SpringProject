@@ -15,6 +15,7 @@ public class CouponDto {
 	private int couponCostori;			// 쿠폰 원가
 	private int couponCostsale;			// 쿠폰 할인가
 	private int couponSalerate;				// 쿠폰 할인률
+	private String couponStatus;				// 쿠폰 할인률
 	private String imageCode;
 	private String imageName;
 	private long imageSize;
@@ -25,8 +26,8 @@ public class CouponDto {
 
 	public CouponDto(String couponCode, String foodCode, String couponName, String couponStartdate,
 			String couponEnddate, String couponIntro, int couponCostori, int couponCostsale, int couponSalerate,
-			String imageCode, String imageName, long imageSize, String imagePath, String foodName) {
-		super();
+			String couponStatus, String imageCode, String imageName, long imageSize, String imagePath,
+			String foodName) {
 		this.couponCode = couponCode;
 		this.foodCode = foodCode;
 		this.couponName = couponName;
@@ -36,6 +37,7 @@ public class CouponDto {
 		this.couponCostori = couponCostori;
 		this.couponCostsale = couponCostsale;
 		this.couponSalerate = couponSalerate;
+		this.couponStatus = couponStatus;
 		this.imageCode = imageCode;
 		this.imageName = imageName;
 		this.imageSize = imageSize;
@@ -155,12 +157,21 @@ public class CouponDto {
 		this.foodName = foodName;
 	}
 
+	public String getCouponStatus() {
+		return couponStatus;
+	}
+
+	public void setCouponStatus(String couponStatus) {
+		this.couponStatus = couponStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "CouponDto [couponCode=" + couponCode + ", foodCode=" + foodCode + ", couponName=" + couponName
 				+ ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro="
 				+ couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale
-				+ ", couponSalerate=" + couponSalerate + ", imageCode=" + imageCode + ", imageName=" + imageName
-				+ ", imageSize=" + imageSize + ", imagePath=" + imagePath + ", foodName=" + foodName + "]";
+				+ ", couponSalerate=" + couponSalerate + ", couponStatus=" + couponStatus + ", imageCode=" + imageCode
+				+ ", imageName=" + imageName + ", imageSize=" + imageSize + ", imagePath=" + imagePath + ", foodName="
+				+ foodName + "]";
 	}
 }

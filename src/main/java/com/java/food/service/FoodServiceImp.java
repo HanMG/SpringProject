@@ -2,6 +2,8 @@ package com.java.food.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +64,7 @@ public class FoodServiceImp implements FoodService {
 		// 조회수 0 으로 설정
 		foodDto.setFoodRead(0);
 		// 음식점 공개상태는 처음시 검토중으로
-		foodDto.setFoodStatus("검토중");		
+		foodDto.setFoodStatus("n");		
 		// 음식점 등록
 		check = foodDao.foodInsert(foodDto);
 		// food_code의 마지막 값 가져옴
@@ -278,17 +281,18 @@ public class FoodServiceImp implements FoodService {
 		ImageDto imageDto = imageDao.imgRead(foodCode);	
 		
 		// 가져온 이미지 정보가 있을 경우 해당 경로의 파일을 삭제
-		if (imageDto.getImageName() != null) {
-			File checkFile = new File(imageDto.getImagePath());
-			if (checkFile.exists() && checkFile.isFile()) {
-				checkFile.delete();
+		if(imageDto != null) {
+			if (imageDto.getImageName() != null) {
+				File checkFile = new File(imageDto.getImagePath());
+				if (checkFile.exists() && checkFile.isFile()) {
+					checkFile.delete();
+				}
 			}
+			// 음식점 코드를 통해 DB에서 이미지 정보 삭제
+			check += imageDao.imgDelete(foodCode);
 		}
 		// 음식점 코드를 통해 DB에서 음식점 정보 삭제
-		check += foodDao.foodDelete(foodCode);
-		
-		// 음식점 코드를 통해 DB에서 이미지 정보 삭제
-		check += imageDao.imgDelete(foodCode);
+		check += foodDao.foodDelete(foodCode);		
 		
 		mav.addObject("check",check);
 		mav.setViewName("food/delete.tiles");		
@@ -320,6 +324,50 @@ public class FoodServiceImp implements FoodService {
 		JejuAspect.logger.info(JejuAspect.logMsg+foodDtoList.toString());
 		mav.addObject("foodDtoList",foodDtoList);
 		mav.setViewName("admin/food.admin");		
+	}
+
+	@Override
+	public void getFood(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		String foodCode = request.getParameter("foodCode");
+		FoodDto foodDto = foodDao.foodRead(foodCode);
+		ImageDto imageDto = imageDao.imgRead(foodCode);
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		JSONObject jsonFoodDto = new JSONObject();
+		JSONObject jsonImgDto = new JSONObject();
+		if(imageDto != null) {
+			jsonImgDto.put("imageName", imageDto.getImageName());
+		}
+		
+		JejuAspect.logger.info(JejuAspect.logMsg+jsonFoodDto.toString());
+		jsonFoodDto.put("foodCode", foodDto.getFoodCode());
+		jsonFoodDto.put("foodName", foodDto.getFoodName());
+		jsonFoodDto.put("foodAddr", foodDto.getFoodAddr());
+		jsonFoodDto.put("foodArea", foodDto.getFoodArea());
+		jsonFoodDto.put("foodPhone", foodDto.getFoodPhone());
+		jsonFoodDto.put("foodKind", foodDto.getFoodKind());
+		jsonFoodDto.put("foodMenu", foodDto.getFoodMenu());
+		jsonFoodDto.put("foodTime", foodDto.getFoodTime());
+		jsonFoodDto.put("foodBreak", foodDto.getFoodBreak());
+		jsonFoodDto.put("foodIntro", foodDto.getFoodIntro());		
+		jsonFoodDto.put("foodStatus", foodDto.getFoodStatus());
+		jsonFoodDto.put("memberCode", foodDto.getMemberCode());
+		jsonFoodDto.put("imageDto", jsonImgDto);
+		
+		String jsonText = jsonFoodDto.toJSONString();
+		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);
+		
+		response.setContentType("application/x-json;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(jsonText);
+			out.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 }

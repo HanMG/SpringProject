@@ -66,6 +66,14 @@ public class AdminController {
 		mav.addObject("response", response);
 		reviewService.getReview(mav);	
 	}
+	
+	@RequestMapping(value="/admin/getFood.go", method= RequestMethod.GET)
+	public void getFood(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		foodService.getFood(mav);
+	}
 
 	
 }

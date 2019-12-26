@@ -8,142 +8,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-}
-.button {
-    color: #FFFFFF;
-    border: #EFB730 solid 1px;
-    background-color: #EFB730;
-}
-#title {
-	width: 100%;
-	height: 50px;
-	line-height: 50px;
-}
-#title > button {
-	float: right;
-	font-size: 23px;
-	color: black;
-	background: white;
-	border: #CED4DA solid 1px;
-	border-radius: 5px;
-}
-#title > span {
-	margin-left: 60px;
-	font-size: 23px;
-}
-#content {
-	width: 100%;
-	overflow: hidden;
-	margin: 0 auto;
-}
-#list {
-	width: 100%;
-	margin: 0 auto;
-}
-/* 식당관련 */
-#content_modal {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -400px;
-	margin-top: -450px;
-	background: #F2F4EF;
-	width: 800px;
-	border-radius: 5px;
-	background: tomato;
-	overflow: hidden;
-}
-.content_modal {
-	width: 800px;
-	overflow: hidden;
-	background: skyblue;
-}
-.title_modal {
-	width: 800px;
-	height: 50px;
-	line-height: 50px;
-	font-size: 30px;
-	border-bottom: 1px dotted;
-	font-weight: bold;
-	background: olive;
-}
-.title_modal > span:first-child {
-	margin-left: 40px;
-}
-
-/* 식당관련 */
-.food {
-	overflow: hidden;
-	width: 500px; 
-	border-bottom: 1px dotted;
-	margin: 10px auto;
-	background: tomato;
-}
-.food > div {
-	margin-top: 5px;
-	margin-left: 30px;
-}
-.food > div span:nth-child(1) {
-	display: block;
-	font-size: 20px;
-	
-}
-.food > div > input[type=text] {
-	display: inline-block;
-	width: 400px;
-	height: 20px;
-	font-size: 20px;
-}
-
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  margin-right: 15px;
-}
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-.btn > .button {
-	font-size: 23px;
-	width: 120px;
-	height: 50px;
-}
-
-.foodModal, .foodInModal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.nodisplay{
-	display:none;
-}
-
-</style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 <script src="${root}/resources/javascript/food/food.js"></script>
 <script src="${root}/resources/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="${root}/resources/css/admin/food.css" />
 </head>
 <body>
 	<div id="content">
@@ -162,6 +31,7 @@
 						<th>종류</th>
 						<th>주소</th>
 						<th>등록날짜</th>
+						<th>식당상태</th>
 					</tr>				
 				</thead>
 				<tbody>
@@ -175,6 +45,7 @@
 						<th class="foodKind">${foodDto.foodKind}</th>
 						<th class="foodAddr">${foodDto.foodAddr}</th>
 						<th class="foodDate"><fmt:formatDate value="${foodDto.foodDate}" pattern="yyyy-MM-dd" /></th>
+						<th>${foodDto.foodStatus}</th>
 					</tr>					
 					</c:forEach>	
 					</c:if>				
@@ -190,43 +61,43 @@
 					<span>식당 등록</span>
 					<span class="close foodInClose">&times;</span>
 				</div>
-				<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
+				<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodInForm(this)">
 				<input type="hidden" name="memberCode" value="${memberCode}" />
 				<div class="food">		
 					<div>
-						<span>가게명</span>
+						<span>*가게명</span>
 						<input type="text" name="foodName" value=""/>
 					</div>		
 					<div>
-						<span>주소</span>
+						<span>*주소</span>
 						<input type="text" name="foodAddr" id="sample5_address">
 						<button type="button" class="button" onclick="sample5_execDaumPostcode()" style="font-size: 16px">지도</button>
 					</div>	
 					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none"></div>
 					<div>
-						<span>지역</span>
-						<input type="radio" name="foodArea" value="제주시"><label>제주시</label>
-						<input type="radio" name="foodArea" value="서귀포시"><label>서귀포시</label>
+						<span>*지역</span>
+						<input type="radio" name="foodArea" id="insertAreaJeju" value="제주시" checked="checked"><label for="insertAreaJeju">제주시</label>
+						<input type="radio" name="foodArea" id="insertAreaSeo" value="서귀포시"><label for="insertAreaSeo">서귀포시</label>
 					</div>		
 					<div>
-						<span>전화번호</span>
+						<span>*전화번호</span>
 						<input type="text" name="foodPhone" value="">
 					</div>			
 					<div>
-						<span>종류</span>
-						<input type="radio" name="foodKind" value="한식"><label>한식</label>
-						<input type="radio" name="foodKind" value="중식"><label>중식</label>
-						<input type="radio" name="foodKind" value="일식"><label>일식</label>
-						<input type="radio" name="foodKind" value="양식"><label>양식</label>
-						<input type="radio" name="foodKind" value="카페"><label>카페</label>
-						<input type="radio" name="foodKind" value="기타"><label>기타</label>
+						<span>*종류</span>
+						<input type="radio" name="foodKind" id="insertKor" value="한식" checked="checked"><label for="insertKor">한식</label>
+						<input type="radio" name="foodKind" id="insertChn" value="중식"><label for="insertChn">중식</label>
+						<input type="radio" name="foodKind" id="insertJp" value="일식"><label for="insertJp">일식</label>
+						<input type="radio" name="foodKind" id="insertWt" value="양식"><label for="insertWt">양식</label>
+						<input type="radio" name="foodKind" id="insertCf" value="카페"><label for="insertCf">카페</label>
+						<input type="radio" name="foodKind" id="insertEtc" value="기타"><label for="insertEtc">기타</label>
 					</div>
 					<div>
 						<span>대표음식</span>
 						<input type="text" name="foodMenu" value="">
 					</div>				
 					<div>
-						<span>영업시간</span>
+						<span>영업시간(ex:08:00~18:00)</span>
 						<input type="text" name="foodTime" value="">
 					</div>
 					<div>
@@ -234,17 +105,17 @@
 						<input type="text" name="foodBreak" value="">
 					</div>
 					<div>
-						<span>대표이미지</span>
+						<span>*대표이미지</span>
 						<input type="file" name="imgFile" accept="image/*"/>
 					</div>
 					<div>
-						<span>음식점소개</span>
+						<span>*음식점소개</span>
 						<textarea name="foodIntro" id="" cols="55" rows="3" placeholder="소개"></textarea>
 					</div>
 					<div>
-						<span>식당상태</span>
-						<input type="radio" name="foodStatus" value="y"><label>활성화</label>
-						<input type="radio" name="foodStatus" value="n"><label>비활성화</label>
+						<span>*식당상태</span>
+						<input type="radio" name="foodStatus" value="y" id="insertStatY"><label for="insertStatY">Y</label>
+						<input type="radio" name="foodStatus" value="n" id="insertStatN"checked="checked"><label for="insertStatN">N</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="등록하기"></input>
@@ -264,78 +135,123 @@
 					<span>식당 관리</span>
 					<span class="close foodClose">&times;</span>
 				</div>
-				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodForm(this)">
-				<input type="hidden" name="memberCode" value="" />
+				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" name="foodForm" onsubmit="return foodForm(this)">
+				<input type="hidden" name="foodCode" id="foodCode" value="" />
 				<div class="food">
 					<div>
-						<span>식당코드 : foodCode</span>
+						<span>식당코드 : </span>
+						<div id="foodCodeTemp"></div>						
 					</div>
 					<div>
-						<span>가게명</span>
-						<input type="text" name="foodName" value=""/>
+						<span>*가게명</span>
+						<input type="text" name="foodName" id="foodName" value=""/>
 					</div>
 					<div>
-						<span>주소</span>
-						<input type="text" name="foodAddr" value=""/>					
+						<span>*주소</span>
+						<input type="text" name="foodAddr" id="foodAddr" value=""/>					
 					</div>
 					<div>
 						<span>지역</span>
-						<input type="radio" name="foodArea" value="제주시"><label>제주시</label>
-						<input type="radio" name="foodArea" value="서귀포시"><label>서귀포시</label>
+						<input type="radio" name="foodArea" id="updateAreaJeju" value="제주시"><label for="updateAreaJeju">제주시</label>
+						<input type="radio" name="foodArea" id="updateAreaSeo" value="서귀포시"><label for="updateAreaSeo">서귀포시</label>
 					</div>
 					<div>
-						<span>전화번호</span>
-						<input type="text" name="foodPhone" value="">
+						<span>*전화번호</span>
+						<input type="text" name="foodPhone" id="foodPhone" value="">
 					</div>					
 					<div>
-						<span>종류</span>
-						<input type="radio" name="foodKind" value="한식"><label>한식</label>
-						<input type="radio" name="foodKind" value="중식"><label>중식</label>
-						<input type="radio" name="foodKind" value="일식"><label>일식</label>
-						<input type="radio" name="foodKind" value="양식"><label>양식</label>
-						<input type="radio" name="foodKind" value="카페"><label>카페</label>
-						<input type="radio" name="foodKind" value="기타"><label>기타</label>
+						<span>*종류</span>
+						<input type="radio" name="foodKind" id="updateKor" value="한식"><label for="updateKor">한식</label>
+						<input type="radio" name="foodKind" id="updateChn" value="중식"><label for="updateChn">중식</label>
+						<input type="radio" name="foodKind" id="updateJp" value="일식"><label for="updateJp">일식</label>
+						<input type="radio" name="foodKind" id="updateWt" value="양식"><label for="updateWt">양식</label>
+						<input type="radio" name="foodKind" id="updateCf" value="카페"><label for="updateCf">카페</label>
+						<input type="radio" name="foodKind" id="updateEtc" value="기타"><label for="updateEtc">기타</label>
 					</div>				
 					<div>
 						<span>대표음식</span>
-						<input type="text" name="foodMenu" value="">
+						<input type="text" name="foodMenu" id="foodMenu" value="">
 					</div>
 					<div>
-						<span>영업시간</span>
-						<input type="text" name="foodTime" value="">
+						<span>영업시간(ex:08:00~18:00)</span>
+						<input type="text" name="foodTime" id="foodTime" value="">
 					</div>
 					<div>
 						<span>휴일</span>
-						<input type="text" name="foodBreak" value="">
+						<input type="text" name="foodBreak" id="foodBreak" value="">
 					</div>
 					<div>
-						<span>대표이미지</span>
+						<span>*대표이미지</span>
+						<div id="imgWrapper" class="m-2"></div>
+						
 						<input type="file" name="imgFile" accept="image/*"/>
 					</div>
 					<div>
-						<span>음식점소개</span>
-						<textarea name="foodIntro" id="" cols="55" rows="3" placeholder="소개"></textarea>
+						<span>*음식점소개</span>
+						<textarea name="foodIntro" id="foodIntro" cols="55" rows="3" placeholder="소개"></textarea>
 					</div>
 					<div>
-						<span>식당상태</span>
-						<input type="radio" name="foodStatus" value="y"><label>활성화</label>
-						<input type="radio" name="foodStatus" value="n"><label>비활성화</label>
+						<span>*식당상태</span>
+						<input type="radio" name="foodStatus" id="updateStatY" value="y"><label for="updateStatY">Y</label>
+						<input type="radio" name="foodStatus" id="updateStatN"value="n"><label for="updateStatN">N</label>
 					</div>
+					<div>
+						<span>등록자(읽기전용)</span>
+						<input type="text" id="memberCode" readonly="readonly"/>
+					</div>
+					
 					<div class="btn">
-						<input class="button" type="submit" value="수정하기"></input>						
-						<button class="button">삭제하기</button>
+						<input class="button" type="submit" value="수정하기"/>	
+						<input class="button" type="button" id="foodDeleteBtn" value="삭제하기"/>						
 					</div>
 				</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+<!-- 식당 등록 유효성 검사 -->
+<script>
 
+</script>
 <script type="text/javascript">
 /*  게시판  클릭시 작동 */
  
 $(".foodClick").click(function(){
-	$("#foodModal").css("display","block");
+	$("#imgWrapper").empty();
+	$("#foodDeleteBtn").removeAttr("onclick");
+	$("#foodModal").css("display","block");	
+	let foodCode = $(this).children(".foodCode").text();
+	let url = "${root}/admin/getFood.go?foodCode="+foodCode;	
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success:function(data){
+			//console.log(data);			
+			$("#foodCode").val(data.foodCode);
+			$("#foodCodeTemp").text(data.foodCode);			
+			$("#foodName").val(data.foodName);
+			$("#foodAddr").val(data.foodAddr);
+			$("input:radio[name='foodArea'][value='"+data.foodArea+"']",document.foodForm).prop("checked", true);			
+			$("#foodPhone").val(data.foodPhone);			
+			$("input:radio[name='foodKind'][value='"+data.foodKind+"']",document.foodForm).prop("checked", true);
+			$("#foodMenu").val(data.foodMenu);
+			$("#foodTime").val(data.foodTime);
+			$("#foodBreak").val(data.foodBreak);
+			$("#foodIntro").val(data.foodIntro);
+			$("input:radio[name='foodStatus'][value='"+data.foodStatus+"']",document.foodForm).prop("checked", true);
+			$("#memberCode").val(data.memberCode);
+			if(data.imageDto.imageName != null){
+				$("#imgWrapper").append("<img src='${root}/resources/ftp/"+data.imageDto.imageName+"\' alt='"+data.imageDto.imageName+"' style='width:150px; height:150px' />");
+				$("#imgWrapper").append("<span>"+data.imageDto.imageName+"</span>");
+			}
+			$("#foodDeleteBtn").attr("onclick","foodDelete('${root}','"+data.foodCode+"')");
+		},
+		error:function(request,status,error){
+			console.log("code= "+request.status+" message= "+request.responseText+" error= "+error);
+		}	
+	});
 });
 $(".foodClose").click(function(){
 	$("#foodModal").css("display","none");
@@ -347,6 +263,7 @@ $("#foodInClick").click(function(){
 $(".foodInClose").click(function(){
 	$("#foodInModal").css("display","none");
 });
+
 
 	
 /* 지도 */

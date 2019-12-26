@@ -18,4 +18,6 @@ public interface FoodService {
 
 	public void adminFoodList(ModelAndView mav);
 
+	public void getFood(ModelAndView mav);
+
 }

@@ -45,7 +45,7 @@ a {
 	margin: 0 15px;
 }
 #header > div > input {
-	width: 740px; 
+	width: 1000px; 
 	height: 50px;
 	border: none;
 	font-size: 25px;
@@ -56,7 +56,7 @@ a {
 	color: #EFB730;
 }
 #header > div > a > img {
-	width: 100px;
+	width: 50px;
 	height: 50px;
 }
 #content_main {
@@ -195,6 +195,7 @@ a {
 <!-- body부분에도 엔터 이벤트를 추가하면 input태그 외의 공간에서도 엔터 이벤트가 발생  -->
 <body>
 
+<%-- 
 	<div class="container">
 
 		<a href="${root}/coupon/couponInsert.go">상품등록</a>
@@ -231,7 +232,9 @@ a {
 			<a href="${root}/purchase/purchaseList.go">구매내역</a>
 			${memberCode}
 		</c:when>
-	</c:choose>
+	</c:choose> 
+	 --%>
+	
 	</div>
 	<div id="header">
 		<div>

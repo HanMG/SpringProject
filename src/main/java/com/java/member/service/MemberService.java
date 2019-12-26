@@ -17,4 +17,8 @@ public interface MemberService {
 
 	public void myFoodDel(ModelAndView mav);
 
+	public void adminMember(ModelAndView mav);
+
+	public void getMember(ModelAndView mav);
+
 }

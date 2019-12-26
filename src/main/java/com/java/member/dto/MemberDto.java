@@ -9,17 +9,29 @@ public class MemberDto {
 	private String memberPwd;
 	private String memberName;
 	private String memberPhone;
+	private String memberStatus;
 	
-	public MemberDto() {}
-	
+
+	public MemberDto() {
+	}
+
 	public MemberDto(String memberCode, Date memberDate, String memberMail, String memberPwd, String memberName,
-			String memberPhone) {
+			String memberPhone, String memberStatus) {
 		this.memberCode = memberCode;
 		this.memberDate = memberDate;
 		this.memberMail = memberMail;
 		this.memberPwd = memberPwd;
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
+		this.memberStatus = memberStatus;
+	}
+
+	public String getMemberStatus() {
+		return memberStatus;
+	}
+
+	public void setMemberStatus(String memberStatus) {
+		this.memberStatus = memberStatus;
 	}
 
 	public String getMemberCode() {
@@ -73,8 +85,10 @@ public class MemberDto {
 	@Override
 	public String toString() {
 		return "MemberDto [memberCode=" + memberCode + ", memberDate=" + memberDate + ", memberMail=" + memberMail
-				+ ", memberPwd=" + memberPwd + ", memberName=" + memberName + ", memberPhone=" + memberPhone + "]";
+				+ ", memberPwd=" + memberPwd + ", memberName=" + memberName + ", memberPhone=" + memberPhone
+				+ ", memberStatus=" + memberStatus + "]";
 	}
+
 	
 	
 

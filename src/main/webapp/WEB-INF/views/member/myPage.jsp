@@ -108,30 +108,30 @@ a {
 /* 내가 구매한 EAT 딜 */
 .history {
 	width: 500px;
-	overflow: hidden;
+	height: 650px;
 }
 .eat {
-	width: 500px;
+	width: 480px;
 	overflow: hidden;
-	background: skyblue;
 	margin-bottom: 10px;
+	margin: 5px auto;
+	border: solid 1px skyblue;
 }
 .info_1 {
-	width: 170px;
-	height: 170px;
+	width: 140px;
+	height: 140px;
 	float: left;
 }
 
 .info_1 > img {
-	width: 150px;
-	height: 150px;
-	margin: 10px;
+	width: 140px;
+	height: 140px;
 }
 .info_2 {
 	width: 330px;
-	height: 170px;
+	height: 140px;
 	float: left;
-	font-size: 23px;
+	font-size: 20px;
 }
 .info_2 span {
 	margin: 5px;
@@ -417,46 +417,30 @@ a {
 					<span>구매한 EAT딜</span>
 					<span class="close">&times;</span>
 				</div>
-				<div class="eat">
-					<div class="info_1">
-						<img alt="쿠폰" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="info_2">
-						<div>
-							<span>쿠폰명</span>
+				
+				<c:forEach var="couponList" items="${couponList}">
+					<div class="eat" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponList.foodCode}'">
+						<div class="info_1">
+							<img alt="쿠폰" src="${couponList.imagePath}" onerror="this.src='${root}/resources/css/list.jpg'">
 						</div>
-						<div>
-							<span>쿠폰소개</span>
-						</div>
-						<div>
-							<span>가격</span>
-						</div>
-						<div>
-							<span>할인가</span>
-							<button class="button"><a href="#">취소</a></button>
-						</div>
-					</div>
-				</div>
-				<div class="eat">
-					<div class="info_1">
-						<img alt="쿠폰" src="${root}/resources/css/list.jpg">
-					</div>
-					<div class="info_2">
-						<div>
-							<span>쿠폰명</span>
-						</div>
-						<div>
-							<span>쿠폰소개</span>
-						</div>
-						<div>
-							<span>가격</span>
-						</div>
-						<div>
-							<span>할인가</span>
-							<button class="button"><a href="#">취소</a></button>
+						<div class="info_2">
+							<div>
+								<span style="font-weight: bold;">${couponList.couponName}</span>
+							</div>
+							<div>
+								<span style="font-size: 14px;">${couponList.couponIntro}</span>
+							</div>
+							<div>
+								<span style="font-size: 14px; text-decoration:line-through; color: #9b9b9b;">${couponList.couponCostori}</span> 
+							</div>
+							<div>
+								<span style="color: #EFB730;">${couponList.couponCostsale}</span>
+								<button class="button"><a href="#">취소</a></button>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
+				
 			</div>
 		</div>
 	</div>
@@ -468,48 +452,23 @@ a {
 					<span>리뷰 내역</span>
 					<span class="close">&times;</span>
 				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
+				
+				<c:forEach var="reviewList" items="${reviewList}">
+					<div class="review">
+						<div class="review_1">
+							<div>${reviewList.reviewDate}작성일</div>
+							<div>${reviewList.reviewCont}</div>
+							<div>
+								<%-- <c:forEach items="${reviewList}"> --%>							
+									<%-- <img alt="리뷰" src="${reviewList.imageName}"> --%>
+								<%-- </c:forEach> --%>
+							</div> 
+						</div>
+						<div class="review_2">
+							<span>${reviewList.reviewScore}</span>
 						</div>
 					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-						</div>
-					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
-				<div class="review">
-					<div class="review_1">
-						<div>작성일</div>
-						<div>내용</div>
-						<div>
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-							<img alt="리뷰" src="${root}/resources/css/list.jpg">
-						</div>
-					</div>
-					<div class="review_2">
-						<span>별점</span>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

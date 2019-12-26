@@ -27,12 +27,10 @@ a {
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	margin-top: 40px;
-	color: #EFB730;
 }
 .title > span {
-	margin-left: 70px;
+	margin-left: 220px;
 }
 .eat {
 	overflow: hidden;
@@ -159,7 +157,7 @@ a {
 			</c:if>
 			<c:if test="${count > 0}">
 				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-				<div id="inner" class="list">
+				<div id="inner" class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
 						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
 						<span>\ ${couponDto.couponCostsale}</span>

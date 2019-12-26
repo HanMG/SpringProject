@@ -2,7 +2,9 @@ package com.java.member.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,15 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.aop.JejuAspect;
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
+import com.java.review.dto.ReviewDto;
 
 @Component
 public class MemberServiceImp implements MemberService{
@@ -116,8 +122,14 @@ public class MemberServiceImp implements MemberService{
 		// 가고싶다
 		
 		// 리뷰
+		List<ReviewDto> reviewList = memberDao.getMyReview(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.size());
+		mav.addObject("reviewList",reviewList);
 		
 		// EAT딜
+		List<CouponDto> couponList = memberDao.getMyCoupon(memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
+		mav.addObject("couponList", couponList);
 		
 		mav.setViewName("member/myPage.tiles");
 		
@@ -172,8 +184,57 @@ public class MemberServiceImp implements MemberService{
 			e.printStackTrace();
 		}
 		
-		
 	}
+	
+	//관리자
+	@Override
+	public void adminMember(ModelAndView mav) {
+		Map<String, Object> map=mav.getModelMap();
+		MemberDto memberDto = (MemberDto) map.get("memberDto");
+		List<MemberDto> memberList = memberDao.getMember(memberDto);
+		mav.addObject("memberList", memberList);
+	}
+	
+	@Override
+	public void getMember(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		String memberCode = request.getParameter("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberCode : " + memberCode);
+		
+		MemberDto memberDto = new MemberDto();
+		memberDto = memberDao.getMemberDto(memberCode);
+		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		String memberDate = date.format(memberDto.getMemberDate());
+		
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberDate : " + memberDate);
+		
+		JSONObject jsonMemberDto = new JSONObject();
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberDto : " + memberDto.toString());
+		jsonMemberDto.put("memberCode", memberDto.getMemberCode());
+		jsonMemberDto.put("memberDate", memberDate);
+		jsonMemberDto.put("memberMail", memberDto.getMemberMail());
+		jsonMemberDto.put("memberName", memberDto.getMemberName());
+		jsonMemberDto.put("memberPhone", memberDto.getMemberPhone());
+		jsonMemberDto.put("memberStatus", memberDto.getMemberStatus());
+		String jsonText = jsonMemberDto.toJSONString();
+		JejuAspect.logger.info(JejuAspect.logMsg + "jsonText : " + jsonText);
+		
+		response.setContentType("application/x-json;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(jsonText);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+	}
+	
 	
 }
 

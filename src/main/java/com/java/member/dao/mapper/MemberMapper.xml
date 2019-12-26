@@ -67,6 +67,33 @@
 	<delete id="myFoodDel" parameterType="String">
 		DELETE FROM FOOD WHERE FOOD_CODE = #{foodCode}
 	</delete>
+	
+	<select id="getMyCoupon" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
+		select coupon.coupon_code, coupon.food_code, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
+		TO_CHAR(coupon.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(coupon.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, 
+		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,
+		(select image_name from image where refer_code = coupon.coupon_code) AS image_name, 
+		(select image_path from image where refer_code = coupon.coupon_code) AS image_path,
+		(select food_name from food Where food_code = coupon.food_code) AS food_name
+		from coupon where coupon_code in (select coupon_code from purchase where member_code=#{memberCode}) 
+	</select>
+	
+	<select id="getMyReview" parameterType="String" resultType="com.java.review.dto.ReviewDto">
+		SELECT REVIEW.REVIEW_CODE, REVIEW.FOOD_CODE, REVIEW.MEMBER_CODE, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE, LISTAGG(IMAGE_NAME, ',')WITHIN GROUP (ORDER BY IMAGE_NAME) AS IMAGE_NAME
+		FROM REVIEW, IMAGE, MEMBER
+		WHERE REVIEW_CODE = REFER_CODE(+) AND review.MEMBER_CODE = member.member_code  AND member.member_code=#{memberCode}
+		GROUP BY REVIEW.REVIEW_CODE,  REVIEW.FOOD_CODE, review.member_code, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE
+		ORDER BY REVIEW_CODE DESC
+	</select>
+	
+	
+	
+	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
+      select * from member   
+   </select>
+   <select id="getMemberDto" parameterType="String" resultMap="memberDto">
+   		SELECT * FROM MEMBER WHERE MEMBER_CODE = #{memberCode}
+   </select>
 </mapper>
 
 

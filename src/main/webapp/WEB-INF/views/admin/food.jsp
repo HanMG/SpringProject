@@ -17,7 +17,7 @@
     background-color: #EFB730;
 }
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 }
@@ -34,12 +34,12 @@
 	font-size: 23px;
 }
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 식당관련 */

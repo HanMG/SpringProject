@@ -2,8 +2,10 @@ package com.java.member.dao;
 
 import java.util.List;
 
+import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
 import com.java.member.dto.MemberDto;
+import com.java.review.dto.ReviewDto;
 
 public interface MemberDao {
 	public int memberInsert(MemberDto memberDto);
@@ -25,6 +27,14 @@ public interface MemberDao {
 	public List<FoodDto> getMyFood(String memberCode);
 
 	public int myFoodDel(String foodCode);
+	
+	public List<CouponDto> getMyCoupon(String memberCode);
+
+	public List<ReviewDto> getMyReview(String memberCode);
+
+	public List<MemberDto> getMember(MemberDto memberDto);
+
+	public MemberDto getMemberDto(String memberCode);
 
 
 	

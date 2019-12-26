@@ -3,6 +3,7 @@ package com.java.review.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -189,11 +190,12 @@ public class ReviewServiceImp implements ReviewService {
 		JejuAspect.logger.info(JejuAspect.logMsg+" reviewCode : "+reviewCode);
 		reviewDto = reviewDao.reviewUpdate(reviewCode);
 		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		String reviewDate = date.format(reviewDto.getReviewDate());
 		
-		  
 		  JSONObject jo = new JSONObject();
 		  jo.put("reviewCont", reviewDto.getReviewCont()); 
-		  jo.put("reviewScore", reviewDto.getReviewScore()); 
+		  jo.put("reviewDate", reviewDate); 
 		  
 //		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
 		List<ImageDto> listImage = imageDao.imgList(reviewCode);

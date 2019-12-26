@@ -39,7 +39,7 @@
 			SELECT 'pc'||LPAD(seqpurchase.nextval,4,0) As purchase_code from dual
 		</selectKey>
 		INSERT INTO purchase(purchase_code, coupon_code, member_code, purchase_phone, purchase_date, purchase_cost, purchase_status)
-		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, TO_DATE(SYSDATE,'yyyy.mm.dd hh24:mi'), #{purchaseCost}, 'Y')
+		VALUES('pc'||LPAD(seqpurchase.CURRVAL,4,0),#{couponCode}, #{memberCode}, #{purchasePhone}, SYSDATE, #{purchaseCost}, 'Y')
 	</insert>
 	
 	<!--구매 완료 후 정보 출력 -->

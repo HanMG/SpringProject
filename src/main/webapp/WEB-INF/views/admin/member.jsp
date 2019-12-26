@@ -20,7 +20,7 @@
     background-color: #EFB730;
 }
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 }
@@ -29,12 +29,12 @@
 	font-size: 23px;
 }
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 멤버 모달 */
@@ -143,26 +143,23 @@
 					<tr>
 						<th>멤버코드</th>
 						<th>이메일</th>
+						<th>이름</th>
 						<th>가입일</th>
 						<th>휴대폰번호</th>
 						<th>회원상태</th>
 					</tr>				
 				</thead>
 				<tbody>
-					<tr id="memberClick">
-						<th>MemberCode</th>
-						<th>memberMail</th>
-						<th>MemberDate</th>
-						<th>MemberPhone</th>
-						<th>MemberStatus</th>
-					</tr>
-					<tr>
-						<th>MemberCode</th>
-						<th>memberMail</th>
-						<th>MemberDate</th>
-						<th>MemberPhone</th>
-						<th>MemberStatus</th>
-					</tr>
+					<c:forEach var="memberList" items="${memberList}">
+	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
+	                     <th>${memberList.memberCode}</th>
+	                     <th>${memberList.memberMail}</th>
+	                     <th>${memberList.memberName}</th>
+	                     <th>${memberList.memberDate}</th>
+	                     <th>${memberList.memberPhone}</th>
+	                     <th>${memberList.memberStatus}</th>
+	                  </tr>
+               		</c:forEach>
 				</tbody>
 			</table>
 		</div>	
@@ -180,23 +177,23 @@
 				<form action="#" method="post">
 				<div class="member">
 					<div>
-						<span>멤버코드 : memberCode</span>
+						<span id="memberCode">멤버코드 : memberCode</span>
 					</div>
 					<div>
 						<span>이름</span>
-						<input type="text" name="memberName" value="">
+						<input type="text" id="memberName" name="memberName" value="">
 					</div>
 					<div>
 						<span>이메일</span>
 						<input type="hidden" value="" name="memberMail"/>
-						<input type="text" name="mail" value="" disabled="disabled"/>
+						<input type="text" id="memberMail" name="mail" value="" disabled="disabled"/>
 					</div>
 					<div>
 						<span>휴대폰</span>
-						<input type="text" name="memberPhone" value="">
+						<input type="text" id="memberPhone" name="memberPhone" value="">
 					</div>
 					<div>
-						<span>가입일 : memberDate</span>
+						<span id="memberDate">가입일 : memberDate</span>
 					</div>
 					<div>
 						<span>회원상태</span>
@@ -214,12 +211,34 @@
 	</div>
 <script type="text/javascript">
 /*  게시판  클릭시 작동 */
-var memberModal = document.getElementById("memberModal");
-var memberClick = document.getElementById("memberClick");
-var span = document.getElementsByClassName("close")[0];
-memberClick.onclick = function() {
-	memberModal.style.display = "block";
+	function getMember(memberCode) {
+	var url = "${root}/admin/getMember.go?memberCode=" + memberCode;
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success : function(data) {
+			$("#memberCode").text("멤버코드 : " + data.memberCode);
+			$("#memberName").val(data.memberName);
+			$("#memberMail").val(data.memberMail);
+			$("#memberPhone").val(data.memberPhone);
+			$("#memberDate").text("가입일 : " + data.memberDate);
+			$("input:radio[name='memberStatus']:input[value="+data.memberStatus+"]").attr("checked", true);
+		},
+	     error:function(request,status,error){
+	    	 console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+	        }
+
+	});
+	
 	}
+
+$(".memberClick").click(function(){
+   $("#memberModal").css("display","block");
+});
+
+var memberModal = document.getElementById("memberModal");
+var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
 	memberModal.style.display = "none";
 	}

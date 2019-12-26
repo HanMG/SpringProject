@@ -275,7 +275,7 @@
 				<tbody>
 					<c:forEach var="couponDto" items="${couponList}" begin="0"
 						step="1">
-						<tr>
+						<tr class="couponClick">
 							<th id="sendCouponCode">${couponDto.couponCode}</th>
 							<th>${couponDto.foodCode}</th>
 							<th>${couponDto.couponName}</th>
@@ -293,9 +293,8 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('#list tbody tr').on('click', function(){
+		$('.couponClick').on('click', function(){
 			var couponId = $(this).children('#sendCouponCode').text();
-			//var cId = $(this).attr("id");
 			var sendData = "couponCode="+couponId+"&pageNumber="+${pageNumber};
 			var dataUrl = "${root}/coupon/couponUpdate.go?"+sendData;
 			$.ajax({
@@ -315,9 +314,6 @@
 					$('#couponModal input[name=couponSalerate]').val(data.couponSalerate);
 					$('#couponModal input[name=couponCostori]').val(data.couponCostori);
 					$('#couponModal textarea[name=couponIntro]').text(data.couponIntro);
-					
-					//var couponStatusUp = data.couponStatus;
-					//alert(couponStatusUp);
 					
 					$("input:radio[name='couponStatusUp']:input[value="+data.couponStatus+"]").attr("checked", true);
 					
@@ -489,10 +485,6 @@
 			$('.couponInModal').hide();
 		});
 		
-		/*  게시판  클릭시 작동 */
-		$('#list tbody tr').click(function(){
-			//$('.couponModal').show();
-		});
 		$('._close_update').click(function(){
 			$('.couponModal').hide();
 		});

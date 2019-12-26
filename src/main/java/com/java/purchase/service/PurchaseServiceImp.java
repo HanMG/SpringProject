@@ -166,21 +166,16 @@ public class PurchaseServiceImp implements PurchaseService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
-		String pageNumber = request.getParameter("pageNumber");
-		if(pageNumber == null) pageNumber = "1";
-		int currentPage = Integer.parseInt(pageNumber);
-
 		
 		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll();
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		
-		mav.addObject("pageNumber", pageNumber);
 		mav.addObject("purchaseList", purchaseList);
 	}
 	
-	//구매 취소 불러오기
+	//구매 상세 불러오기
 	@Override
 	public String purchaseDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();

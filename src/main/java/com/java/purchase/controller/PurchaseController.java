@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.aop.JejuAspect;
@@ -70,13 +71,11 @@ public class PurchaseController {
 	public void purchaseDelete(HttpServletRequest request, HttpServletResponse response) {
 		String couponCode = request.getParameter("couponCode");
 		String couponName = request.getParameter("couponName");
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponCode", couponCode);
 		mav.addObject("couponName", couponName);
-		mav.addObject("pageNumber", pageNumber);
 		
 		
 		String jsonText = purchaseService.purchaseDelete(mav);
@@ -95,6 +94,7 @@ public class PurchaseController {
 
 	// 구매 취소
 	@RequestMapping(value = "/purchase/purchaseDeleteOk.go", method = RequestMethod.POST)
+	@ResponseBody
 	public void purchaseDeleteOk(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);

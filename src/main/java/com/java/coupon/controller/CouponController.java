@@ -143,8 +143,7 @@ public class CouponController {
 	
 	// 쿠폰상품 수정
 	@RequestMapping(value = "/coupon/couponUpdateOk.go", method = RequestMethod.POST)
-	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto,
-			ImageDto imageDto) {
+	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto, ImageDto imageDto) {
 		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		ModelAndView mav = new ModelAndView();

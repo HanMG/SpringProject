@@ -157,7 +157,7 @@
 				</thead>
 				<tbody>
 				<c:forEach var="purchaseDto" items="${purchaseList}" begin="0">
-					<tr id="${purchaseDto.purchaseCode}">
+					<tr id="${purchaseDto.purchaseCode}" class="purchaseClick">
 						<th>${purchaseDto.purchaseCode}</th>
 						<th>${purchaseDto.couponCode}</th>
 						<th>${purchaseDto.memberCode}</th>
@@ -179,16 +179,15 @@
 	
 	<script type="text/javascript">
 	$(function(){
-		$('#list tbody tr').on('click', function(){
+		$('.purchaseClick').on('click', function(){
 			var pId = $(this).attr('id');
-			var sendData = "purchaseCode="+pId+"&pageNumber="+${pageNumber};
+			var sendData = "purchaseCode="+pId;
 			var purchaseUrl = '${root}/purchase/purchaseDelete.go?'+sendData;
 			$.ajax({
 				url: purchaseUrl,
 				type: 'GET',
 				dataType: 'json',
 				success: function(data){
-					//alert(data);
 					$('.purchaseModal .pCode').text('구매코드 : '+data.purchaseCode);
 					$('.purchaseModal input[name=purchaseCode]').val(data.purchaseCode);
 					$('.purchaseModal .cName').text('쿠폰명 : '+data.couponName);
@@ -197,7 +196,13 @@
 					$('.purchaseModal .pDate').text('구매날짜 : '+data.purchaseDate);
 					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
 					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
-					var pStatus = data.purchasePhone;
+					if(data.purchaseStatus == "Y"){
+						$('#purchaseDelBtn').attr('disabled', false);
+						
+					} else if(data.purchaseStatus == 'N'){
+						$('#purchaseDelBtn').attr('disabled', true);
+						$('#purchaseModal .btn').text("취소된 구매내역 입니다.");
+					}
 					
 					$('.purchaseModal').show();
 					
@@ -248,16 +253,9 @@
 					<div>
 						<span class="pPhone">전송번호 : </span>
 					</div>
-					<!-- <div>
-						<span>쿠폰상태</span>
-						<input type="radio" name="purchaseStatus" value="y"><label>활성화</label>
-						<input type="radio" name="purchaseStatus" value="n"><label>비활성화</label>
-					</div> -->
-					<c:if test="${pStatus == 'Y'}">
 					<div class="btn">
-						<input class="button _close" type="submit" value="취소하기">
+						<input id="purchaseDelBtn" class="button _close" type="submit" value='취소하기'>
 					</div>
-					</c:if>
 				</div>
 				</form>
 			</div>
@@ -265,7 +263,7 @@
 	</div>
 	<script type="text/javascript">
 		$(function(){
-			$("#purchaseModal .button").on('click', function(){
+			$("#purchaseDelBtn").on('click', function(){
 				var purchaseCode = $('input[name=purchaseCode]').val();
 				var delUrl = "${root}/purchase/purchaseDeleteOk.go?purchaseCode="+purchaseCode;
 				$.ajax({

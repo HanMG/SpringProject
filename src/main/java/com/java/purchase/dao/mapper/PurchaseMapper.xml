@@ -81,9 +81,9 @@
 		]]>
 	</select>
 	
-	<!-- 구매 취소 불러오기 -->
+	<!-- 구매 상세 불러오기 -->
 	<select id="purchaseDeleteSelect" parameterType="String" resultMap="PurchaseListDto">
-		SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_code, member_code, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
+		SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_code, purchase_status, member_code, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
         SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
     	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
     	WHERE purchase_code = #{purchaseCode}

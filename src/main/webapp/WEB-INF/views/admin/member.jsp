@@ -151,7 +151,7 @@
 				</thead>
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
-						<tr id="memberClick">
+						<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
 							<th>${memberList.memberCode}</th>
 							<th>${memberList.memberMail}</th>
 							<th>${memberList.memberName}</th>
@@ -174,26 +174,27 @@
 					<span>회원 관리</span>
 					<span class="close">&times;</span>
 				</div>
-				<form action="#" method="post">
+				<form action="${root}/admin/adminUpdateOk.go" method="post">
 				<div class="member">
+					<input type="hidden" id="memberCode" value="${memberDto.memberCode}" name="memberCode"/>	
 					<div>
-						<span>멤버코드 : memberCode</span>
+						<span id="memberCode">멤버코드 : ${memberDto.memberCode}</span>
 					</div>
 					<div>
 						<span>이름</span>
-						<input type="text" name="memberName" value="">
+						<input type="text" id="memberName" name="memberName" value="">
 					</div>
 					<div>
 						<span>이메일</span>
 						<input type="hidden" value="" name="memberMail"/>
-						<input type="text" name="mail" value="" disabled="disabled"/>
+						<input type="text" id="memberMail" name="mail" value="" disabled="disabled"/>
 					</div>
 					<div>
 						<span>휴대폰</span>
-						<input type="text" name="memberPhone" value="">
+						<input type="text" id="memberPhone" name="memberPhone" value="">
 					</div>
 					<div>
-						<span>가입일 : memberDate</span>
+						<span id="memberDate">가입일 : ${memberDto.memberDate}</span>
 					</div>
 					<div>
 						<span>회원상태</span>
@@ -211,16 +212,44 @@
 	</div>
 <script type="text/javascript">
 /*  게시판  클릭시 작동 */
+
+$(".memberClick").click(function(){
+   $("#memberModal").css("display","block");
+});
+
 var memberModal = document.getElementById("memberModal");
-var memberClick = document.getElementById("memberClick");
 var span = document.getElementsByClassName("close")[0];
-memberClick.onclick = function() {
-	memberModal.style.display = "block";
-	}
 span.onclick = function() {
 	memberModal.style.display = "none";
 	}
+	
+function getMember(memberCode){
+	var url = "${root}/admin/getMember.go?memberCode=" + memberCode;
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success : function(data){
+			console.log(data);
+			$("#memberCode").text("멤버코드 : " + data.memberCode);
+			$("#memberDate").text("가입일 : " + data.memberDate);
+			$("#memberCode").val(data.memberCode);
+			$("#memberName").val(data.memberName);
+			$("#memberMail").val(data.memberMail);
+			$("#memberPhone").val(data.memberPhone);
+			$("input:radio[name='memberStatus']:input[value="+data.memberStatus+"]").attr("checked", true);
+		},
+		error:function(request,status,error){
+			console.log("code = " + request.status + "message = " + request.responseText + "error = " + error);
+		}
+	});
+}
+	
 </script>
 	
 </body>
 </html>
+
+
+
+

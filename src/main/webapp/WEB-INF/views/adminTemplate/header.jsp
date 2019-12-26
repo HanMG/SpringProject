@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="${root}/resources/datatables.min.css">
 <script type="text/javascript">
 $(document).ready(function() {
+
     $('#example').DataTable({    	
     	"order":[[0, 'desc']]
     });

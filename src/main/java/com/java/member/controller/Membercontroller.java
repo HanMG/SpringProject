@@ -1,5 +1,8 @@
 package com.java.member.controller;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,18 +11,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.java.aop.JejuAspect;
 import com.java.food.dto.FoodDto;
 import com.java.member.dto.MemberDto;
 import com.java.member.service.MemberService;
+import com.java.member.naver.NaverLoginManager;
 
 @Controller
 public class Membercontroller {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private NaverLoginManager naverLoginManager;
+	
+	// 네이버 로그인
+	@RequestMapping(value = "/auth/naverCallback.go", method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView callback(HttpServletRequest request, HttpServletResponse response,@RequestParam Map<String,Object> data)
+            throws IOException {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String memberCode = (String)session.getAttribute("memberCode");
+		String code = (String) data.get("code");
+		String state = (String) data.get("state");
+		boolean isRedirectState = false;
+		
+		if(memberCode != null) isRedirectState = true; 
+		else if(code.equals("") || code == null) isRedirectState = true; 
+		else if(state.equals("") || state == null) isRedirectState = true; 
+
+		if(isRedirectState) {
+			mav.setViewName("redirect:/jeju.go");
+			return mav;
+		}
+		
+        OAuth2AccessToken oauthToken = naverLoginManager.getAccessToken(session,code,state);
+        String apiResult = naverLoginManager.getUserProfile(oauthToken);
+        
+        
+        memberService.insertNaver(apiResult,mav);
+        
+        mav.addObject("result", apiResult);
+
+        return mav;
+    }
 	
 	// 카카오로 로그인	
 	@RequestMapping(value="/kakaoLogin.go", method = RequestMethod.GET)
@@ -109,7 +149,23 @@ public class Membercontroller {
 			mav.setViewName("admin/member.admin");		
 			return mav;		
 		}
-	
+		
+		@RequestMapping(value = "/admin/getMember.go", method = RequestMethod.GET)
+		public void getMember(HttpServletRequest request, HttpServletResponse response){
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("request", request);
+			mav.addObject("response", response);
+			memberService.getMember(mav);
+		}
+		// 회원정보 수정
+		@RequestMapping(value = "/admin/adminUpdateOk.go", method=RequestMethod.POST)
+		public ModelAndView adminUpdateOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto){
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("request", request);
+			mav.addObject("memberDto", memberDto);
+			memberService.adminUpdateOk(mav);
+			return mav;
+		}
 }
 
 

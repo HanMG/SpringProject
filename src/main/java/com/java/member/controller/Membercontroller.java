@@ -89,8 +89,8 @@ public class Membercontroller {
 	// 메인하면 가면서 세션 다 끊기
 	@RequestMapping(value="/member/main.go", method=RequestMethod.GET)
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		HttpSession session=request.getSession();
-		request.getSession().invalidate();
+//		HttpSession session=request.getSession();
+//		request.getSession().invalidate();
 		
 		return "/member/main.tiles";
 	}
@@ -136,36 +136,33 @@ public class Membercontroller {
 	}
 	
 	
-	
-	
-	
 	// 관리자
 	
 	// 회원 관리 관련
-		@RequestMapping(value = "/admin/member.go", method = RequestMethod.GET)
-		public ModelAndView member(HttpServletRequest request, HttpServletResponse response) {
-			ModelAndView mav = new ModelAndView();
-			memberService.adminMember(mav);
-			mav.setViewName("admin/member.admin");		
-			return mav;		
-		}
-		
-		@RequestMapping(value = "/admin/getMember.go", method = RequestMethod.GET)
-		public void getMember(HttpServletRequest request, HttpServletResponse response){
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("request", request);
-			mav.addObject("response", response);
-			memberService.getMember(mav);
-		}
-		// 회원정보 수정
-		@RequestMapping(value = "/admin/adminUpdateOk.go", method=RequestMethod.POST)
-		public ModelAndView adminUpdateOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto){
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("request", request);
-			mav.addObject("memberDto", memberDto);
-			memberService.adminUpdateOk(mav);
-			return mav;
-		}
+	@RequestMapping(value = "/admin/member.go", method = RequestMethod.GET)
+	public ModelAndView member(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		memberService.adminMember(mav);
+		mav.setViewName("admin/member.admin");		
+		return mav;		
+	}
+	
+	@RequestMapping(value = "/admin/getMember.go", method = RequestMethod.GET)
+	public void getMember(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		memberService.getMember(mav);
+	}
+	// 회원정보 수정
+	@RequestMapping(value = "/admin/adminUpdateOk.go", method=RequestMethod.POST)
+	public ModelAndView adminUpdateOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("memberDto", memberDto);
+		memberService.adminUpdateOk(mav);
+		return mav;
+	}
 }
 
 

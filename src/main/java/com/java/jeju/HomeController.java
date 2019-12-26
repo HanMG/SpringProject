@@ -47,7 +47,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("url", naverAuthUrl);
 
-		
+		System.out.println("아니!");
 		return "main.main";
 	}
 	

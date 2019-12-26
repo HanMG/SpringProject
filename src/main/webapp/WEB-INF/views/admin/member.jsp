@@ -20,7 +20,7 @@
     background-color: #EFB730;
 }
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 }
@@ -29,12 +29,12 @@
 	font-size: 23px;
 }
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 멤버 모달 */
@@ -160,6 +160,17 @@
 							<th>${memberList.memberStatus}</th>
 						</tr>
 					</c:forEach>
+				<tbody>
+					<c:forEach var="memberList" items="${memberList}">
+	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
+	                     <th>${memberList.memberCode}</th>
+	                     <th>${memberList.memberMail}</th>
+	                     <th>${memberList.memberName}</th>
+	                     <th>${memberList.memberDate}</th>
+	                     <th>${memberList.memberPhone}</th>
+	                     <th>${memberList.memberStatus}</th>
+	                  </tr>
+               		</c:forEach>
 				</tbody>
 			</table>
 		</div>	

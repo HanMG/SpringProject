@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
-import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
@@ -222,9 +217,7 @@ public class MemberServiceImp implements MemberService{
 			e.printStackTrace();
 		}
 		
-		
 	}
-	
 	
 	//관리자
 	@Override
@@ -285,7 +278,6 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("check", check);
 		mav.setViewName("member/adminUpdateOk.tiles");
 	}
-	
 }
 
 

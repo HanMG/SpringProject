@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.java.coupon.dto.CouponDto;
-import com.java.favorite.dto.FavoriteDto;
 import com.java.food.dto.FoodDto;
-import com.java.image.dto.ImageDto;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
 import com.java.review.dto.ReviewDto;

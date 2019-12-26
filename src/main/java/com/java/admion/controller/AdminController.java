@@ -29,7 +29,6 @@ public class AdminController {
 		mav.setViewName("admin/main.admin");		
 		return mav;		
 	}
-	
 	// 음식점 정보 등록 관련
 	@RequestMapping(value = "/admin/food.go", method = RequestMethod.GET)
 	public ModelAndView food(HttpServletRequest request, HttpServletResponse response) {

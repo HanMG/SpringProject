@@ -11,8 +11,10 @@ public class MemberDto {
 	private String memberPhone;
 	private String memberStatus;
 	
-	public MemberDto() {}
-	
+
+	public MemberDto() {
+	}
+
 	public MemberDto(String memberCode, Date memberDate, String memberMail, String memberPwd, String memberName,
 			String memberPhone, String memberStatus) {
 		this.memberCode = memberCode;
@@ -86,6 +88,7 @@ public class MemberDto {
 				+ ", memberPwd=" + memberPwd + ", memberName=" + memberName + ", memberPhone=" + memberPhone
 				+ ", memberStatus=" + memberStatus + "]";
 	}
+
 	
 	
 	

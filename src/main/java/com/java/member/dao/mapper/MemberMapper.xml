@@ -7,13 +7,12 @@
 	<resultMap type="com.java.food.dto.FoodDto" id="foodDto"/>
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
-		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME, member_status) 
+		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
 		values('member'||LPAD(seqMember.nextval,4,0),
 		#{memberDate},
 		#{memberMail},
 		#{memberPwd},
-		#{memberName},
-		'y'
+		#{memberName}
 		)
 	</insert>
 	 
@@ -30,22 +29,20 @@
 	</select>
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
-		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE, member_status) 
+		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
 		values('member'||LPAD(seqMember.nextval,4,0),
 		#{mail},
 		#{nickname},
-		sysdate,
-		'y'
+		sysdate
 		)
 	</insert>
 	
 		<insert id="insertNaver" parameterType="map">
-		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE, member_status) 
+		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
 		values('member'||LPAD(seqMember.nextval,4,0),
 		#{email},
 		#{name},
-		sysdate,
-		'y'
+		sysdate
 		)
 	</insert>
 	
@@ -97,7 +94,6 @@
 		GROUP BY REVIEW.REVIEW_CODE,  REVIEW.FOOD_CODE, review.member_code, MEMBER.MEMBER_NAME, REVIEW.REVIEW_DATE, REVIEW.REVIEW_CONT, REVIEW.REVIEW_SCORE, IMAGE.REFER_CODE
 		ORDER BY REVIEW_CODE DESC
 	</select>
-	
 	
 	<select id="getMyFavorite" parameterType="String" resultType="com.java.member.dto.MemberFavoriteDto">
         select food.food_code, food.food_area, food.food_name, food.food_read,

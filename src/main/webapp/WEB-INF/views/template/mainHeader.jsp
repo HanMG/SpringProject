@@ -235,10 +235,10 @@ html {
 			</c:when>
 		</c:choose>
 		<div>
-			<a href="#">EAT딜</a>
+			<a href="${root}/coupon/couponList.go">EAT딜</a>
 		</div>
 		<div>
-			<a href="#">맛집리스트</a>
+			<a href="${root}/food/list.go">맛집리스트</a>
 		</div>
 	</div>
 	<!-- 로그인 -->

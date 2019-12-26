@@ -252,6 +252,8 @@ html {
 				<img alt="로고" src="${root}/resources/css/jeju.png">
 				<button class="button" id="emailClick" style="width:180pt;height:35pt;">이메일 로그인</button>
 				<button class="button" style="width:180pt;height:35pt;" onclick="loginForm()">카카오 로그인</button>
+				<div id="naver_id_login" style="text-align:center"><a href="${url}">
+				<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
 			</div>
 		</div>
 	</div>

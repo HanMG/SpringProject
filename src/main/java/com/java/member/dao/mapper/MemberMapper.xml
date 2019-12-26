@@ -7,12 +7,13 @@
 	<resultMap type="com.java.food.dto.FoodDto" id="foodDto"/>
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
-		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
+		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME, member_status) 
 		values('member'||LPAD(seqMember.nextval,4,0),
 		#{memberDate},
 		#{memberMail},
 		#{memberPwd},
-		#{memberName}
+		#{memberName},
+		'y'
 		)
 	</insert>
 	 
@@ -29,11 +30,22 @@
 	</select>
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
-		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
+		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE, member_status) 
 		values('member'||LPAD(seqMember.nextval,4,0),
 		#{mail},
 		#{nickname},
-		sysdate
+		sysdate,
+		'y'
+		)
+	</insert>
+	
+		<insert id="insertNaver" parameterType="map">
+		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE, member_status) 
+		values('member'||LPAD(seqMember.nextval,4,0),
+		#{email},
+		#{name},
+		sysdate,
+		'y'
 		)
 	</insert>
 	
@@ -101,6 +113,10 @@
 	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
 		select * from member	
 	</select>
+	
+	<update id="adminUpdate" parameterType="com.java.member.dto.MemberDto">
+		update member set MEMBER_STATUS=#{memberStatus}, MEMBER_NAME=#{memberName}, MEMBER_PHONE=#{memberPhone} where MEMBER_CODE=#{memberCode}
+	</update>
 </mapper>
 
 

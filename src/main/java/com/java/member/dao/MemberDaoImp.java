@@ -38,7 +38,6 @@ public class MemberDaoImp implements MemberDao {
 	
 	@Override
 	public MemberDto memberUpdate(String memberCode) {
-		
 		return sqlSessionTemplate.selectOne("memberMapper.memberInfo", memberCode);
 	}
 
@@ -48,6 +47,11 @@ public class MemberDaoImp implements MemberDao {
 		hashMap.put("nickname", nickname);
 		hashMap.put("mail", mail);
 		return sqlSessionTemplate.insert("memberMapper.insertKakao", hashMap);
+	}
+	
+	@Override
+	public int insertNaver(Map<String,Object> map) {
+		return sqlSessionTemplate.insert("memberMapper.insertNaver", map);
 	}
 	
 	@Override
@@ -92,9 +96,15 @@ public class MemberDaoImp implements MemberDao {
 		return sqlSessionTemplate.selectList("memberMapper.getMyFavorite", memberCode);
 	}
 	
+	
 	//관리자
 	@Override
 	public List<MemberDto> getMember(MemberDto memberDto) {
 		return sqlSessionTemplate.selectList("memberMapper.getMember", memberDto);
 	}
+	@Override
+	public int adminUpdateOk(MemberDto memberDto) {
+		return sqlSessionTemplate.update("memberMapper.adminUpdate", memberDto);
+	}
+
 }

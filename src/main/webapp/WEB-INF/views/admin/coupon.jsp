@@ -275,7 +275,7 @@
 				<tbody>
 					<c:forEach var="couponDto" items="${couponList}" begin="0"
 						step="1">
-						<tr class="couponClick">
+						<tr id="couponClick">
 							<th id="sendCouponCode">${couponDto.couponCode}</th>
 							<th>${couponDto.foodCode}</th>
 							<th>${couponDto.couponName}</th>
@@ -293,10 +293,8 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('.couponClick').click(function(){
-			
-			//alert("click");
-			$('.couponModal').css("display","block");
+		$('body').delegate('#couponClick', 'click', function(e){
+			$('#couponModal').css("display","block");
 			var couponId = $(this).children('#sendCouponCode').text();
 			var sendData = "couponCode="+couponId;
 			var dataUrl = "${root}/coupon/couponUpdate.go?"+sendData;
@@ -327,6 +325,10 @@
 				}
 			})
 		});
+
+		$('._closeUpdate').click(function(){
+			$('#couponModal').css("display","none");
+		});
 	})
 </script>
 	<!-- 쿠폰 모달 -->
@@ -334,7 +336,7 @@
 		<div id="content_modal">
 			<div class="content_modal">
 				<div class="title_modal">
-					<span>쿠폰 관리</span> <span class="close _close_update">&times;</span>
+					<span>쿠폰 관리</span> <span class="close _closeUpdate">&times;</span>
 				</div>
 				<form action="${root}/coupon/couponUpdateOk.go" method="post"
 					enctype="multipart/form-data" onsubmit="return insertForm(this)" name="couponForm">
@@ -389,7 +391,6 @@
 							<input class="button" type="submit" value="수정하기">
 							<input class="button" type="reset" value="초기화">
 							<a class="button" href="javascript:couponDeleteCheck('${root}','upCouponCode.value','upCouponName.value','${pageNumber}')">삭제하기</a>
-							<!-- <button class="button">삭제하기</button> -->
 						</div>
 					</div>
 				</form>
@@ -488,9 +489,6 @@
 			$('.couponInModal').hide();
 		});
 		
-		$('._close_update').click(function(){
-			$('.couponModal').hide();
-		});
 	 })
 	</script>
 </body>

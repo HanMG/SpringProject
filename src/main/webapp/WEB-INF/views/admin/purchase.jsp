@@ -179,7 +179,7 @@
 	
 	<script type="text/javascript">
 	$(function(){
-		$('.purchaseClick').on('click', function(){
+		$('body').delegate('.purchaseClick','click', function(){
 			var pId = $(this).attr('id');
 			var sendData = "purchaseCode="+pId;
 			var purchaseUrl = '${root}/purchase/purchaseDeleteAdmin.go?'+sendData;
@@ -197,10 +197,11 @@
 					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
 					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
 					if(data.purchaseStatus == "Y"){
-						$('#purchaseDelBtn').attr('disabled', false);
+						$('#purchaseModal .btn span').text("");
+						$('#purchaseDelBtn').show();
 					} else if(data.purchaseStatus == 'N'){
-						$('#purchaseDelBtn').attr('disabled', true);
-						$('#purchaseModal .btn').text("취소된 구매내역 입니다.");
+						$('#purchaseDelBtn').hide();
+						$('#purchaseModal .btn span').text("취소된 구매내역 입니다.");
 					}
 					
 					$('.purchaseModal').show();
@@ -254,6 +255,7 @@
 					</div>
 					<div class="btn">
 						<input id="purchaseDelBtn" class="button _close" type="submit" value='취소하기'>
+						<span></span>
 					</div>
 				</div>
 				</form>

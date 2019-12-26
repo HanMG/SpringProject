@@ -338,29 +338,42 @@ a {
 	</div>
 	
 	
+
+</body>
 <script type="text/javascript">
-	var url = null;
-	
-	function search() {
-		var param = $("#searchInput").val()
-		url = "${root}/searchKeyword.go?keyword=" + param;
-		location.href = url;
+var url = null;
+
+function search() {
+	var param = $("#searchInput").val()
+	url = "${root}/searchKeyword.go?keyword=" + param;
+	location.href = url;
+}
+
+$("#searchButton").click(function() {
+	search();
+})
+
+$("#searchInput").keypress(function(event) {
+	if (event.which == 13) {
+		search();
 	}
-	
-	$("#searchInput").keypress(function(event) {
-		if (event.which == 13) {
-			search();
-		}
-	})
-	
-	$(document).ready(function() {
-		$("#searchInput").on("change", function() {
-			getKeywordList($("#testInput").val());
-			
-			$('#testInput').autocomplete({
+});
+
+$("#searchInput").on("change keyup paste", function() {
+	var keywordList = [];
+	$.ajax({
+		type : "POST",
+		url : "${root}/searchAutoAjax.do",
+		data : {"keyword" : $("#searchInput").val()},
+		dataType:"json",
+		success : function(data){
+			$('#searchInput').autocomplete({
+			    source: data
 			});
-		});
-	});
+		}
+	}); 
+});
+
 	
 
 	/* 메인화면 로그인 클릭시 작동 */
@@ -463,5 +476,4 @@ a {
     }
 
 </script>	
-</body>
 </html>

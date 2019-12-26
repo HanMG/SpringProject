@@ -6,7 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 * {
@@ -166,7 +166,9 @@ a {
 			</div>
 			<div>
 				<span class="foodName">${searchFoodDto.foodName}</span>
-				<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern=".0"/></span>
+				<c:if test="${searchFoodDto.reviewScore > 0}">
+				<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
+				</c:if>
 			</div>
 			<div>
 				<span class="foodArea">${searchFoodDto.foodArea} - </span>  
@@ -379,26 +381,20 @@ a {
 </div>
 		<div>
 			<h4>필터</h4>
-			<label>조회 기준</label>
-			<select>
-				<option value="평점">평점순</option>
-				<option value="조회수">인기순</option>
-			</select>
-			<label>음식점 지역</label>
-			<select>
-				<option value="제주시">제주시</option>
-				<option value="서귀포시">서귀포시</option>
-			</select>
-			<label>음식 종류</label>
-			<select>
-				<option value="한식">한식</option>
-				<option value="회집">회집</option>
-				<option value="일식">일식</option>
-				<option value="양식">양식</option>
-				<option value="중국식">중식</option>
-				<option value="까페">까페</option>
-			</select>
-			<input type="button" value="적용">
+			<p>조회 기준</p>
+				<input type="radio" name="orderType" class="orderType" value="조회수">인기순
+				<input type="radio" name="orderType" class="orderType" value="평점">평점순
+			<p>음식점 지역</p>
+				<input type="checkbox" name="areaType" class="areaType" value="제주시">제주시
+				<input type="checkbox" name="areaType" class="areaType" value="서귀포시">서귀포시
+			<p>음식 종류</p>
+				<input type="checkbox" name="kindType" class="kindType" value="한식">한식
+				<input type="checkbox" name="kindType" class="kindType" value="회집">회집
+				<input type="checkbox" name="kindType" class="kindType" value="일식">일식
+				<input type="checkbox" name="kindType" class="kindType" value="중식">중식
+				<input type="checkbox" name="kindType" class="kindType" value="양식">양식
+				<input type="checkbox" name="kindType" class="kindType" value="까페">까페
+			<input type="button" value="적용" onclick="searchType()" />
 		</div>
 
 		<div align="center">
@@ -408,10 +404,20 @@ a {
 </body>
 <script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-function search() {
-	var param = $("#searchInput").val()
-	url = "${root}/searchKeyword.go?keyword=" + param;
-	location.href = url;
+var orderType = "";
+
+var areaType = [];
+var kindType = [];
+
+function searchType() {
+	orderType = $('input[name="orderType"]:checked').val();
+	$('input[name="areaType"]:checked').each(function() {
+		areaType.push($(this).val());
+	});
+	$('input[name="kindType"]:checked').each(function() {
+		kindType.push($(this).val());
+	});
+	alert(orderType + "/" + areaType + "/" + kindType);
 }
 
 </script>

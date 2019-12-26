@@ -22,7 +22,10 @@ public interface PurchaseService {
 	//구매내역 전체(관리자)
 	public void purchaseListAll(ModelAndView mav);
 	
-	//구매삭제
-	public void purchaseDeleteOk(ModelAndView mav);
+	//구매 취소 불러오기
+	public String purchaseDelete(ModelAndView mav);
+	
+	//구매 취소
+	public String purchaseDeleteOk(ModelAndView mav);
 	
 }

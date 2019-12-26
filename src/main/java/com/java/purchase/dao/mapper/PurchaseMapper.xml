@@ -71,22 +71,28 @@
 	</select>
 	
 	<!-- 구매내역(관리자) -->
-	<select id="purchaseListAll" parameterType="java.util.Map" resultMap="PurchaseListDto">
+	<select id="purchaseListAll" resultMap="PurchaseListDto">
 		<![CDATA[
 		SELECT * FROM
     	(SELECT ROWNUM AS numb, A.* FROM (
     	SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_code, member_code, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
         SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
     	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
-    	WHERE purchase_status = 'Y' ORDER BY purchase_date DESC) A) B 
-    	WHERE B.numb >= #{startRow} AND B.numb <= #{endRow}
+    	WHERE purchase_status = 'Y') A) B
 		]]>
+	</select>
+	
+	<!-- 구매 취소 불러오기 -->
+	<select id="purchaseDeleteSelect" parameterType="String" resultMap="PurchaseListDto">
+		SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_code, member_code, purchase_date, purchase_phone, image_name, image_path, image_code FROM(
+        SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
+    	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
+    	WHERE purchase_status = 'Y' AND purchase_code = #{purchaseCode}
 	</select>
 	
 	<!-- 구매 취소 -->
 	<update id="purchaseDelete" parameterType="String">
-		UPDATE purchase
-		SET purchase_status='N' WHERE coupon_code = #{couponCode} AND member_code = #{memberCode}
+		UPDATE purchase SET purchase_status='N' WHERE purchase_code = #{purchaseCode}
 	</update>
 	
 </mapper>

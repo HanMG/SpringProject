@@ -133,26 +133,21 @@ public class CouponServiceImp implements CouponService {
 		int currentPage = Integer.parseInt(pageNumber);
 		
 		//쿠폰 리스트 카운트
-		int count = couponDao.couponListCount();
-		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
+		//int count = couponDao.couponListCount();
+		//JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
 		
-		int scrollSize = 10;
-		int startRow = (currentPage - 1) * scrollSize + 1;
-		int endRow = currentPage*scrollSize;
-		
-		List<CouponDto> couponList = null;
+		//int scrollSize = 10;
+		//int startRow = (currentPage - 1) * scrollSize + 1;
+		//int endRow = currentPage*scrollSize;
 		
 		//현재 날짜 출력
 		Date today = new Date();
 		JejuAspect.logger.info(JejuAspect.logMsg + "date: "+ today);
 		
-		if(count > 0) {
-			//쿠폰 리스트 가져오기
-			couponList = couponDao.couponList(startRow, endRow, today);
-			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
-			mav.addObject("couponList", couponList);
-		}
-		mav.addObject("count", count);
+		//쿠폰 리스트 가져오기
+		List<CouponDto> couponList = couponDao.couponListAdmin();
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: "+ couponList.size());
+		mav.addObject("couponList", couponList);
 		mav.addObject("pageNumber", pageNumber);
 	}
 	
@@ -379,22 +374,29 @@ public class CouponServiceImp implements CouponService {
 		mav.setViewName("coupon/couponUpdateOk.tiles");
 	}
 	
-	// TODO Auto-generated method stub
 	//쿠폰 삭제
 	@Override
-	public void couponDeleteOk(ModelAndView mav) {
+	public String couponDeleteOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String couponCode = request.getParameter("couponCode");
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		int check = couponDao.couponDeleteOk(couponCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "check_3: " +check);
 		
-		request.setAttribute("pageNumber", pageNumber);
+		Map<String, Integer> cDelMap = new HashMap<String, Integer>();
+		cDelMap.put("check", check);
+		
+		String jsonText = JSONValue.toJSONString(cDelMap);
+		JejuAspect.logger.info(JejuAspect.logMsg + "jsonText: "+ jsonText);
+		
+		//request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("check", check);
-		mav.setViewName("coupon/couponDeleteOk.tiles");
+		//mav.setViewName("coupon/couponDeleteOk.tiles");
+		
+		return jsonText;
 	}
 	
 }

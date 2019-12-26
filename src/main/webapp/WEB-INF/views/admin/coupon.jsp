@@ -260,20 +260,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test="${count > 0}">
-						<c:forEach var="couponDto" items="${couponList}" begin="0"
-							step="1">
-							<tr>
-								<th id="sendCouponCode">${couponDto.couponCode}</th>
-								<th>${couponDto.foodCode}</th>
-								<th>${couponDto.couponName}</th>
-								<th>${couponDto.couponStartdate}~
-									${couponDto.couponEnddate}</th>
-								<th>${couponDto.couponSalerate}</th>
-								<th>${couponDto.couponCostsale}</th>
-							</tr>
-						</c:forEach>
-					</c:if>
+					<c:forEach var="couponDto" items="${couponList}" begin="0"
+						step="1">
+						<tr>
+							<th id="sendCouponCode">${couponDto.couponCode}</th>
+							<th>${couponDto.foodCode}</th>
+							<th>${couponDto.couponName}</th>
+							<th>${couponDto.couponStartdate}~
+								${couponDto.couponEnddate}</th>
+							<th>${couponDto.couponSalerate}</th>
+							<th>${couponDto.couponCostsale}</th>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -305,15 +303,16 @@
 					$('#couponModal textarea[name=couponIntro]').text(data.couponIntro);
 					
 					$('.couponModal').show();
-				},error : function(){
+				}, error : function(request,status,error){
 					console.log("실패");
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			})
 		});
 		
+		
 	})
 </script>
-	pageNumber: ${pageNumber}
 	<!-- 쿠폰 모달 -->
 	<div id="couponModal" class="couponModal">
 		<div id="content_modal">

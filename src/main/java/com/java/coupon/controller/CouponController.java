@@ -28,15 +28,6 @@ public class CouponController {
 	@Autowired
 	private CouponService couponService;
 
-	// 쿠폰상품 등록 페이지
-//	@RequestMapping(value="/coupon/couponInsert.go", method= RequestMethod.GET)
-//	public ModelAndView couponInsert(HttpServletRequest request, HttpServletResponse response) {
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("coupon/couponInsert.tiles");
-//		
-//		return mav;
-//	}
-//	
 	// 쿠폰상품 등록
 	@RequestMapping(value = "/coupon/couponInsertOk.go", method = RequestMethod.POST)
 	public ModelAndView couponInsertOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
@@ -185,21 +176,36 @@ public class CouponController {
 		mav.setViewName("coupon/couponDelete.empty");
 
 		return mav;
-
 	}
 
 	// 쿠폰상품 삭제
 	@RequestMapping(value = "/coupon/couponDeleteOk.go", method = RequestMethod.POST)
-	public ModelAndView couponDeleteOk(HttpServletRequest request, HttpServletResponse response) {
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-
+	public void couponDeleteOk(HttpServletRequest request, HttpServletResponse response) {
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		String couponCode = request.getParameter("couponCode");
+		System.out.println("couponCode/Ok: "+couponCode);
+		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
-		mav.addObject("pageNumber", pageNumber);
+		mav.addObject("couponCode", couponCode);
+		//mav.addObject("pageNumber", pageNumber);
 
-		couponService.couponDeleteOk(mav);
+		String jsonText = couponService.couponDeleteOk(mav);
 
-		return mav;
+		if(jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//return mav;
 	}
 
 }

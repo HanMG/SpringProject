@@ -35,5 +35,5 @@ public interface CouponService {
 	public void couponUpdateOk(ModelAndView mav);
 	
 	//쿠폰 삭제
-	public void couponDeleteOk(ModelAndView mav);
+	public String couponDeleteOk(ModelAndView mav);
 }

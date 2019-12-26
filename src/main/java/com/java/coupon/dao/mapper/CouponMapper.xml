@@ -60,12 +60,22 @@
 		]]>
 	</select>
 	-->
+	<!-- 쿠폰리스트 불러오기 -->
 	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
 		<![CDATA[
 		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
 		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
 		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code AND coupon_enddate >= #{today} AND coupon_status = 'Y' ORDER BY coupon_code DESC) A) B
 		WHERE B.num >= #{startRow} AND B.num <= #{endRow}
+		]]>
+	</select>
+	
+	<!-- 쿠폰리스트 불러오기(관리자) -->
+	<select id="couponListAdmin" resultMap="CouponDto">
+		<![CDATA[
+		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
+		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
+		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code ORDER BY coupon_code DESC) A) B
 		]]>
 	</select>
 	

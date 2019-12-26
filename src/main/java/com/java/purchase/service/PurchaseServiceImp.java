@@ -1,5 +1,6 @@
 package com.java.purchase.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -167,44 +169,65 @@ public class PurchaseServiceImp implements PurchaseService {
 		String pageNumber = request.getParameter("pageNumber");
 		if(pageNumber == null) pageNumber = "1";
 		int currentPage = Integer.parseInt(pageNumber);
-		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber/currentPage: "+ pageNumber +"/"+ currentPage);
 
-		int count = purchaseDao.getCountAll();
-		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
-		
-		int boardSize = 10;
-		int startRow = (currentPage-1)*boardSize+1;
-		int endRow = currentPage*boardSize;
-		JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
-		
-		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll(startRow, endRow);
+		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll();
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		
 		mav.addObject("pageNumber", pageNumber);
-		mav.addObject("boardSize", boardSize);
-		mav.addObject("count", count);
 		mav.addObject("purchaseList", purchaseList);
 	}
 	
-	
-	// 구매 취소
+	//구매 취소 불러오기
 	@Override
-	public void purchaseDeleteOk(ModelAndView mav) {
+	public String purchaseDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		String couponCode = (String) map.get("couponCode");
-		int pageNumber = (Integer) map.get("pageNumber");
+		String purchaseCode = request.getParameter("purchaseCode");
 		
-		HttpSession session =  request.getSession(false);
-		String memberCode = (String) session.getAttribute("memberCode");
+		PurchaseListDto purchaseListDto = purchaseDao.purchaseSelect(purchaseCode);
 		
-		JejuAspect.logger.info(JejuAspect.logMsg + "memberCode: "+ memberCode);
-		int check = purchaseDao.purchaseDelete(couponCode, memberCode);
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh24:mi");
+		String purchaseDate = date.format(purchaseListDto.getPurchaseDate());
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDate: "+ purchaseDate);
+		
+		Map<String, Object> pDeleteMap = new HashMap<String, Object>();
+		pDeleteMap.put("purchaseCode", purchaseListDto.getPurchaseCode());
+		pDeleteMap.put("couponCode", purchaseListDto.getCouponCode());
+		pDeleteMap.put("memberCode", purchaseListDto.getMemberCode());
+		pDeleteMap.put("purchasePhone", purchaseListDto.getPurchasePhone());
+		pDeleteMap.put("purchaseDate", purchaseDate);
+		pDeleteMap.put("couponName", purchaseListDto.getCouponName());
+		pDeleteMap.put("couponCostsale", purchaseListDto.getCouponCostsale());
+		
+		String jsonText = JSONValue.toJSONString(pDeleteMap);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
+	// 구매 취소
+	@Override
+	public String purchaseDeleteOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+
+		String purchaseCode = request.getParameter("purchaseCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCode: "+ purchaseCode);
+
+		int check = purchaseDao.purchaseDelete(purchaseCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
 		
 		mav.addObject("check", check);
-		mav.addObject("pageNumber", pageNumber);
-		mav.setViewName("purchase/purchaseDeleteOk.tiles");
+		//mav.setViewName("purchase/purchaseDeleteOk.tiles");
+		
+		Map<String, Integer> delMap = new HashMap<String, Integer>();
+		delMap.put("check", check);
+		
+		String jsonText = JSONValue.toJSONString(delMap);		
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
 	}
 	
 }

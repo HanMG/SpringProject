@@ -53,10 +53,6 @@
 			}
 		</style>
 		<script type="text/javascript">
-			function phoneCheck(){
-				confirm("휴대폰으로 인증번호가 발송되었습니다.");
-			}
-			
 			function purchaseForm(obj){
 				if(obj.purchasePhone.value==""){
 					alert("휴대폰 번호를 인증해주세요.");
@@ -100,9 +96,6 @@
 		</script>
 	</head>
 	<body>
-		
-		
-		<!-- 일반사용자일 경우 -->
 		<div id="content">
 			<div class="history">
 				<div class="title">
@@ -138,17 +131,12 @@
 							<span> *휴대폰번호(해당 번호로 구매한 쿠폰이 전송됩니다.)</span>
 							<span> "-"을 제외한 번호만 입력해주세요.</span>
 							<input type="text" name="purchasePhone" maxlength="13" onChange="inputPhone(this)">
-							<input type="button" value="인증번호 받기" onclick="phoneCheck()">
-							
 						</div>
 						<div>
 							<input type="submit" value="구매하기">
 						</div>
 					</form>
-					
-					<!-- 관리자일 경우  -->
-					<p><a href="${root}/coupon/couponUpdate.go?couponCode=${couponDto.couponCode}&pageNumber=${pageNumber}">수정하기</a></p>
-					<p><a href="javascript:couponDelete('${root}','${couponDto.couponCode}','${couponDto.couponName}','${pageNumber}')">삭제하기</a></p>
+					<!-- 비로그인 경우  -->
 					<% 
 					} if(memberCode == null){ 	
 					%>

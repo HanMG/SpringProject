@@ -156,9 +156,8 @@
 					</tr>				
 				</thead>
 				<tbody>
-				<c:if test="${count > 0}">
 				<c:forEach var="purchaseDto" items="${purchaseList}" begin="0">
-					<tr id="purchaseClick ${purchaseDto.purchaseCode}">
+					<tr id="${purchaseDto.purchaseCode}">
 						<th>${purchaseDto.purchaseCode}</th>
 						<th>${purchaseDto.couponCode}</th>
 						<th>${purchaseDto.memberCode}</th>
@@ -167,15 +166,47 @@
 						<th>${purchaseDto.purchasePhone}</th>
 					</tr>
 				</c:forEach>
-				</c:if>
 				</tbody>
 			</table>
 		</div>	
 	</div>
 	
+	<script type="text/javascript">
+	$(function(){
+		$('#list tbody tr').on('click', function(){
+			var pId = $(this).attr('id');
+			var sendData = "purchaseCode="+pId+"&pageNumber="+${pageNumber};
+			var purchaseUrl = '${root}/purchase/purchaseDelete.go?'+sendData;
+			$.ajax({
+				url: purchaseUrl,
+				type: 'GET',
+				dataType: 'json',
+				success: function(data){
+					//alert(data);
+					$('.purchaseModal .pCode').text('구매코드 : '+data.purchaseCode);
+					$('.purchaseModal input[name=purchaseCode]').val(data.purchaseCode);
+					$('.purchaseModal .cName').text('쿠폰명 : '+data.couponName);
+					$('.purchaseModal .cCode').text('쿠폰코드 : '+data.couponCode);
+					$('.purchaseModal .mCode').text('멤버코드 : '+data.memberCode);
+					$('.purchaseModal .pDate').text('구매날짜 : '+data.purchaseDate);
+					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
+					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
+					
+					$('.purchaseModal').show();
+					
+				}, error : function(request,status,error){
+					console.log("실패");
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+		});
+		$('._close').click(function(){
+			$('.purchaseModal').hide();
+		});	
+	})
 	
+	</script>
 	<!-- 구매 모달 -->
-	
 	<div id="purchaseModal" class="purchaseModal">
 		<div id="content_modal">
 			<div class="content_modal">
@@ -183,28 +214,32 @@
 					<span>구매 관리</span>
 					<span class="close _close">&times;</span>
 				</div>
-				<form action="${root}/purchase/purchaseDeleteOk.go" method="post" name="deleteForm">
+				<form name="deleteForm">
 				<div class="purchase">
 					<div>
-						<span class="pCode">구매코드 : purchaseCode</span>
+						<span class="pCode">구매코드 :</span>
 						<input type="hidden" value="${purchaseCode}" name="purchaseCode"/>
 					</div>
 					<div>
-						<span class="cCode">쿠폰코드 : couponCode</span>
+						<span class="cName">쿠폰명 :</span>
+						<input type="hidden" value="${couponName}" name="couponCode"/>
+					</div>
+					<div>
+						<span class="cCode">쿠폰코드 :</span>
 						<input type="hidden" value="${couponCode}" name="couponCode"/>
 					</div>
 					<div>
-						<span class="mCode">멤버코드 : memberCode</span>
+						<span class="mCode">멤버코드 :</span>
 						<input type="hidden" value="${memberCode}" name="memberCode"/>
 					</div>
 					<div>
-						<span class="pDate">구매날짜 : ${purchaseDate}</span>
+						<span class="pDate">구매날짜 :</span>
 					</div>
 					<div>
-						<span class="pDate">구매가격 : ${couponCostsale}</span>
+						<span class="pCost">구매가격 : </span>
 					</div>
 					<div>
-						<span class="pPhone">휴대폰 : ${purchasePhone}</span>
+						<span class="pPhone">전송번호 : </span>
 					</div>
 					<!-- <div>
 						<span>쿠폰상태</span>
@@ -212,7 +247,7 @@
 						<input type="radio" name="purchaseStatus" value="n"><label>비활성화</label>
 					</div> -->
 					<div class="btn">
-						<input class="button" type="submit" value="삭제하기">
+						<input class="button _close" type="submit" value="삭제하기">
 					</div>
 				</div>
 				</form>
@@ -220,14 +255,27 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		/*  게시판  클릭시 작동 */
 		$(function(){
-			$('#list tbody tr').on('click', function(){
-				$('.purchaseModal').show();
+			$("#purchaseModal .button").on('click', function(){
+				var purchaseCode = $('input[name=purchaseCode]').val();
+				var delUrl = "${root}/purchase/purchaseDeleteOk.go?purchaseCode="+purchaseCode;
+				$.ajax({
+					url: delUrl,
+					type: 'POST',
+					dataType: 'json',
+					success: function(data){
+						var check = data.check;
+						if(check == 1){
+							alert("구매취소 완료되었습니다.");
+						} else {
+							alert("정상처리 실패; 구매 취소 가능 여부 확인해주세요.")
+						}
+					}, error : function(request,status,error){
+						console.log("실패");
+				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				})
 			});
-			$('._close').click(function(){
-				$('.purchaseModal').hide();
-			});	
 		})
 		
 	</script>

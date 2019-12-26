@@ -182,7 +182,7 @@
 		$('.purchaseClick').on('click', function(){
 			var pId = $(this).attr('id');
 			var sendData = "purchaseCode="+pId;
-			var purchaseUrl = '${root}/purchase/purchaseDelete.go?'+sendData;
+			var purchaseUrl = '${root}/purchase/purchaseDeleteAdmin.go?'+sendData;
 			$.ajax({
 				url: purchaseUrl,
 				type: 'GET',
@@ -198,7 +198,6 @@
 					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
 					if(data.purchaseStatus == "Y"){
 						$('#purchaseDelBtn').attr('disabled', false);
-						
 					} else if(data.purchaseStatus == 'N'){
 						$('#purchaseDelBtn').attr('disabled', true);
 						$('#purchaseModal .btn').text("취소된 구매내역 입니다.");

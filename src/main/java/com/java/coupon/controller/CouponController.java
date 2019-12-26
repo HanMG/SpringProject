@@ -110,14 +110,14 @@ public class CouponController {
 	@RequestMapping(value = "/coupon/couponUpdate.go", method = RequestMethod.GET)
 	@ResponseBody
 	public void couponUpdate(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto) {
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		String couponCode = request.getParameter("couponCode");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("response", response);
 		mav.addObject("couponCode", couponCode);
-		mav.addObject("pageNumber", pageNumber);
+		//mav.addObject("pageNumber", pageNumber);
 		
 		String jsonText = couponService.couponUpdate(mav);
 		
@@ -131,9 +131,7 @@ public class CouponController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
 		//return mav;
 	}
 
@@ -144,13 +142,10 @@ public class CouponController {
 	// 쿠폰상품 수정
 	@RequestMapping(value = "/coupon/couponUpdateOk.go", method = RequestMethod.POST)
 	public ModelAndView couponUpdateOk(HttpServletRequest request, HttpServletResponse response, CouponDto couponDto, ImageDto imageDto) {
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("couponDto", couponDto);
 		mav.addObject("imageDto", imageDto);
-		mav.addObject("pageNumber", pageNumber);
 
 		couponService.couponUpdateOk(mav);
 

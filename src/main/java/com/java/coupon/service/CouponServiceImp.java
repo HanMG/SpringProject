@@ -123,22 +123,14 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
-		String pageNumber = request.getParameter("pageNumber");
-
-		if (pageNumber == null)
-			pageNumber = "1";
-		JejuAspect.logger.info(JejuAspect.logMsg + "pageNumber: " + pageNumber);
-		int currentPage = Integer.parseInt(pageNumber);
-
 		// 현재 날짜 출력
-		Date today = new Date();
-		JejuAspect.logger.info(JejuAspect.logMsg + "date: " + today);
+		//Date today = new Date();
+		//JejuAspect.logger.info(JejuAspect.logMsg + "date: " + today);
 
 		// 쿠폰 리스트 가져오기
 		List<CouponDto> couponList = couponDao.couponListAdmin();
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.size());
 		mav.addObject("couponList", couponList);
-		mav.addObject("pageNumber", pageNumber);
 	}
 
 	// 쿠폰리스트
@@ -267,11 +259,11 @@ public class CouponServiceImp implements CouponService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
 		String couponCode = request.getParameter("couponCode");
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode);
 
 		CouponDto couponDto = couponDao.couponRead(couponCode);
-		request.setAttribute("pageNumber", pageNumber);
+		//request.setAttribute("pageNumber", pageNumber);
 
 		String couponStatus = couponDto.getCouponStatus();
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponStatus : " + couponStatus);
@@ -289,7 +281,7 @@ public class CouponServiceImp implements CouponService {
 		upMap.put("couponSalerate", couponDto.getCouponSalerate());
 		upMap.put("couponIntro", couponDto.getCouponIntro());
 		upMap.put("couponStatus", couponDto.getCouponStatus());
-		upMap.put("pageNumber", pageNumber);
+		//upMap.put("pageNumber", pageNumber);
 		JejuAspect.logger.info(JejuAspect.logMsg + upMap.toString());
 
 		String jsonText = JSONValue.toJSONString(upMap);
@@ -307,7 +299,7 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		MultipartFile upImage = request.getFile("imageFile");
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		CouponDto couponDto = (CouponDto) map.get("couponDto");
 		String couponStatus = couponDto.getCouponStatus();
@@ -364,7 +356,7 @@ public class CouponServiceImp implements CouponService {
 			mav.addObject("check", check);
 		}
 
-		request.setAttribute("pageNumber", pageNumber);
+		//request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("couponCode", couponCode);
 		mav.setViewName("coupon/couponUpdateOk.tiles");
 	}

@@ -66,9 +66,26 @@ public class PurchaseController {
 		return mav;
 	}
 
-	// 구매 취소 페이지 연결
 	@RequestMapping(value = "/purchase/purchaseDelete.go", method = RequestMethod.GET)
-	public void purchaseDelete(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView purchaseDelete(HttpServletRequest request, HttpServletResponse response) {
+		String couponCode = request.getParameter("couponCode");
+		String couponName = request.getParameter("couponName");
+		String purchaseCode = request.getParameter("purchaseCode");
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("couponCode", couponCode);
+		mav.addObject("couponName", couponName);
+		mav.addObject("purchaseCode", purchaseCode);
+		
+		mav.setViewName("purchase/purchaseDelete.empty");
+		
+		return mav;
+	}
+	
+	// 구매 상세 불러오기(관리자)
+	@RequestMapping(value = "/purchase/purchaseDeleteAdmin.go", method = RequestMethod.GET)
+	public void purchaseDeleteAdmin(HttpServletRequest request, HttpServletResponse response) {
 		String couponCode = request.getParameter("couponCode");
 		String couponName = request.getParameter("couponName");
 
@@ -92,7 +109,7 @@ public class PurchaseController {
 		}
 	}
 
-	// 구매 취소
+	// 구매 취소(관리자)
 	@RequestMapping(value = "/purchase/purchaseDeleteOk.go", method = RequestMethod.POST)
 	@ResponseBody
 	public void purchaseDeleteOk(HttpServletRequest request, HttpServletResponse response) {
@@ -111,9 +128,6 @@ public class PurchaseController {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		//return mav;
 	}
 
 }

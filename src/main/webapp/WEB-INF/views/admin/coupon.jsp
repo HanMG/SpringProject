@@ -147,7 +147,7 @@
 }
 </style>
 <script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
-<script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+<%-- <script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script> --%>
 <script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
 <script type="text/javascript">
 			//유효성 체크
@@ -293,9 +293,12 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('.couponClick').on('click', function(){
+		$('.couponClick').click(function(){
+			
+			//alert("click");
+			$('.couponModal').css("display","block");
 			var couponId = $(this).children('#sendCouponCode').text();
-			var sendData = "couponCode="+couponId+"&pageNumber="+${pageNumber};
+			var sendData = "couponCode="+couponId;
 			var dataUrl = "${root}/coupon/couponUpdate.go?"+sendData;
 			$.ajax({
 				url: dataUrl,
@@ -317,7 +320,7 @@
 					
 					$("input:radio[name='couponStatus']:input[value="+data.couponStatus+"]").attr("checked", true);
 					
-					$('.couponModal').show();
+					//$('.couponModal').show();
 				}, error : function(request,status,error){
 					console.log("실패");
 			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -362,11 +365,11 @@
 						</div>
 						<div>
 							<span>원가격</span>
-							<input id="cost" type="text" name="couponCostori">
+							<input class="cost" type="text" name="couponCostori">
 						</div>
 						<div>
 							<span>할인율</span>
-							<input id="saleRate" type="text" name="couponSalerate" maxlength="3">
+							<input class="saleRate" type="text" name="couponSalerate" maxlength="3">
 						</div>
 						<div>
 							<span>할인가</span>
@@ -403,7 +406,7 @@
 		}
 	
 		$(function(){
-			$('.couponModal #cost, .couponModal #saleRate').on('change', function(){
+			$('.couponModal .cost, .couponModal .saleRate').on('change', function(){
 				var oriCost = parseInt($('.couponModal input[name=couponCostori]').val() || 0);
 				var salePer = parseInt($('.couponModal input[name=couponSalerate]').val() || 0);
 				var result = Math.ceil((oriCost - (oriCost * (salePer * 0.01))));
@@ -411,7 +414,7 @@
 				$('.couponModal input[name=couponCostsale]').val(result);
 			});
 			
-			$('.couponInModal #cost, .couponInModal #saleRate').on('change', function(){
+			$('.couponInModal .cost, .couponInModal .saleRate').on('change', function(){
 				var oriCost = parseInt($('.couponInModal input[name=couponCostori]').val() || 0);
 				var salePer = parseInt($('.couponInModal input[name=couponSalerate]').val() || 0);
 				var result = Math.ceil((oriCost - (oriCost * (salePer * 0.01))));
@@ -453,11 +456,11 @@
 						</div>
 						<div>
 							<span>원가격</span>
-							<input id="cost" type="text" name="couponCostori">
+							<input class="cost" type="text" name="couponCostori">
 						</div>
 						<div>
 							<span>할인율</span>
-							<input id="saleRate" type="text" name="couponSalerate" maxlength="3">
+							<input class="saleRate" type="text" name="couponSalerate" maxlength="3">
 						</div>
 						<div>
 							<span>할인가</span>

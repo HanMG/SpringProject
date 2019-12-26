@@ -870,10 +870,7 @@ a {
 	  slides[slideIndex-1].style.display = "block";  
 	  dots[slideIndex-1].className += " active";
 	}
-<<<<<<< HEAD
 
-</script>
-<script>
 
 var root = "${root}";
 var memberCode = "${memberCode}";

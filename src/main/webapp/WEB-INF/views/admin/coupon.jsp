@@ -315,7 +315,7 @@
 					$('#couponModal input[name=couponCostori]').val(data.couponCostori);
 					$('#couponModal textarea[name=couponIntro]').text(data.couponIntro);
 					
-					$("input:radio[name='couponStatusUp']:input[value="+data.couponStatus+"]").attr("checked", true);
+					$("input:radio[name='couponStatus']:input[value="+data.couponStatus+"]").attr("checked", true);
 					
 					$('.couponModal').show();
 				}, error : function(request,status,error){
@@ -379,8 +379,8 @@
 						</div>
 						<div>
 							<span>쿠폰 상태</span>
-							<input type="radio" name="couponStatusUp" value="Y"><label>활성화</label>
-							<input type="radio" name="couponStatusUp" value="N"><label>비활성화</label>
+							<input type="radio" name="couponStatus" value="Y"><label>활성화</label>
+							<input type="radio" name="couponStatus" value="N"><label>비활성화</label>
 						</div>
 						<div class="btn">
 							<input class="button" type="submit" value="수정하기">

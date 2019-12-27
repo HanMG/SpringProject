@@ -931,7 +931,6 @@ function favorSwitch(aa) {
 			let reviewDisplay = document.getElementById("review");
 			reviewDisplay.innerHTML = xhr.responseText;
 		}
-	}
-		}
+	}		
 </script>
 </html>

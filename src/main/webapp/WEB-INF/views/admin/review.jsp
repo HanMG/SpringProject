@@ -110,10 +110,7 @@ $(".reviewClick").click(function(){
 		type : "GET",
 		dataType : "json",
 		success:function(data){
-			console.log(data);
-			//alert(data.listImage[0].imageName);
-			//alert(data.listImage[1].imageName);
-			//alert(data.listImage.length);
+			//console.log(data);			
 			$("#reviewHidden").val(data.reviewCode);
 			$("#reviewCode").text(data.reviewCode);
 			$("#foodCode").text(data.foodCode);

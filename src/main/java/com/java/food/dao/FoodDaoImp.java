@@ -92,6 +92,11 @@ public class FoodDaoImp implements FoodDao {
 
 	@Override
 	public List<FoodDto> foodDtoList() {		
-		return sqlSession.selectList("dao.FoodMapper.AdminfoodList");
-	}	
+		return sqlSession.selectList("dao.FoodMapper.adminfoodList");
+	}
+
+	@Override
+	public int foodFavorite(String foodCode) {		
+		return sqlSession.selectOne("dao.FoodMapper.foodFavorite",foodCode);
+	}		
 }

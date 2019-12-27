@@ -71,7 +71,11 @@
 		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
 	</select>
 	
-	<select id="AdminfoodList" resultType="com.java.food.dto.FoodDto">
+	<select id="adminfoodList" resultType="com.java.food.dto.FoodDto">
 		select * from food
+	</select>
+	
+	<select id="foodFavorite" parameterType="String" resultType="int">
+		select count(food_code) from favorite where food_code=#{foodCode}
 	</select>
 </mapper>

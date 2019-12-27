@@ -33,4 +33,6 @@ public interface FoodDao {
 
 	public List<FoodDto> foodDtoList();
 
+	public int foodFavorite(String foodCode);
+
 }

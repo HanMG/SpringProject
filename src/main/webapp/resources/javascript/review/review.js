@@ -10,6 +10,7 @@ function reviewForm(obj) {
 		obj.reviewCont.focus();
 		return false;
 	}
+	
 }
 
 //삭제 이미지 파일명 저장.
@@ -18,3 +19,4 @@ function delImage(tdId, imgName) {
 	document.getElementById("deleteImg").value += imgName + ",";
 	document.getElementById(tdId).style.display = "none";
 }
+

@@ -512,7 +512,7 @@ a {
 			<div class="info_2">
 				<span>조회수 ${foodDto.foodRead }</span> 
 				<span>리뷰수 ${reviewCountDto.whole}</span> 
-				<span>즐겨찾기</span>
+				<span>즐겨찾기 ${favoriteCnt}</span>
 			</div>
 			<div class="info_3">
 				<div>
@@ -688,7 +688,7 @@ a {
 						<label for="bad">별로에요</label><input type="radio" id="bad" name="reviewScore" value="1"/> -->
 						<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="식당의 분위기, 서비스가 궁금해요!"></textarea>
 						<div id="fileDiv">     
-							<div class="box-file-input"><label><input type="file" multiple="multiple" name="imgFile" class="file-input"  accept="image/*"></label><span class="filename">파일을 선택해주세요</span></div>
+							<div class="box-file-input"><label><input type="file" multiple="multiple" name="imgFile" class="file-input" accept="image/*"></label><span class="filename">파일을 선택해주세요</span></div>
 				            <!-- <input type="file" name="imgFile" multiple="multiple" accept="image/*"/> -->                  
 				        </div>        
 				        <input class="button" type="submit" value="글쓰기"/>
@@ -730,6 +730,7 @@ a {
 		</div>
 	</div>
 </body>
+<!-- 리뷰 삭제  -->
 <script>
 	function userDelete(root, foodCode, reviewCode){
 		let isOk = confirm("정말로 리뷰를 삭제하시겠습니까?");
@@ -737,7 +738,7 @@ a {
 		let url = root+"/review/userDelete.go?reviewCode="+reviewCode+"&foodCode="+foodCode;		
 		location.href=url;	
 		}
-	}
+	}	
 </script>
 
 	<script type="text/javascript">

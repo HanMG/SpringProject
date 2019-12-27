@@ -118,6 +118,7 @@ public class FoodServiceImp implements FoodService {
 		FoodDto foodDto = new FoodDto();
 		ImageDto imageDto = new ImageDto();
 		ReviewCountDto reviewCountDto = new ReviewCountDto();
+
 		// 리뷰 리스트 가져오기 위한 Dao
 		List<FoodReviewDto> reviewList = null;
 		reviewList = foodDao.reviewList(foodCode);
@@ -177,16 +178,17 @@ public class FoodServiceImp implements FoodService {
             // 조회수 증가
             foodDao.foodReadUpdate(foodCode);
         }		
-		
+		// 즐겨찾기 카운트 
+        String favoriteCnt = Integer.toString(foodDao.foodFavorite(foodCode));
 		// 리뷰 카운트
         reviewCountDto = foodDao.foodReivewCount(foodCode);
         JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCountDto.toString());
         // 리뷰 평균 점수
         float reviewAvg = foodDao.foodReviewAvg(foodCode);
         // 보낼 데이터
+        mav.addObject("favoriteCnt", favoriteCnt);
 		mav.addObject("reviewAvg", reviewAvg);
-		mav.addObject("reviewCountDto",reviewCountDto);	
-			
+		mav.addObject("reviewCountDto",reviewCountDto);			
 		mav.addObject("couponDtoList", couponDtoList);
 		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	

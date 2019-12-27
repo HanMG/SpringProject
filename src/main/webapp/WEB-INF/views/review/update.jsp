@@ -52,7 +52,7 @@ function reviewUpdate() {
 				</table>
 				<input type="hidden" name="deleteImg" id="deleteImg"/>
 			</c:if>
-			<input type="file" name="imgFile" multiple="multiple" accept="image/*" />
+			<input type="file" name="imgFile" multiple="multiple" accept="image/*" id="files"/>
 		</div>
 		<input type="submit" value="수정" /> <input type="button" value="뒤로가기" onclick="history.back()"/>
 	</form>

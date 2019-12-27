@@ -108,6 +108,7 @@ form input {
 				<form action="${root}/purchase/purchaseInsertOk.go" method="post">
 					<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
 					<input type="hidden" name="memberCode" value="${memberCode}">
+					<input type="hidden" name="memberMail" value="${memberDto.memberMail}">
 					<input type="hidden" name="purchasePhone" value="${purchasePhone}">
 					<input type="hidden" name="purchaseCost" value="${couponDto.couponCostsale}">
 					<div>
@@ -127,5 +128,4 @@ form input {
 		</div>
 	</div>
 </body>
->>>>>>> d74622fb7d46b60259c08e9cf0017089d2ea9be5
 </html>

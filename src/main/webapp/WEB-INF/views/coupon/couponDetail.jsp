@@ -55,7 +55,7 @@
 		<script type="text/javascript">
 			function purchaseForm(obj){
 				if(obj.purchasePhone.value==""){
-					alert("휴대폰 번호를 인증해주세요.");
+					alert("휴대폰 번호를 입력해주세요.");
 					obj.purchasePhone.focus();
 					return false;
 				}
@@ -69,6 +69,17 @@
 				var num = obj.value.replace(/[^0-9]/g,"");
 				var phone = "";
 				
+				if(num.length < 9){
+					alert("휴대폰 번호를 올바르게 입력해주세요.")
+					obj.focus();
+					return false;
+				}
+				else if(num.length > 11){
+					alert("11자리 이내로 입력해주세요.")
+					obj.focus();
+					return false;
+				} 
+				
 				if(num.length <= 11){
 					phone += num.substr(0,3);
 					phone += "-";
@@ -81,15 +92,8 @@
 					phone += num.substr(3,3);
 					phone += "-";
 					phone += num.substr(7);
-				} else if(num.length > 11){
-					alert("11자리 이내로 입력해주세요.")
-					obj.focus();
-					return false;
-				} else if(num.length < 9){
-					alert("휴대폰 번호를 올바르게 입력해주세요.")
-					obj.focus();
-					return false;
 				}
+				
 				obj.value = phone;									
 			}
 		
@@ -111,15 +115,15 @@
 			</div>
 			<div>
 				<span>원가</span>
-				<span>${couponDto.couponCostori}</span>
+				<span>${couponDto.couponCostori}원</span>
 			</div>
 			<div>
 				<span>할인가격</span>
-				<span>${couponDto.couponCostsale}</span>
+				<span>${couponDto.couponCostsale}원</span>
 			</div>
 			<div>
 				<span>유효기간</span>
-				<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
+				<span>${couponDto.couponStartdate}부터 ${couponDto.couponEnddate}까지 사용가능</span>
 			</div>
 			<div>
 				<span>쿠폰소개</span>
@@ -127,24 +131,24 @@
 			</div>
 		</div>
 		<div>
-			<form action="${root}/purchase/purchaseInsert.go" method="get">
+		     <form action="${root}/purchase/purchaseInsert.go" method="get" onsubmit="return purchaseForm(this)">
 				<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
-				<!-- <input type="hidden" name="memberCode"> -->
 				<% 	
 					String memberCode = (String) session.getAttribute("memberCode");
 					if(memberCode != null){ 
 				%>
 					<div>
-						<span class="nav_5"> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
-						<input class="input" type="text" name="purchasePhone">
+						<span> *휴대폰번호(해당 번호로 구매한 쿠폰이 전송됩니다.)</span>
+						<span> "-"을 제외한 번호만 입력해주세요.</span>
+						<input type="text" name="purchasePhone" maxlength="13" onChange="inputPhone(this)">
 					</div>
-					<div style="text-align: center; margin-top: 10px;">
-						<input class="button" type="submit" value="구매하기" style="height: 50px; font-size: 23px; width: 100px;">
+					<div>
+						<input type="submit" value="구매하기">
 					</div>
+				<%
 				} if(memberCode == null){ 	
 				%>
 					<p>로그인 후 구매하실 수 있습니다.</p>
-					<%-- <a href="${root}/member/login.go">로그인하기</a> --%>
 					<a href="#" onclick="memberCodeCheck(${memberCode})" >로그인하기</a>
 					
 					<script type="text/javascript">

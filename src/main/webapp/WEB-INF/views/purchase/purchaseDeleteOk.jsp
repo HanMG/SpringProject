@@ -12,7 +12,7 @@
 		<c:if test="${check > 0}">
 			<script type="text/javascript">
 				alert("정상적으로 취소요청되었습니다.");
-				opener.document.location.href="${root}/purchase/purchaseList.go?pageNumber=${pageNumber}";
+				location.href="${root}/admin/purchase.go";
 				self.close();
 			</script>
 		</c:if>
@@ -20,7 +20,7 @@
 		<c:if test="${check == 0}">
 			<script type="text/javascript">
 				alert("취소처리가 실패했습니다. 관리자에게 문의해주세요.");
-				opener.document.location.href="${root}/purchase/purchaseList.go?pageNumber=${pageNumber}";
+				location.href="${root}/admin/purchase.go";
 				self.close();
 			</script>
 		</c:if>

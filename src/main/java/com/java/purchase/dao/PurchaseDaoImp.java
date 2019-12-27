@@ -69,22 +69,21 @@ public class PurchaseDaoImp implements PurchaseDao {
 	
 	// 구매내역(관리자)
 	@Override
-	public List<PurchaseListDto> purchaseListAll(int startRow, int endRow) {
-		Map<String, Object> allMap = new HashMap<String, Object>();
-		allMap.put("startRow", startRow);
-		allMap.put("endRow", endRow);
-		
-		return sqlsessionTemplate.selectList("dao.PurchaseMapper.purchaseListAll", allMap);
+	public List<PurchaseListDto> purchaseListAll() {
+		return sqlsessionTemplate.selectList("dao.PurchaseMapper.purchaseListAll");
 	}
+	
+	// 구매취소 불러오기
+	@Override
+	public PurchaseListDto purchaseSelect(String purchaseCode) {
+		return sqlsessionTemplate.selectOne("dao.PurchaseMapper.purchaseDeleteSelect", purchaseCode);
+	}
+	
 	
 	// 구매취소
 	@Override
-	public int purchaseDelete(String couponCode, String memberCode) {
-		Map<String, String> pdMap = new HashMap<String, String>();
-		pdMap.put("couponCode", couponCode);
-		pdMap.put("memberCode", memberCode);
-		
-		return sqlsessionTemplate.update("dao.PurchaseMapper.purchaseDelete", pdMap);
+	public int purchaseDelete(String purchaseCode) {
+		return sqlsessionTemplate.update("dao.PurchaseMapper.purchaseDelete", purchaseCode);
 	}
 	
 	

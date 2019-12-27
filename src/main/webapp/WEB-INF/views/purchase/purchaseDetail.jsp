@@ -7,15 +7,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 구매 상세페이지</title>
-		<script type="text/javascript">
-			/*  function phoneChange(obj){
-				var num = obj.purchasePhone.value.replace(/[^0-9]/g,"");
-				var phone = "";
-				phone += num.split("-");
-				console.log("num:"+num +"/ phone:"+phone);
-				obj.purchasePhone.value = phone;
-			} */
-		</script>
 	</head>
 	<body>
 		<p>쿠폰명: ${couponDto.couponName}</p>
@@ -33,6 +24,8 @@
 			<input type="hidden" name="memberCode" value="${memberCode}">
 			<input type="hidden" name="purchasePhone" value="${purchasePhone}">
 			<input type="hidden" name="purchaseCost" value="${couponDto.couponCostsale}">
+			<input type="hidden" name="memberMail" value="${memberDto.memberMail}">
+			
 			<p>구매자 정보</p>
 			<span>구매자 이름: ${memberDto.memberName}</span>
 			<span>구매자 이메일: ${memberDto.memberMail}</span>

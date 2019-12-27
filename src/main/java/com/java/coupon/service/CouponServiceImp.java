@@ -2,7 +2,6 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
@@ -52,13 +50,11 @@ public class CouponServiceImp implements CouponService {
 		String couponCode = couponDao.couponInsert(couponDto);
 
 		if (couponCode != null) {
-			// TODO : 이미지 insert
 			MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 			MultipartFile upImage = request.getFile("imageFile");
 
 			long imageSize = upImage.getSize();
 
-			// 이미지 path 수정
 			String rootPath = request.getSession().getServletContext().getRealPath("/");
 			String attachPath = "resources/ftp/";
 			String imageName = Long.toString(System.currentTimeMillis()) + "_" + upImage.getOriginalFilename();
@@ -95,7 +91,6 @@ public class CouponServiceImp implements CouponService {
 	}
 
 	// 식당 코드 검색
-	// TODO
 	@Override
 	public void searchFoodCode(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -114,7 +109,6 @@ public class CouponServiceImp implements CouponService {
 			JejuAspect.logger.info(JejuAspect.logMsg + "searchFoodCodeList 사이즈: " + searchFoodCodeList.size());
 			mav.addObject("foodCodeList", searchFoodCodeList);
 		}
-
 	}
 
 	// 쿠폰리스트[관리자]
@@ -123,13 +117,10 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
-		// 현재 날짜 출력
-		//Date today = new Date();
-		//JejuAspect.logger.info(JejuAspect.logMsg + "date: " + today);
-
 		// 쿠폰 리스트 가져오기
 		List<CouponDto> couponList = couponDao.couponListAdmin();
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.size());
+
 		mav.addObject("couponList", couponList);
 	}
 
@@ -170,7 +161,7 @@ public class CouponServiceImp implements CouponService {
 		mav.addObject("pageNumber", pageNumber);
 	}
 
-	// 쿠폰 리스트(Ajax 새로고침) TODO
+	// 쿠폰 리스트(Ajax 새로고침)
 	@Override
 	@ResponseBody
 	public String couponListAjax(ModelAndView mav) {
@@ -242,7 +233,6 @@ public class CouponServiceImp implements CouponService {
 		}
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : " + couponDto.toString());
 
-		// TODO 이미지 경로
 		String path = request.getContextPath() + "\\ftp\\";
 		JejuAspect.logger.info(JejuAspect.logMsg + "path : " + path);
 
@@ -281,7 +271,6 @@ public class CouponServiceImp implements CouponService {
 		upMap.put("couponSalerate", couponDto.getCouponSalerate());
 		upMap.put("couponIntro", couponDto.getCouponIntro());
 		upMap.put("couponStatus", couponDto.getCouponStatus());
-		//upMap.put("pageNumber", pageNumber);
 		JejuAspect.logger.info(JejuAspect.logMsg + upMap.toString());
 
 		String jsonText = JSONValue.toJSONString(upMap);
@@ -299,7 +288,6 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		MultipartFile upImage = request.getFile("imageFile");
-		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 
 		CouponDto couponDto = (CouponDto) map.get("couponDto");
 		String couponStatus = couponDto.getCouponStatus();
@@ -356,7 +344,6 @@ public class CouponServiceImp implements CouponService {
 			mav.addObject("check", check);
 		}
 
-		//request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("couponCode", couponCode);
 		mav.setViewName("coupon/couponUpdateOk.tiles");
 	}
@@ -367,7 +354,6 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String couponCode = request.getParameter("couponCode");
-		// int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: " + couponCode);
 
 		int check = couponDao.couponDeleteOk(couponCode);
@@ -379,9 +365,7 @@ public class CouponServiceImp implements CouponService {
 		String jsonText = JSONValue.toJSONString(cDelMap);
 		JejuAspect.logger.info(JejuAspect.logMsg + "jsonText: " + jsonText);
 
-		// request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("check", check);
-		// mav.setViewName("coupon/couponDeleteOk.tiles");
 
 		return jsonText;
 	}

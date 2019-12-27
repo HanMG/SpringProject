@@ -9,16 +9,16 @@
 <title>음식점정보삭제</title>
 </head>
 <body>
-	<c:if test="${check > 1 }">
-		<script>
+	<c:if test="${check > 0 }">
+		<script>			
+			location.href="${root}/admin/food.go";
 			alert("삭제되었습니다.");
-			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 	<c:if test="${check == 0 }">
-		<script>
+		<script>			
+			location.href="${root}/admin/food.go";
 			alert("ERROR ! 삭제되지않았습니다.");
-			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 </body>

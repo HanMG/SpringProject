@@ -8,6 +8,7 @@
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp"></put-attribute>
 		<put-attribute name="content" value=""></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"></put-attribute>
+		<put-attribute name="script" value="/WEB-INF/views/template/script.jsp"></put-attribute>
 	</definition>
 	<!-- 메인화면 용 -->
 	<definition name="main" template="/WEB-INF/views/template/main.jsp">

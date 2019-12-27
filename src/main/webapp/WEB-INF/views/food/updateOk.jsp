@@ -10,15 +10,15 @@
 </head>
 <body>
 	<c:if test="${check > 0 }">
-		<script>
+		<script>			
+			location.href="${root}/admin/food.go";
 			alert("수정되었습니다.");
-			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 	<c:if test="${check == 0 }">
-		<script>
+		<script>			
+			location.href="${root}/admin/food.go";
 			alert("ERROR ! 수정되지않았습니다.");
-			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 </body>

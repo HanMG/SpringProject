@@ -8,137 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-}
-.button {
-    color: #FFFFFF;
-    border: #EFB730 solid 1px;
-    background-color: #EFB730;
-}
-#title {
-	width: 100%;
-	height: 50px;
-	line-height: 50px;
-}
-#title > button {
-	float: right;
-	font-size: 23px;
-	color: black;
-	background: white;
-	border: #CED4DA solid 1px;
-	border-radius: 5px;
-}
-#title > span {
-	margin-left: 60px;
-	font-size: 23px;
-}
-#content {
-	width: 100%;
-	overflow: hidden;
-	margin: 0 auto;
-}
-#list {
-	width: 100%;
-	margin: 0 auto;
-}
-/* 식당관련 */
-#content_modal {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -400px;
-	margin-top: -450px;
-	background: #F2F4EF;
-	width: 800px;
-	border-radius: 5px;
-	background: tomato;
-	overflow: hidden;
-}
-.content_modal {
-	width: 800px;
-	overflow: hidden;
-	background: skyblue;
-}
-.title_modal {
-	width: 800px;
-	height: 50px;
-	line-height: 50px;
-	font-size: 30px;
-	border-bottom: 1px dotted;
-	font-weight: bold;
-	background: olive;
-}
-.title_modal > span:first-child {
-	margin-left: 40px;
-}
-
-/* 식당관련 */
-.food {
-	overflow: hidden;
-	width: 500px; 
-	border-bottom: 1px dotted;
-	margin: 10px auto;
-	background: tomato;
-}
-.food > div {
-	margin-top: 5px;
-	margin-left: 30px;
-}
-.food > div span:nth-child(1) {
-	display: block;
-	font-size: 20px;
-	
-}
-.food > div > input[type=text] {
-	display: inline-block;
-	width: 400px;
-	height: 20px;
-	font-size: 20px;
-}
-
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  margin-right: 15px;
-}
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-.btn > .button {
-	font-size: 23px;
-	width: 120px;
-	height: 50px;
-}
-
-.reviewModal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-</style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 <script src="${root}/resources/javascript/food/food.js"></script>
+<link rel="stylesheet" href="${root}/resources/css/admin/review.css"/>
 </head>
 <body>
 	<div id="content">
@@ -183,7 +56,7 @@
 					<span>리뷰 관리</span>
 					<span class="close reviewClose">&times;</span>
 				</div>
-				<form action="${root}/review/delete.go" method="post">
+				<form action="${root}/review/delete.go" method="post" onsubmit="return reviewForm(this)">
 				<input type="hidden" name="reviewCode" id="reviewHidden" value="" />
 				<div class="food">
 					<div>
@@ -261,6 +134,13 @@ $(".reviewClick").click(function(){
 $(".reviewClose").click(function(){
 	$("#reviewModal").css("display","none");
 });
+
+function reviewForm(obj){
+	let isOk = confirm("정말로 삭제하시겠습니까?");
+	if(!isOk){
+		return false;
+	}
+}
 </script>
 	
 </body>

@@ -37,6 +37,15 @@
 		)
 	</insert>
 	
+		<insert id="insertNaver" parameterType="map">
+		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
+		values('member'||LPAD(seqMember.nextval,4,0),
+		#{email},
+		#{name},
+		sysdate
+		)
+	</insert>
+	
 
 	<select id="emailCheck" parameterType="String" resultType="int" >
 		select count(*) from member where MEMBER_MAIL=#{mail}
@@ -86,7 +95,6 @@
 		ORDER BY REVIEW_CODE DESC
 	</select>
 	
-	
 	<select id="getMyFavorite" parameterType="String" resultType="com.java.member.dto.MemberFavoriteDto">
         select food.food_code, food.food_area, food.food_name, food.food_read,
         (select image_name from image where refer_code = food.food_code) AS image_name, 
@@ -101,6 +109,10 @@
 	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
 		select * from member	
 	</select>
+	
+	<update id="adminUpdate" parameterType="com.java.member.dto.MemberDto">
+		update member set MEMBER_STATUS=#{memberStatus}, MEMBER_NAME=#{memberName}, MEMBER_PHONE=#{memberPhone} where MEMBER_CODE=#{memberCode}
+	</update>
 </mapper>
 
 

@@ -28,7 +28,7 @@ public class SearchFoodDto {
 	private String reviewCode;
 	private String reviewDate;
 	private String reviewCont;
-	private String reviewScore;
+	private float reviewScore;
 	private String reviewCount;
 	
 	private String imageCode;	//	이미지 코드
@@ -53,7 +53,7 @@ public class SearchFoodDto {
 	public SearchFoodDto(String member_code, String foodCode, String foodName, String foodAddr, String foodArea,
 			String foodPhone, String foodKind, String foodMenu, String foodTime, String foodBreak, String foodIntro,
 			Date foodDate, int foodRead, String foodStatus, String reviewCode, String reviewDate, String reviewCont,
-			String reviewScore, String reviewCount, String imageCode, String referCode, String imageName,
+			float reviewScore, String reviewCount, String imageCode, String referCode, String imageName,
 			long imageSize, String imagePath) {
 		super();
 		this.member_code = member_code;
@@ -185,10 +185,10 @@ public class SearchFoodDto {
 	public void setReviewCont(String reviewCont) {
 		this.reviewCont = reviewCont;
 	}
-	public String getReviewScore() {
+	public float getReviewScore() {
 		return reviewScore;
 	}
-	public void setReviewScore(String reviewScore) {
+	public void setReviewScore(float reviewScore) {
 		this.reviewScore = reviewScore;
 	}
 	public String getImageCode() {

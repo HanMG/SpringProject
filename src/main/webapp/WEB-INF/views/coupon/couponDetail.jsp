@@ -94,61 +94,64 @@
 			}
 		
 		</script>
-	</head>
-	<body>
-		<div id="content">
-			<div class="history">
-				<div class="title">
-					<span>쿠폰 구매창</span>
-				</div>
-				<div class="eat">
-					<div class="img">
-						<img alt="쿠폰이미지" src="list.jpg">
-					</div>
-					<div>
-						<span>쿠폰명: ${couponDto.couponName}</span>
-					</div>
-					<div>
-						<span>원가: ${couponDto.couponCostori}</span>
-					</div>
-					<div>
-						<span>할인가격: ${couponDto.couponCostsale}</span>
-					</div>
-					<div>
-						<span>사용가능기간: ${couponDto.couponStartdate}부터 ${couponDto.couponEnddate} 까지</span>
-					</div>
-					<div>
-						<span>쿠폰소개: ${couponDto.couponIntro}</span>
-					</div>
-					
-					<form action="${root}/purchase/purchaseInsert.go" method="get" onsubmit="return purchaseForm(this)">
-						<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
-					<% 	
-						String memberCode = (String) session.getAttribute("memberCode");
-						if(memberCode != null){ 
-					%>
-						<div>
-							<span> *휴대폰번호(해당 번호로 구매한 쿠폰이 전송됩니다.)</span>
-							<span> "-"을 제외한 번호만 입력해주세요.</span>
-							<input type="text" name="purchasePhone" maxlength="13" onChange="inputPhone(this)">
-						</div>
-						<div>
-							<input type="submit" value="구매하기">
-						</div>
-					</form>
-					<!-- 비로그인 경우  -->
-					<% 
-					} if(memberCode == null){ 	
-					%>
-						<p>로그인 후 구매하실 수 있습니다.</p>
-						<a href="${root}/member/login.go">로그인하기</a>
-					<% 
-					} 
-					%>
-				</div>
+</head>
+<body>
+	<div id="content_mypage">
+	<div class="myPage">
+		<div class="title_mypage">
+			<span>쿠폰 구매창</span>
+		</div>
+		<div class="nav_1">
+			<div>
+				<img alt="쿠폰이미지" src="list.jpg">
+			</div>
+			<div>
+				<span>쿠폰명</span>
+				<span>${couponDto.couponName}</span>
+			</div>
+			<div>
+				<span>원가</span>
+				<span>${couponDto.couponCostori}</span>
+			</div>
+			<div>
+				<span>할인가격</span>
+				<span>${couponDto.couponCostsale}</span>
+			</div>
+			<div>
+				<span>유효기간</span>
+				<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
+			</div>
+			<div>
+				<span>쿠폰소개</span>
+				<span>${couponDto.couponIntro}</span>
 			</div>
 		</div>
-	
-	</body>
-	
+		<div>
+			<form action="${root}/purchase/purchaseInsert.go" method="get">
+				<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
+				<!-- <input type="hidden" name="memberCode"> -->
+				<% 	
+					String memberCode = (String) session.getAttribute("memberCode");
+					if(memberCode != null){ 
+				%>
+					<div>
+						<span class="nav_5"> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
+						<input class="input" type="text" name="purchasePhone">
+					</div>
+					<div style="text-align: center; margin-top: 10px;">
+						<input class="button" type="submit" value="구매하기" style="height: 50px; font-size: 23px; width: 100px;">
+					</div>
+				} if(memberCode == null){ 	
+				%>
+					<p>로그인 후 구매하실 수 있습니다.</p>
+					<a href="${root}/member/login.go">로그인하기</a>
+				<% 
+				} 
+				%>
+				</form>
+		</div>
+	</div>
+</div>
+
+</body>
 </html>

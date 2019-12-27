@@ -21,7 +21,7 @@ public class FoodDto {
 	private String foodIntro;	// 음식점 소개
 	private Date foodDate;	// 음식점 등록일
 	private int foodRead;	// 음식점 조회 카운트
-	private String foodStatus;	//	음식점 상태  ex) 검토중, 완료	
+	private String foodStatus;	//	음식점 상태  ex) y : 완료, n : 검토중	
 	private String memberCode;	// 등록자 
 	
 	public FoodDto() {}

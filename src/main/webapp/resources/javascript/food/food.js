@@ -1,10 +1,43 @@
-// 유효성 검사
-function foodForm(obj) {
-	var start = document.getElementById("start").value;
-	var end = document.getElementById("end").value;
-	if (start != null && end != null) {
-		obj.foodTime.value = start + "~" + end;
+// 음식점 등록시 
+function foodInForm(obj){
+	if (obj.foodName.value == "") {
+		alert("음식점명을 입력하세요.");
+		obj.foodName.focus();
+		return false;
 	}
+	if (obj.foodAddr.value == "") {
+		alert("음식점주소를 입력하세요.");
+		obj.foodAddr.focus();
+		return false;
+	}
+	if(!$('input:radio[name=foodArea]').is(':checked')){
+		alert("지역을 확인해주세요!");		
+		return false;
+	}
+	if (obj.foodPhone.value == "") {
+		alert("전화번호를 입력하세요.");
+		obj.foodPhone.focus();
+		return false;
+	}
+	if(obj.imgFile.value == ""){
+		alert("대표 이미지를 최소 1개 이상 넣어주세요!!");
+		obj.imgFile.focus();
+		return false;
+	}	
+	if (obj.foodIntro.value == "") {
+		alert("음식점 소개를 입력하세요.");
+		obj.foodIntro.focus();
+		return false;
+	}
+	
+	if(!$('input:radio[name=foodStatus]').is(':checked')){
+		alert("식당 상태를 확인해주세요!");
+		return false;
+	}	
+}
+
+// 음식점 업데이트 시 
+function foodForm(obj) {	
 
 	if (obj.foodName.value == "") {
 		alert("음식점명을 입력하세요.");
@@ -16,20 +49,37 @@ function foodForm(obj) {
 		obj.foodAddr.focus();
 		return false;
 	}
+	if(!$('input:radio[name=foodArea]').is(':checked')){
+		alert("지역을 확인해주세요!");		
+		return false;
+	}
 	if (obj.foodPhone.value == "") {
 		alert("전화번호를 입력하세요.");
 		obj.foodPhone.focus();
 		return false;
-	}
-	/*
-	 * if(obj.foodKind.value==""){ alert("음식종류를 입력하세요."); return false; }
-	 * if(obj.foodMenu.value==""){ alert("대표메뉴를 입력하세요."); obj.foodMenu.focus();
-	 * return false; } if(obj.foodTime.value==""){ alert("영업시간을 입력하세요."); return
-	 * false; }
-	 */
+	}	
+	if(obj.imgFile.value == ""){
+		alert("대표 이미지를 최소 1개 이상 넣어주세요!!");
+		obj.imgFile.focus();
+		return false;
+	}	
 	if (obj.foodIntro.value == "") {
-		alert("가게 소개를 입력하세요.");
+		alert("음식점 소개를 입력하세요.");
 		obj.foodIntro.focus();
 		return false;
+	}	
+	if(!$('input:radio[name=foodStatus]').is(':checked')){
+		alert("등록상태를 확인해주세요!");
+		return false;
+	}	
+}
+
+//식당 삭제
+function foodDelete(root, foodCode){
+	let isOk = confirm("정말로 삭제하시겠습니까?");
+	if(isOk == true){
+		let url = root+"/food/delete.go?foodCode="+foodCode;
+		//alert(url);
+		location.href=url;
 	}
 }

@@ -184,7 +184,6 @@ public class PurchaseServiceImp implements PurchaseService {
 		PurchaseListDto purchaseListDto = purchaseDao.purchaseSelect(purchaseCode);
 		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm");
-//		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh24:mi");
 		String purchaseDate = date.format(purchaseListDto.getPurchaseDate());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDate: "+ purchaseDate);
 		
@@ -216,7 +215,6 @@ public class PurchaseServiceImp implements PurchaseService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "check: "+ check);
 		
 		mav.addObject("check", check);
-		//mav.setViewName("purchase/purchaseDeleteOk.tiles");
 		
 		Map<String, Integer> delMap = new HashMap<String, Integer>();
 		delMap.put("check", check);

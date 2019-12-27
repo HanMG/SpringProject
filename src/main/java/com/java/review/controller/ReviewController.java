@@ -26,7 +26,7 @@ public class ReviewController {
 
 	// 리뷰 등록시 페이지로 이동
 	@RequestMapping(value = "/review/insert.go", method = RequestMethod.GET)
-	public ModelAndView reviewInsert(HttpServletRequest request) {
+	public ModelAndView reviewInsert(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		reviewService.reviewInsert(mav);
@@ -35,7 +35,7 @@ public class ReviewController {
 
 	// 리뷰 등록시 정보 입력
 	@RequestMapping(value = "/review/insertOk.go", method = RequestMethod.POST)
-	public ModelAndView reviewInsertOk(HttpServletRequest request, ReviewDto reviewDto) {
+	public ModelAndView reviewInsertOk(HttpServletRequest request, HttpServletResponse response, ReviewDto reviewDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("reviewDto", reviewDto);
@@ -55,7 +55,7 @@ public class ReviewController {
 
 	// 리뷰 수정시 정보 입력
 	@RequestMapping(value = "/review/updateOk.go", method = RequestMethod.POST)
-	public ModelAndView reviewUpdateOk(HttpServletRequest request, ReviewDto reviewDto) {
+	public ModelAndView reviewUpdateOk(HttpServletRequest request, HttpServletResponse reponse, ReviewDto reviewDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("reviewDto", reviewDto);
@@ -75,7 +75,7 @@ public class ReviewController {
 
 	// 관리자 페이지 리뷰 삭제
 	@RequestMapping(value = "/review/delete.go", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView reviewDelete(HttpServletRequest request) {
+	public ModelAndView reviewDelete(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		reviewService.reviewDelete(mav);

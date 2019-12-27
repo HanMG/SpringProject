@@ -12,10 +12,17 @@
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
 <script src="${root}/resources/javascript/review/review.js"></script>
 <script>
-//라디오 버튼 체크 (el때문에 js로 이동불가)
 function reviewUpdate() {
+	var memberCode = "${memberCode}";
+	var reviewMemberCode = "${reviewDto.memberCode}";
+	// 로드시 세션의 멤버코드와 불러온 멤버코드를 비교해 안맞으면 
+	if(reviewMemberCode !== memberCode){
+		alert("잘못된 접근입니다!!!");
+		history.back();
+	} 
+	//라디오 버튼 체크 (el때문에 js로 이동불가)	
 	$("input:radio[name='reviewScore']:radio[value='${reviewDto.reviewScore}']")
-			.prop('checked', true);
+			.prop('checked', true);	
 }
 </script>
 </head>

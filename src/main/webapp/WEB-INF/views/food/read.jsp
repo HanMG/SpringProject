@@ -615,7 +615,7 @@ a {
 								</div>
 								<c:if test="${memberCode == foodReviewDto.memberCode}">
 								<div>
-									<a href="${root}/review/update.go?foodCode=${foodDto.foodCode}&reviewCode=${foodReviewDto.reviewCode}">수정</a>
+									<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
 								</div>
 								<div>
 									<a href="javascript:void(0)" onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>									
@@ -730,16 +730,7 @@ a {
 		</div>
 	</div>
 </body>
-<!-- 리뷰 삭제  -->
-<script>
-	function userDelete(root, foodCode, reviewCode){
-		let isOk = confirm("정말로 리뷰를 삭제하시겠습니까?");
-		if(isOk == true){
-		let url = root+"/review/userDelete.go?reviewCode="+reviewCode+"&foodCode="+foodCode;		
-		location.href=url;	
-		}
-	}	
-</script>
+
 
 	<script type="text/javascript">
 	

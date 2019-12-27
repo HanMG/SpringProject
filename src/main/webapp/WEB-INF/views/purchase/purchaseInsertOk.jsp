@@ -55,16 +55,6 @@
 <div id="content_mypage">
 	<div class="myPage">
 	<c:if test="${check > 0}">
-<<<<<<< HEAD
-		<h3>상품 구매가 완료되었습니다!</h3>
-		<p>쿠폰명: ${couponDto.couponName}</p>
-		<p>쿠폰 사용가능 기간: ${couponDto.couponStartdate}부터
-			${couponDto.couponEnddate}까지</p>
-		<p>결제금액: ${couponDto.couponSalerate}</p>
-
-		<p>쿠폰 받을 번호</p>
-		${purchaseDto.purchasePhone}
-=======
 	<div class="title_mypage">
 			<span>상품 구매가 완료되었습니다!</span>
 		</div>
@@ -93,7 +83,6 @@
 			<span>${purchaseDto.purchasePhone}</span>
 		</div>
 	</div>
->>>>>>> nth
 	</c:if>
 	<c:if test="${check == 0}">
 		<h3>상품 구매가 완료되지 않았습니다. 처음부터 다시 시도해주세요.</h3>

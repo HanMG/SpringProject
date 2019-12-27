@@ -144,7 +144,18 @@
 				} if(memberCode == null){ 	
 				%>
 					<p>로그인 후 구매하실 수 있습니다.</p>
-					<a href="${root}/member/login.go">로그인하기</a>
+					<%-- <a href="${root}/member/login.go">로그인하기</a> --%>
+					<a href="#" onclick="memberCodeCheck(${memberCode})" >로그인하기</a>
+					
+					<script type="text/javascript">
+						function memberCodeCheck(memberCode){
+							if (memberCode == null) {
+								alert("로그인이 필요합니다.");
+								/* 리뷰 등록 모달창 숨기고, 로그인 모달창 띄우기 */
+								modal.style.display = "block";
+							}
+						};
+					</script>
 				<% 
 				} 
 				%>

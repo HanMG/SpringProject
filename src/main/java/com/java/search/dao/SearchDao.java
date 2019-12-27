@@ -21,4 +21,5 @@ public interface SearchDao {
 	
 	List<SearchFoodDto> keywordList(String keyword);
 
+
 }

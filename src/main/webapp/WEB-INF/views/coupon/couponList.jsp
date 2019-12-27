@@ -43,6 +43,7 @@ a {
 	height: 430px;
 	float: left;
 	margin: 10px;
+	cursor: pointer;
 }
 .list > div:nth-child(1) {
 	width: 650px;
@@ -130,18 +131,27 @@ a {
 			var data = JSON.parse(xhr.responseText);
 			console.log(data);
 			console.log("length:"+ data.length);
-			
 			for(var i=0; i< data.length; i++){
-				var list = '<div class="list"><div><span>'+data[i].couponName+'</span></div>';
-				list += '<div><img alt="쿠폰 이미지" src="'+data[i].imageName+'"></div><div><span>${couponDto.couponName}</span></div>';
-				list += '<div><span>사용가능기간: '+data[i].couponStartdate+'부터 '+data[i].couponEnddate+'까지</span></div>';
-				list += '<div><span style="text-decoration:line-through;">원가격: '+data[i].couponCostori+'</span></div>';
-				list += '<div><span>할인가격:'+data[i].couponCostsale+'</span><a href="${root}/coupon/couponRead.go?couponCode='+data[i].couponCode+'${couponDto.couponCode}&pageNumber='+pageNumber+'">구매하기</a></div>';
+				var foodCode = "${root}/coupon/couponRead.go?couponCode="+data[i].couponCode+"&&pageNumber=1";
+				var image = "${root}/resources/css/list.jpg";
+				console.log(foodCode);
+				var list = "<div class='list' onclick="+"'location.href=\""+foodCode+"\"'>";
+						list += "<div style="+"'background-image: url(\""+image+"\")';>";
+							list += '<span>'+data[i].couponCostsale+'</span>';
+							list += '<span style="text-decoration:line-through;">'+data[i].couponCostori+'</span>';
+						list += '</div>';
+						list += '<div>';
+							list += '<span>'+data[i].couponName+'</span>';
+						list += '</div>';
+						list += '<div>';
+						list += '<span>'+data[i].couponStartdate+ '~' +data[i].couponEnddate +'</span>';
+						list += '</div>';
+					list += '</div>';
 				$('#next').append(list);
 			}
 		}
 	}
-		
+	
 	function addNext(couponListNext){
 		console.log(couponListNext);
 		
@@ -168,12 +178,13 @@ a {
 					<p>판매중인 쿠폰이 없습니다</p>
 				</div>
 			</c:if>
+	<%-- 		
 			<c:if test="${count > 0}">
 				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
 				<div id="inner" class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
-						<span>\ ${couponDto.couponCostsale}</span>
+						<img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
+						<span>${couponDto.couponCostsale}</span>
 						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
 					</div>
 					<div>
@@ -182,13 +193,10 @@ a {
 					<div>
 						<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
 					</div>
-					<div>
-						<p>판매중인 쿠폰이 없습니다</p>
-					</div>
 				</div>
 				</c:forEach>
 				</c:if>
-				
+				 --%>
 				<c:if test="${count > 0}">
 					<div id="next"></div>
 				</c:if>

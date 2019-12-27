@@ -505,7 +505,8 @@ a {
 				</div>
 				<div>
 <!-- 					<i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i> -->
-					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"></i><br /> <span>가고싶다</span>
+					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /><span>가고싶다 </span></i>
+					
 				</div>
 			</div>
 			<div class="info_2">
@@ -860,9 +861,6 @@ a {
 	  dots[slideIndex-1].className += " active";
 	}
 
-</script>
-<script>
-
 var root = "${root}";
 var memberCode = "${memberCode}";
 var foodCode = "${foodDto.foodCode}";
@@ -920,7 +918,6 @@ function favorSwitch(aa) {
 	}
 }
 	
-	
 	function reviewList(root, selScore) {
 		let url = root + "/food/foodReviewList.go";
 		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
@@ -932,5 +929,6 @@ function favorSwitch(aa) {
 			reviewDisplay.innerHTML = xhr.responseText;
 		}
 	}
+		}
 </script>
 </html>

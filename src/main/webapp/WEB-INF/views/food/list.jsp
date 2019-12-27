@@ -145,7 +145,6 @@ a {
 			<div class="page"></div>
 		</div>
 		
-		
 	</div>
 </body>
 <script type="text/javascript">
@@ -161,14 +160,16 @@ function updateList() {
 		dataType : "json",
 		success : function (data) {
 			var cont = "";
+			var image = "${root}/resources/css/list.jpg";
 			for (var i = 0; i < data.length; i++) {
+				var foodCode = "${root}/food/read.go?foodCode="+data[i].foodCode;
 				/* cont += "<div style='background-image: url(" + data[i].imagePath + ")'>";
 				cont += "<span>"+data[i].foodName+"</span><span>"+data[i].foodMenu+"</span>";
 				cont += "</div>"; */
 				
-				cont += "<div>";
+				cont += "<div style='cursor: pointer;' onclick="+"'location.href=\""+foodCode+"\"'>";
 					cont += "<div>";
-						cont += "<img/>";
+						cont += '<img src='+image+'/>';
 					cont += "</div>";
 					cont += "<div>";
 						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span> <span>"+data[i].foodMenu+"</span>";

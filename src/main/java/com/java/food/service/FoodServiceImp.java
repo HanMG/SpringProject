@@ -270,6 +270,7 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/updateOk.tiles");		
 	}
 	
+	// 음식점 정보 삭제
 	@Override
 	public void foodDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -298,6 +299,7 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/delete.tiles");		
 	}
 
+	
 	@Override
 	public void foodReviewList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -317,7 +319,9 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("review/list.empty");
 		
 	}
-
+	
+	
+	// 관리자 음식점페이지로 이동 및 전체 정보를 가져오기
 	@Override
 	public void adminFoodList(ModelAndView mav) {		
 		List<FoodDto> foodDtoList = foodDao.foodDtoList();		
@@ -326,6 +330,8 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("admin/food.admin");		
 	}
 
+	
+	// 관리자 음식점페이지에서 게시글 클릭시 해당 게시글의 정보를 ajax로 가져오기
 	@Override
 	public void getFood(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();

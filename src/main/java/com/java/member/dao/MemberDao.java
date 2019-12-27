@@ -1,10 +1,10 @@
 package com.java.member.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
-import com.java.image.dto.ImageDto;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
 import com.java.review.dto.ReviewDto;
@@ -17,6 +17,8 @@ public interface MemberDao {
 	public MemberDto memberUpdate(String memberCode);
 
 	public int insertKakao(String nickname, String mail);
+	
+	public int insertNaver(Map<String, Object> map);
 
 	public int emailCheck(String memberCode);
 
@@ -38,6 +40,6 @@ public interface MemberDao {
 
 	public List<MemberFavoriteDto> getMyFavorite(String memberCode);
 
+	public int adminUpdateOk(MemberDto memberDto);
 
-	
 }

@@ -19,6 +19,7 @@
 		<result column="coupon_costori" property="couponCostori"/>
 		<result column="coupon_costsale" property="couponCostsale"/>
 		<result column="coupon_salerate" property="couponSalerate"/>
+		<result column="coupon_status" property="couponStatus"/>
 		
 		<result column="image_code" property="imageCode"/>
 		<result column="image_name" property="imageName"/>
@@ -50,16 +51,7 @@
 		SELECT count(*) FROM coupon 
 	</select>
 	
-	<!-- 쿠폰리스트 불러오기 -->
-	<!-- <select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
-		<![CDATA[
-		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
-		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
-		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code ORDER BY coupon_code DESC) A) B
-		WHERE B.num >= #{startRow} AND B.num <= #{endRow}
-		]]>
-	</select>
-	-->
+	<!-- 쿠폰리스트 불러오기 : coupon_satus = Y만 가능-->
 	<select id="couponList" parameterType="java.util.Map" resultMap="CouponDto">
 		<![CDATA[
 		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
@@ -69,9 +61,25 @@
 		]]>
 	</select>
 	
+	<!-- 쿠폰리스트 불러오기(관리자) -->
+	<!-- <select id="couponListAdmin" resultMap="CouponDto">
+		<![CDATA[
+		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, B.coupon_status,
+		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
+		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code ORDER BY coupon_code DESC) A) B
+		]]>
+	</select>
+	-->
+	<select id="couponListAdmin" resultMap="CouponDto">
+		<![CDATA[
+		SELECT B.*, TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate
+		FROM (select * from coupon, image WHERE coupon_code = refer_code) B
+		]]>
+	</select>
+	
 	<!-- 쿠폰상세페이지 -->
 	<select id="couponSelect" parameterType="String" resultMap="CouponDto">
-		select coupon.coupon_code, coupon.food_code, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
+		select coupon.coupon_code, coupon.food_code, coupon.coupon_status, coupon.coupon_name, coupon.coupon_costori, coupon.coupon_salerate, coupon.coupon_costsale, coupon.coupon_intro, 
 		TO_CHAR(coupon.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(coupon.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, 
 		(select image_code from image where refer_code = coupon.coupon_code) AS image_code,
 		(select image_name from image where refer_code = coupon.coupon_code) AS image_name, 
@@ -87,7 +95,7 @@
 		coupon_startdate= TO_DATE(#{couponStartdate}), coupon_enddate=TO_DATE(#{couponEnddate}), 
 		coupon_costori= #{couponCostori}, coupon_salerate= #{couponSalerate}, 
 		coupon_costsale= #{couponCostsale}, 
-		coupon_intro=#{couponIntro}
+		coupon_intro=#{couponIntro}, coupon_status=#{couponStatus}
 		WHERE coupon_code = #{couponCode}
 	</update>
 	

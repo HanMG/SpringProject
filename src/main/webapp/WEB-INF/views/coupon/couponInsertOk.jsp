@@ -12,14 +12,14 @@
 		<c:if test="${check > 0}">
 			<script type="text/javascript">
 				alert("상품이 등록되었습니다.");
-				location.href="${root}/coupon/couponList.go";
+				location.href="${root}/admin/coupon.go";
 			</script>
 		</c:if>
 		
 		<c:if test="${check == 0}">
 			<script type="text/javascript">
 				alert("상품 등록에 실패했습니다.");
-				location.href="${root}/coupon/couponInsert.go";
+				location.href="${root}/admin/coupon.go";
 			</script>
 		</c:if>
 	</body>

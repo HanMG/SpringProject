@@ -36,8 +36,11 @@ public interface PurchaseDao {
 	public int getCountAll();
 	
 	// 구매내역(관리자)
-	public List<PurchaseListDto> purchaseListAll(int startRow, int endRow);
+	public List<PurchaseListDto> purchaseListAll();
+	
+	// 구매취소 불러오기
+	public PurchaseListDto purchaseSelect(String purchaseCode);
 	
 	// 구매취소
-	public int purchaseDelete(String couponCode, String memberCode);
+	public int purchaseDelete(String purchaseCode);
 }

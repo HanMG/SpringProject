@@ -2,6 +2,7 @@ package com.java.member.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
-import com.java.image.dto.ImageDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
@@ -96,6 +100,35 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/mailLoginOk.tiles");
 		
+	}
+	// 네이버 로그인
+	@Override
+	public void insertNaver(String json,ModelAndView mav) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(json, Map.class);
+        Map<String,Object> data = (Map<String, Object>) map.get("response");
+     
+
+
+        String email = (String)data.get("email");
+        
+        JejuAspect.logger.info(JejuAspect.logMsg + email);
+        
+        int emailCheck = memberDao.emailCheck(email);
+        int check = 0;
+        		
+        if (emailCheck == 0) check = memberDao.insertNaver(data);
+        else check = emailCheck;
+        
+        MemberDto memberDto = null;
+		if (check == 1) {
+			memberDto = memberDao.getMemberCode(email);
+		}
+		
+		mav.addObject("check", check);
+		mav.addObject("memberDto", memberDto);
+		mav.setViewName("member/mailLoginOk.tiles");
+        
 	}
 	// 마이페이지
 	@Override
@@ -184,9 +217,7 @@ public class MemberServiceImp implements MemberService{
 			e.printStackTrace();
 		}
 		
-		
 	}
-	
 	
 	//관리자
 	@Override
@@ -197,6 +228,56 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("memberList", memberList);
 	}
 	
+	@Override
+	public void getMember(ModelAndView mav) {
+		Map<String, Object> map=mav.getModelMap();
+		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		String memberCode=request.getParameter("memberCode");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
+		
+		MemberDto memberDto = new MemberDto();
+		memberDto = memberDao.memberUpdate(memberCode);
+		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		String memberDate =  date.format(memberDto.getMemberDate());
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberDate : " + memberDate);
+		
+		JSONObject jsonMemberDto = new JSONObject();
+		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
+		
+		jsonMemberDto.put("memberCode", memberDto.getMemberCode());
+		jsonMemberDto.put("memberDate", memberDate);
+		jsonMemberDto.put("memberMail", memberDto.getMemberMail());
+		jsonMemberDto.put("memberName", memberDto.getMemberName());
+		jsonMemberDto.put("memberPhone", memberDto.getMemberPhone());
+		jsonMemberDto.put("memberStatus", memberDto.getMemberStatus());
+		String jsonText = jsonMemberDto.toJSONString();
+		JejuAspect.logger.info(JejuAspect.logMsg + "jsontext" + jsonText);
+		
+		response.setContentType("application/x-json;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(jsonText);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void adminUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		MemberDto memberDto = (MemberDto) map.get("memberDto");
+		HttpServletRequest request=(HttpServletRequest) map.get("request");
+		JejuAspect.logger.info(JejuAspect.logMsg + memberDto.toString());
+		
+		int check = memberDao.adminUpdateOk(memberDto);
+		JejuAspect.logger.info(JejuAspect.logMsg + check);
+		mav.addObject("check", check);
+		mav.setViewName("member/adminUpdateOk.tiles");
+	}
 }
 
 

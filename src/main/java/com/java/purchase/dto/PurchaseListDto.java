@@ -13,6 +13,7 @@ public class PurchaseListDto {
 	private String memberCode;
 	private String purchasePhone;
 	private Date purchaseDate;
+	private String purchaseStatus;
 	
 	private String couponName;
 	private String couponStartdate;	
@@ -29,15 +30,15 @@ public class PurchaseListDto {
 	public PurchaseListDto() {}
 
 	public PurchaseListDto(String purchaseCode, String couponCode, String memberCode, String purchasePhone,
-			Date purchaseDate, String couponName, String couponStartdate, String couponEnddate, String couponIntro,
-			int couponCostori, int couponCostsale, int couponSalerate, String imageCode, String imageName,
-			String imagePath) {
-		super();
+			Date purchaseDate, String purchaseStatus, String couponName, String couponStartdate, String couponEnddate,
+			String couponIntro, int couponCostori, int couponCostsale, int couponSalerate, String imageCode,
+			String imageName, String imagePath) {
 		this.purchaseCode = purchaseCode;
 		this.couponCode = couponCode;
 		this.memberCode = memberCode;
 		this.purchasePhone = purchasePhone;
 		this.purchaseDate = purchaseDate;
+		this.purchaseStatus = purchaseStatus;
 		this.couponName = couponName;
 		this.couponStartdate = couponStartdate;
 		this.couponEnddate = couponEnddate;
@@ -170,15 +171,24 @@ public class PurchaseListDto {
 		this.imagePath = imagePath;
 	}
 
+	
+	public String getPurchaseStatus() {
+		return purchaseStatus;
+	}
+
+	public void setPurchaseStatus(String purchaseStatus) {
+		this.purchaseStatus = purchaseStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "PurchaseListDto [purchaseCode=" + purchaseCode + ", couponCode=" + couponCode + ", memberCode="
-				+ memberCode + ", purchasePhone=" + purchasePhone + ", purchaseDate=" + purchaseDate + ", couponName="
-				+ couponName + ", couponStartdate=" + couponStartdate + ", couponEnddate=" + couponEnddate
-				+ ", couponIntro=" + couponIntro + ", couponCostori=" + couponCostori + ", couponCostsale="
-				+ couponCostsale + ", couponSalerate=" + couponSalerate + ", imageCode=" + imageCode + ", imageName="
-				+ imageName + ", imagePath=" + imagePath + "]";
+				+ memberCode + ", purchasePhone=" + purchasePhone + ", purchaseDate=" + purchaseDate
+				+ ", purchaseStatus=" + purchaseStatus + ", couponName=" + couponName + ", couponStartdate="
+				+ couponStartdate + ", couponEnddate=" + couponEnddate + ", couponIntro=" + couponIntro
+				+ ", couponCostori=" + couponCostori + ", couponCostsale=" + couponCostsale + ", couponSalerate="
+				+ couponSalerate + ", imageCode=" + imageCode + ", imageName=" + imageName + ", imagePath=" + imagePath
+				+ "]";
 	}
-	
 	
 }

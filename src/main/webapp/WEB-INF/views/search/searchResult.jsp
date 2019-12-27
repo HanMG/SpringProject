@@ -6,7 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 * {
@@ -137,6 +137,60 @@ a {
 	}
 }
 
+.abc {
+	width: 400px;
+	margin: 5px 20px;
+	background: maroon;
+	height: 150px;
+}
+
+/* 쿠폰 관련 */
+.couponList {
+	width: 300px;
+	height: 150px;
+	float: left;
+	margin: 10px;
+	margin-left: 70px;
+}
+.couponList > div:nth-child(1) {
+	width: 300px;
+	height: 150px;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+	text-align: center;
+}
+.couponList > div:nth-child(1) > span {
+	float: right;
+	display: inline-block;
+	position: absolute;
+	bottom: 25px;
+	right: 15px;
+	font-size: 23px;
+	font-weight: bold;
+	color: white;
+	
+}
+.couponList > div:nth-child(1) > span:nth-child(2) {
+	bottom: 55px;
+	font-size: 14px;
+}
+.couponList > div:nth-child(1) > span:nth-child(3) {
+	bottom: 75px;
+	font-size: 23px;
+	right: inherit;
+	display: inline-block;
+}
+.couponList > div:nth-child(1) > a {
+	float: right;
+	display: inline-block;
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
+	font-weight: bold;
+	color: white;
+	
+}
 </style>
 <script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
@@ -158,27 +212,30 @@ a {
 		</c:if>
 		
 		<!-- 검색된 음식점 리스트 불러오기  -->
-		<c:if test="${foodCount > 0}">
-		<c:forEach var = "searchFoodDto" items="${foodList}">
-		<div class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${searchFoodDto.foodCode}'">
-			<div>
-				<img alt="음식 이미지" src="${searchFoodDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
+		<div style="height: 1600px;">
+			<c:if test="${foodCount > 0}">
+			<c:forEach var = "searchFoodDto" items="${foodList}">
+			<div class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${searchFoodDto.foodCode}'">
+				<div>
+					<img alt="음식 이미지" src="${searchFoodDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
+				</div>
+				<div>
+					<span class="foodName">${searchFoodDto.foodName}</span>
+				<c:if test="${searchFoodDto.reviewScore > 0}">
+				<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
+				</c:if>				</div>
+				<div>
+					<span class="foodArea">${searchFoodDto.foodArea} - </span>  
+					<span class="foodKind">${searchFoodDto.foodKind}</span>
+				</div>
+				<div>
+					<span class="foodRead">${searchFoodDto.foodRead}</span>
+					<span class="reviewCount">${searchFoodDto.reviewCount}</span>
+				</div>
 			</div>
-			<div>
-				<span class="foodName">${searchFoodDto.foodName}</span>
-				<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern=".0"/></span>
-			</div>
-			<div>
-				<span class="foodArea">${searchFoodDto.foodArea} - </span>  
-				<span class="foodKind">${searchFoodDto.foodKind}</span>
-			</div>
-			<div>
-				<span class="foodRead">${searchFoodDto.foodRead}</span>
-				<span class="reviewCount">${searchFoodDto.reviewCount}</span>
-			</div>
+			</c:forEach>
+			</c:if>
 		</div>
-		</c:forEach>
-		</c:if>
 		<div class="page">
 			<c:if test="${foodCount > 0}">
 				<c:set var = "pageBlock" value = "5" />
@@ -209,9 +266,7 @@ a {
 			</c:if>
 		</div>
 	</div>
-	
-	
-	
+		
 	<div class="nav_2">
 		<div class="map" id="map">
 			<div class="dragend" id="dragend">
@@ -356,9 +411,8 @@ a {
 		}
 		</script>
 		
-		
+		<div style=" margin: 15px 30px; font-size: 28px; color: #EFB730;">관련 쿠폰</div>
 		<c:forEach var="i" items="${foodList}">
-		<br />
 		<script>
 		var arr = new Array();
 		arr.push("${i.foodAddr}","${i.foodName}","${i.foodKind}","${i.foodCode}");
@@ -366,39 +420,54 @@ a {
 		mark(arr);
 		</script>
 		</c:forEach>
+		
 		<c:if test="${couponCount > 0}">
-		<c:forEach var = "couponDto" items="${couponList}">
-		<div class="abc">
-			<span>${couponDto.couponName}</span>
-			<span>${couponDto.foodName}</span>
-			<span>${couponDto.foodMenu}</span>
-		</div>
-		</c:forEach>
+				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
+				<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
+					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
+						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
+						<span>\ ${couponDto.couponCostsale}</span>
+						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
+						<span>${couponDto.couponName}</span>
+						<a class="button" href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=1">구매하기</a>
+					</div>
+					<div>
+					</div>
+					
+				</div>
+				</c:forEach>
 		</c:if>
+		
+		<%-- 	
+		<c:if test="${couponCount > 0}">
+			<c:forEach var = "couponDto" items="${couponList}">
+			<div class="abc">
+				<span>${couponDto.couponName}</span>
+				<span>${couponDto.foodName}</span>
+				<span>${couponDto.foodMenu}</span>
+			</div>
+			</c:forEach>
+		</c:if>
+		 --%>
+		
 	</div>
 </div>
 		<div>
 			<h4>필터</h4>
-			<label>조회 기준</label>
-			<select>
-				<option value="평점">평점순</option>
-				<option value="조회수">인기순</option>
-			</select>
-			<label>음식점 지역</label>
-			<select>
-				<option value="제주시">제주시</option>
-				<option value="서귀포시">서귀포시</option>
-			</select>
-			<label>음식 종류</label>
-			<select>
-				<option value="한식">한식</option>
-				<option value="회집">회집</option>
-				<option value="일식">일식</option>
-				<option value="양식">양식</option>
-				<option value="중국식">중식</option>
-				<option value="까페">까페</option>
-			</select>
-			<input type="button" value="적용">
+			<p>조회 기준</p>
+				<input type="radio" name="orderType" class="orderType" value="조회수">인기순
+				<input type="radio" name="orderType" class="orderType" value="평점">평점순
+			<p>음식점 지역</p>
+				<input type="checkbox" name="areaType" class="areaType" value="제주시">제주시
+				<input type="checkbox" name="areaType" class="areaType" value="서귀포시">서귀포시
+			<p>음식 종류</p>
+				<input type="checkbox" name="kindType" class="kindType" value="한식">한식
+				<input type="checkbox" name="kindType" class="kindType" value="회집">회집
+				<input type="checkbox" name="kindType" class="kindType" value="일식">일식
+				<input type="checkbox" name="kindType" class="kindType" value="중식">중식
+				<input type="checkbox" name="kindType" class="kindType" value="양식">양식
+				<input type="checkbox" name="kindType" class="kindType" value="까페">까페
+			<input type="button" value="적용" onclick="searchType()" />
 		</div>
 
 		<div align="center">
@@ -408,10 +477,20 @@ a {
 </body>
 <script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-function search() {
-	var param = $("#searchInput").val()
-	url = "${root}/searchKeyword.go?keyword=" + param;
-	location.href = url;
+var orderType = "";
+
+var areaType = [];
+var kindType = [];
+
+function searchType() {
+	orderType = $('input[name="orderType"]:checked').val();
+	$('input[name="areaType"]:checked').each(function() {
+		areaType.push($(this).val());
+	});
+	$('input[name="kindType"]:checked').each(function() {
+		kindType.push($(this).val());
+	});
+	alert(orderType + "/" + areaType + "/" + kindType);
 }
 
 </script>

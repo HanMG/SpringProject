@@ -77,8 +77,8 @@ a {
 }
 </style>
 <script type="text/javascript">
-	function purchaseDelete(root, couponCode, couponName, pageNumber){
-		var url = root + "/purchase/purchaseDelete.go?couponCode="+couponCode+"&couponName="+couponName+"&pageNumber="+pageNumber;
+	function purchaseDelete(root, couponName, purchaseCode){
+		var url = root + "/purchase/purchaseDelete.go?couponName="+couponName+"&purchaseCode="+purchaseCode;
 		open(url, "", "width= 500, height=300, scrollbars=yes");
 	} 
 	
@@ -104,6 +104,9 @@ a {
 						</div>
 						<div class="info_2">
 							<div>
+								<span>구매번호: ${purchaseDto.purchaseCode}</span>
+							</div>
+							<div>
 								<span>쿠폰명: ${purchaseDto.couponName}</span>
 							</div>
 							<div>
@@ -125,10 +128,20 @@ a {
 							</div>
 							<div>
 								<span>할인가: ${purchaseDto.couponCostsale}원</span>
-								<a href="javascript:purchaseDelete('${root}','${purchaseDto.couponCode}','${purchaseDto.couponName}','${pageNumber}')">취소</a>
+								<c:if test="${purchaseDto.purchaseStatus == 'Y'}">
+								<a href="javascript:purchaseDelete('${root}','${purchaseDto.couponName}','${purchaseDto.purchaseCode}')">취소</a>
+								</c:if>
 							</div>
 							<div>
 								<span id="selPhone">입력받은 번호: ${purchaseDto.purchasePhone}</span>
+							</div>
+							<div>
+								<c:if test="${purchaseDto.purchaseStatus == 'Y'}">
+								<span>쿠폰상태: 구매완료</span>
+								</c:if>
+								<c:if test="${purchaseDto.purchaseStatus == 'N'}">
+								<span>쿠폰상태: 취소신청</span>
+								</c:if>
 							</div>
 						</div>
 					</div>

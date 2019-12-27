@@ -13,14 +13,16 @@
 <meta name="author" content="">
 <!-- 게시판용 -->
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="${root}/resources/datatables.min.css"></script>
+<script type="text/javascript" src="${root}/resources/datatables.min.js"></script>
 <link rel="stylesheet" href="${root}/resources/datatables.min.css">
 <script type="text/javascript">
 $(document).ready(function() {
+
     $('#example').DataTable({    	
     	"order":[[0, 'desc']]
     });
 } );
+
 </script>
 
 

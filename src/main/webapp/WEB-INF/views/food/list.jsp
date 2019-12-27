@@ -16,6 +16,16 @@
 a {
 	text-decoration: none;
 }
+.button {
+    color: #FFFFFF;
+    border: #EFB730 solid 1px;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 23px;
+}
+.button > a {
+	color: #EFB730;
+}
 #content {
 	margin : 10px auto;
 	width: 1240px;
@@ -24,17 +34,17 @@ a {
 .title {
 	width: 1240px;
 	height: 50px;
-	background: tomato;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
+	margin: 40px;
+}
+.title > span {
+	margin-left: 50px;
 }
 .tag {
 	width: 1240px;
 	height: 50px;
-	background: tomato;
 	line-height: 50px;
-	border-bottom: 1px dotted;
 	text-align: center;
 }
 .tag > button {
@@ -44,29 +54,62 @@ a {
 }
 .list {
 	overflow: hidden;
-	width: 900px; 
-	margin: 30px 170px;
-	background: tomato;
+	width: 1200px; 
+	margin: 0 20px;
 }
 .page {
-	width: 400px;
-	height: 300px;
+	width: 1150px;
 	margin: 25px;
-	float: left;
+	overflow: hidden;
 }
 .page > div {
-	width: 400px;
-	height: 300px;
-	text-align: center;
-	position: relative;
+	width: 550px;
+	height: 410px;
+	float: left;
+	margin: 10px;
 }
+.page img {
+	height: 350px;
+    width: 550px;
+}
+.page strong, .page span {
+	margin: 0 5px;
+	display: inline-block;
+	color: #9b9b9b;
+}
+.page strong {
+	width: 310px;
+	font-size: 23px;
+	color: #EFB730;
+}
+.page span {
+	width: 95px;
+	font-size: 14px;
+}
+.page > div > div:last-child > span{
+	width: 530px;
+}
+/* 
 .page > div > span {
 	display: block;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+} */
+
+.test {
+	width: 430px;
+	height: 300px;
+	float: left;
+	background: skyblue;
+	margin: 10px;
 }
+.img {
+	width: 430px;
+	height: 250px;
+}
+
 </style>
 </head>
 <body>
@@ -75,17 +118,34 @@ a {
 			<span>믿고 보는 맛집 리스트</span>
 		</div>
 		<div class="tag">
-			<button><a href="#">#인기Top10</a></button>
-			<button><a href="#">#애월</a></button>
-			<button><a href="#">#성산</a></button>
-			<button><a href="#">#함덕</a></button>
-			<button><a href="#">#우도</a></button>
-			<button><a href="#">#흑돼지</a></button>
-			<button><a href="#">#고기국수</a></button>
+			<button class="button"><a href="#">#TOP10</a></button>
+			<button class="button"><a href="#">#애월</a></button>
+			<button class="button"><a href="#">#성산</a></button>
+			<button class="button"><a href="#">#함덕</a></button>
+			<button class="button"><a href="#">#우도</a></button>
+			<button class="button"><a href="#">#흑돼지</a></button>
+			<button class="button"><a href="#">#고기국수</a></button>
 		</div>
 		<div class="list">
+	<%-- 	<div class="test" style="width: 430px; height: 300px; float: left; background: skyblue; margin: 10px">
+			<div>
+				<img class="img" alt="" src="" onerror="this.src='${root}/resources/css/list.jpg'">
+			</div>
+			<div>
+				<div>
+					<strong>가게명</strong>
+					<span>종류</span>
+					<span>대표메뉴</span>
+				</div>
+				<div>
+					<span>주소</span>
+				</div>
+			</div>
+		</div> --%>
 			<div class="page"></div>
 		</div>
+		
+		
 	</div>
 </body>
 <script type="text/javascript">
@@ -102,9 +162,25 @@ function updateList() {
 		success : function (data) {
 			var cont = "";
 			for (var i = 0; i < data.length; i++) {
-				cont += "<div style='background-image: url(" + data[i].imagePath + ")'>";
+				/* cont += "<div style='background-image: url(" + data[i].imagePath + ")'>";
 				cont += "<span>"+data[i].foodName+"</span><span>"+data[i].foodMenu+"</span>";
-				cont += "</div>";
+				cont += "</div>"; */
+				
+				cont += "<div>";
+					cont += "<div>";
+						cont += "<img/>";
+					cont += "</div>";
+					cont += "<div>";
+						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span> <span>"+data[i].foodMenu+"</span>";
+					cont += "</div>";
+					cont += "<div>";
+						cont += "<span>"+data[i].foodAddr+"</span>";
+					cont += "</div>";
+					
+/* 						cont += "<img src='"+${root}+"/resources/ftp/"+data[i].imageName+"' style='width: 400px; height: 400px;' />"; */
+					
+				cont += "</div>"
+				
 			}
 			$(".page").html(cont);
 		},

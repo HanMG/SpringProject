@@ -44,7 +44,7 @@ public class FoodController {
 		return mav;
 	}
 	
-	// 음식점 정보 수정 관련
+	// 음식점 정보 수정 시 정보 읽기
 	@RequestMapping(value = "/food/update.go", method = RequestMethod.GET)
 	public ModelAndView foodUpdate(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
@@ -53,6 +53,7 @@ public class FoodController {
 		return mav;
 	}
 	
+	// 음식점 정보 수정 시 정보 입력
 	@RequestMapping(value = "/food/updateOk.go", method = RequestMethod.POST)
 	public ModelAndView foodUpdateOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav = new ModelAndView();

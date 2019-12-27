@@ -83,7 +83,7 @@ public class FoodServiceImp implements FoodService {
 			// 파일명 = 현재시간을 초단위로 변환한 값 + 올려질때 파일명
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 			// 파일 생성위치 
-			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가...
 			path.mkdirs();
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
@@ -235,7 +235,7 @@ public class FoodServiceImp implements FoodService {
 		if (fileSize != 0) {
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 
-			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
 			path.mkdirs();	

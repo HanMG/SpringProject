@@ -76,7 +76,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdirs();					
@@ -125,6 +125,7 @@ public class ReviewServiceImp implements ReviewService {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");		
 		List<MultipartFile> files = request.getFiles("imgFile");
 		ReviewDto reviewDto = (ReviewDto) map.get("reviewDto");
+		String foodCode = request.getParameter("foodCode");
 		reviewDto.setReviewDate(new Date());
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewDto);
 		int check = reviewDao.reviewUpdateOk(reviewDto);
@@ -155,7 +156,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdir();					
@@ -178,6 +179,7 @@ public class ReviewServiceImp implements ReviewService {
 			}
 		}
 		mav.addObject("check", check);
+		mav.addObject("foodCode",foodCode);
 		mav.setViewName("review/updateOk.tiles");		
 	}
 	
@@ -191,12 +193,11 @@ public class ReviewServiceImp implements ReviewService {
 		JejuAspect.logger.info(JejuAspect.logMsg+" reviewCode : "+reviewCode);
 		reviewDto = reviewDao.reviewUpdate(reviewCode);
 		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		String reviewDate = date.format(reviewDto.getReviewDate());
 		
+		  
 		  JSONObject jo = new JSONObject();
 		  jo.put("reviewCont", reviewDto.getReviewCont()); 
-		  jo.put("reviewDate", reviewDate); 
+		  jo.put("reviewScore", reviewDto.getReviewScore()); 
 		  
 //		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
 		List<ImageDto> listImage = imageDao.imgList(reviewCode);
@@ -248,6 +249,32 @@ public class ReviewServiceImp implements ReviewService {
 		mav.addObject("check",check);
 		mav.setViewName("review/delete.tiles");
 	}
+	
+	@Override
+	public void userReviewDelete(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String reviewCode = request.getParameter("reviewCode");
+		String foodCode = request.getParameter("foodCode");
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewCode);
+		int check = 0;
+		List<ImageDto> imageList = imageDao.imgList(reviewCode);
+		for(int i = 0; i< imageList.size(); i++) {
+			if (imageList.get(i).getImageName() != null) {
+				File checkFile = new File(imageList.get(i).getImagePath());
+				if (checkFile.exists() && checkFile.isFile()) {
+					checkFile.delete();
+				}
+			}
+		}		
+		check = reviewDao.reviewDelete(reviewCode);
+		check += imageDao.imgDelete(reviewCode);
+		mav.addObject("check",check);
+		mav.addObject("foodCode",foodCode);
+		mav.setViewName("review/userDelete.tiles");		
+	}
+	
+	
 
 	@Override
 	public void imageDelete(ModelAndView mav) {
@@ -328,4 +355,6 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		
 	}
+
+	
 }

@@ -10,16 +10,15 @@
 <meta charset="UTF-8">
 <title>리뷰리스트</title>
 <style type="text/css">
-	
 </style>
 </head>
 <body>
 	<div class="re_1">
-		<span>리뷰(${reviewCountDto.whole})</span> 
-		<a href="javascript:void(0)" onclick="reviewList('${root}','1')"><span>별로(${reviewCountDto.bad})</span></a> 
-		<a href="javascript:void(0)" onclick="reviewList('${root}','3')"><span>괜찮다(${reviewCountDto.soso})</span></a> 
-		<a href="javascript:void(0)" onclick="reviewList('${root}','5')"><span>맛있다(${reviewCountDto.good})</span></a> 
-		<a href="javascript:void(0)" onclick="reviewList('${root}','0')"><span>전체(${reviewCountDto.whole})</span></a> 
+		<span>리뷰(${reviewCountDto.whole})</span> <a href="javascript:void(0)"
+			onclick="reviewList('${root}','1')"><span>별로(${reviewCountDto.bad})</span></a>
+		<a href="javascript:void(0)" onclick="reviewList('${root}','3')"><span>괜찮다(${reviewCountDto.soso})</span></a>
+		<a href="javascript:void(0)" onclick="reviewList('${root}','5')"><span>맛있다(${reviewCountDto.good})</span></a>
+		<a href="javascript:void(0)" onclick="reviewList('${root}','0')"><span>전체(${reviewCountDto.whole})</span></a>
 	</div>
 	<c:choose>
 		<c:when test="${foodReviewList != null}">
@@ -34,21 +33,34 @@
 						<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
 						<a href="#" class="reviewInfoClick">
 							<div class="reviewCont">
-								<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span>
-								<span>${foodReviewDto.reviewCont}</span>
+								<span><fmt:formatDate value="${foodReviewDto.reviewDate}"
+										pattern="yyyy-MM-dd" /></span> <span>${foodReviewDto.reviewCont}</span>
 							</div>
 							<div class="reviewImg">
-								<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
+								<c:set var="img"
+									value="${fn:split(foodReviewDto.imageName,',')}" />
 								<c:forEach var="imgList" items="${img}">
-									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+									<img src="${root}/resources/ftp/${imgList}" alt=""
+										style="width: 100px; height: 100px;"
+										onerror="this.src='${root}/resources/css/list.jpg'" />
 								</c:forEach>
-							</div>							
+							</div>
 						</a>
 					</div>
 
 					<div>
 						<span>(${foodReviewDto.reviewScore})</span>
 					</div>
+					<c:if test="${memberCode == foodReviewDto.memberCode}">
+						<div>
+							<a
+								href="${root}/review/update.go?foodCode=${foodReviewDto.foodCode}&reviewCode=${foodReviewDto.reviewCode}">수정</a>
+						</div>
+						<div>
+							<a href="javascript:void(0)"
+								onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>
+						</div>
+					</c:if>
 				</div>
 			</c:forEach>
 

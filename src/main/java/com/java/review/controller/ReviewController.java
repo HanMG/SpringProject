@@ -76,10 +76,19 @@ public class ReviewController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/review/userDelete.go", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView userReviewDelete(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request",request);
+		mav.addObject("response",response);
+		reviewService.userReviewDelete(mav);
+		return mav;
+	}
+	
 	@RequestMapping(value="/review/imageDelete.go", method = RequestMethod.GET)
 	public ModelAndView imageDelete(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("request",request);
+		mav.addObject("request",request);		
 		reviewService.imageDelete(mav);
 		return mav;
 	}	

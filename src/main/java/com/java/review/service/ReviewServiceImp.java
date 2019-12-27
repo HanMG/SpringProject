@@ -339,21 +339,27 @@ public class ReviewServiceImp implements ReviewService {
 		List<ImageDto> listImage = imageDao.imgList(reviewCode);
 		System.out.println(listImage);
 		JSONArray jsonArr = new JSONArray();
-		for(ImageDto imgDto : listImage) {
-			JSONObject jsonImgDto = new JSONObject();
-			jsonImgDto.put("imageName", imgDto.getImageName());
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		for(ImageDto imgDto : listImage) {			
+			hashMap.put("imageName", imgDto.getImageName());
+			JSONObject jsonImgDto = new JSONObject(hashMap);
+			//jsonImgDto.put("imageName", imgDto.getImageName());
 			jsonArr.add(jsonImgDto);
 		}
 		
-		JSONObject jsonReviewDto = new JSONObject();
+		
 		JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString()+","+listImage.toString());
-		jsonReviewDto.put("reviewCode", reviewDto.getReviewCode());
-		jsonReviewDto.put("foodCode", reviewDto.getFoodCode());
-		jsonReviewDto.put("memberCode", reviewDto.getMemberCode());
-		jsonReviewDto.put("reviewDate", date.format(reviewDto.getReviewDate()));
-		jsonReviewDto.put("reviewCont", reviewDto.getReviewCont());
-		jsonReviewDto.put("reviewScore", reviewDto.getReviewScore());
-		jsonReviewDto.put("listImage", jsonArr);
+		
+		hashMap.put("reviewCode", reviewDto.getReviewCode());
+		hashMap.put("foodCode",	reviewDto.getFoodCode()); 
+		hashMap.put("memberCode", reviewDto.getMemberCode()); 
+		hashMap.put("reviewDate", date.format(reviewDto.getReviewDate())); 
+		hashMap.put("reviewCont", reviewDto.getReviewCont());
+		hashMap.put("reviewScore", reviewDto.getReviewScore());
+		hashMap.put("listImage", jsonArr);		 
+		
+		JSONObject jsonReviewDto = new JSONObject(hashMap);		
+		
 		String jsonText = jsonReviewDto.toJSONString();
 		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);
 		

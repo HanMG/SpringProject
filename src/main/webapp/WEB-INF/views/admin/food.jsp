@@ -243,9 +243,9 @@ $(".foodClick").click(function(){
 			$("#foodIntro").val(data.foodIntro);
 			$("input:radio[name='foodStatus'][value='"+data.foodStatus+"']",document.foodForm).prop("checked", true);
 			$("#memberCode").val(data.memberCode);
-			if(data.imageDto.imageName != null){
-				$("#imgWrapper").append("<img src='${root}/resources/ftp/"+data.imageDto.imageName+"\' alt='"+data.imageDto.imageName+"' style='width:150px; height:150px' />");
-				$("#imgWrapper").append("<span>"+data.imageDto.imageName+"</span>");
+			if(data.imageName != null){
+				$("#imgWrapper").append("<img src='${root}/resources/ftp/"+data.imageName+"\' alt='"+data.imageName+"' style='width:150px; height:150px' />");
+				$("#imgWrapper").append("<span>"+data.imageName+"</span>");
 			}
 			$("#foodDeleteBtn").attr("onclick","foodDelete('${root}','"+data.foodCode+"')");
 		},

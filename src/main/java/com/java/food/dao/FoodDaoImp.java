@@ -58,7 +58,7 @@ public class FoodDaoImp implements FoodDao {
 
 	@Override
 	public List<FoodReviewDto> foodReviewList(String foodCode, String selScore) {
-		HashMap<String, Object> hMap = new HashMap(); 
+		HashMap<String, Object> hMap = new HashMap<String, Object>(); 
 		hMap.put("foodCode", foodCode);
 		hMap.put("selScore", selScore);
 		
@@ -93,9 +93,5 @@ public class FoodDaoImp implements FoodDao {
 	@Override
 	public List<FoodDto> foodDtoList() {		
 		return sqlSession.selectList("dao.FoodMapper.AdminfoodList");
-	}
-
-	
-	
-	
+	}	
 }

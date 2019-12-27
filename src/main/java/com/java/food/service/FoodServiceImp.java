@@ -3,8 +3,8 @@ package com.java.food.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -336,31 +336,32 @@ public class FoodServiceImp implements FoodService {
 	public void getFood(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");		
 		String foodCode = request.getParameter("foodCode");
 		FoodDto foodDto = foodDao.foodRead(foodCode);
-		ImageDto imageDto = imageDao.imgRead(foodCode);
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		JSONObject jsonFoodDto = new JSONObject();
-		JSONObject jsonImgDto = new JSONObject();
-		if(imageDto != null) {
-			jsonImgDto.put("imageName", imageDto.getImageName());
-		}
+		ImageDto imageDto = imageDao.imgRead(foodCode);		
 		
-		JejuAspect.logger.info(JejuAspect.logMsg+jsonFoodDto.toString());
-		jsonFoodDto.put("foodCode", foodDto.getFoodCode());
-		jsonFoodDto.put("foodName", foodDto.getFoodName());
-		jsonFoodDto.put("foodAddr", foodDto.getFoodAddr());
-		jsonFoodDto.put("foodArea", foodDto.getFoodArea());
-		jsonFoodDto.put("foodPhone", foodDto.getFoodPhone());
-		jsonFoodDto.put("foodKind", foodDto.getFoodKind());
-		jsonFoodDto.put("foodMenu", foodDto.getFoodMenu());
-		jsonFoodDto.put("foodTime", foodDto.getFoodTime());
-		jsonFoodDto.put("foodBreak", foodDto.getFoodBreak());
-		jsonFoodDto.put("foodIntro", foodDto.getFoodIntro());		
-		jsonFoodDto.put("foodStatus", foodDto.getFoodStatus());
-		jsonFoodDto.put("memberCode", foodDto.getMemberCode());
-		jsonFoodDto.put("imageDto", jsonImgDto);
+		HashMap<String, Object> jsonHashMap = new HashMap<String, Object>();		
+		
+		if(imageDto != null) {			
+			jsonHashMap.put("imageName", imageDto.getImageName());
+		}	
+
+		jsonHashMap.put("foodCode", foodDto.getFoodCode());
+		jsonHashMap.put("foodName", foodDto.getFoodName());
+		jsonHashMap.put("foodAddr", foodDto.getFoodAddr());
+		jsonHashMap.put("foodArea", foodDto.getFoodArea());
+		jsonHashMap.put("foodPhone", foodDto.getFoodPhone());
+		jsonHashMap.put("foodKind", foodDto.getFoodKind());
+		jsonHashMap.put("foodMenu", foodDto.getFoodMenu());
+		jsonHashMap.put("foodTime", foodDto.getFoodTime());
+		jsonHashMap.put("foodBreak", foodDto.getFoodBreak());
+		jsonHashMap.put("foodIntro", foodDto.getFoodIntro());
+		jsonHashMap.put("foodStatus", foodDto.getFoodStatus());
+		jsonHashMap.put("foodStatus", foodDto.getFoodStatus());
+		jsonHashMap.put("memberCode", foodDto.getMemberCode());	
+		JSONObject jsonFoodDto = new JSONObject(jsonHashMap);
+		JejuAspect.logger.info(JejuAspect.logMsg+jsonFoodDto.toString());		
 		
 		String jsonText = jsonFoodDto.toJSONString();
 		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);

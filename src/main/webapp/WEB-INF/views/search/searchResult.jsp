@@ -189,7 +189,68 @@ a {
 	right: 15px;
 	font-weight: bold;
 	color: white;
-	
+}
+/* 필터 모달 관련 */
+.filterModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#contentFilter{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -370px;
+	margin-top: -400px;
+	background: #F2F4EF;
+	width: 740px;
+	height: 700px;
+	border-radius: 5px;
+}
+.titleFilter {
+	width: 740px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 30px;
+	border-bottom: 1px dotted;
+	font-weight: bold;
+}
+/* 개인정보 */
+.titleFilter > span:first-child {
+	margin-left: 40px;
+}
+.radio-tile-label {
+	font-size: 15px;
+}
+.filter_nav span {
+	font-size: 23px;
+	margin: 20px 30px;
+	display: block;
+}
+.radio-tile-group {
+	justify-content: left;
+	margin-left: 25px;
+}
+.search {
+    height: 230px;
+    text-align: center;
+    line-height: 230px;
+}
+.searchBtn {
+	width: 100px;
+	height: 50px;
+	font-size: 32px;
+	line-height: 50px;
+	border-radius: 5px;
 }
 </style>
 <script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
@@ -201,7 +262,7 @@ a {
 	<div class="nav_1">
 		<div class="filter">
 			<span>${keyword} 맛집 인기 검색 순위</span>
-			<a href="#">필터</a>
+			<a href="#" id="filterClick">필터</a>
 		</div>
 		
 		<!-- 검색 결과가 없는 경우  -->
@@ -451,6 +512,7 @@ a {
 		
 	</div>
 </div>
+<!-- 
 		<div>
 			<h4>필터</h4>
 			<label>조회 기준</label>
@@ -478,7 +540,113 @@ a {
 		<div align="center">
 		
 	</div>
-		
+		 -->
+		 
+	<div id="filterModal" class="filterModal">
+		<div id="contentFilter">
+			<div class="filter">
+				<div class="titleFilter">
+					<span>필터</span>
+					<span class="close">&times;</span>
+				</div>
+				<div class="filter_nav">
+					<div>
+						<span>조회 기준</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="orderType1" class="radio-button" type="radio" name="orderType" value="조회수"/>
+								<div class="radio-tile">
+								<label for="orderType1" class="radio-tile-label" style="font-size: 15px;">인기순</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="orderType2" class="radio-button" type="radio" name="orderType" value="평점" />
+								<div class="radio-tile">
+								<label for="orderType2" class="radio-tile-label" style="font-size: 15px;">평점순</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<span>음식점 지역</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="areaType1" class="radio-button" type="radio" name="areaType" value="제주시"/>
+								<div class="radio-tile">
+								<label for="areaType1" class="radio-tile-label" style="font-size: 15px;">제주시</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="areaType2" class="radio-button" type="radio" name="areaType" value="서귀포시" />
+								<div class="radio-tile">
+								<label for="areaType2" class="radio-tile-label" style="font-size: 15px;">서귀포시</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<span>음식 종류</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="kindType1" class="radio-button" type="checkbox" name="kindType" value="한식"/>
+								<div class="radio-tile">
+								<label for="kindType1" class="radio-tile-label" style="font-size: 15px;">한식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType2" class="radio-button" type="checkbox" name="kindType" value="중식" />
+								<div class="radio-tile">
+								<label for="kindType2" class="radio-tile-label" style="font-size: 15px;">중식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType3" class="radio-button" type="checkbox" name="kindType" value="일식"/>
+								<div class="radio-tile">
+								<label for="kindType3" class="radio-tile-label" style="font-size: 15px;">일식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType4" class="radio-button" type="checkbox" name="kindType" value="양식"/>
+								<div class="radio-tile">
+								<label for="kindType4" class="radio-tile-label" style="font-size: 15px;">양식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType5" class="radio-button" type="checkbox" name="kindType" value="카페"/>
+								<div class="radio-tile">
+								<label for="kindType5" class="radio-tile-label" style="font-size: 15px;">카페</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType6" class="radio-button" type="checkbox" name="kindType" value="기타"/>
+								<div class="radio-tile">
+								<label for="kindType6" class="radio-tile-label" style="font-size: 15px;">기타</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="search">
+			        	<input class="button searchBtn" type="button" value="적용" onclick="searchType()" />
+			        </div>
+			   	</div>
+		   	</div>
+	   	</div>
+	</div>
+    
+		 
+		 
+<!--        <input type="checkbox" name="kindType" class="kindType" value="한식">한식
+            <input type="checkbox" name="kindType" class="kindType" value="회집">회집
+            <input type="checkbox" name="kindType" class="kindType" value="일식">일식
+            <input type="checkbox" name="kindType" class="kindType" value="중식">중식
+            <input type="checkbox" name="kindType" class="kindType" value="양식">양식
+            <input type="checkbox" name="kindType" class="kindType" value="까페">까페 -->
 </body>
 <script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -487,6 +655,16 @@ function search() {
 	url = "${root}/searchKeyword.go?keyword=" + param;
 	location.href = url;
 }
+	var filterModal = document.getElementById("filterModal");
+	var filterClick = document.getElementById("filterClick");
+	var span = document.getElementsByClassName("close")[3];
+	filterClick.onclick = function() {
+		filterModal.style.display = "block";
+		}
+	span.onclick = function() {
+		filterModal.style.display = "none";
+		}
+
 
 </script>
 </html>

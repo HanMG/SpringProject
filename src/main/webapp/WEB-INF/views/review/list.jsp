@@ -30,7 +30,7 @@
 						<span>${foodReviewDto.memberName}</span>
 					</div>
 
-					<div>
+					<div onclick="myReview('${foodReviewDto.reviewCode}')">
 						<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
 						<a href="#" class="reviewInfoClick">
 							<div class="reviewCont">

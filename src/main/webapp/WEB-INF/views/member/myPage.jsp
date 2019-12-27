@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
@@ -157,7 +158,7 @@ a {
 }
 .history_review {
 	width: 800px;
-	overflow: hidden;
+	overflow: auto;
 }
 .title_review {
 	width: 800px;
@@ -244,6 +245,7 @@ a {
 .register {
 	overflow: hidden;
 	width: 500px; 
+	height: 630px; 
 }
 .reg_btn {
 	width: 500px;
@@ -303,8 +305,37 @@ a {
 	margin-bottom: 10px;
 	
 }
+.eat_scroll, .favorite_scroll {
+	height: 650px;
+	width: 500px;
+}
+.review_scroll {
+	height: 700px;
+	width: 800px;
+}
+.register, .eat_scroll, .review_scroll, .favorite_scroll {
+	 overflow: hidden;
+	 -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
 
+display:none;
 
+}
+.register:hover, .eat_scroll:hover, .review_scroll:hover, .favorite_scroll:hover {
+  	overflow-y: scroll;
+}
+
+/* 가고싶다  */
+.fa {
+  font-size: 25px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: pink;
+}
 
 /* 모달 관련 */
 .infoModal, .foodModal, .foodInModal, .eatModal, .reViewModal, .favoriteModal, .myFoodUpModal {
@@ -321,6 +352,7 @@ a {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
@@ -417,7 +449,7 @@ a {
 					<span>구매한 EAT딜</span>
 					<span class="close">&times;</span>
 				</div>
-				
+				<div class="eat_scroll">
 				<c:forEach var="couponList" items="${couponList}">
 					<div class="eat" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponList.foodCode}'">
 						<div class="info_1">
@@ -435,12 +467,12 @@ a {
 							</div>
 							<div>
 								<span style="color: #EFB730;">${couponList.couponCostsale}</span>
-								<button class="button"><a href="#">취소</a></button>
+								<button class="button" style="z-index: 99;"><a href="${root}/index.jsp">취소</a></button>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
-				
+				</div>
 			</div>
 		</div>
 	</div>
@@ -452,13 +484,17 @@ a {
 					<span>리뷰 내역</span>
 					<span class="close">&times;</span>
 				</div>
-				
+				<div class="review_scroll">
 				<c:forEach var="reviewList" items="${reviewList}">
 					<div class="review">
 						<div class="review_1">
-							<div>${reviewList.reviewDate}작성일</div>
+							<div>${reviewList.reviewDate}</div>
 							<div>${reviewList.reviewCont}</div>
 							<div>
+								<%-- <c:set var="img" value="${fn:split(reviewList.imageName,',')}" />
+								<c:forEach var="imgList" items="${img}">
+									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+								</c:forEach> --%>
 								<%-- <c:forEach items="${reviewList}"> --%>							
 									<%-- <img alt="리뷰" src="${reviewList.imageName}"> --%>
 								<%-- </c:forEach> --%>
@@ -469,6 +505,7 @@ a {
 						</div>
 					</div>
 				</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -481,7 +518,7 @@ a {
 					<span>가고싶다</span>
 					<span class="close">&times;</span>
 				</div>
-				
+				<div class="favorite_scroll">
 				<c:forEach var="favoriteList" items="${favoriteList}">
 					<div class="like">
 						<div class="like_1">
@@ -495,11 +532,11 @@ a {
 							<div>리뷰수: ${favoriteList.count}</div>
 						</div>
 						<div class="like_3">
-							<img alt="별점" src="${root}/resources/css/icon.PNG">
+							<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /></i>
 						</div>
 					</div>
 				</c:forEach>
-			
+				</div>
 			</div>
 		</div>
 	</div>
@@ -698,7 +735,71 @@ a {
 		</div>
 	</div>
 <script type="text/javascript">
+	/* 가고싶다 버튼 */
+	function favorite(x) {
+	if (x.className === "fa fa-heart-o") {
+		x.className = "fa fa-heart";
+		}
+	}
+				
+	var root = "${root}";
+	var memberCode = "${memberCode}";
+	var foodCode = "${foodDto.foodCode}";
+	var favorStatus = "";
 	
+	$(function() {
+		if (memberCode != "") {
+			favorCheck();
+		} 
+	});
+	
+	function favorCheck() {
+	$.ajax({
+		type : "POST",
+		url : root + "/favorite/check.do",
+		data : { "memberCode" : memberCode, "foodCode" : foodCode},
+		success : function(data) {
+			favorStatus = data;
+			if (favorStatus === "on") {
+				$("#favorite").attr('class', 'fa fa-heart');
+			} else if (favorStatus === "off") {
+				$("#favorite").attr('class', 'fa fa-heart-o');
+			}
+		}, error: function (request, status, error) {
+			alert("error");
+		}
+	});
+}
+	
+	function favorSwitch(aa) {
+	if (memberCode == "") {
+		// 로그인
+		alert("로그인하세요");
+	} else if (memberCode != "") {
+		if (aa.className == "fa fa-heart") {
+			favorStatus = "on";
+		} else {
+			favorStatus = "off";
+		}
+		$.ajax({
+			type : "POST",
+			url : root + "/favorite/switch.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			success : function(data) {
+				favorStatus = data;
+				if (favorStatus === "on") {
+					$("#favorite").attr('class', 'fa fa-heart');
+				} else if (favorStatus === "off") {
+					$("#favorite").attr('class', 'fa fa-heart-o');
+				}
+			}, error: function (request, status, error) {
+				alert("error");
+			}
+		});
+	}
+}
+
+	/* 내가 등록한 식당 삭제 */	
 	function myFoodDel(foodCode){
 		var url = "${root}/myFoodDel.go?foodCode=" + foodCode;
 		$.ajax({

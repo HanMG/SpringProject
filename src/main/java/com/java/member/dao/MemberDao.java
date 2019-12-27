@@ -42,4 +42,5 @@ public interface MemberDao {
 
 	public int adminUpdateOk(MemberDto memberDto);
 
+
 }

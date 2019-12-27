@@ -79,6 +79,7 @@ public class MemberServiceImp implements MemberService{
 		
 		String nickname = request.getParameter("nickname");
 		String mail = request.getParameter("mail");
+		JejuAspect.logger.info(JejuAspect.logMsg + mail);
 		// DB 저장하기전에 카카오에서 주는 mail값으로 현재 DB에 있는지 체크한다.
 		int emailCheck = memberDao.emailCheck(mail);
 		int check = 0;
@@ -137,6 +138,7 @@ public class MemberServiceImp implements MemberService{
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		HttpSession session = request.getSession();
 		String memberCode = (String) session.getAttribute("memberCode");
+		
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		// 개인정보를 보기 위한

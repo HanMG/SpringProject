@@ -9,6 +9,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.ui-datepicker {
+	background: #fff;
+}
 * {
 	margin: 0;
 	padding: 0;
@@ -148,7 +151,7 @@
 }
 </style>
 <script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
-<%-- <script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script> --%>
+
 <script type="text/javascript">
 			//유효성 체크
 			function insertForm(obj){
@@ -209,7 +212,6 @@
 					alert("상품 활성화 상태를 선택해주세요.");
 					return false;
 				}
-				
 			}
 	
 			//식당코드 리스트 출력
@@ -229,7 +231,7 @@
 			
 			//데이터 피커
 			$(function(){
-				/* $('#datepickStart', '#datepickEnd').datetimepicker({
+				$.datepicker.setDefaults({
 					dateFormat: 'yy-mm-dd',
 					showOn: 'both',
 					prevText: '이전',
@@ -244,13 +246,12 @@
 				    changeMonth: true,
 				    changeYear: true,
 				    yearSuffix: '년'
-				}); */
-				//$('#datepickStart').datepicker();
-				//$('#datepickEnd').datepicker();
-				//$('#datepickStart').datepicker('setDate', 'today');
-				//$('#datepickEnd').datepicker('setDate','+1D');
+				});
+				$('#datepickStart').datepicker();
+				$('#datepickEnd').datepicker();
 				
-				
+				$('#datepickStartUp').datepicker();
+				$('#datepickEndUp').datepicker();
 			})
 		</script>
 </head>
@@ -368,9 +369,8 @@
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input id="datepickStart" type="text" name="couponStartdate"
-								value="${couponDto.couponStartdate}">
-							<input id="datepickEnd" type="text" name="couponEnddate">
+							<input id="datepickStartUp" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
+							<input id="datepickEndUp" type="text" name="couponEnddate" value="${couponDto.couponEnddate}">
 						</div>
 						<div>
 							<span>원가격</span>
@@ -490,8 +490,8 @@
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input id="datepickStartInsert" type="text" name="couponStartdate">
-							<input id="datepickEndInsert" type="text" name="couponEnddate">
+							<input id="datepickStart" type="text" name="couponStartdate">
+							<input id="datepickEnd" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>

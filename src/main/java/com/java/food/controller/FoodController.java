@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.food.dto.FoodDto;
 import com.java.food.service.FoodService;
-import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 한문구
@@ -92,5 +91,14 @@ public class FoodController {
 		mav.addObject("request",request);			
 		foodService.foodReviewList(mav);				
 		return mav;
+	}
+	
+	// 관리자 페이지 ajax로 읽기
+	@RequestMapping(value="/admin/getFood.go", method= RequestMethod.GET)
+	public void getFood(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		foodService.getFood(mav);
 	}
 }

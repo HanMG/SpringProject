@@ -166,7 +166,6 @@ public class PurchaseServiceImp implements PurchaseService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
-		
 		List<PurchaseListDto> purchaseList = purchaseDao.purchaseListAll();
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
@@ -184,7 +183,7 @@ public class PurchaseServiceImp implements PurchaseService {
 		
 		PurchaseListDto purchaseListDto = purchaseDao.purchaseSelect(purchaseCode);
 		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat date = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm");
 //		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh24:mi");
 		String purchaseDate = date.format(purchaseListDto.getPurchaseDate());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDate: "+ purchaseDate);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
@@ -147,11 +148,12 @@
 }
 </style>
 <script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
-<%-- <script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script> --%>
-<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+<%-- <script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script> --%>
 <script type="text/javascript">
 			//유효성 체크
 			function insertForm(obj){
+				var formCheck = true;
+				
 				if(obj.couponName.value==""){
 					alert("등록하실 쿠폰상품명을 입력해주세요.");
 					obj.couponName.focus();
@@ -207,6 +209,7 @@
 					alert("상품 활성화 상태를 선택해주세요.");
 					return false;
 				}
+				
 			}
 	
 			//식당코드 리스트 출력
@@ -279,8 +282,12 @@
 							<th id="sendCouponCode">${couponDto.couponCode}</th>
 							<th>${couponDto.foodCode}</th>
 							<th>${couponDto.couponName}</th>
-							<th>${couponDto.couponStartdate}~
-								${couponDto.couponEnddate}</th>
+							<th>
+								<fmt:parseDate value="${couponDto.couponStartdate}" var="startDate" pattern="YYYY-MM-dd" />
+								<fmt:formatDate value="${startDate}" pattern="YYYY년  MM월  dd일" /> ~ 
+								<fmt:parseDate value="${couponDto.couponEnddate}" var="endDate" pattern="YYYY-MM-dd " />
+								<fmt:formatDate value="${endDate}" pattern="YYYY년  MM월  dd일 " />
+							</th>
 							<th>${couponDto.couponSalerate}</th>
 							<th>${couponDto.couponCostsale}</th>
 							<th>${couponDto.couponStatus}</th>
@@ -309,8 +316,8 @@
 					$('#couponModal input[name=foodCode]').val(data.foodCode);
 					$('#couponModal input[name=foodName]').val(data.foodName);
 					$('#couponModal #imageName').text(data.imageName);
-					$('#couponModal input[name=couponEnddate]').val(data.couponEnddate);
 					$('#couponModal input[name=couponStartdate]').val(data.couponStartdate);
+					$('#couponModal input[name=couponEnddate]').val(data.couponEnddate);
 					$('#couponModal input[name=couponCostsale]').val(data.couponCostsale);
 					$('#couponModal input[name=couponSalerate]').val(data.couponSalerate);
 					$('#couponModal input[name=couponCostori]').val(data.couponCostori);
@@ -390,7 +397,7 @@
 						<div class="btn">
 							<input class="button" type="submit" value="수정하기">
 							<input class="button" type="reset" value="초기화">
-							<a class="button" href="javascript:couponDeleteCheck('${root}','upCouponCode.value','upCouponName.value','${pageNumber}')">삭제하기</a>
+							<a class="button _deleteCheckBtn" href="#">삭제하기</a>
 						</div>
 					</div>
 				</form>
@@ -398,13 +405,33 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		//쿠폰 삭제 확인
-		function couponDeleteCheck(root, couponCode, couponName, pageNumber){
-			//var couponCode = 
-			
-			var url = root + "/coupon/couponDelete.go?couponCode="+upCouponCode.value+"&couponName="+upCouponName.value+"&pageNumber="+pageNumber;
-			open(url, "", "width= 400, height=200, scrollbars=no");
-		}
+		$(function(){
+			$('._deleteCheckBtn').on('click',function(){
+				if(confirm("정말로 삭제하시겠습니까?")){
+					var couponCode = $('input[name=couponCode]').val();
+					var url = "${root}/coupon/couponDeleteOk.go?couponCode="+couponCode;
+					$.ajax({
+						url: url,
+						type: 'POST',
+						dataType: 'json',
+						success: function(data){
+							var check = data.check;
+							if(check == 1){
+								alert("쿠폰이 삭제되었습니다.");
+							} else {
+								alert("쿠폰 삭제가 정상처리되지 않았습니다.")
+							}
+							$('#couponModal').hide();
+						}, error : function(request,status,error){
+							console.log("실패");
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+				} else {
+					return false;
+				}
+			});				
+		})
 	
 		$(function(){
 			$('.couponModal .cost, .couponModal .saleRate').on('change', function(){
@@ -424,7 +451,18 @@
 			});
 		})
 	</script>
-
+	<script type="text/javascript">
+	 $(function(){
+		 /*  쿠폰 등록 클릭시 작동 */
+		$('._open').click(function(){
+			$('.couponInModal').show();	
+		});
+		$('._close').click(function(){
+			$('.couponInModal').hide();
+		});
+		
+	 })
+	</script>
 	<!-- 쿠폰 등록 모달 -->
 	<div id="couponInModal" class="couponInModal">
 		<div id="content_modal">
@@ -468,10 +506,11 @@
 							<input type="text" name="couponCostsale">%
 						</div>
 						<div>
-							<span>쿠폰 이미지</span><input type="file" name="imageFile">
+							<span>쿠폰 이미지</span>
+							<input type="file" name="imageFile">
 						</div>
 						<div class="btn">
-							<input class="button _close" type="submit" value="등록하기"></input>
+							<input class="button" type="submit" value="등록하기"></input>
 							<input class="button" type="reset" value="초기화"></input>
 						</div>
 					</div>
@@ -479,17 +518,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-	 $(function(){
-		 /*  쿠폰 등록 클릭시 작동 */
-		$('._open').click(function(){
-			$('.couponInModal').show();	
-		});
-		$('._close').click(function(){
-			$('.couponInModal').hide();
-		});
-		
-	 })
-	</script>
+	
 </body>
 </html>

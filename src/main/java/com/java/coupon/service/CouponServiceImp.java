@@ -2,7 +2,6 @@ package com.java.coupon.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
@@ -123,13 +121,10 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
-		// 현재 날짜 출력
-		//Date today = new Date();
-		//JejuAspect.logger.info(JejuAspect.logMsg + "date: " + today);
-
 		// 쿠폰 리스트 가져오기
 		List<CouponDto> couponList = couponDao.couponListAdmin();
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.size());
+
 		mav.addObject("couponList", couponList);
 	}
 

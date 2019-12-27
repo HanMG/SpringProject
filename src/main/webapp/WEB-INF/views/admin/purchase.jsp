@@ -194,7 +194,7 @@
 					$('.purchaseModal .cCode').text('쿠폰코드 : '+data.couponCode);
 					$('.purchaseModal .mCode').text('멤버코드 : '+data.memberCode);
 					$('.purchaseModal .pDate').text('구매날짜 : '+data.purchaseDate);
-					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
+					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale + '원');
 					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
 					if(data.purchaseStatus == "Y"){
 						$('#purchaseModal .btn span').text("");
@@ -211,6 +211,7 @@
 			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			})
+			
 		});
 		$('._close').click(function(){
 			$('.purchaseModal').hide();
@@ -265,24 +266,28 @@
 	<script type="text/javascript">
 		$(function(){
 			$("#purchaseDelBtn").on('click', function(){
-				var purchaseCode = $('input[name=purchaseCode]').val();
-				var delUrl = "${root}/purchase/purchaseDeleteOk.go?purchaseCode="+purchaseCode;
-				$.ajax({
-					url: delUrl,
-					type: 'POST',
-					dataType: 'json',
-					success: function(data){
-						var check = data.check;
-						if(check == 1){
-							alert("구매취소 완료되었습니다.");
-						} else {
-							alert("정상처리 실패; 구매 취소 가능 여부 확인해주세요.")
+				if(confirm("구매내역을 정말로 취소하시겠습니까?")){
+					var purchaseCode = $('input[name=purchaseCode]').val();
+					var delUrl = "${root}/purchase/purchaseDeleteOk.go?purchaseCode="+purchaseCode;
+					$.ajax({
+						url: delUrl,
+						type: 'POST',
+						dataType: 'json',
+						success: function(data){
+							var check = data.check;
+							if(check == 1){
+								alert("구매취소 완료되었습니다.");
+							} else {
+								alert("정상처리 실패; 구매 취소 가능 여부 확인해주세요.")
+							}
+						}, error : function(request,status,error){
+							console.log("실패");
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
-					}, error : function(request,status,error){
-						console.log("실패");
-				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				})
+					})
+				} else {
+					return false;
+				}
 			});
 		})
 		

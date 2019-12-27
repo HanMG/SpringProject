@@ -12,7 +12,7 @@ public interface ReviewService {
 
 	public void reviewUpdateOk(ModelAndView mav);
 
-	public void imageDelete(ModelAndView mav);
+	//public void imageDelete(ModelAndView mav);
 
 	public void reviewDelete(ModelAndView mav);
 
@@ -20,7 +20,7 @@ public interface ReviewService {
 
 	public void adminReviewList(ModelAndView mav);
 
-	public void adminReviewRead(ModelAndView mav);
+	//public void adminReviewRead(ModelAndView mav);
 
 	public void getReview(ModelAndView mav);
 

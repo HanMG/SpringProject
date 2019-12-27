@@ -11,10 +11,10 @@
 <%-- <link rel="stylesheet" href="${root}/resources/css/food/read.css" /> --%>
 <link rel="stylesheet" href="${root}/resources/css/slideshow.css" />
 <script src="${root}/resources/xhr.js"></script>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>음식점상세페이지</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+<script src="${root}/resources/javascript/review/review.js"></script>
 <script>
 	$(function(){
 
@@ -656,7 +656,7 @@ a {
 				</div>
 				<div class="in">
 					<p><strong>${foodDto.foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</p>
-					<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data">			
+					<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data" onsubmit="return reviewForm(this)">			
 						<input type="hidden" name="foodCode" value="${foodDto.foodCode}" />
 						<input type="hidden" name="memberCode" value="${memberCode}" />
 						<div class="container_1">
@@ -920,12 +920,13 @@ function favorSwitch(aa) {
 	}
 }
 	
-	
+	// 리뷰 리스트  ajax로 불러오기 (XHR.js 이용) 
 	function reviewList(root, selScore) {
 		let url = root + "/food/foodReviewList.go";
 		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
 		sendRequest("GET", url, fromServer, params);
 	}	
+	// reivew/list.jsp를 거쳐 값을 #reviewDisplay에 뿌려줌 
 	function fromServer() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			let reviewDisplay = document.getElementById("review");

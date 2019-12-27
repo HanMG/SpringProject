@@ -43,12 +43,12 @@ public class PurchaseController {
 	@RequestMapping(value = "/purchase/purchaseInsertOk.go", method = RequestMethod.POST)
 	public ModelAndView purchaseInsertOk(HttpServletRequest request, HttpServletResponse response,
 			PurchaseDto purchaseDto) {
-		String memberMail = request.getParameter("memberMail");
+		//String memberMail = request.getParameter("memberMail");
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		mav.addObject("purchaseDto", purchaseDto);
-		mav.addObject("memberMail", memberMail);
+		//mav.addObject("memberMail", memberMail);
 
 		purchaseService.purchaseInsertOk(mav);
 

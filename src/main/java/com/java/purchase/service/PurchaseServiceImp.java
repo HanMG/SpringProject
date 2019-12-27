@@ -84,6 +84,7 @@ public class PurchaseServiceImp implements PurchaseService {
 		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
+		//HttpSession session =  request.getSession(false);
 		String memberMail = request.getParameter("memberMail");
 		JejuAspect.logger.info(JejuAspect.logMsg + "memberMail: "+ memberMail);
 		

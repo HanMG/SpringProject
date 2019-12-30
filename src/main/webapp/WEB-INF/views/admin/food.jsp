@@ -13,13 +13,148 @@
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 <script src="${root}/resources/javascript/food/food.js"></script>
 <script src="${root}/resources/jquery-3.4.1.js"></script>
-<link rel="stylesheet" href="${root}/resources/css/admin/food.css" />
+<%-- <link rel="stylesheet" href="${root}/resources/css/admin/food.css" /> --%>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+.button {
+    color: #FFFFFF;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
+}
+#title {
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+}
+#title > span {
+	margin-left: 60px;
+	font-size: 23px;
+}
+#content {
+	width: 100%;
+	overflow: hidden;
+	margin: 0 auto;
+}
+#list {
+	width: 100%;
+	margin: 0 auto;
+}
+/* 식당관련 */
+#content_modal {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -400px;
+	margin-top: -400px;
+	background: #F2F4EF;
+	width: 800px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.content_modal {
+	width: 800px;
+	overflow: hidden;
+}
+.title_modal {
+	width: 800px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+/* 식당관련 */
+.food {
+	overflow: hidden;
+	width: 600px; 
+	margin: 10px auto;
+}
+.food > div {
+	margin-top: 5px;
+}
+.food > div span:nth-child(1) {
+	font-size: 23px;
+	display: inline-block;
+	width: 150px;
+	line-height: 50px;
+	
+}
+.food > div > input[type=text] {
+	display: inline-block;
+	width: 445px;
+	height: 50px;
+	font-size: 23px;
+}
+
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn > .button {
+	font-size: 23px;
+	width: 280px;
+	height: 50px;
+}
+.menuBtn {
+	float: right;
+	font-size: 23px;
+	height: 50px;
+    width: 120px;
+    line-height: 50px;
+    color: #FFFFFF;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
+    margin: 5px;
+}
+
+.foodModal, .foodInModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.span {
+	font-size: 23px;
+}
+.mapBtn {
+	height: 50px;
+    width: 60px;
+    line-height: 55px;
+}
+thead > tr > th {
+	min-width: 70px; 
+}
+
+</style>
 </head>
 <body>
 	<div id="content">
 		<div id="title">
 			<span>식당관리</span>
-			<button class="button" id="foodInClick">식당등록</button>
+			<button class="menuBtn" id="foodInClick">식당등록</button>
 		</div>
 		<div id="list">
 			<table id="example" class="display" style="width:100%">
@@ -71,14 +206,14 @@
 					</div>		
 					<div>
 						<span>*주소</span>
-						<input type="text" name="foodAddr" id="sample5_address">
-						<button type="button" class="button" onclick="sample5_execDaumPostcode()" style="font-size: 16px">지도</button>
+						<input style="width: 380px" type="text" name="foodAddr" id="sample5_address">
+						<button type="button" class="button mapBtn" onclick="sample5_execDaumPostcode()">지도</button>
 					</div>	
-					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none"></div>
+					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none; margin-left: 155px"></div>
 					<div>
 						<span>*지역</span>
-						<input type="radio" name="foodArea" id="insertAreaJeju" value="제주시" checked="checked"><label for="insertAreaJeju">제주시</label>
-						<input type="radio" name="foodArea" id="insertAreaSeo" value="서귀포시"><label for="insertAreaSeo">서귀포시</label>
+						<input type="radio" name="foodArea" id="insertAreaJeju" value="제주시" checked="checked"><label class="span" for="insertAreaJeju">제주시</label>
+						<input type="radio" name="foodArea" id="insertAreaSeo" value="서귀포시"><label class="span" for="insertAreaSeo">서귀포시</label>
 					</div>		
 					<div>
 						<span>*전화번호</span>
@@ -86,19 +221,19 @@
 					</div>			
 					<div>
 						<span>*종류</span>
-						<input type="radio" name="foodKind" id="insertKor" value="한식" checked="checked"><label for="insertKor">한식</label>
-						<input type="radio" name="foodKind" id="insertChn" value="중식"><label for="insertChn">중식</label>
-						<input type="radio" name="foodKind" id="insertJp" value="일식"><label for="insertJp">일식</label>
-						<input type="radio" name="foodKind" id="insertWt" value="양식"><label for="insertWt">양식</label>
-						<input type="radio" name="foodKind" id="insertCf" value="카페"><label for="insertCf">카페</label>
-						<input type="radio" name="foodKind" id="insertEtc" value="기타"><label for="insertEtc">기타</label>
+						<input type="radio" name="foodKind" id="insertKor" value="한식" checked="checked"><label class="span" for="insertKor">한식</label>
+						<input type="radio" name="foodKind" id="insertChn" value="중식"><label class="span" for="insertChn">중식</label>
+						<input type="radio" name="foodKind" id="insertJp" value="일식"><label class="span" for="insertJp">일식</label>
+						<input type="radio" name="foodKind" id="insertWt" value="양식"><label class="span" for="insertWt">양식</label>
+						<input type="radio" name="foodKind" id="insertCf" value="카페"><label class="span" for="insertCf">카페</label>
+						<input type="radio" name="foodKind" id="insertEtc" value="기타"><label class="span" for="insertEtc">기타</label>
 					</div>
 					<div>
 						<span>대표음식</span>
 						<input type="text" name="foodMenu" value="">
 					</div>				
 					<div>
-						<span>영업시간(ex:08:00~18:00)</span>
+						<span>영업시간</span>
 						<input type="text" name="foodTime" value="">
 					</div>
 					<div>
@@ -111,12 +246,12 @@
 					</div>
 					<div>
 						<span>*음식점소개</span>
-						<textarea name="foodIntro" id="" cols="55" rows="3" placeholder="소개"></textarea>
+						<textarea name="foodIntro" id="" cols="60" rows="5" placeholder="소개" style="vertical-align: top;"></textarea>
 					</div>
 					<div>
 						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" value="y" id="insertStatY"><label for="insertStatY">Y</label>
-						<input type="radio" name="foodStatus" value="n" id="insertStatN"checked="checked"><label for="insertStatN">N</label>
+						<input type="radio" name="foodStatus" value="y" id="insertStatY"><label class="span" for="insertStatY">Y</label>
+						<input type="radio" name="foodStatus" value="n" id="insertStatN"checked="checked"><label class="span" for="insertStatN">N</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="등록하기"></input>
@@ -140,8 +275,8 @@
 				<input type="hidden" name="foodCode" id="foodCode" value="" />
 				<div class="food">
 					<div>
-						<span>식당코드 : </span>
-						<div id="foodCodeTemp"></div>						
+						<span>식당코드</span>
+						<span class="span" id="foodCodeTemp"></span>
 					</div>
 					<div>
 						<span>*가게명</span>
@@ -153,8 +288,8 @@
 					</div>
 					<div>
 						<span>지역</span>
-						<input type="radio" name="foodArea" id="updateAreaJeju" value="제주시"><label for="updateAreaJeju">제주시</label>
-						<input type="radio" name="foodArea" id="updateAreaSeo" value="서귀포시"><label for="updateAreaSeo">서귀포시</label>
+						<input type="radio" name="foodArea" id="updateAreaJeju" value="제주시"><label class="span" for="updateAreaJeju">제주시</label>
+						<input type="radio" name="foodArea" id="updateAreaSeo" value="서귀포시"><label class="span" for="updateAreaSeo">서귀포시</label>
 					</div>
 					<div>
 						<span>*전화번호</span>
@@ -162,19 +297,19 @@
 					</div>					
 					<div>
 						<span>*종류</span>
-						<input type="radio" name="foodKind" id="updateKor" value="한식"><label for="updateKor">한식</label>
-						<input type="radio" name="foodKind" id="updateChn" value="중식"><label for="updateChn">중식</label>
-						<input type="radio" name="foodKind" id="updateJp" value="일식"><label for="updateJp">일식</label>
-						<input type="radio" name="foodKind" id="updateWt" value="양식"><label for="updateWt">양식</label>
-						<input type="radio" name="foodKind" id="updateCf" value="카페"><label for="updateCf">카페</label>
-						<input type="radio" name="foodKind" id="updateEtc" value="기타"><label for="updateEtc">기타</label>
+						<input type="radio" name="foodKind" id="updateKor" value="한식"><label class="span" for="updateKor">한식</label>
+						<input type="radio" name="foodKind" id="updateChn" value="중식"><label class="span" for="updateChn">중식</label>
+						<input type="radio" name="foodKind" id="updateJp" value="일식"><label class="span" for="updateJp">일식</label>
+						<input type="radio" name="foodKind" id="updateWt" value="양식"><label class="span" for="updateWt">양식</label>
+						<input type="radio" name="foodKind" id="updateCf" value="카페"><label class="span" for="updateCf">카페</label>
+						<input type="radio" name="foodKind" id="updateEtc" value="기타"><label class="span" for="updateEtc">기타</label>
 					</div>				
 					<div>
 						<span>대표음식</span>
 						<input type="text" name="foodMenu" id="foodMenu" value="">
 					</div>
 					<div>
-						<span>영업시간(ex:08:00~18:00)</span>
+						<span>영업시간</span>
 						<input type="text" name="foodTime" id="foodTime" value="">
 					</div>
 					<div>
@@ -183,21 +318,21 @@
 					</div>
 					<div>
 						<span>*대표이미지</span>
+						<input type="file" name="imgFile" accept="image/*"/>
 						<div id="imgWrapper" class="m-2"></div>
 						
-						<input type="file" name="imgFile" accept="image/*"/>
 					</div>
 					<div>
 						<span>*음식점소개</span>
-						<textarea name="foodIntro" id="foodIntro" cols="55" rows="3" placeholder="소개"></textarea>
+						<textarea name="foodIntro" id="foodIntro" cols="60" rows="5" placeholder="소개" style="vertical-align: top;"></textarea>
 					</div>
 					<div>
 						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" id="updateStatY" value="y"><label for="updateStatY">Y</label>
-						<input type="radio" name="foodStatus" id="updateStatN"value="n"><label for="updateStatN">N</label>
+						<input type="radio" name="foodStatus" id="updateStatY" value="y"><label class="span" for="updateStatY">Y</label>
+						<input type="radio" name="foodStatus" id="updateStatN"value="n"><label class="span" for="updateStatN">N</label>
 					</div>
 					<div>
-						<span>등록자(읽기전용)</span>
+						<span>등록자(읽기)</span>
 						<input type="text" id="memberCode" readonly="readonly"/>
 					</div>
 					

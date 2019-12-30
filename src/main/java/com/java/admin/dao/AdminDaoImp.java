@@ -1,6 +1,8 @@
 package com.java.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ public class AdminDaoImp implements AdminDao {
 	@Override
 	public List<AdminFoodReadDto> foodReadRank() {
 		return sqlSession.selectList("dao.AdminMapper.foodReadRank");
+	}
+	@Override
+	public int loginCheck(String adminId, String adminPwd) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("adminId", adminId);		
+		map.put("adminPwd", adminPwd);		
+		
+		return sqlSession.selectOne("memberMapper.loginCheck", map);
 	}
 
 }

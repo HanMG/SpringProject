@@ -324,6 +324,8 @@ public class FoodServiceImp implements FoodService {
 	
 	
 	// 관리자 음식점페이지로 이동 및 전체 정보를 가져오기
+
+
 	@Override
 	public void adminFoodList(ModelAndView mav) {		
 		List<FoodDto> foodDtoList = foodDao.foodDtoList();		

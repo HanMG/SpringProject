@@ -44,6 +44,7 @@ a {
 	float: left;
 	margin: 10px;
 	cursor: pointer;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
 .list > div:nth-child(1) {
 	width: 650px;
@@ -161,9 +162,9 @@ a {
 			<span>EAT 딜</span>
 		</div>
 		<!-- 검색 했을 경우 : 템플릿 들어갈 것-->
-		<div>
+		<!-- <div>
 			<input type="text" name="search">
-		</div>
+		</div> -->
 		<div>
 			
 		</div>

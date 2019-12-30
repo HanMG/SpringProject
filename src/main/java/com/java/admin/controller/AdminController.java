@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.food.service.FoodService;
+import com.java.member.service.MemberService;
 import com.java.review.service.ReviewService;
 import com.java.admin.service.AdminService;
 import com.java.coupon.service.CouponService;
@@ -32,12 +33,32 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	
+	
+	// 관리자 로그인 페이지
+	@RequestMapping(value = "/admin/login.go", method = RequestMethod.GET)
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/login.empty");		
+		return mav;		
+	}
+	
 	// 관리자 메인페이지 이동
-	@RequestMapping(value = "/admin/main.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/main.go", method= RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
 		adminService.getMainData(mav);	
+				
+		return mav;		
+	}
+	// 관리자 메인페이지 이동
+	@RequestMapping(value = "/admin/loginOk.go", method= {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView loginOk(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request",request);
+		adminService.adminLogin(mav);
+		
 		return mav;		
 	}
 	// 관리자 음식점페이지로 이동 및 리스트 불러오기

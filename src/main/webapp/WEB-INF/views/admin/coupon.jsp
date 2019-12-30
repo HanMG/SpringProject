@@ -20,23 +20,14 @@
 
 .button {
 	color: #FFFFFF;
-	border: #EFB730 solid 1px;
-	background-color: #EFB730;
+	border: #343A40 solid 1px;
+	background-color: #343A40;
 }
 
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
-}
-
-#title>button {
-	float: right;
-	font-size: 23px;
-	color: black;
-	background: white;
-	border: #CED4DA solid 1px;
-	border-radius: 5px;
 }
 
 #title>span {
@@ -45,13 +36,13 @@
 }
 
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 쿠폰관련 */
@@ -60,11 +51,10 @@
 	left: 50%;
 	top: 50%;
 	margin-left: -400px;
-	margin-top: -450px;
+	margin-top: -400px;
 	background: #F2F4EF;
 	width: 800px;
 	border-radius: 5px;
-	background: tomato;
 	overflow: hidden;
 	]
 }
@@ -72,47 +62,42 @@
 .content_modal {
 	width: 800px;
 	overflow: hidden;
-	background: skyblue;
 }
+
 
 .title_modal {
 	width: 800px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-	background: olive;
+	text-align: center;
 }
 
-.title_modal>span:first-child {
-	margin-left: 40px;
-}
 
 /* 쿠폰관련 */
 .coupon {
 	overflow: hidden;
-	width: 500px;
-	border-bottom: 1px dotted;
+	width: 600px;
 	margin: 10px auto;
-	background: tomato;
 }
 
 .coupon>div {
 	margin-top: 5px;
-	margin-left: 30px;
 }
 
-.coupon>div span:nth-child(1) {
-	display: block;
-	font-size: 20px;
+.coupon>div span:nth-child(1), .foodBtn {
+	font-size: 23px;
+	display: inline-block;
+	width: 150px;
+	line-height: 50px;
 }
 
 .coupon>div>input[type=text] {
 	display: inline-block;
-	width: 400px;
-	height: 20px;
-	font-size: 20px;
+	width: 445px;
+	height: 50px;
+	font-size: 23px;
 }
 
 /* The Close Button */
@@ -148,6 +133,36 @@
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.buttonSize {
+	font-size: 23px;
+	width: 280px;
+	height: 50px;
+	color: #FFFFFF;
+	border: #343A40 solid 1px;
+	background-color: #343A40;
+}
+.span {
+	font-size: 23px;
+}
+.listBtn {
+	font-size: 23px;
+	width: 188px;
+	height: 50px;
+	color: #FFFFFF;
+	border: #343A40 solid 1px;
+	background-color: #343A40;
+}
+.menuBtn {
+	float: right;
+	font-size: 23px;
+	height: 50px;
+    width: 120px;
+    line-height: 50px;
+    color: #FFFFFF;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
+    margin: 5px;
 }
 </style>
 <script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
@@ -260,7 +275,7 @@
 	<div id="content">
 		<div id="title">
 			<span>쿠폰 관리</span>
-			<button class="button _open" id="couponInClick">쿠폰등록</button>
+			<button class="menuBtn _open" id="couponInClick">쿠폰등록</button>
 		</div>
 		<div id="list">
 			<input type="hidden" name="pageNumber" value="${pageNumber}">
@@ -359,18 +374,19 @@
 						<div>
 							<span>가게코드</span>
 							<input type="text" name="foodCode">
-							<input class="button" type="button" value="식당검색" onclick="foodcodeRead('${root}')">
+							<input class="button foodBtn" type="button" value="식당검색" onclick="foodcodeRead('${root}')">
 							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
 							<span>쿠폰내용</span>
-							<textarea rows="3" cols="55" name="couponIntro"></textarea>
+							<textarea rows="5" cols="60" name="couponIntro" style="vertical-align: top;"></textarea>
 						</div>
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input id="datepickStartUp" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
-							<input id="datepickEndUp" type="text" name="couponEnddate" value="${couponDto.couponEnddate}">
+							<input style="width: 213px;" id="datepickStart" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
+							~
+							<input style="width: 212px;" id="datepickEnd" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>
@@ -382,22 +398,22 @@
 						</div>
 						<div>
 							<span>할인가</span>
-							<input type="text" name="couponCostsale">%
+							<input type="text" name="couponCostsale">
 						</div>
 						<div>
 							<span>쿠폰 이미지</span>
 							<input type="file" name="imageFile">
-							<span id="imageName"></span>
+							<span style="margin-left: 150px;" id="imageName"></span>
 						</div>
 						<div>
 							<span>쿠폰 상태</span>
-							<input type="radio" name="couponStatus" value="Y"><label>활성화</label>
-							<input type="radio" name="couponStatus" value="N"><label>비활성화</label>
+							<input type="radio" name="couponStatus" value="Y"><label class="span" >활성화</label>
+							<input type="radio" name="couponStatus" value="N"><label class="span" >비활성화</label>
 						</div>
 						<div class="btn">
-							<input class="button" type="submit" value="수정하기">
-							<input class="button" type="reset" value="초기화">
-							<a class="button _deleteCheckBtn" href="#">삭제하기</a>
+							<input class="listBtn" type="submit" value="수정하기">
+							<input class="listBtn" type="reset" value="초기화">
+							<a style="line-height: 48px; display: inline-block;" class="listBtn" href="javascript:couponDeleteCheck('${root}','upCouponCode.value','upCouponName.value','${pageNumber}')">삭제하기</a>
 						</div>
 					</div>
 				</form>
@@ -480,18 +496,19 @@
 						<div>
 							<span>가게코드</span>
 							<input type="text" name="foodCode"> 
-							<input class="button" type="button" value="식당검색" onclick="foodcodeRead('${root}','${cInsert}')">
+							<input class="button foodBtn" type="button" value="식당검색" onclick="foodcodeRead('${root}','${cInsert}')">
 							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
 							<span>쿠폰내용</span>
-							<textarea rows="3" cols="55" name="couponIntro"></textarea>
+							<textarea rows="5" cols="60" name="couponIntro" style="vertical-align: top;"></textarea>
 						</div>
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input id="datepickStart" type="text" name="couponStartdate">
-							<input id="datepickEnd" type="text" name="couponEnddate">
+							<input style="width: 213px;" id="datepickStartInsert" type="text" name="couponStartdate">
+							~
+							<input style="width: 212px;" id="datepickEndInsert" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>
@@ -503,15 +520,15 @@
 						</div>
 						<div>
 							<span>할인가</span>
-							<input type="text" name="couponCostsale">%
+							<input type="text" name="couponCostsale">
 						</div>
 						<div>
 							<span>쿠폰 이미지</span>
 							<input type="file" name="imageFile">
 						</div>
 						<div class="btn">
-							<input class="button" type="submit" value="등록하기"></input>
-							<input class="button" type="reset" value="초기화"></input>
+							<input class="_close buttonSize" type="submit" value="등록하기"></input>
+							<input class="buttonSize" type="reset" value="초기화"></input>
 						</div>
 					</div>
 				</form>

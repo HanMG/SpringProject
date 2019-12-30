@@ -7,14 +7,14 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <html>
 <head>
+<meta charset="UTF-8">
+<title>음식점상세페이지</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%-- <link rel="stylesheet" href="${root}/resources/css/food/read.css" /> --%>
 <link rel="stylesheet" href="${root}/resources/css/slideshow.css" />
 <script src="${root}/resources/xhr.js"></script>
-<meta charset="UTF-8">
-<title>음식점상세페이지</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
-<script src="${root}/resources/javascript/review/review.js"></script>
+
 <style type="text/css">
 a {
 	color: #030305;
@@ -26,7 +26,7 @@ a {
 }
 
 .fa:hover {
-  color: pink;
+  color: #EFB730;
 }
 
 * {
@@ -40,7 +40,6 @@ a {
 	margin : 10px auto;
 	width: 1240px;
 	overflow: hidden;
-   	border-bottom: 1px dotted;
    	margin-top: 30px;
 }
 /* 가게 상세 */
@@ -97,7 +96,6 @@ a {
 }
 .info_2 > span {
 	font-size: 12px;
-	margin-left: 10px;
 }
 /* 가게 상세설명 */
 .info_3 {
@@ -187,6 +185,7 @@ a {
 	overflow: hidden;
 	margin: 10px 0;
 	border-bottom: 1px dotted;
+	
 }
 /* 닉네임 */
 .re_2 > div:nth-child(1) {
@@ -251,16 +250,16 @@ a {
 	top: 50%;
 	margin-left: -500px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 1000px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 
 .reViewIn {
 	width: 1000px;
 	overflow: hidden;
-	background: #F2F4EF;
 }
 
 .title_reView > span:first-child {
@@ -283,7 +282,6 @@ a {
 	resize:none;
 	width: 980px;
 	height: 350px;
-	border: none;
 	font-size: 20px;
 	font-weight: bold;
 }
@@ -292,39 +290,37 @@ a {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -500px;
+	margin-left: -400px;
 	margin-top: -400px;
-	background: #F2F4EF;
-	width: 1000px;
-	height: 700px;
+	width: 800px;
 	border-radius: 5px;
+	overflow: hidden;
+	
 }
 
 .reViewInfo {
-	width: 1000px;
+	width: 800px;
 	overflow: hidden;
 	background: #F2F4EF;
 }
 .title_reViewInfo {
-	width: 1000px;
+	width: 800px;
 	height: 50px;
-	background: #F2F4EF;
+	background: white;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 }
 
 .title_reView {
 	width: 1000px;
 	height: 50px;
-	background: #F2F4EF;
+	background: white;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	
 }
 .title_reViewInfo > span:first-child {
-	margin-left: 40px;
+	margin-left: 20px;
 }
 
 
@@ -339,7 +335,7 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
 }
 
 .reViewInfoModal {
@@ -353,7 +349,7 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 .close_reView, .close_reViewInfo {
   color: #aaaaaa;
@@ -383,6 +379,43 @@ a {
 	justify-content: flex-start;
 	margin-left: 10px;
 }
+
+/* 큰이미지 관련 */
+.slideshow-review {
+  max-width: 800px;
+  position: relative;
+  margin: auto;
+  background: white;
+}
+.reviewContent {
+	width: 800px;
+	overflow: hidden;
+	margin: auto;
+	background: white;
+}
+#reviewDate {
+	color: #9b9b9b;
+	font-size: 12px;
+	height: 20px;
+	width: 800px;
+	float: right;
+}
+#reviewCont {
+	font-size: 23px;
+	overflow: hidden;
+	width: 780px;
+	margin-left: 20px;
+	min-height: 200px;
+}
+.icon {
+	width: 10px;
+	height: 10px;
+}
+.emoticon{
+	width: 48px;
+	height: 48px;
+}
+
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
@@ -415,15 +448,17 @@ a {
 					</script>
 				</div>
 				<div>
-<!-- 					<i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i> -->
-					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /><span>가고싶다 </span></i>
-					
+					<!-- <i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i> -->
+					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /><span>가고싶다</span></i>
 				</div>
 			</div>
 			<div class="info_2">
-				<span>조회수 ${foodDto.foodRead }</span> 
-				<span>리뷰수 ${reviewCountDto.whole}</span> 
-				<span>즐겨찾기 ${favoriteCnt}</span>
+				<img class="icon" alt="" src="${root}/resources/css/views.png">
+				<span>${foodDto.foodRead }</span> 
+				<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
+				<span>${reviewCountDto.whole}</span> 
+				<img class="icon" alt="" src="${root}/resources/css/favorites.png">
+				<span>${favoriteCnt}</span>
 			</div>
 			<div class="info_3">
 				<div>
@@ -522,15 +557,30 @@ a {
 								</div>
 			
 								<div>
-									<span>(${foodReviewDto.reviewScore})</span>
+									<c:choose>
+										<c:when test="${foodReviewDto.reviewScore == 5}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_5.png">
+											<br/><span>맛있다</span>
+										</c:when>
+										<c:when test="${foodReviewDto.reviewScore == 3}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_3.png">
+											<br/><span>괜찮다</span>
+										</c:when>
+										<c:when test="${foodReviewDto.reviewScore == 1}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_1.png">
+											<br/><span>별로</span>
+										</c:when>
+									</c:choose>
+									<%-- <span>(${foodReviewDto.reviewScore})</span> --%>
 								</div>
 								<c:if test="${memberCode == foodReviewDto.memberCode}">
 								<div>
-									<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
 								</div>
 								<div>
+									<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
 									<a href="javascript:void(0)" onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>									
 								</div>
+								
 								</c:if>
 							</div>
 						</c:forEach>
@@ -614,37 +664,36 @@ a {
 		<div id="content_reViewInfo">
 			<div class="reViewInfo">
 				<div class="title_reViewInfo">
-					<span>리뷰 작성</span>
+					<span>${foodDto.foodName}</span>
 					<span class="close_reViewInfo">&times;</span>
 				</div>
 				<div class="info">
-					<p><strong>${foodDto.foodName}</strong>에 대한 솔직한 리뷰 입니다.</p>
-					<div>
-						<div id="reviewCont"></div>
-						<div id="reviewScore"></div>
-						<div id="fileDiv">
-							<c:if test="${listImage != null}">
-								<table style="text-align:center;">
-									<tr>
-										<c:forEach var="imageDto" items="${listImage}">							
-											<td><img src="${root}/resources/ftp/${imageDto.imageName}"
-												alt="image" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br /><label>${fn:substringAfter(imageDto.imageName,'_')}</label>								
-											</td>
-										</c:forEach>
-									</tr>
-								</table>
-							</c:if>			
+					<div class="slideshow-review">
+					<c:forEach var="imageDto" items="${listImage}">
+						<div class="mySlides fade">
+							<img class="imageName"  style="width: 800px; height: 500px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br />
 						</div>
+						<div>	
+							<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+							<a class="next" onclick="plusSlides(1)">&#10095;</a>
+						</div>	
+					</c:forEach>
+					</div>
+					<div class="reviewContent">
+						<div id="reviewDate"></div>
+						<div id="reviewCont"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</body>
+
+
 
 <!-- 리뷰 상세보기 모달, 내용 가져오는 ajax -->
 <script>
 //본인 리뷰 내용 & 리뷰 내용 
+
 function myReview(reviewCode) {
 	var url = "${root}/review/read.go?reviewCode=" + reviewCode;
 	$("#reViewInfoModal").css("display","block");
@@ -688,11 +737,11 @@ function fromServer() {
 }
 </script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	
 	// 본인 리뷰 내용
 	
-
+	
 	/* 파일 버튼 */
 	$(document).on("change", ".file-input", function(){
 	 
@@ -706,15 +755,22 @@ function fromServer() {
 	});
 	
 	/*  리뷰쓰기 클릭시 작동 */
+	
 	var reViewInModal = document.getElementById("reViewInModal");
 	var reViewInClick = document.getElementById("reViewInClick");
 	var close_reView = document.getElementsByClassName("close_reView")[0];
 	reViewInClick.onclick = function() {
 		reViewInModal.style.display = "block";
+		header.style.display = "none";
 		}
 	close_reView.onclick = function() {
 		reViewInModal.style.display = "none";
+		header.style.display = "block";
 		}	
+	
+	/*  리뷰내용 클릭시 작동 */
+	var reViewInfoModal = $("#reViewInfoModal");
+	var close_reViewInfo = $(".close_reViewInfo");
 	
 	// 지도 관련 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -757,9 +813,6 @@ function fromServer() {
     
 });    
 	
-	
-</script>
-<script type="text/javascript">
 	var slideIndex = 1;
 	showSlides(slideIndex);
 
@@ -786,50 +839,33 @@ function fromServer() {
 	  slides[slideIndex-1].style.display = "block";  
 	  dots[slideIndex-1].className += " active";
 	}
+	</script>
+	
+	
+	<script>
 
-var root = "${root}";
-var memberCode = "${memberCode}";
-var foodCode = "${foodDto.foodCode}";
-var favorStatus = "";
-
-$(function() {
-	if (memberCode != "") {
-		favorCheck();
-	} 
-});
-
-function favorCheck() {
-	$.ajax({
-		type : "POST",
-		url : root + "/favorite/check.do",
-		data : { "memberCode" : memberCode, "foodCode" : foodCode},
-		success : function(data) {
-			favorStatus = data;
-			if (favorStatus === "on") {
-				$("#favorite").attr('class', 'fa fa-heart');
-			} else if (favorStatus === "off") {
-				$("#favorite").attr('class', 'fa fa-heart-o');
-			}
-		}, error: function (request, status, error) {
-			alert("error");
+	function favorite(x) {
+		if (x.className === "fa fa-heart-o") {
+			x.className = "fa fa-heart";
 		}
+	}
+				
+	var root = "${root}";
+	var memberCode = "${memberCode}";
+	var foodCode = "${foodDto.foodCode}";
+	var favorStatus = "";
+
+	$(function() {
+		if (memberCode != "") {
+			favorCheck();
+		} 
 	});
-}
 
-function favorSwitch(aa) {
-	if (memberCode == "") {
-		// 로그인
-		alert("로그인하세요");
-	} else if (memberCode != "") {
-		if (aa.className == "fa fa-heart") {
-			favorStatus = "on";
-		} else {
-			favorStatus = "off";
-		}
+	function favorCheck() {
 		$.ajax({
 			type : "POST",
-			url : root + "/favorite/switch.do",
-			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			url : root + "/favorite/check.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode},
 			success : function(data) {
 				favorStatus = data;
 				if (favorStatus === "on") {
@@ -842,10 +878,35 @@ function favorSwitch(aa) {
 			}
 		});
 	}
-}
-	
 
-
-}
+	function favorSwitch(x) {
+		if (memberCode == "") {
+			// 로그인
+			alert("로그인하세요");
+		} else if (memberCode != "") {
+			if (x.className == "fa fa-heart") {
+				favorStatus = "on";
+			} else {
+				favorStatus = "off";
+			}
+			$.ajax({
+				type : "POST",
+				url : root + "/favorite/switch.do",
+				data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+				success : function(data) {
+					favorStatus = data;
+					if (favorStatus === "on") {
+						$("#favorite").attr('class', 'fa fa-heart');
+					} else if (favorStatus === "off") {
+						$("#favorite").attr('class', 'fa fa-heart-o');
+					}
+				}, error: function (request, status, error) {
+					alert("error");
+				}
+			});
+		}
+	}
 </script>
+<script src="${root}/resources/javascript/review/review.js"></script>
+</body>
 </html>

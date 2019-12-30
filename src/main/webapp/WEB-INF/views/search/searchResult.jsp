@@ -20,7 +20,6 @@ a {
 	margin : 50px auto;
 	width: 1240px;
 	overflow: hidden;
-   	border-bottom: 1px dotted;
 }
 /* 검색 순위, 필터, 가게 리스트 */
 .nav_1 {
@@ -74,7 +73,7 @@ a {
 	height: 200px;
 	margin-bottom: 5px;
 }
-.list img {
+.list > div:first-child > img {
 	width: 350px;
 	height: 200px;
 }
@@ -96,6 +95,10 @@ a {
 .page {
 	text-align: center;
 	width: 740px;
+}
+.page a {
+	font-size: 23px;
+	color: #EFB730;
 }
 
 .map {
@@ -202,7 +205,7 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
 }
 
 #contentFilter{
@@ -211,17 +214,17 @@ a {
 	top: 50%;
 	margin-left: -370px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 740px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .titleFilter {
 	width: 740px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
 }
 /* 개인정보 */
@@ -252,6 +255,11 @@ a {
 	line-height: 50px;
 	border-radius: 5px;
 }
+.icon {
+	width: 10px;
+	height: 10px;
+}
+
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
@@ -292,7 +300,9 @@ a {
 					<span class="foodKind">${searchFoodDto.foodKind}</span>
 				</div>
 				<div>
+					<img class="icon" alt="" src="${root}/resources/css/views.png">
 					<span class="foodRead">${searchFoodDto.foodRead}</span>
+					<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
 					<span class="reviewCount">${searchFoodDto.reviewCount}</span>
 				</div>
 			</div>
@@ -638,15 +648,17 @@ function searchCountAjax() {
 			}
 			var button = "";
 			if (startPage > pageBlock) {
-				button += "<a href='javascript:changePage(\"first\")'>처음</a>";
-				button += "<a href='javascript:changePage(\"prev\")'>이전</a>";
+				button += "<a href='javascript:changePage(\"first\")'>[처음]</a>";
+				button += "<a href='javascript:changePage(\"prev\")'>[이전]</a>";
 			}
 			for (var i = startPage; i <= endPage; i++) {
-				button += "<a href='javascript:changePage("+i+")'>"+i+"</a>";
+				button += "<a href='javascript:changePage("+i+")'> ["+i+"] </a>";
 			}
+			
+			
 			if (endPage < pageCount) {
-				button += "<a href='javascript:changePage(\"next\")'>다음</a>";
-				button += "<a href='javascript:changePage(\"last\")'>마지막</a>";
+				button += "<a href='javascript:changePage(\"next\")'>[다음]</a>";
+				button += "<a href='javascript:changePage(\"last\")'>[마지막]</a>";
 			}
 			$(".page").html(button);
 		},
@@ -728,6 +740,7 @@ function searchType() {
 	});
 	searchCountAjax();
 	searchResultAjax();
+	filterModal.style.display = "none";
 }
 
 function changePage(n) {
@@ -748,14 +761,17 @@ function changePage(n) {
 	}
 	searchResultAjax();
 }
+	var header = document.getElementById("header");
 	var filterModal = document.getElementById("filterModal");
 	var filterClick = document.getElementById("filterClick");
 	var span = document.getElementsByClassName("close")[3];
 	filterClick.onclick = function() {
 		filterModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		filterModal.style.display = "none";
+		header.style.display = "block";
 		}
 
 

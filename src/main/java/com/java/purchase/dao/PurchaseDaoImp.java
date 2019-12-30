@@ -52,13 +52,8 @@ public class PurchaseDaoImp implements PurchaseDao {
 	
 	//구매내역
 	@Override
-	public List<PurchaseListDto> purchaseSelectAll(String memberCode, int startRow, int endRow) {
-		Map<String, Object> allMap = new HashMap<String, Object>();
-		allMap.put("memberCode", memberCode);
-		allMap.put("startRow", startRow);
-		allMap.put("endRow", endRow);
-		
-		return sqlsessionTemplate.selectList("dao.PurchaseMapper.purchaseList", allMap);
+	public List<PurchaseListDto> purchaseSelectAll(String memberCode) {
+		return sqlsessionTemplate.selectList("dao.PurchaseMapper.purchaseList", memberCode);
 	}
 	
 	//구매내역전체(관리자) 카운트

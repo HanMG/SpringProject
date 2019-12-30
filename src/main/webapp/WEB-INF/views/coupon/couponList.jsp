@@ -161,44 +161,18 @@ a {
 		<div class="title">
 			<span>EAT 딜</span>
 		</div>
-		<!-- 검색 했을 경우 : 템플릿 들어갈 것-->
-		<!-- <div>
-			<input type="text" name="search">
-		</div> -->
-		<div>
-			
-		</div>
 		<div class="eat">
 			<c:if test="${count == 0}">
 				<div>
 					<p>판매중인 쿠폰이 없습니다</p>
 				</div>
 			</c:if>
-	<%-- 		
-			<c:if test="${count > 0}">
-				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-				<div id="inner" class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
-					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-						<img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
-						<span>${couponDto.couponCostsale}</span>
-						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
-					</div>
-					<div>
-						<span>${couponDto.couponName}</span>
-					</div>
-					<div>
-						<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
-					</div>
-				</div>
-				</c:forEach>
-				</c:if>
-				 --%>
 				<c:if test="${count > 0}">
 					<div id="next"></div>
-				</c:if>
-			</div>
-		</div><!-- // #content -->
-	</body>
+			</c:if>
+		</div>
+	</div><!-- // #content -->
+</body>
 </html>
 
 

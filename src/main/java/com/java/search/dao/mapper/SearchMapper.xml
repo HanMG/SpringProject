@@ -93,7 +93,7 @@
 				<if test="tagType.equals('area')">
 				WHERE food_area like ('%'||#{tagValue}||'%')
 				</if>
-			ORDER BY food_read)A, image
+			ORDER BY food_read DESC)A, image
 			WHERE A.food_code = image.refer_code(+))
 		<![CDATA[
 			WHERE rnum >=1 and rnum <=10
@@ -177,10 +177,10 @@
 				</foreach>
 			</if>
 			<if test="orderType == '조회수'">
-				ORDER BY food_read
+				ORDER BY food_read DESC
 			</if>
 			<if test="orderType == '평점'">
-				ORDER BY review_score
+				ORDER BY review_score DESC
 			</if>
 			)A)
 		<![CDATA[

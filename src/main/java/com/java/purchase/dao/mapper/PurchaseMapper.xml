@@ -61,7 +61,6 @@
         SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
     	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
     	WHERE  member_code = #{memberCode} ORDER BY purchase_date DESC) A) B 
-    	WHERE B.numb >= #{startRow} AND B.numb <= #{endRow}
 		]]>
 	</select>
 	

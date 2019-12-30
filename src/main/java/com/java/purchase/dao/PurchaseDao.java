@@ -30,7 +30,7 @@ public interface PurchaseDao {
 	public int getCount(String memberCode);
 	
 	// 구매내역
-	public List<PurchaseListDto> purchaseSelectAll(String memberCode, int startRow, int endRow);
+	public List<PurchaseListDto> purchaseSelectAll(String memberCode);
 	
 	// 구매내역 카운트(관리자)
 	public int getCountAll();

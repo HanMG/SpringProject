@@ -265,6 +265,9 @@ html {
 
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
+<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <!-- body부분에도 엔터 이벤트를 추가하면 input태그 외의 공간에서도 엔터 이벤트가 발생  -->
@@ -343,22 +346,26 @@ html {
 				<span class="close">&times;</span>
 			</div>
 			<div class="join">
-				<form action="${root}/member/signInOk.go" method="post"  onsubmit="return signForm(this)">
+				<form action="${root}/member/signInOk.go" method="post"  onsubmit="return signForm(this)" name="creatForm">
 					<div>
 						<span>이메일</span>
-						<input type="text" id="mail" name="mail">
+						<input type="text" id="mail1" name="mail">
+						<span class="warnId"></span>
 					</div>
 					<div>
 						<span>닉네임</span>
-						<input type="text" name="name">
+						<input type="text" id="name1" name="name">
+						<span class="warnName"></span>
 					</div>
 					<div>
 						<span>비밀번호</span>
-						<input type="password" name="pwd">
+						<input type="password" id="pwd1" name="pwd">
+						<span class="warnPwd1"></span>
 					</div>
 					<div>
 						<span>비밀번호 확인</span>
-						<input type="password" name="pwdCheck">
+						<input type="password" id="pwd2" name="pwdCheck">
+						<span class="warnPwd2"></span>
 					</div>
 					<div>
 						<input class="button" type="submit" value="가입">
@@ -373,9 +380,106 @@ html {
 		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent; border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 	</div>
 	
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
+
+<script type="text/javascript">
+	var url = null;
+	$(function(){
+		$("#mail1").blur(function(){
+			var mail= $("#mail1").val();
+			var url= "${root}/member/mailCheck.go?mail="+mail;
+			var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if(mail=="") {
+				$(".warnId").text("필수 정보입니다.").css("color","red");
+			}else if (reg.test(mail)==false) {
+				$(".warnId").text("이메일 주소 형식에 맞지 않습니다.").css("color","red");
+			}
+			else {
+				$.ajax({
+					url:url,
+					method:"get",
+					success: function(text){
+						if(text==1){
+							$(".warnId").text("이미 사용중이거나 탈퇴한 아이디입니다.").css("color","red");
+						}else{
+							$(".warnId").text("사용 가능한 이메일 주소 입니다.").css("color","#08a600");
+						}
+						
+					},
+						
+				});
+			}
+
+		});
+	});
+	$(function(){
+		$("#name1").blur(function(){
+			var name= $("#name1").val();
+			if(name=="") {
+				$(".warnName").text("필수 정보입니다.").css("color","red");
+			}else{
+				$(".warnName").text("")
+			}
+		});
+	});
+	$(function(){
+		$("#pwd1").blur(function(){
+			var pwd1= $("#pwd1").val();
+			if(pwd1=="") {
+				$(".warnPwd1").text("비밀번호를 입력하세요.").css("color","red");
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(pwd1)){
+				$(".warnPwd1").text("숫자 영문 포함 4~10자리를 입력하세요.").css("color","red");
+			}else{
+				$(".warnPwd1").text("")
+			}
+		});
+	});
+	$(function(){
+		$("#pwd2").blur(function(){
+			var pwd1= $("#pwd1").val();
+			var pwd2= $("#pwd2").val();
+			if(pwd2=="") {
+				$(".warnPwd2").text("비밀번호 확인란을 입력하세요.").css("color","red");
+			}else if (pwd1 != pwd2) {
+				$(".warnPwd2").text("비밀번호가 같지않습니다.").css("color","red");
+			}else{
+				$(".warnPwd2").text("")
+			}
+		});
+	});
+	function signForm(obj){
+	 	   var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		    if (reg.test(obj.mail.value)==false){
+		    	obj.mail.focus();
+		    	return false;
+		    } 
+
+			if(obj.name.value == ""){
+				obj.name.focus();
+				return false;
+			}
+			if(obj.pwd.value == ""){
+				obj.pwd.focus();
+				return false;
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(obj.pwd.value)) {
+				obj.pwd.focus();
+				return false;
+			} 
+			if(obj.pwdCheck.value == ""){
+				obj.pwdCheck.focus();
+				return false;
+			}
+			if(obj.pwd.value != obj.pwdCheck.value){
+				obj.pwdCheck.focus();
+				return false;
+			}
+		}
+	function search() {
+		var param = $("#searchInput").val()
+		url = "${root}/searchKeyword.go?keyword=" + param;
+		location.href = url;
+	}
+	
+	</script>
 <script type="text/javascript">
 var url = null;
 
@@ -454,36 +558,34 @@ $("#searchInput").on("change keyup paste", function() {
 			  modal_3.style.display = "none";
 		  }
 		}
-</script>	
+</script>
 <script type='text/javascript'>
 	function signForm(obj){
-	/* 	    var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		    if (reg.test(obj.mail.value)==false){ 
-		    	alert("이메일주소 형식에 맞지 않습니다.")
+	 	   var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		    if (reg.test(obj.mail.value)==false){
 		    	obj.mail.focus();
 		    	return false;
 		    } 
 
 			if(obj.name.value == ""){
-				alert("닉네임을 입력하세요.")
 				obj.name.focus();
 				return false;
 			}
 			if(obj.pwd.value == ""){
-				alert("비밀번호를 입력하세요.")
 				obj.pwd.focus();
 				return false;
-			}
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(obj.pwd.value)) {
+				obj.pwd.focus();
+				return false;
+			} 
 			if(obj.pwdCheck.value == ""){
-				alert("비밀번호 확인란을 입력하세요.")
 				obj.pwdCheck.focus();
 				return false;
 			}
 			if(obj.pwd.value != obj.pwdCheck.value){
-				alert("비밀번호가 같지 않습니다.")
 				obj.pwdCheck.focus();
 				return false;
-			} */
+			}
 		}
 
 

@@ -177,7 +177,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 4;
+		int scrollSize = 10;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 		JejuAspect.logger.info(JejuAspect.logMsg + "startRow: " + startRow + " endRow:" + endRow);
@@ -219,12 +219,15 @@ public class CouponServiceImp implements CouponService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
-		int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		String couponCode = request.getParameter("couponCode");
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode + " pageNumber: " + pageNumber);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode);
 
 		CouponDto couponDto = couponDao.couponRead(couponCode);
-		couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n", "<br/>"));
+		String couponIntro = couponDto.getCouponIntro();
+		if(couponIntro != null) {
+			couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n", "<br/>"));
+		}
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : " + couponDto.toString());
 
 		if (couponDto.getImageName() != null) {
@@ -236,7 +239,7 @@ public class CouponServiceImp implements CouponService {
 		String path = request.getContextPath() + "\\ftp\\";
 		JejuAspect.logger.info(JejuAspect.logMsg + "path : " + path);
 
-		request.setAttribute("pageNumber", pageNumber);
+		//request.setAttribute("pageNumber", pageNumber);
 		mav.addObject("path", path);
 		mav.addObject("couponDto", couponDto);
 		mav.setViewName("coupon/couponDetail.tiles");
@@ -249,11 +252,11 @@ public class CouponServiceImp implements CouponService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
 		String couponCode = request.getParameter("couponCode");
-		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		// int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode);
 
 		CouponDto couponDto = couponDao.couponRead(couponCode);
-		//request.setAttribute("pageNumber", pageNumber);
+		// request.setAttribute("pageNumber", pageNumber);
 
 		String couponStatus = couponDto.getCouponStatus();
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponStatus : " + couponStatus);

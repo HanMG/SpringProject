@@ -5,27 +5,20 @@ public class AdminFoodDto {
 	private int	korFood;	//한식
 	private int chnFood;	//중국식
 	private int jpFood;		//일식
-	private int wtFood;		//경양식
-	private int bbq;		//고기집 
+	private int wtFood;		//양식	
 	private int cafe;		//카페
-	private int fishFood;	//회집
-	private int buffet;		//뷔페
 	private int etc;		//기타	
 	
 	public AdminFoodDto() {}
 
-	public AdminFoodDto(int totalFoodCnt, int korFood, int chnFood, int jpFood, int wtFood, int bbq, int cafe,
-			int fishFood, int buffet, int etc) {
+	public AdminFoodDto(int totalFoodCnt, int korFood, int chnFood, int jpFood, int wtFood, int cafe, int etc) {
 		super();
 		this.totalFoodCnt = totalFoodCnt;
 		this.korFood = korFood;
 		this.chnFood = chnFood;
 		this.jpFood = jpFood;
 		this.wtFood = wtFood;
-		this.bbq = bbq;
 		this.cafe = cafe;
-		this.fishFood = fishFood;
-		this.buffet = buffet;
 		this.etc = etc;
 	}
 
@@ -69,36 +62,12 @@ public class AdminFoodDto {
 		this.wtFood = wtFood;
 	}
 
-	public int getBbq() {
-		return bbq;
-	}
-
-	public void setBbq(int bbq) {
-		this.bbq = bbq;
-	}
-
 	public int getCafe() {
 		return cafe;
 	}
 
 	public void setCafe(int cafe) {
 		this.cafe = cafe;
-	}
-
-	public int getFishFood() {
-		return fishFood;
-	}
-
-	public void setFishFood(int fishFood) {
-		this.fishFood = fishFood;
-	}
-
-	public int getBuffet() {
-		return buffet;
-	}
-
-	public void setBuffet(int buffet) {
-		this.buffet = buffet;
 	}
 
 	public int getEtc() {
@@ -112,7 +81,6 @@ public class AdminFoodDto {
 	@Override
 	public String toString() {
 		return "AdminFoodDto [totalFoodCnt=" + totalFoodCnt + ", korFood=" + korFood + ", chnFood=" + chnFood
-				+ ", jpFood=" + jpFood + ", wtFood=" + wtFood + ", bbq=" + bbq + ", cafe=" + cafe + ", fishFood="
-				+ fishFood + ", buffet=" + buffet + ", etc=" + etc + "]";
+				+ ", jpFood=" + jpFood + ", wtFood=" + wtFood + ", cafe=" + cafe + ", etc=" + etc + "]";
 	}	
 }

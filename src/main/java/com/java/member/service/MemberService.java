@@ -30,5 +30,6 @@ public interface MemberService {
 
 	public void adminUpdateOk(ModelAndView mav);
 
+	public void mailCheck(ModelAndView mav);
 
 }

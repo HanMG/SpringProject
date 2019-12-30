@@ -20,7 +20,7 @@ public interface MemberDao {
 	public int insertKakao(String nickname, String mail);
 	
 	public int insertNaver(Map<String, Object> map);
-
+	
 	public int emailCheck(String memberCode);
 
 	public int memberUpdateOk(MemberDto memberDto);

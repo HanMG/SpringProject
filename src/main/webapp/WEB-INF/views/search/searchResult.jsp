@@ -192,7 +192,6 @@ a {
 	
 }
 </style>
-<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
 <body>
@@ -204,15 +203,17 @@ a {
 			<a href="#">필터</a>
 		</div>
 		
-		<!-- 검색 결과가 없는 경우  -->
-		<c:if test="${foodCount == 0}">
-			<div>
-				<p>검색된 음식점이 없습니다.</p>
-			</div>
-		</c:if>
+
 		
 		<!-- 검색된 음식점 리스트 불러오기  -->
-		<div style="height: 1600px;">
+		<div class="result" style="height: 1600px;">
+<%-- 			<!-- 검색 결과가 없는 경우  -->
+			<c:if test="${foodCount == 0}">
+				<div>
+					<p>검색된 음식점이 없습니다.</p>
+				</div>
+			</c:if>	
+			
 			<c:if test="${foodCount > 0}">
 			<c:forEach var = "searchFoodDto" items="${foodList}">
 			<div class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${searchFoodDto.foodCode}'">
@@ -221,9 +222,10 @@ a {
 				</div>
 				<div>
 					<span class="foodName">${searchFoodDto.foodName}</span>
-				<c:if test="${searchFoodDto.reviewScore > 0}">
-				<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
-				</c:if>				</div>
+					<c:if test="${searchFoodDto.reviewScore > 0}">
+					<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
+					</c:if>				
+				</div>
 				<div>
 					<span class="foodArea">${searchFoodDto.foodArea} - </span>  
 					<span class="foodKind">${searchFoodDto.foodKind}</span>
@@ -234,36 +236,9 @@ a {
 				</div>
 			</div>
 			</c:forEach>
-			</c:if>
+			</c:if> --%>
 		</div>
 		<div class="page">
-			<c:if test="${foodCount > 0}">
-				<c:set var = "pageBlock" value = "5" />
-				<fmt:parseNumber var = "pageCount" value = "${foodCount / boardSize + (foodCount%boardSize==0 ? 0 : 1 ) }" integerOnly="true"/>
-				<fmt:parseNumber var="result" value="${(currentPage -1)/pageBlock}" integerOnly="true"/>
-				<c:set var="startPage" value="${result*pageBlock+1}"/>
-				<c:set var="endPage" value="${startPage+pageBlock-1}"/>
-				
-				<c:if test="${endPage > pageCount }">
-					<c:set var="endPage" value="${pageCount}"/>
-				</c:if>
-				
-				<%-- 처음, 이전 --%>
-				<c:if test="${startPage > pageBlock}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=1">[처음]</a>
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${startPage-pageBlock}">[이전]</a>
-				</c:if>
-				
-				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${i}">[${i}]</a>
-				</c:forEach>
-				
-				<%-- 다음, 끝 --%>
-				<c:if test="${endPage < pageCount}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${startPage+pageBlock}">[다음]</a>
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${pageCount}">[끝]</a>
-				</c:if>
-			</c:if>
 		</div>
 	</div>
 		
@@ -437,19 +412,6 @@ a {
 				</div>
 				</c:forEach>
 		</c:if>
-		
-		<%-- 	
-		<c:if test="${couponCount > 0}">
-			<c:forEach var = "couponDto" items="${couponList}">
-			<div class="abc">
-				<span>${couponDto.couponName}</span>
-				<span>${couponDto.foodName}</span>
-				<span>${couponDto.foodMenu}</span>
-			</div>
-			</c:forEach>
-		</c:if>
-		 --%>
-		
 	</div>
 </div>
 		<div>
@@ -475,22 +437,148 @@ a {
 	</div>
 		
 </body>
-<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-var orderType = "";
+var root = "${root}";
+var keyword = "${keyword}";
 
-var areaType = [];
-var kindType = [];
+/* 필터 관련 */
+var orderType = "";
+var areaType = "";
+var kindType = "";
+
+/* 검색 결과 출력 관련 */
+var boardSize = 10;		// 한페이지당 출력 수
+var pageBlock = 5;		// 구간당 페이지 표기 수
+var currentPage = 1;	// 현재 페이지
+var resultCount = 0;	// 검색 결과 수
+var pageCount = 0;
+
+function searchCountAjax() {
+// 	alert(orderType + areaType + kindType);
+	$.ajax({
+		type : "POST",
+		url : root + "/searchCountAjax.do",
+		data : { keyword : keyword, areaType : areaType, kindType : kindType},
+		success : function (data) {
+			resultCount = data;
+			pageCount = Math.ceil(resultCount/boardSize);				/* 결과 페이지 수 */
+			var currentBlock = Math.floor((currentPage-1)/pageBlock);		/* 현재 블락 */
+			var startPage = currentBlock * pageBlock + 1;
+			var endPage = startPage + pageBlock -1;
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+			var button = "";
+			if (startPage > pageBlock) {
+				button += "<a href='javascript:changePage(\"first\")'>처음</a>";
+				button += "<a href='javascript:changePage(\"prev\")'>이전</a>";
+			}
+			for (var i = startPage; i <= endPage; i++) {
+				button += "<a href='javascript:changePage("+i+")'>"+i+"</a>";
+			}
+			if (endPage < pageCount) {
+				button += "<a href='javascript:changePage(\"next\")'>다음</a>";
+				button += "<a href='javascript:changePage(\"last\")'>마지막</a>";
+			}
+			$(".page").html(button);
+		},
+		error: function (request, status, error) {
+			var str = 'code: '+request.status+'\n';
+			str += 'message: ' + request.responseText+'\n';
+			str += 'error: ' + error;
+			alert(str);
+		}
+	});
+}
+
+function searchResultAjax() {
+	var arr = new Array();
+	$.ajax({
+		type : "POST",
+		url : root + "/searchResultAjax.do",
+		data : { keyword : keyword, currentPage : currentPage, orderType : orderType, areaType : areaType, kindType : kindType},
+		success : function (data) {
+			var cont = "";
+			if (resultCount > 0) {
+				for (var i = 0; i < data.length; i++) {
+					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode);
+					mark(arr);
+					//alert(arr);
+					var url = root + "/food/read.go?foodCode=" + data[i].foodCode;
+					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
+						cont += "<div>";
+							var err = root + "/resources/css/list.jpg";
+							cont += "<img alt='음식 이미지' src='"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodName'>"+data[i].foodName+"</span>";
+							if (data[i].reviewScore > 0) {
+							cont += "<span class='reviewScore'>"+data[i].reviewScore+"</span>";
+							}
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodArea'>"+data[i].foodArea+" - </span>";
+							cont += "<span class='foodKind'>"+data[i].foodKind+"</span>";
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodRead'>"+data[i].foodRead+"</span>";
+							if (data[i].reviewCount != null) {
+							cont += "<span class='reviewCount'>"+data[i].reviewCount+"</span>";
+							}
+						cont += "</div>";
+					cont += "</div>"
+				}
+			} else if (resultCount == 0) {
+				cont += "<div><p>검색된 음식점이 없습니다.</p></div>";
+			}
+			$(".result").html(cont);	
+			},
+		error: function (request, status, error) {
+			var str = 'code: '+request.status+'\n';
+			str += 'message: ' + request.responseText+'\n';
+			str += 'error: ' + error;
+			alert(str);
+		}
+	});
+}
+
+$(function() {
+	searchCountAjax();
+	searchResultAjax();
+});
 
 function searchType() {
+	areaType = "";
+	kindType = "";
+	currentPage=1;
 	orderType = $('input[name="orderType"]:checked').val();
 	$('input[name="areaType"]:checked').each(function() {
-		areaType.push($(this).val());
+		areaType += $(this).val() + ",";
 	});
 	$('input[name="kindType"]:checked').each(function() {
-		kindType.push($(this).val());
+		kindType += $(this).val() + ",";
 	});
-	alert(orderType + "/" + areaType + "/" + kindType);
+	searchCountAjax();
+	searchResultAjax();
+}
+
+function changePage(n) {
+	if (n == "next") {
+		currentPage = Math.ceil(currentPage/pageBlock)*pageBlock+1;
+		searchCountAjax();
+	} else if (n == "prev") {
+		currentPage = (Math.floor(currentPage/pageBlock)-1)*pageBlock+1;
+		searchCountAjax();
+	} else if (n == "first") {
+		currentPage = 1;
+		searchCountAjax();
+	} else if (n == "last") {
+		currentPage = pageCount;
+		searchCountAjax();
+	} else {
+		currentPage = n;
+	}
+	searchResultAjax();
 }
 
 </script>

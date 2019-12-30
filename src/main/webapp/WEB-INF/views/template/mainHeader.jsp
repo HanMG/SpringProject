@@ -206,7 +206,7 @@ html {
 
 
 </style>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -318,30 +318,43 @@ html {
 		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent" placeholder="검색어를 입력하여 주세요" autofocus />
 	</div>
 	
-	
+<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
 <script type="text/javascript">
-	var url = null;
-	
-	function search() {
-		var param = $("#searchInput").val()
-		url = "${root}/searchKeyword.go?keyword=" + param;
-		location.href = url;
+var url = null;
+
+function search() {
+	var param = $("#searchInput").val()
+	url = "${root}/searchKeyword.go?keyword=" + param;
+	location.href = url;
+}
+
+$("#searchButton").click(function() {
+	search();
+});
+
+$("#searchInput").keypress(function(event) {
+	if (event.which == 13) {
+		search();
 	}
-	
-	$("#searchInput").keypress(function(event) {
-		if (event.which == 13) {
-			search();
-		}
-	})
-	
-	$(document).ready(function() {
-		$("#searchInput").on("change", function() {
-			getKeywordList($("#testInput").val());
-			
-			$('#testInput').autocomplete({
+});
+
+$("#searchInput").on("change keyup paste", function() {
+	var keywordList = [];
+	$.ajax({
+		type : "POST",
+		url : "${root}/searchAutoAjax.do",
+		data : {"keyword" : $("#searchInput").val()},
+		dataType:"json",
+		success : function(data){
+			$('#searchInput').autocomplete({
+			    source: data
 			});
-		});
-	});
+		}
+	}); 
+});
+
 	
 
 	/* 메인화면 로그인 클릭시 작동 */

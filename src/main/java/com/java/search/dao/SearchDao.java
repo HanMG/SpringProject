@@ -21,4 +21,9 @@ public interface SearchDao {
 	
 	List<SearchFoodDto> keywordList(String keyword);
 
+	int searchCount(String keyword, String[] areaArr, String[] kindArr);
+
+	List<SearchFoodDto> searchResult(String keyword, String orderType, String[] areaArr, String[] kindArr, int startRow,
+			int endRow);
+
 }

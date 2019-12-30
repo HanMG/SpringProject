@@ -507,7 +507,7 @@ a {
 			
 								<div onclick="myReview('${foodReviewDto.reviewCode}')">
 									<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
-									<a href="#" class="reviewInfoClick" >
+									<a href="javascript:void(0)" class="reviewInfoClick" >
 										<div class="reviewCont">
 											<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span>
 											<span>${foodReviewDto.reviewCont}</span>
@@ -642,29 +642,57 @@ a {
 	</div>
 </body>
 
+<!-- 리뷰 상세보기 모달, 내용 가져오는 ajax -->
+<script>
+//본인 리뷰 내용 & 리뷰 내용 
+function myReview(reviewCode) {
+	var url = "${root}/review/read.go?reviewCode=" + reviewCode;
+	$("#reViewInfoModal").css("display","block");
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success : function(data){
+			var json=data;
+			$("#reviewCont").text(json.reviewCont);
+			$("#reviewScore").text(json.reviewScore);
+			//alert(json.reviewCont);
+			//alert(json.reviewScore);
+			/* for(var i=0; json.imgList.length;i++){
+				alert(json.imgList[i].imagePath);
+			} */
+		}
+	});
+}
+
+// 리뷰 상세 모달 끄기 
+$(".close_reViewInfo").click(function(){
+	$("#reViewInfoModal").css("display","none");
+});
+</script>
+
+<!-- 리뷰 리스트 불러오는 자바 스크립트 ajax -->
+<script>
+// 리뷰 리스트  ajax로 불러오기 (XHR.js 이용) 
+function reviewList(root, selScore) {
+	let url = root + "/food/foodReviewList.go";
+	let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
+	sendRequest("GET", url, fromServer, params);
+}	
+// reivew/list.jsp를 거쳐 값을 #reviewDisplay에 뿌려줌 
+function fromServer() {
+	if (xhr.readyState == 4 && xhr.status == 200) {
+		let reviewDisplay = document.getElementById("review");
+		reviewDisplay.innerHTML = xhr.responseText;
+	}
+}
+</script>
 
 	<script type="text/javascript">
 	
 	// 본인 리뷰 내용
 	
-	function myReview(reviewCode) {
-		var url = "${root}/review/read.go?reviewCode=" + reviewCode;
-		$.ajax({
-			url : url,
-			type : "GET",
-			dataType : "json",
-			success : function(data){
-				var json=data;
-				$("#reviewCont").text(json.reviewCont);
-				$("#reviewScore").text(json.reviewScore);
-				//alert(json.reviewCont);
-				//alert(json.reviewScore);
-				/* for(var i=0; json.imgList.length;i++){
-					alert(json.imgList[i].imagePath);
-				} */
-			}
-		});
-	}
+
 	/* 파일 버튼 */
 	$(document).on("change", ".file-input", function(){
 	 
@@ -686,12 +714,7 @@ a {
 		}
 	close_reView.onclick = function() {
 		reViewInModal.style.display = "none";
-		}
-	
-	/*  리뷰내용 클릭시 작동 */
-	var reViewInfoModal = $("#reViewInfoModal");
-	var close_reViewInfo = $(".close_reViewInfo");
-	
+		}	
 	
 	// 지도 관련 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -822,19 +845,7 @@ function favorSwitch(aa) {
 }
 	
 
-	// 리뷰 리스트  ajax로 불러오기 (XHR.js 이용) 
-	function reviewList(root, selScore) {
-		let url = root + "/food/foodReviewList.go";
-		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
-		sendRequest("GET", url, fromServer, params);
-	}	
-	// reivew/list.jsp를 거쳐 값을 #reviewDisplay에 뿌려줌 
-	function fromServer() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let reviewDisplay = document.getElementById("review");
-			reviewDisplay.innerHTML = xhr.responseText;
-		}
-	}
+
 }
 </script>
 </html>

@@ -31,7 +31,7 @@
 
 					<div onclick="myReview('${foodReviewDto.reviewCode}')">
 						<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
-						<a href="#" class="reviewInfoClick">
+						<a href="javascript:void(0)" class="reviewInfoClick">
 							<div class="reviewCont">
 								<span><fmt:formatDate value="${foodReviewDto.reviewDate}"
 										pattern="yyyy-MM-dd" /></span> <span>${foodReviewDto.reviewCont}</span>

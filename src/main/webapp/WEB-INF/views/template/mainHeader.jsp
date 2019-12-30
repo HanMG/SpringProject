@@ -265,6 +265,9 @@ html {
 
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
+<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <!-- body부분에도 엔터 이벤트를 추가하면 input태그 외의 공간에서도 엔터 이벤트가 발생  -->
@@ -377,7 +380,6 @@ html {
 		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent; border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 	</div>
 	
-<<<<<<< HEAD
 
 <script type="text/javascript">
 	var url = null;
@@ -389,7 +391,7 @@ html {
 			if(mail=="") {
 				$(".warnId").text("필수 정보입니다.").css("color","red");
 			}else if (reg.test(mail)==false) {
-				$(".warnId").text("이메일 주소 형식에 맞지 않습니다..").css("color","red");
+				$(".warnId").text("이메일 주소 형식에 맞지 않습니다.").css("color","red");
 			}
 			else {
 				$.ajax({
@@ -444,15 +446,40 @@ html {
 			}
 		});
 	});
-	
+	function signForm(obj){
+	 	   var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		    if (reg.test(obj.mail.value)==false){
+		    	obj.mail.focus();
+		    	return false;
+		    } 
+
+			if(obj.name.value == ""){
+				obj.name.focus();
+				return false;
+			}
+			if(obj.pwd.value == ""){
+				obj.pwd.focus();
+				return false;
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(obj.pwd.value)) {
+				obj.pwd.focus();
+				return false;
+			} 
+			if(obj.pwdCheck.value == ""){
+				obj.pwdCheck.focus();
+				return false;
+			}
+			if(obj.pwd.value != obj.pwdCheck.value){
+				obj.pwdCheck.focus();
+				return false;
+			}
+		}
 	function search() {
 		var param = $("#searchInput").val()
 		url = "${root}/searchKeyword.go?keyword=" + param;
 		location.href = url;
-=======
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
+	}
+	
+	</script>
 <script type="text/javascript">
 var url = null;
 
@@ -469,7 +496,6 @@ $("#searchButton").click(function() {
 $("#searchInput").keypress(function(event) {
 	if (event.which == 13) {
 		search();
->>>>>>> cce213f50753ff958610d891cb31549112cd3c88
 	}
 });
 
@@ -561,15 +587,6 @@ $("#searchInput").on("change keyup paste", function() {
 				return false;
 			}
 		}
-	function mailCheck(target, root){
-/* 		if (!target.mail.value) {
-			alert("이메일을 입력해주세요.");
-			target.mail.focus();
-			return false;
-		}
-		var url = root + "/member/mailCheck.go?mail="+target.mail.value;
-		open(url, "", "width=300px, height=200px, scrollbars=no"); */
-	}
 
 
     // 사용할 앱의 JavaScript 키를 설정해 주세요.

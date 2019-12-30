@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>      
 <!DOCTYPE html>
 <html>
@@ -143,31 +144,18 @@
 						<th>회원상태</th>
 					</tr>				
 				</thead>
-<<<<<<< HEAD
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
 	                     <th>${memberList.memberCode}</th>
 	                     <th>${memberList.memberMail}</th>
 	                     <th>${memberList.memberName}</th>
-	                     <th>${memberList.memberDate}</th>
+	                     <th><fmt:formatDate value="${memberList.memberDate}" pattern="YYYY년 MM월 dd일 HH:mm" /></th>
 	                     <th>${memberList.memberPhone}</th>
 	                     <th>${memberList.memberStatus}</th>
 	                  </tr>
                		</c:forEach>
-=======
-				<tbody>
-				<c:forEach var="memberList" items="${memberList}">
-					<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
-						<th>${memberList.memberCode}</th>
-						<th>${memberList.memberMail}</th>
-						<th>${memberList.memberName}</th>
-						<th>${memberList.memberDate}</th>
-						<th>${memberList.memberPhone}</th>
-						<th>${memberList.memberStatus}</th>
-					</tr>
-				</c:forEach>
->>>>>>> cce213f50753ff958610d891cb31549112cd3c88
+               		
 				</tbody>
 			</table>
 		</div>	

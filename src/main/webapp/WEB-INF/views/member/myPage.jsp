@@ -466,7 +466,7 @@ display:none;
 				<div class="eat_scroll">
 				<c:forEach var="couponList" items="${couponList}">
 					<div class="eat" >
-						<div class="info_1" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponList.foodCode}'">
+						<div class="info_1" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?purchaseCode=${couponList.purchaseCode}'">
 							<img alt="쿠폰" src="${couponList.imagePath}" onerror="this.src='${root}/resources/css/list.jpg'">
 						</div>
 						<div class="info_2">

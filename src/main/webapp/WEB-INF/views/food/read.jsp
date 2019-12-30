@@ -15,95 +15,6 @@
 <title>음식점상세페이지</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
 <script src="${root}/resources/javascript/review/review.js"></script>
-<script>
-	$(function(){
-
-		var reviewInfoClick = $(".reviewInfoClick");
-		for (var i = 0; i < reviewInfoClick.length; i++) {
-			reviewInfoClick[i].onclick = function() {
-				reViewInfoModal.css("display","block");
-			}
-		}
-		close_reViewInfo[0].onclick = function() {
-			reViewInfoModal.css("display","none");
-		}
-	});
-
-</script>
-<script>
-	function favorite(x) {
-		if (x.className === "fa fa-heart-o") {
-			x.className = "fa fa-heart";
-var root = "${root}";
-var memberCode = "${memberCode}";
-var foodCode = "${foodDto.foodCode}";
-var favorStatus = "";
-
-$(function() {
-	if (memberCode != "") {
-		favorCheck();
-	} 
-})
-
-function favorCheck() {
-	$.ajax({
-		type : "POST",
-		url : root + "/favorite/check.do",
-		data : { "memberCode" : memberCode, "foodCode" : foodCode},
-		success : function(data) {
-			favorStatus = data;
-			if (favorStatus === "on") {
-				$("#favorite").attr('class', 'fa fa-heart');
-			} else if (favorStatus === "off") {
-				$("#favorite").attr('class', 'fa fa-heart-o');
-			}
-		}, error: function (request, status, error) {
-			alert("error");
-		}
-	});
-}
-
-function favorSwitch() {
-	if (memberCode == "") {
-		// 로그인
-		alert("로그인하세요");
-	} else if (memberCode != "") {
-		if (x.className == "fa fa-heart") {
-			favorStatus = "on";
-		} else {
-			favorStatus = "off";
-		}
-		$.ajax({
-			type : "POST",
-			url : root + "/favorite/switch.do",
-			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
-			success : function(data) {
-				favorStatus = data;
-				if (favorStatus === "on") {
-					$("#favorite").attr('class', 'fa fa-heart');
-				} else if (favorStatus === "off") {
-					$("#favorite").attr('class', 'fa fa-heart-o');
-				}
-			}, error: function (request, status, error) {
-				alert("error");
-			}
-		});
-	}
-}
-	
-	
-	function reviewList(root, selScore) {
-		let url = root + "/food/foodReviewList.go";
-		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
-		sendRequest("GET", url, fromServer, params);
-	}	
-	function fromServer() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let reviewDisplay = document.getElementById("review");
-			reviewDisplay.innerHTML = xhr.responseText;
-		}
-	}
-</script>
 <style type="text/css">
 a {
 	color: #030305;
@@ -923,6 +834,7 @@ function favorSwitch(aa) {
 			let reviewDisplay = document.getElementById("review");
 			reviewDisplay.innerHTML = xhr.responseText;
 		}
-	}		
+	}
+}
 </script>
 </html>

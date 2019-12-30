@@ -187,7 +187,6 @@ a {
   cursor: pointer;
 }
 </style>
-<%-- <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script> --%>
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/radioButton.css" />
@@ -347,6 +346,8 @@ a {
 	
 
 </body>
+<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+
 <script type="text/javascript">
 var url = null;
 
@@ -358,7 +359,7 @@ function search() {
 
 $("#searchButton").click(function() {
 	search();
-})
+});
 
 $("#searchInput").keypress(function(event) {
 	if (event.which == 13) {

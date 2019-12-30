@@ -10,4 +10,8 @@ public interface SearchService {
 
 	String keywordAuto(ModelAndView mav);
 
+	int searchCount(ModelAndView mav);
+
+	String searchResult(ModelAndView mav);
+
 }

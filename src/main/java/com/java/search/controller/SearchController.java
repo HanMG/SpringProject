@@ -32,12 +32,6 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 
-	// 검색창 호출
-	@RequestMapping(value = "/search.go", method = RequestMethod.GET)
-	public String search(HttpServletRequest request, HttpServletResponse response) {
-		return "search/search.tiles";
-	}
-	
 	// 음식점 리스트
 	@RequestMapping(value="/food/list.go", method = RequestMethod.GET)
 	public String foodList(HttpServletRequest request, HttpServletResponse response) {
@@ -82,6 +76,55 @@ public class SearchController {
 		
 		searchService.searchKeyword(mav);
 		return mav;
+	}
+	
+	// 검색 결과 카운트 AJAX
+	@RequestMapping(value = "/searchCountAjax.do")
+	@ResponseBody
+	public String searchCount(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("keyword", request.getParameter("keyword"));
+		mav.addObject("areaType", request.getParameter("areaType"));
+		mav.addObject("kindType", request.getParameter("kindType"));
+		
+		return Integer.toString(searchService.searchCount(mav));
+	}
+	
+	// 검색 결과 리스트 AJAX
+	@RequestMapping(value = "/searchResultAjax.do")
+	@ResponseBody
+	public void searchResult(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String keyword = request.getParameter("keyword");
+		String currentPage = request.getParameter("currentPage");
+		String orderType = request.getParameter("orderType");
+		String areaType = request.getParameter("areaType");
+		String kindType = request.getParameter("kindType");
+		JejuAspect.logger.info(JejuAspect.logMsg + keyword + "/" + currentPage + "/" + orderType + "/" + areaType + "/" + kindType);
+
+		mav.addObject("keyword", keyword);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("orderType", orderType);
+		mav.addObject("areaType", areaType);
+		mav.addObject("kindType", kindType);
+		
+		String jsonText = searchService.searchResult(mav);
+		
+		if (jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			try {
+				PrintWriter out;
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
 	}
 	
 	// 키워드 자동완성 AJAX

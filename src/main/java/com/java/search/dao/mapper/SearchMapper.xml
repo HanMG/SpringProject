@@ -117,5 +117,75 @@
 			WHERE rn >= 1 AND rn <= 5
 		]]>
 	</select>
+	
+	<select id="searchCount" parameterType="java.util.Map" resultType="int">
+	SELECT count(*) FROM food WHERE food_code IN(
+		(SELECT distinct food_code from (
+		SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
+		union all
+		SELECT food_code from food where food_menu like ('%'||#{keyword}||'%')
+		union all
+		SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
+		union all
+		SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
+		)))
+		<if test="areaArr[0] != ''">
+			AND food_area IN
+			<foreach collection="areaArr" item="area" index="index" open="(" close=")" separator=",">
+				#{area}
+			</foreach>
+		</if>
+		<if test="kindArr[0] != ''">
+			AND food_kind IN
+			<foreach collection="kindArr" item="kind" index="index" open="(" close=")" separator=",">
+				#{kind}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="searchResult" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
+			SELECT * FROM 
+			(SELECT ROWNUM rnum, A.* FROM
+			(SELECT * FROM 
+			(SELECT * FROM food WHERE food_code in(
+			(SELECT distinct food_code from (
+			SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
+			union all
+			SELECT food_code from food where food_menu like ('%'||#{keyword}||'%')
+			union all
+			SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
+			union all
+			SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
+			)))
+			order by case 
+			when food_name like ('%'||#{keyword}||'%') then 0
+			when food_menu like ('%'||#{keyword}||'%') then 1
+			when food_kind like ('%'||#{keyword}||'%') then 2
+			else 3 end asc) fo, image, (SELECT food_code review_food, AVG(review_score) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
+			WHERE fo.food_code = image.refer_code(+)
+			AND fo.food_code = rv.review_food(+)
+			<if test="areaArr[0] != ''">
+				AND food_area IN
+				<foreach collection="areaArr" item="area" index="index" open="(" close=")" separator=",">
+					#{area}
+				</foreach>
+			</if>
+			<if test="kindArr[0] != ''">
+				AND food_kind IN
+				<foreach collection="kindArr" item="kind" index="index" open="(" close=")" separator=",">
+					#{kind}
+				</foreach>
+			</if>
+			<if test="orderType == '조회수'">
+				ORDER BY food_read
+			</if>
+			<if test="orderType == '평점'">
+				ORDER BY review_score
+			</if>
+			)A)
+		<![CDATA[
+			WHERE rnum >=#{startRow} and rnum <=#{endRow}
+		]]>
+	</select>
 
 </mapper>

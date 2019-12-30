@@ -136,9 +136,8 @@
 			</foreach>
 		</if>
 		<if test="kindArr[0] != ''">
-			AND food_kind IN
-			<foreach collection="kindArr" item="kind" index="index" open="(" close=")" separator=",">
-				#{kind}
+			<foreach collection="kindArr" item="kind" index="index" open=" and (" close=")" separator=" or">
+				food_kind LIKE (#{kind}||'%')
 			</foreach>
 		</if>
 	</select>
@@ -146,7 +145,7 @@
 	<select id="searchResult" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
 			SELECT * FROM 
 			(SELECT ROWNUM rnum, A.* FROM
-			(SELECT food_code, food_name, food_addr, food_area, food_phone, food_kind, food_menu, image_name, image_path, review_food, nvl(review_score,0) review_score, nvl(review_count,0) review_count FROM 
+			(SELECT food_code, food_name, food_addr, food_area, food_phone, food_kind, food_read, food_menu, image_name, image_path, review_food, nvl(review_score,0) review_score, nvl(review_count,0) review_count FROM 
 			(SELECT * FROM food WHERE food_code in(
 			(SELECT distinct food_code from (
 			SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
@@ -171,9 +170,8 @@
 				</foreach>
 			</if>
 			<if test="kindArr[0] != ''">
-				AND food_kind IN
-				<foreach collection="kindArr" item="kind" index="index" open="(" close=")" separator=",">
-					('%'||#{kind}||'%')
+				<foreach collection="kindArr" item="kind" index="index" open=" and (" close=")" separator=" or">
+					food_kind LIKE (#{kind}||'%')
 				</foreach>
 			</if>
 			)A

@@ -133,7 +133,6 @@ public class SearchServiceImp implements SearchService {
 		String keyword = (String) map.get("keyword");
 		String areaType = (String) map.get("areaType");
 		String kindType = (String) map.get("kindType");
-		JejuAspect.logger.info(JejuAspect.logMsg + keyword + "/" + areaType + "/" + kindType);
 		
 		String[] areaArr = null;
 		String[] kindArr = null;
@@ -143,7 +142,7 @@ public class SearchServiceImp implements SearchService {
 		if (kindType != null) {
 			kindArr = kindType.split(",");
 		}
-//		JejuAspect.logger.info(JejuAspect.logMsg + areaArr.length + "/" + areaArr[0].toString());
+		JejuAspect.logger.info(JejuAspect.logMsg + "arrLength : " + kindArr.length);
 		int searchCount = searchDao.searchCount(keyword, areaArr, kindArr);
 		
 		return searchCount;
@@ -182,7 +181,7 @@ public class SearchServiceImp implements SearchService {
 			searchResultList = searchDao.searchResult(keyword, orderType, areaArr, kindArr, startRow, endRow);
 		}
 		
-		JejuAspect.logger.info(JejuAspect.logMsg + searchResultList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + searchCount + " / " + searchResultList.size());
 
 		JSONArray arr = new JSONArray();
 		for(SearchFoodDto sFoodDto : searchResultList) {
@@ -199,7 +198,7 @@ public class SearchServiceImp implements SearchService {
 			jMap.put("imageName", sFoodDto.getImageName());
 			jMap.put("imagePath", sFoodDto.getImagePath());
 			arr.add(jMap);
-			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
+//			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
 		}
 		String jsonText = JSONValue.toJSONString(arr);
 		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);

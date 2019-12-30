@@ -508,7 +508,19 @@ $("#searchInput").on("change keyup paste", function() {
 		dataType:"json",
 		success : function(data){
 			$('#searchInput').autocomplete({
-			    source: data
+			    source: data,
+			    focus: function(eventCheck, ui) {
+					eventCheck.preventDefault();
+					console.log(ui.item.label);
+					
+					$("#searchInput").keydown(function(key) {
+						
+						if(key.which == 13) {
+							$("#searchInput").val(ui.item.label);
+							search();
+						}
+					});
+				}
 			});
 		}
 	}); 

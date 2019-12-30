@@ -468,7 +468,7 @@ a {
 		</c:forEach>
 		
 		<c:if test="${couponCount > 0}">
-				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
+				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
 				<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
 						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
@@ -485,29 +485,6 @@ a {
 		</c:if>
 	</div>
 </div>
-<!-- 
-		<div>
-			<h4>필터</h4>
-			<p>조회 기준</p>
-				<input type="radio" name="orderType" class="orderType" value="조회수">인기순
-				<input type="radio" name="orderType" class="orderType" value="평점">평점순
-			<p>음식점 지역</p>
-				<input type="checkbox" name="areaType" class="areaType" value="제주시">제주시
-				<input type="checkbox" name="areaType" class="areaType" value="서귀포시">서귀포시
-			<p>음식 종류</p>
-				<input type="checkbox" name="kindType" class="kindType" value="한식">한식
-				<input type="checkbox" name="kindType" class="kindType" value="회집">회집
-				<input type="checkbox" name="kindType" class="kindType" value="일식">일식
-				<input type="checkbox" name="kindType" class="kindType" value="중식">중식
-				<input type="checkbox" name="kindType" class="kindType" value="양식">양식
-				<input type="checkbox" name="kindType" class="kindType" value="까페">까페
-			<input type="button" value="적용" onclick="searchType()" />
-		</div>
-
-		<div align="center">
-		
-	</div>
-		 -->
 		 
 	<div id="filterModal" class="filterModal">
 		<div id="contentFilter">
@@ -542,13 +519,13 @@ a {
 					<div class="container_1">
 						<div class="radio-tile-group">
 							<div class="input-container">
-								<input id="areaType1" class="radio-button" type="radio" name="areaType" value="제주시"/>
+								<input id="areaType1" class="radio-button" type="checkbox" name="areaType" value="제주시"/>
 								<div class="radio-tile">
 								<label for="areaType1" class="radio-tile-label" style="font-size: 15px;">제주시</label>
 								</div>
 							</div>
 							<div class="input-container">
-								<input id="areaType2" class="radio-button" type="radio" name="areaType" value="서귀포시" />
+								<input id="areaType2" class="radio-button" type="checkbox" name="areaType" value="서귀포시" />
 								<div class="radio-tile">
 								<label for="areaType2" class="radio-tile-label" style="font-size: 15px;">서귀포시</label>
 								</div>
@@ -605,15 +582,7 @@ a {
 		   	</div>
 	   	</div>
 	</div>
-    
 		 
-		 
-<!--        <input type="checkbox" name="kindType" class="kindType" value="한식">한식
-            <input type="checkbox" name="kindType" class="kindType" value="회집">회집
-            <input type="checkbox" name="kindType" class="kindType" value="일식">일식
-            <input type="checkbox" name="kindType" class="kindType" value="중식">중식
-            <input type="checkbox" name="kindType" class="kindType" value="양식">양식
-            <input type="checkbox" name="kindType" class="kindType" value="까페">까페 -->
 </body>
 <script type="text/javascript">
 var root = "${root}";
@@ -626,7 +595,7 @@ var kindType = "";
 
 /* 검색 결과 출력 관련 */
 var boardSize = 10;		// 한페이지당 출력 수
-var pageBlock = 5;		// 구간당 페이지 표기 수
+var pageBlock = 10;		// 구간당 페이지 표기 수
 var currentPage = 1;	// 현재 페이지
 var resultCount = 0;	// 검색 결과 수
 var pageCount = 0;

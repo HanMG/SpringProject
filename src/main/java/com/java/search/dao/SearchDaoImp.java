@@ -1,5 +1,6 @@
 package com.java.search.dao;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.aop.JejuAspect;
 import com.java.search.dto.SearchCouponDto;
 import com.java.search.dto.SearchFoodDto;
 
@@ -73,6 +75,7 @@ public class SearchDaoImp implements SearchDao {
 	@Override
 	public List<SearchFoodDto> searchResult(String keyword, String orderType, String[] areaArr, String[] kindArr,
 			int startRow, int endRow) {
+		JejuAspect.logger.info(JejuAspect.logMsg + Arrays.toString(kindArr));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
 		map.put("orderType", orderType);

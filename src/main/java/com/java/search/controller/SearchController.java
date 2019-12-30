@@ -103,7 +103,6 @@ public class SearchController {
 		String orderType = request.getParameter("orderType");
 		String areaType = request.getParameter("areaType");
 		String kindType = request.getParameter("kindType");
-		JejuAspect.logger.info(JejuAspect.logMsg + keyword + "/" + currentPage + "/" + orderType + "/" + areaType + "/" + kindType);
 
 		mav.addObject("keyword", keyword);
 		mav.addObject("currentPage", currentPage);

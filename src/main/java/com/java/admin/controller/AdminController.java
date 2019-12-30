@@ -1,4 +1,4 @@
-package com.java.admion.controller;
+package com.java.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.food.service.FoodService;
 import com.java.review.service.ReviewService;
-
+import com.java.admin.service.AdminService;
 import com.java.coupon.service.CouponService;
 import com.java.purchase.service.PurchaseService;
 
@@ -29,11 +29,15 @@ public class AdminController {
 	@Autowired
 	private PurchaseService purchaseService;
 	
+	@Autowired
+	private AdminService adminService;
+	
 	// 관리자 메인페이지 이동
 	@RequestMapping(value = "/admin/main.go", method = RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/main.admin");		
+		mav.addObject("request",request);
+		adminService.getMainData(mav);	
 		return mav;		
 	}
 	// 관리자 음식점페이지로 이동 및 리스트 불러오기

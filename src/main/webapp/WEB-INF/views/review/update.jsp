@@ -15,7 +15,7 @@
 function reviewUpdate() {
 	var memberCode = "${memberCode}";
 	var reviewMemberCode = "${reviewDto.memberCode}";
-	// 로드시 세션의 멤버코드와 불러온 멤버코드를 비교해 안맞으면 
+	// 페이지 로드시 세션의 멤버코드와 불러온 멤버코드를 비교해 안맞으면 뒤로 돌아가게
 	if(reviewMemberCode !== memberCode){
 		alert("잘못된 접근입니다!!!");
 		history.back();

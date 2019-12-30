@@ -16,11 +16,11 @@
 }
 .button {
     color: #FFFFFF;
-    border: #EFB730 solid 1px;
-    background-color: #EFB730;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
 }
 #title {
-	width: 100vh;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 }
@@ -29,12 +29,12 @@
 	font-size: 23px;
 }
 #content {
-	width: 100vh;
+	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
 }
 #list {
-	width: 100vh;
+	width: 100%;
 	margin: 0 auto;
 }
 /* 멤버 모달 */
@@ -43,56 +43,47 @@
 	left: 50%;
 	top: 50%;
 	margin-left: -400px;
-	margin-top: -450px;
+	margin-top: -400px;
 	background: #F2F4EF;
 	width: 800px;
 	border-radius: 5px;
-	background: tomato;
 	overflow: hidden;
 }
 .content_modal {
 	width: 800px;
 	overflow: hidden;
-	background: skyblue;
 }
 .title_modal {
 	width: 800px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-	background: olive;
-}
-.title_modal > span:first-child {
-	margin-left: 40px;
+	text-align: center;
 }
 
 /* 내역관련 */
 .purchase {
 	overflow: hidden;
 	width: 500px; 
-	border-bottom: 1px dotted;
 	margin: 10px auto;
-	background: tomato;
 }
 .purchase > div {
 	margin-top: 10px;
-	margin-left: 30px;
 }
 .purchase > div span:nth-child(1) {
-	display: block;
-	font-size: 20px;
-	
-}
-.purchase > div > input[type=text] {
+	font-size: 23px;
 	display: inline-block;
-	width: 400px;
-	height: 20px;
-	font-size: 20px;
+	width: 120px;
+}
+.purchase > div span:nth-child(2) {
+	font-size: 23px;
+	display: inline-block;
+	width: 375px;
+	text-align: center;
 }
 .purchase > div > .button {
-	width: 120px;
+	width: 480px;
 	height: 50px;
 }
 .btn > .button {
@@ -188,14 +179,14 @@
 				type: 'GET',
 				dataType: 'json',
 				success: function(data){
-					$('.purchaseModal .pCode').text('구매코드 : '+data.purchaseCode);
+					$('.purchaseModal .pCode').text(data.purchaseCode);
 					$('.purchaseModal input[name=purchaseCode]').val(data.purchaseCode);
-					$('.purchaseModal .cName').text('쿠폰명 : '+data.couponName);
-					$('.purchaseModal .cCode').text('쿠폰코드 : '+data.couponCode);
-					$('.purchaseModal .mCode').text('멤버코드 : '+data.memberCode);
-					$('.purchaseModal .pDate').text('구매날짜 : '+data.purchaseDate);
-					$('.purchaseModal .pCost').text('구매가격 : '+data.couponCostsale);
-					$('.purchaseModal .pPhone').text('전송번호 : '+data.purchasePhone);
+					$('.purchaseModal .cName').text(data.couponName);
+					$('.purchaseModal .cCode').text(data.couponCode);
+					$('.purchaseModal .mCode').text(data.memberCode);
+					$('.purchaseModal .pDate').text(data.purchaseDate);
+					$('.purchaseModal .pCost').text(data.couponCostsale);
+					$('.purchaseModal .pPhone').text(data.purchasePhone);
 					if(data.purchaseStatus == "Y"){
 						$('#purchaseModal .btn span').text("");
 						$('#purchaseDelBtn').show();
@@ -229,29 +220,36 @@
 				<form name="deleteForm">
 				<div class="purchase">
 					<div>
-						<span class="pCode">구매코드 :</span>
+						<span>구매코드</span>
+						<span class="pCode">구매코드</span>
 						<input type="hidden" value="${purchaseCode}" name="purchaseCode"/>
 					</div>
 					<div>
-						<span class="cName">쿠폰명 :</span>
+						<span>쿠폰명</span>
+						<span class="cName">쿠폰명</span>
 						<input type="hidden" value="${couponName}" name="couponCode"/>
 					</div>
 					<div>
-						<span class="cCode">쿠폰코드 :</span>
+						<span>쿠폰코드</span>
+						<span class="cCode">쿠폰코드</span>
 						<input type="hidden" value="${couponCode}" name="couponCode"/>
 					</div>
 					<div>
-						<span class="mCode">멤버코드 :</span>
+						<span>멤버코드</span>
+						<span class="mCode">멤버코드</span>
 						<input type="hidden" value="${memberCode}" name="memberCode"/>
 					</div>
 					<div>
-						<span class="pDate">구매날짜 :</span>
+						<span>구매날짜</span>
+						<span class="pDate">구매날짜</span>
 					</div>
 					<div>
-						<span class="pCost">구매가격 : </span>
+						<span>구매가격</span>
+						<span class="pCost">구매가격</span>
 					</div>
 					<div>
-						<span class="pPhone">전송번호 : </span>
+						<span>전송번호</span>
+						<span class="pPhone">전송번호</span>
 					</div>
 					<div class="btn">
 						<input id="purchaseDelBtn" class="button _close" type="submit" value='취소하기'>

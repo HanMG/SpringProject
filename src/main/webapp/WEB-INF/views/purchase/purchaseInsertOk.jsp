@@ -14,9 +14,8 @@
 	overflow: hidden;
 }
 .title_mypage {
-	width: 1000px;
+	width: 800px;
 	height: 50px;
-	background: #F2F4EF;
 	line-height: 50px;
 	font-size: 30px;
 	text-align: center;
@@ -24,24 +23,25 @@
 
 /* 마이페이지 */
 .myPage {
-	width: 1000px;
+	width: 800px;
 	overflow: hidden;
-	margin: 40px 120px;
-	background: #F2F4EF;
+	margin: 70px 220px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
-	width: 300px;
-	font-size: 35px;
+	width: 200px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
-	width: 600px;
-	font-size: 35px;
+	width: 500px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .button {

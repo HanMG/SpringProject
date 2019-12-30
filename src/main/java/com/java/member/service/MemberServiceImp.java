@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
+import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
+import com.java.food.dto.FoodReviewDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
@@ -32,6 +34,7 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	private MemberDao memberDao;
+	
 
 	// 회원가입 과정
 	@Override
@@ -157,7 +160,7 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("favoriteList", favoriteList);
 		
 		// 리뷰
-		List<ReviewDto> reviewList = memberDao.getMyReview(memberCode);
+		List<FoodReviewDto> reviewList = memberDao.getMyReview(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.size());
 		mav.addObject("reviewList",reviewList);
 		
@@ -280,6 +283,9 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("check", check);
 		mav.setViewName("member/adminUpdateOk.tiles");
 	}
+	
+	
+	
 }
 
 

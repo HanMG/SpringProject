@@ -18,14 +18,17 @@ a {
 }
 .button {
     color: #FFFFFF;
-    border: #EFB730 solid 1px;
+    border: #EFB730 solid 2px;
     border-radius: 5px;
     background-color: transparent;
     font-size: 23px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
 .button > a {
 	color: #EFB730;
 }
+
+
 #content {
 	margin : 10px auto;
 	width: 1240px;
@@ -64,9 +67,10 @@ a {
 }
 .page > div {
 	width: 550px;
-	height: 410px;
+	height: 430px;
 	float: left;
 	margin: 10px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
 .page img {
 	height: 350px;
@@ -78,16 +82,23 @@ a {
 	color: #9b9b9b;
 }
 .page strong {
-	width: 310px;
+	width: 420px;
 	font-size: 23px;
 	color: #EFB730;
 }
 .page span {
-	width: 95px;
+	width: 100px;
 	font-size: 14px;
+	display: inline-block;
+	float: right;
 }
-.page > div > div:last-child > span{
-	width: 530px;
+
+.page > div > div:last-child > span:first-child{
+	width: 420px;
+	float: none;
+}
+.page > div > div:last-child > span:last-child{
+	width: 100px;
 }
 /* 
 .page > div > span {
@@ -172,10 +183,10 @@ function updateList() {
 						cont += '<img src='+image+'/>';
 					cont += "</div>";
 					cont += "<div>";
-						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span> <span>"+data[i].foodMenu+"</span>";
+						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span>";
 					cont += "</div>";
 					cont += "<div>";
-						cont += "<span>"+data[i].foodAddr+"</span>";
+						cont += "<span>"+data[i].foodAddr+"</span> <span>"+data[i].foodMenu+"</span>";
 					cont += "</div>";
 					
 /* 						cont += "<img src='"+${root}+"/resources/ftp/"+data[i].imageName+"' style='width: 400px; height: 400px;' />"; */

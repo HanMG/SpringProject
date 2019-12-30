@@ -108,6 +108,33 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/insertOk.tiles");
 		
 	}
+	
+	@Override
+	public void foodReviewList(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String foodCode = request.getParameter("foodCode");
+		String selScore = request.getParameter("selScore");
+		ReviewCountDto reviewCountDto = foodDao.foodReivewCount(foodCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewCountDto.toString());
+		List<FoodReviewDto> foodReviewList = null;
+		if (reviewCountDto != null) {			
+			foodReviewList = foodDao.foodReviewList(foodCode, selScore);
+			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
+			mav.addObject("foodReviewList",foodReviewList);
+			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.toString());
+		}		
+		
+		FoodDto foodDto = new FoodDto();
+		ImageDto imageDto = new ImageDto();
+		foodDto = foodDao.foodRead(foodCode);
+		imageDto = imageDao.imgRead(foodCode);
+		mav.addObject("foodDto", foodDto);	
+		mav.addObject("imageDto", imageDto);
+		mav.addObject("reviewCountDto",reviewCountDto);		
+		mav.setViewName("review/list.empty");
+		
+	}
 
 	@Override
 	public void foodRead(ModelAndView mav) {
@@ -298,25 +325,7 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/delete.tiles");		
 	}
 
-	@Override
-	public void foodReviewList(ModelAndView mav) {
-		Map<String, Object> map = mav.getModelMap();
-		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		String foodCode = request.getParameter("foodCode");
-		String selScore = request.getParameter("selScore");
-		ReviewCountDto reviewCountDto = foodDao.foodReivewCount(foodCode);
-		JejuAspect.logger.info(JejuAspect.logMsg + reviewCountDto.toString());
-		List<FoodReviewDto> foodReviewList = null;
-		if (reviewCountDto != null) {			
-			foodReviewList = foodDao.foodReviewList(foodCode, selScore);
-			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.size());
-			mav.addObject("foodReviewList",foodReviewList);
-			JejuAspect.logger.info(JejuAspect.logMsg+foodReviewList.toString());
-		}		
-		mav.addObject("reviewCountDto",reviewCountDto);		
-		mav.setViewName("review/list.empty");
-		
-	}
+
 
 	@Override
 	public void adminFoodList(ModelAndView mav) {		

@@ -40,7 +40,7 @@ public class PurchaseController {
 	}
 
 	// 구매하기
-	@RequestMapping(value = "/purchase/purchaseInsertOk.go", method = RequestMethod.POST)
+	@RequestMapping(value = "/purchase/purchaseInsertOk.go", method = RequestMethod.GET)
 	public ModelAndView purchaseInsertOk(HttpServletRequest request, HttpServletResponse response,
 			PurchaseDto purchaseDto) {
 		String memberMail = request.getParameter("memberMail");
@@ -79,6 +79,17 @@ public class PurchaseController {
 		mav.addObject("purchaseCode", purchaseCode);
 		
 		mav.setViewName("purchase/purchaseDelete.empty");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/purchase/kakaoPay.go", method = RequestMethod.POST)
+	public ModelAndView kakaoPay(HttpServletRequest request, HttpServletResponse response, PurchaseDto purchaseDto) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("purchaseDto", purchaseDto);
+		purchaseService.kakaoPay(mav);
 		
 		return mav;
 	}

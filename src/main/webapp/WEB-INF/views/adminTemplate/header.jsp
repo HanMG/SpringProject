@@ -47,8 +47,7 @@ $(document).ready(function() {
 
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-		<a class="navbar-brand mr-1" href="${root}/admin/main.go">EatTheJeju 관리자페이지</a>			
-
+		<a class="navbar-brand mr-1" href="${root}/admin/loginOk.go">EatTheJeju 관리자페이지</a>			
 		<!-- Navbar -->
 		<ul class="navbar-nav ml-auto ml-md-0">
 			<li class="nav-item dropdown no-arrow mx-1">
@@ -86,11 +85,10 @@ $(document).ready(function() {
 	</nav>
 
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav">
 			<li class="nav-item active"><a class="nav-link"
-				href="${root}/admin/main.go"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Main</span>
+				href="${root}/admin/loginOk.go"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Main</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="${root}/admin/member.go">
 					<i class="fas fa-fw fa-chart-area"></i> <span>회원관리</span>

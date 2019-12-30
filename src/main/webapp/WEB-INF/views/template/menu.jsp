@@ -13,7 +13,7 @@
 <body>	
 
 	<div class="container">
-
+<%-- 
 		<a href="${root}/coupon/couponInsert.go">상품등록</a>
 		<a href="${root}/coupon/couponList.go">상품리스트</a>
 		<a href="${root}/search.go">검색</a>
@@ -47,7 +47,7 @@
 			<a href="${root}/purchase/purchaseList.go">구매내역</a>
 			${memberCode}
 		</c:when>
-	</c:choose>
+	</c:choose> --%>
 	</div>
 	
 	

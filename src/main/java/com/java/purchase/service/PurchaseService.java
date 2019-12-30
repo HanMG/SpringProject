@@ -27,5 +27,7 @@ public interface PurchaseService {
 	
 	//구매 취소
 	public String purchaseDeleteOk(ModelAndView mav);
+
+	public void kakaoPay(ModelAndView mav);
 	
 }

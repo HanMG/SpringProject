@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
+import com.java.food.dto.FoodReviewDto;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
 import com.java.review.dto.ReviewDto;
@@ -34,7 +35,7 @@ public interface MemberDao {
 
 	public List<MemberDto> getMember(MemberDto memberDto);
 
-	public List<ReviewDto> getMyReview(String memberCode);
+	public List<FoodReviewDto> getMyReview(String memberCode);
 
 	public List<CouponDto> getMyCoupon(String memberCode);
 

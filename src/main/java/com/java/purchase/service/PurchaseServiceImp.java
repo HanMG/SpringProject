@@ -85,9 +85,14 @@ public class PurchaseServiceImp implements PurchaseService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String memberMail = request.getParameter("memberMail");
+		String memberCode = request.getParameter("memberCode");
+		String couponCode = request.getParameter("couponCode");
 		JejuAspect.logger.info(JejuAspect.logMsg + "memberMail: "+ memberMail);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		purchaseDto.setPurchaseDate(new Date());
+		purchaseDto.setMemberCode(memberCode);
+		purchaseDto.setCouponCode(couponCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
 		
 		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
@@ -228,4 +233,42 @@ public class PurchaseServiceImp implements PurchaseService {
 		return jsonText;
 	}
 	
+	@Override
+	public void kakaoPay(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		PurchaseDto purchaseDto = (PurchaseDto) map.get("purchaseDto");
+		
+		String couponCode = request.getParameter("couponCode");
+		String memberCode = request.getParameter("memberCode");
+		String purchasePhone = request.getParameter("purchasePhone");
+		String purchaseCost = request.getParameter("purchaseCost");
+		String memberName = request.getParameter("memberName");
+		String memberMail = request.getParameter("memberMail");
+		String couponName = request.getParameter("couponName");
+		String foodName = request.getParameter("foodName");
+		String couponCostsale = request.getParameter("couponCostsale");
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberCode : " + memberCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchasePhone : " + purchasePhone);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCost : " + purchaseCost);
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberName : " + memberName);
+		JejuAspect.logger.info(JejuAspect.logMsg + "memberMail : " + memberMail);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponName : " + couponName);
+		JejuAspect.logger.info(JejuAspect.logMsg + "foodName : " + foodName);
+		JejuAspect.logger.info(JejuAspect.logMsg + "couponCostsale : " + couponCostsale);
+		
+		mav.addObject("couponCode", couponCode);
+		mav.addObject("memberCode", memberCode);
+		mav.addObject("purchasePhone", purchasePhone);
+		mav.addObject("purchaseCost", purchaseCost);
+		mav.addObject("memberName", memberName);
+		mav.addObject("memberMail", memberMail);
+		mav.addObject("couponName", couponName);
+		mav.addObject("foodName", foodName);
+		mav.addObject("couponCostsale", couponCostsale);
+		
+		mav.setViewName("purchase/kakaoPay.tiles");
+	}
 }

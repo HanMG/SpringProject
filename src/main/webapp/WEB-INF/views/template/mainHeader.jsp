@@ -8,13 +8,58 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 100;
+  src: url(${root}/resources/fonts/NotoSansKR-Thin.woff2) format('woff2'),
+       url(${root}/resources/fonts/NotoSansKR-Thin.woff) format('woff'),
+       url(${root}/resources/fonts/NotoSansKR-Thin.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  src: url(${root}/resources/fonts/NotoSansKR-Light.woff2) format('woff2'),
+       url(${root}/resources/fonts/NotoSansKR-Light.woff) format('woff'),
+       url(${root}/resources/fonts/NotoSansKR-Light.otf) format('opentype');
+}
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 400;
+   src: url(${root}/resources/fonts/NotoSansKR-Regular.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Regular.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 500;
+   src: url(${root}/resources/fonts/NotoSansKR-Medium.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Medium.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Medium.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 700;
+   src: url(${root}/resources/fonts/NotoSansKR-Bold.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Bold.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 900;
+   src: url(${root}/resources/fonts/NotoSansKR-Black.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Black.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Black.otf) format('opentype');
+ } 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: nanum-square bold;
-}
-input {
-	border:none;
+	font-family: Noto Sans KR;
 }
 a {
 	text-decoration: none;
@@ -59,21 +104,19 @@ a {
 	top: 50%;
 	margin-left: -250px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 500px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .title_main {
 	width: 500px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-}
-.title_main > span:first-child {
-	margin-left: 40px;
+	text-align: center;
 }
 /* 로그인  */
 .login {
@@ -150,7 +193,7 @@ a {
 }
 
 /* 모달 관련 */
-.modal, .modal_2, .modal_3{
+.modal{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -161,12 +204,24 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
+}
+
+.modal_2, .modal_3{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: #000;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -174,7 +229,7 @@ a {
 }
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #aaa;
   text-decoration: none;
   cursor: pointer;
 }
@@ -246,7 +301,6 @@ html {
 	<div id="myModal" class="modal">
 		<div id="content_main">
 			<div class="title_main">
-				<span>로그인</span>
 				<span class="close">&times;</span>
 			</div>
 			<div class="login">
@@ -316,9 +370,8 @@ html {
 	</div>
 	
 	<div id="search" class="search">
-		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent" placeholder="검색어를 입력하여 주세요" autofocus />
+		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent; border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 	</div>
-	
 	
 <script type="text/javascript">
 	var url = null;

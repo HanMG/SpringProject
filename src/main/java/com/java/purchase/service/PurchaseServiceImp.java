@@ -155,7 +155,7 @@ public class PurchaseServiceImp implements PurchaseService {
 		int endRow = currentPage*boardSize;
 		JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
 		
-		List<PurchaseListDto> purchaseList = purchaseDao.purchaseSelectAll(memberCode, startRow, endRow);
+		List<PurchaseListDto> purchaseList = purchaseDao.purchaseSelectAll(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
 		

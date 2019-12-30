@@ -681,7 +681,8 @@ function searchResultAjax() {
 						cont += "<div>";
 							cont += "<span class='foodName'>"+data[i].foodName+"</span>";
 							if (data[i].reviewScore > 0) {
-							cont += "<span class='reviewScore'>"+data[i].reviewScore+"</span>";
+								var reviewScore = Math.round(data[i].reviewScore * 10)/10
+							cont += "<span class='reviewScore'>"+reviewScore+"</span>";
 							}
 						cont += "</div>";
 						cont += "<div>";
@@ -728,6 +729,7 @@ function searchType() {
 	});
 	searchCountAjax();
 	searchResultAjax();
+	filterModal.style.display = "none";
 }
 
 function changePage(n) {

@@ -6,18 +6,14 @@
 <mapper namespace="dao.AdminMapper">
 	<select id="foodCnt" resultType="com.java.admin.dto.AdminFoodDto">
 		 <![CDATA[
-		 	select 
-		 	count(food_code) as totalFoodCnt,
-		 	SUM( DECODE (food_kind, '한식', 1, 0) ) as korFood,
-		 	SUM( DECODE (food_kind, '중국식', 1, 0) ) as chnFood,
-		 	SUM( DECODE (food_kind, '일식', 1, 0) ) as jpFood,
-		 	SUM( DECODE (food_kind, '경양식', 1, 0) )as wtFood,
-		 	SUM( DECODE (food_kind, '식육(숯불구이)', 1, 0) ) as bbq,
-		 	SUM( DECODE (food_kind, '까페', 1, 0) )as cafe,
-		 	SUM( DECODE (food_kind, '회집', 1, 0) ) as fishFood,
-		 	SUM( DECODE (food_kind, '뷔페식', 1, 0) ) as buffet,
-		 	SUM( DECODE (food_kind, '기타', 1, 0) ) as etc 
-		 	from food
+		 	select * from
+			(select count(food_code) as totalFoodCnt from food),
+			(select count(food_kind) as korFood from food where food_kind like '한식 -%'),
+			(select count(food_kind) as chnFood from food where food_kind like '중식 -%'),
+			(select count(food_kind) as jpFood from food where food_kind like '일식 -%'),
+			(select count(food_kind) as wtFood from food where food_kind like '양식 -%'),
+			(select count(food_kind) as cafe from food where food_kind like '카페/술 -%'),
+			(select count(food_kind) as etc from food where food_kind like '기타 -%')
 		 ]]>
 	</select>
 	<select id="foodReadRank" resultType="com.java.admin.dto.AdminFoodReadDto">

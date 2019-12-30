@@ -839,10 +839,24 @@ function fromServer() {
 	  slides[slideIndex-1].style.display = "block";  
 	  dots[slideIndex-1].className += " active";
 	}
+<<<<<<< HEAD
+
+var root = "${root}";
+var memberCode = "${memberCode}";
+var foodCode = "${foodDto.foodCode}";
+var favorStatus = "";
+
+$(function() {
+	if (memberCode != "") {
+		favorCheck();
+	} 
+});
+=======
 	</script>
 	
 	
 	<script>
+>>>>>>> cce213f50753ff958610d891cb31549112cd3c88
 
 	function favorite(x) {
 		if (x.className === "fa fa-heart-o") {

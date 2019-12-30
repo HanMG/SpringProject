@@ -114,8 +114,8 @@
 		(select image_path from image where refer_code = food.food_code) AS image_path,
         (select count(*) from review where food_code=food.food_code) as count,
         (select avg(review_score) from review where food_code=food.food_code) as avg
-        from food, favorite, member
-		where food.food_code = favorite.food_code and member.member_code=#{memberCode}
+        from food, favorite
+		where food.food_code = favorite.food_code and favorite.member_code=#{memberCode}
     </select>
      -->
 

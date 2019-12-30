@@ -11,6 +11,11 @@ import com.java.image.dto.ImageDto;
 
 import com.java.aop.JejuAspect;
 
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 19.
+ * @설명 : 이미지 DAO
+ */
 
 @Component
 public class ImageDaoImp implements ImageDao {

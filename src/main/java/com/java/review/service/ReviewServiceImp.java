@@ -15,22 +15,23 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
-import com.java.food.dto.FoodReviewDto;
 import com.java.image.dao.ImageDao;
 import com.java.image.dto.ImageDto;
 import com.java.review.dao.ReviewDao;
 import com.java.review.dto.ReviewDto;
-import com.java.review.dto.ReviewImgDto;
+
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 19.
+ * @설명 :  리뷰용 서비스
+ */
 
 @Component
 public class ReviewServiceImp implements ReviewService {
@@ -41,6 +42,7 @@ public class ReviewServiceImp implements ReviewService {
 	@Autowired
 	private ImageDao imageDao;
 
+	// 리뷰 정보 등록시 페이지로 이동
 	@Override
 	public void reviewInsert(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -52,6 +54,8 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("review/insert.tiles");
 	}
 
+	
+	// 리뷰 정보 등록시 정보 입력
 	@Override
 	public void reviewInsertOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -76,7 +80,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdirs();					
@@ -103,6 +107,7 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("review/insertOk.tiles");
 	}
 
+	// 리뷰 정보 수정시 해당 페이지로 이동 및  리뷰 정보를 가져오기
 	@Override
 	public void reviewUpdate(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -119,34 +124,42 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("review/update.tiles");		
 	}
 
+	// 리뷰 정보 수정시 입력된 리뷰 정보 보내기 
 	@Override
 	public void reviewUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");		
 		List<MultipartFile> files = request.getFiles("imgFile");
 		ReviewDto reviewDto = (ReviewDto) map.get("reviewDto");
+		String foodCode = request.getParameter("foodCode");
 		reviewDto.setReviewDate(new Date());
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewDto);
 		int check = reviewDao.reviewUpdateOk(reviewDto);
 		String reviewCode = reviewDto.getReviewCode();
+		// 삭제할 이미지의 이름을 받음 (ex: image.jpg,image1.jpg)
 		String delStr = request.getParameter("deleteImg");
-		JejuAspect.logger.info(JejuAspect.logMsg + delStr.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg + delStr.toString());
 		if(delStr != null && !delStr.equals("")) {
-			String[] delList = delStr.split(","); 
+			// split하여 delList라는 문자열배열에 입력
+			String[] delList = delStr.split(",");			 
 			for(int i = 0; i < delList.length; i++) {
+				// 돌면서 해당 리뷰 코드의 값과 이름을 삭제할 Dto에 넣고 해당 값의 이미지DTO를 불러옴
 				ImageDto imageDelDto = new ImageDto();
 				imageDelDto.setReferCode(reviewCode);
 				imageDelDto.setImageName(delList[i]);
-				ImageDto imageDto = imageDao.imgSelect(imageDelDto);				
+				ImageDto imageDto = imageDao.imgSelect(imageDelDto);		
+				// 불러온 이미지 DTO에서 이름이 있으면 해당 파일의 주소를 가지고 삭제
 				if (imageDto.getImageName() != null) {
 					File checkFile = new File(imageDto.getImagePath());
 					if (checkFile.exists() && checkFile.isFile()) {
 						checkFile.delete();
 					}
 				}
+				// 삭제할 이미지 DTO를 가지고 table로 부터 삭제
 				imageDao.imgSelectDelete(imageDelDto);
 			}		
 		}		
+		// 입력받은 이미지 파일들을 체크하여 새로 입력
 		for (MultipartFile f : files) {			
 			if (!f.isEmpty()) {
 				ImageDto imageDto = new ImageDto();
@@ -155,10 +168,10 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
-					path.mkdir();					
+					path.mkdirs();					
 
 					if (path.exists() && path.isDirectory()) {
 						File file = new File(path, fileName);
@@ -178,9 +191,11 @@ public class ReviewServiceImp implements ReviewService {
 			}
 		}
 		mav.addObject("check", check);
+		mav.addObject("foodCode",foodCode);
 		mav.setViewName("review/updateOk.tiles");		
 	}
 	
+	// 리뷰 정보 읽기
 	@Override
 	public void reviewRead(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -191,12 +206,11 @@ public class ReviewServiceImp implements ReviewService {
 		JejuAspect.logger.info(JejuAspect.logMsg+" reviewCode : "+reviewCode);
 		reviewDto = reviewDao.reviewUpdate(reviewCode);
 		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		String reviewDate = date.format(reviewDto.getReviewDate());
 		
+		  
 		  JSONObject jo = new JSONObject();
 		  jo.put("reviewCont", reviewDto.getReviewCont()); 
-		  jo.put("reviewDate", reviewDate); 
+		  jo.put("reviewScore", reviewDto.getReviewScore()); 
 		  
 //		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
 		List<ImageDto> listImage = imageDao.imgList(reviewCode);
@@ -227,6 +241,7 @@ public class ReviewServiceImp implements ReviewService {
 		
 	}
 	
+	// 관리자가 리뷰 삭제
 	@Override
 	public void reviewDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -248,21 +263,46 @@ public class ReviewServiceImp implements ReviewService {
 		mav.addObject("check",check);
 		mav.setViewName("review/delete.tiles");
 	}
-
+	
+	// 유저가 리뷰 삭제
 	@Override
-	public void imageDelete(ModelAndView mav) {
+	public void userReviewDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
-		HttpServletRequest request = (HttpServletRequest) map.get("request");		
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		String reviewCode = request.getParameter("reviewCode");
-		String imageName = request.getParameter("imageName");		
-		ImageDto imageDto = new ImageDto();
-		imageDto.setReferCode(reviewCode);
-		imageDto.setImageName(imageName);
+		String foodCode = request.getParameter("foodCode");
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewCode);
 		int check = 0;
-		check = imageDao.imgSelectDelete(imageDto);
-		mav.setViewName("review/update.tiles?reviewCode="+reviewCode);		
+		List<ImageDto> imageList = imageDao.imgList(reviewCode);
+		for(int i = 0; i< imageList.size(); i++) {
+			if (imageList.get(i).getImageName() != null) {
+				File checkFile = new File(imageList.get(i).getImagePath());
+				if (checkFile.exists() && checkFile.isFile()) {
+					checkFile.delete();
+				}
+			}
+		}		
+		check = reviewDao.reviewDelete(reviewCode);
+		check += imageDao.imgDelete(reviewCode);
+		mav.addObject("check",check);
+		mav.addObject("foodCode",foodCode);
+		mav.setViewName("review/userDelete.tiles");		
 	}
+	
+	
 
+	/* 수정페이지에서 이미지 바로 삭제
+	 * @Override public void imageDelete(ModelAndView mav) { Map<String, Object> map
+	 * = mav.getModel(); HttpServletRequest request = (HttpServletRequest)
+	 * map.get("request"); String reviewCode = request.getParameter("reviewCode");
+	 * String imageName = request.getParameter("imageName"); ImageDto imageDto = new
+	 * ImageDto(); imageDto.setReferCode(reviewCode);
+	 * imageDto.setImageName(imageName); int check = 0; check =
+	 * imageDao.imgSelectDelete(imageDto);
+	 * mav.setViewName("review/update.tiles?reviewCode="+reviewCode); }
+	 */
+
+	// 관리자 페이지로 이동시 리스트 가져오기 
 	@Override
 	public void adminReviewList(ModelAndView mav) {
 		List<ReviewDto> reviewDtoList = reviewDao.reviewDtoList();
@@ -271,22 +311,22 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("admin/review.admin");		
 	}
 
-	@Override
-	public void adminReviewRead(ModelAndView mav) {
-		Map<String, Object> map = mav.getModel();
-		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		String reviewCode = request.getParameter("reviewCode");
-		ReviewDto reviewDto = new ReviewDto();
-		reviewDto = reviewDao.reviewUpdate(reviewCode);
-		JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString());
-		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
-		List<ImageDto> listImage = imageDao.imgList(reviewCode);		
-		JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
-		mav.addObject("foodName",foodName);
-		mav.addObject("reviewDto",reviewDto);
-		mav.addObject("listImage",listImage);		
-	}
+	/* 관리자페이지 게시글 클릭시 이동 보여주기
+	 * @Override public void adminReviewRead(ModelAndView mav) { Map<String, Object>
+	 * map = mav.getModel(); HttpServletRequest request = (HttpServletRequest)
+	 * map.get("request"); String reviewCode = request.getParameter("reviewCode");
+	 * ReviewDto reviewDto = new ReviewDto(); reviewDto =
+	 * reviewDao.reviewUpdate(reviewCode);
+	 * JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString()); String
+	 * foodName = reviewDao.getFoodName(reviewDto.getFoodCode()); List<ImageDto>
+	 * listImage = imageDao.imgList(reviewCode);
+	 * JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
+	 * mav.addObject("foodName",foodName); mav.addObject("reviewDto",reviewDto);
+	 * mav.addObject("listImage",listImage); }
+	 */
 
+	
+	// 관리자 페이지에서 게시글 클릭시 해당 리뷰 정보 가져오기
 	@Override
 	public void getReview(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
@@ -299,21 +339,27 @@ public class ReviewServiceImp implements ReviewService {
 		List<ImageDto> listImage = imageDao.imgList(reviewCode);
 		System.out.println(listImage);
 		JSONArray jsonArr = new JSONArray();
-		for(ImageDto imgDto : listImage) {
-			JSONObject jsonImgDto = new JSONObject();
-			jsonImgDto.put("imageName", imgDto.getImageName());
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		for(ImageDto imgDto : listImage) {			
+			hashMap.put("imageName", imgDto.getImageName());
+			JSONObject jsonImgDto = new JSONObject(hashMap);
+			//jsonImgDto.put("imageName", imgDto.getImageName());
 			jsonArr.add(jsonImgDto);
 		}
 		
-		JSONObject jsonReviewDto = new JSONObject();
+		
 		JejuAspect.logger.info(JejuAspect.logMsg+reviewDto.toString()+","+listImage.toString());
-		jsonReviewDto.put("reviewCode", reviewDto.getReviewCode());
-		jsonReviewDto.put("foodCode", reviewDto.getFoodCode());
-		jsonReviewDto.put("memberCode", reviewDto.getMemberCode());
-		jsonReviewDto.put("reviewDate", date.format(reviewDto.getReviewDate()));
-		jsonReviewDto.put("reviewCont", reviewDto.getReviewCont());
-		jsonReviewDto.put("reviewScore", reviewDto.getReviewScore());
-		jsonReviewDto.put("listImage", jsonArr);
+		
+		hashMap.put("reviewCode", reviewDto.getReviewCode());
+		hashMap.put("foodCode",	reviewDto.getFoodCode()); 
+		hashMap.put("memberCode", reviewDto.getMemberCode()); 
+		hashMap.put("reviewDate", date.format(reviewDto.getReviewDate())); 
+		hashMap.put("reviewCont", reviewDto.getReviewCont());
+		hashMap.put("reviewScore", reviewDto.getReviewScore());
+		hashMap.put("listImage", jsonArr);		 
+		
+		JSONObject jsonReviewDto = new JSONObject(hashMap);		
+		
 		String jsonText = jsonReviewDto.toJSONString();
 		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);
 		
@@ -325,7 +371,6 @@ public class ReviewServiceImp implements ReviewService {
 			out.close();
 		}catch(IOException e){
 			e.printStackTrace();
-		}
-		
-	}
+		}		
+	}	
 }

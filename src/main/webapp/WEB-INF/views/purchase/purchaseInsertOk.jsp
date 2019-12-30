@@ -14,9 +14,8 @@
 	overflow: hidden;
 }
 .title_mypage {
-	width: 1000px;
+	width: 800px;
 	height: 50px;
-	background: #F2F4EF;
 	line-height: 50px;
 	font-size: 30px;
 	text-align: center;
@@ -24,24 +23,25 @@
 
 /* 마이페이지 */
 .myPage {
-	width: 1000px;
+	width: 800px;
 	overflow: hidden;
-	margin: 40px 120px;
-	background: #F2F4EF;
+	margin: 70px 220px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
-	width: 300px;
-	font-size: 35px;
+	width: 200px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
-	width: 600px;
-	font-size: 35px;
+	width: 500px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .button {
@@ -55,16 +55,6 @@
 <div id="content_mypage">
 	<div class="myPage">
 	<c:if test="${check > 0}">
-<<<<<<< HEAD
-		<h3>상품 구매가 완료되었습니다!</h3>
-		<p>쿠폰명: ${couponDto.couponName}</p>
-		<p>쿠폰 사용가능 기간: ${couponDto.couponStartdate}부터
-			${couponDto.couponEnddate}까지</p>
-		<p>결제금액: ${couponDto.couponSalerate}</p>
-
-		<p>쿠폰 받을 번호</p>
-		${purchaseDto.purchasePhone}
-=======
 	<div class="title_mypage">
 			<span>상품 구매가 완료되었습니다!</span>
 		</div>
@@ -93,7 +83,6 @@
 			<span>${purchaseDto.purchasePhone}</span>
 		</div>
 	</div>
->>>>>>> nth
 	</c:if>
 	<c:if test="${check == 0}">
 		<h3>상품 구매가 완료되지 않았습니다. 처음부터 다시 시도해주세요.</h3>

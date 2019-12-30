@@ -6,8 +6,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.java.food.dto.FoodReviewDto;
 import com.java.review.dto.ReviewDto;
+
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 19.
+ * @설명 : 리뷰 DAO
+ */
 
 @Component
 public class ReviewDaoImp implements ReviewDao{	

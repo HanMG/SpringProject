@@ -10,10 +10,10 @@
 <body>
 <!-- header/menu -->
 <tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="menu"/>
 <!-- content -->
 <tiles:insertAttribute name="content"/>
 <!-- footer -->
 <tiles:insertAttribute name="footer"/>
 </body>
+<tiles:insertAttribute name="script"/>
 </html>

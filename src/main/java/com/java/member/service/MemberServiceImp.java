@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.aop.JejuAspect;
 import com.java.coupon.dto.CouponDto;
+import com.java.food.dao.FoodDao;
 import com.java.food.dto.FoodDto;
+import com.java.food.dto.FoodReviewDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
@@ -32,6 +34,7 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	private MemberDao memberDao;
+	
 
 	// 회원가입 과정
 	@Override
@@ -102,6 +105,7 @@ public class MemberServiceImp implements MemberService{
 		
 		String nickname = request.getParameter("nickname");
 		String mail = request.getParameter("mail");
+		JejuAspect.logger.info(JejuAspect.logMsg + mail);
 		// DB 저장하기전에 카카오에서 주는 mail값으로 현재 DB에 있는지 체크한다.
 		int emailCheck = memberDao.emailCheck(mail);
 		int check = 0;
@@ -161,6 +165,7 @@ public class MemberServiceImp implements MemberService{
 		HttpSession session = request.getSession();
 		String memberCode = (String) session.getAttribute("memberCode");
 		
+		
 		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		// 개인정보를 보기 위한
 		MemberDto memberDto = memberDao.memberUpdate(memberCode);
@@ -178,7 +183,7 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("favoriteList", favoriteList);
 		
 		// 리뷰
-		List<ReviewDto> reviewList = memberDao.getMyReview(memberCode);
+		List<FoodReviewDto> reviewList = memberDao.getMyReview(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.size());
 		mav.addObject("reviewList",reviewList);
 		
@@ -301,6 +306,9 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("check", check);
 		mav.setViewName("member/adminUpdateOk.tiles");
 	}
+	
+	
+	
 }
 
 

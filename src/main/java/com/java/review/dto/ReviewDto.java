@@ -2,6 +2,12 @@ package com.java.review.dto;
 
 import java.util.Date;
 
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 19.
+ * @설명 : 리뷰 용 VO
+ */
+
 public class ReviewDto {
 	private String reviewCode;	// 리뷰 코드
 	private String foodCode;	// 음식점 코드

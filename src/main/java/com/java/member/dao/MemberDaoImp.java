@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
+import com.java.food.dto.FoodReviewDto;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
 import com.java.review.dto.ReviewDto;
@@ -85,7 +86,7 @@ public class MemberDaoImp implements MemberDao {
 	}
 	
 	@Override
-	public List<ReviewDto> getMyReview(String memberCode) {
+	public List<FoodReviewDto> getMyReview(String memberCode) {
 		return sqlSessionTemplate.selectList("memberMapper.getMyReview", memberCode);
 	}
 	
@@ -93,7 +94,6 @@ public class MemberDaoImp implements MemberDao {
 	public List<MemberFavoriteDto> getMyFavorite(String memberCode) {
 		return sqlSessionTemplate.selectList("memberMapper.getMyFavorite", memberCode);
 	}
-	
 	
 	//관리자
 	@Override

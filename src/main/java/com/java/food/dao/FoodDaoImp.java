@@ -1,6 +1,8 @@
 package com.java.food.dao;
 
 import java.util.HashMap;
+
+
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +13,12 @@ import com.java.coupon.dto.CouponDto;
 import com.java.food.dto.FoodDto;
 import com.java.food.dto.FoodReviewDto;
 import com.java.review.dto.ReviewCountDto;
+
+/**
+ * @작성자 : 한문구
+ * @작성일 : 2019. 12. 13.
+ * @설명 : 음식점 DAO
+ */
 
 @Component
 public class FoodDaoImp implements FoodDao {
@@ -50,7 +58,7 @@ public class FoodDaoImp implements FoodDao {
 
 	@Override
 	public List<FoodReviewDto> foodReviewList(String foodCode, String selScore) {
-		HashMap<String, Object> hMap = new HashMap(); 
+		HashMap<String, Object> hMap = new HashMap<String, Object>(); 
 		hMap.put("foodCode", foodCode);
 		hMap.put("selScore", selScore);
 		
@@ -84,10 +92,11 @@ public class FoodDaoImp implements FoodDao {
 
 	@Override
 	public List<FoodDto> foodDtoList() {		
-		return sqlSession.selectList("dao.FoodMapper.AdminfoodList");
+		return sqlSession.selectList("dao.FoodMapper.adminfoodList");
 	}
 
-	
-	
-	
+	@Override
+	public int foodFavorite(String foodCode) {		
+		return sqlSession.selectOne("dao.FoodMapper.foodFavorite",foodCode);
+	}		
 }

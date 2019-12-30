@@ -6,7 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 * {
@@ -20,7 +20,6 @@ a {
 	margin : 50px auto;
 	width: 1240px;
 	overflow: hidden;
-   	border-bottom: 1px dotted;
 }
 /* 검색 순위, 필터, 가게 리스트 */
 .nav_1 {
@@ -74,7 +73,7 @@ a {
 	height: 200px;
 	margin-bottom: 5px;
 }
-.list img {
+.list > div:first-child > img {
 	width: 350px;
 	height: 200px;
 }
@@ -96,6 +95,10 @@ a {
 .page {
 	text-align: center;
 	width: 740px;
+}
+.page a {
+	font-size: 23px;
+	color: #EFB730;
 }
 
 .map {
@@ -189,10 +192,75 @@ a {
 	right: 15px;
 	font-weight: bold;
 	color: white;
-	
 }
+/* 필터 모달 관련 */
+.filterModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
+}
+
+#contentFilter{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -370px;
+	margin-top: -400px;
+	width: 740px;
+	height: 700px;
+	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+}
+.titleFilter {
+	width: 740px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 30px;
+	font-weight: bold;
+}
+/* 개인정보 */
+.titleFilter > span:first-child {
+	margin-left: 40px;
+}
+.radio-tile-label {
+	font-size: 15px;
+}
+.filter_nav span {
+	font-size: 23px;
+	margin: 20px 30px;
+	display: block;
+}
+.radio-tile-group {
+	justify-content: left;
+	margin-left: 25px;
+}
+.search {
+    height: 230px;
+    text-align: center;
+    line-height: 230px;
+}
+.searchBtn {
+	width: 100px;
+	height: 50px;
+	font-size: 32px;
+	line-height: 50px;
+	border-radius: 5px;
+}
+.icon {
+	width: 10px;
+	height: 10px;
+}
+
 </style>
-<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
 <body>
@@ -201,18 +269,20 @@ a {
 	<div class="nav_1">
 		<div class="filter">
 			<span>${keyword} 맛집 인기 검색 순위</span>
-			<a href="#">필터</a>
+			<a href="#" id="filterClick">필터</a>
 		</div>
 		
-		<!-- 검색 결과가 없는 경우  -->
-		<c:if test="${foodCount == 0}">
-			<div>
-				<p>검색된 음식점이 없습니다.</p>
-			</div>
-		</c:if>
+
 		
 		<!-- 검색된 음식점 리스트 불러오기  -->
-		<div style="height: 1600px;">
+		<div class="result" style="height: 1600px;">
+<%-- 			<!-- 검색 결과가 없는 경우  -->
+			<c:if test="${foodCount == 0}">
+				<div>
+					<p>검색된 음식점이 없습니다.</p>
+				</div>
+			</c:if>	
+			
 			<c:if test="${foodCount > 0}">
 			<c:forEach var = "searchFoodDto" items="${foodList}">
 			<div class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${searchFoodDto.foodCode}'">
@@ -221,48 +291,25 @@ a {
 				</div>
 				<div>
 					<span class="foodName">${searchFoodDto.foodName}</span>
-					<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern=".0"/></span>
+					<c:if test="${searchFoodDto.reviewScore > 0}">
+					<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
+					</c:if>				
 				</div>
 				<div>
 					<span class="foodArea">${searchFoodDto.foodArea} - </span>  
 					<span class="foodKind">${searchFoodDto.foodKind}</span>
 				</div>
 				<div>
+					<img class="icon" alt="" src="${root}/resources/css/views.png">
 					<span class="foodRead">${searchFoodDto.foodRead}</span>
+					<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
 					<span class="reviewCount">${searchFoodDto.reviewCount}</span>
 				</div>
 			</div>
 			</c:forEach>
-			</c:if>
+			</c:if> --%>
 		</div>
 		<div class="page">
-			<c:if test="${foodCount > 0}">
-				<c:set var = "pageBlock" value = "5" />
-				<fmt:parseNumber var = "pageCount" value = "${foodCount / boardSize + (foodCount%boardSize==0 ? 0 : 1 ) }" integerOnly="true"/>
-				<fmt:parseNumber var="result" value="${(currentPage -1)/pageBlock}" integerOnly="true"/>
-				<c:set var="startPage" value="${result*pageBlock+1}"/>
-				<c:set var="endPage" value="${startPage+pageBlock-1}"/>
-				
-				<c:if test="${endPage > pageCount }">
-					<c:set var="endPage" value="${pageCount}"/>
-				</c:if>
-				
-				<%-- 처음, 이전 --%>
-				<c:if test="${startPage > pageBlock}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=1">[처음]</a>
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${startPage-pageBlock}">[이전]</a>
-				</c:if>
-				
-				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${i}">[${i}]</a>
-				</c:forEach>
-				
-				<%-- 다음, 끝 --%>
-				<c:if test="${endPage < pageCount}">
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${startPage+pageBlock}">[다음]</a>
-					<a href="${root}/searchKeyword.go?keyword=${keyword}&pageNumber=${pageCount}">[끝]</a>
-				</c:if>
-			</c:if>
 		</div>
 	</div>
 		
@@ -436,57 +483,297 @@ a {
 				</div>
 				</c:forEach>
 		</c:if>
-		
-		<%-- 	
-		<c:if test="${couponCount > 0}">
-			<c:forEach var = "couponDto" items="${couponList}">
-			<div class="abc">
-				<span>${couponDto.couponName}</span>
-				<span>${couponDto.foodName}</span>
-				<span>${couponDto.foodMenu}</span>
-			</div>
-			</c:forEach>
-		</c:if>
-		 --%>
-		
 	</div>
 </div>
+<!-- 
 		<div>
 			<h4>필터</h4>
-			<label>조회 기준</label>
-			<select>
-				<option value="평점">평점순</option>
-				<option value="조회수">인기순</option>
-			</select>
-			<label>음식점 지역</label>
-			<select>
-				<option value="제주시">제주시</option>
-				<option value="서귀포시">서귀포시</option>
-			</select>
-			<label>음식 종류</label>
-			<select>
-				<option value="한식">한식</option>
-				<option value="회집">회집</option>
-				<option value="일식">일식</option>
-				<option value="양식">양식</option>
-				<option value="중국식">중식</option>
-				<option value="까페">까페</option>
-			</select>
-			<input type="button" value="적용">
+			<p>조회 기준</p>
+				<input type="radio" name="orderType" class="orderType" value="조회수">인기순
+				<input type="radio" name="orderType" class="orderType" value="평점">평점순
+			<p>음식점 지역</p>
+				<input type="checkbox" name="areaType" class="areaType" value="제주시">제주시
+				<input type="checkbox" name="areaType" class="areaType" value="서귀포시">서귀포시
+			<p>음식 종류</p>
+				<input type="checkbox" name="kindType" class="kindType" value="한식">한식
+				<input type="checkbox" name="kindType" class="kindType" value="회집">회집
+				<input type="checkbox" name="kindType" class="kindType" value="일식">일식
+				<input type="checkbox" name="kindType" class="kindType" value="중식">중식
+				<input type="checkbox" name="kindType" class="kindType" value="양식">양식
+				<input type="checkbox" name="kindType" class="kindType" value="까페">까페
+			<input type="button" value="적용" onclick="searchType()" />
 		</div>
 
 		<div align="center">
 		
 	</div>
-		
+		 -->
+		 
+	<div id="filterModal" class="filterModal">
+		<div id="contentFilter">
+			<div class="filter">
+				<div class="titleFilter">
+					<span>필터</span>
+					<span class="close">&times;</span>
+				</div>
+				<div class="filter_nav">
+					<div>
+						<span>조회 기준</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="orderType1" class="radio-button" type="radio" name="orderType" value="조회수"/>
+								<div class="radio-tile">
+								<label for="orderType1" class="radio-tile-label" style="font-size: 15px;">인기순</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="orderType2" class="radio-button" type="radio" name="orderType" value="평점" />
+								<div class="radio-tile">
+								<label for="orderType2" class="radio-tile-label" style="font-size: 15px;">평점순</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<span>음식점 지역</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="areaType1" class="radio-button" type="radio" name="areaType" value="제주시"/>
+								<div class="radio-tile">
+								<label for="areaType1" class="radio-tile-label" style="font-size: 15px;">제주시</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="areaType2" class="radio-button" type="radio" name="areaType" value="서귀포시" />
+								<div class="radio-tile">
+								<label for="areaType2" class="radio-tile-label" style="font-size: 15px;">서귀포시</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<span>음식 종류</span>
+					</div>
+					<div class="container_1">
+						<div class="radio-tile-group">
+							<div class="input-container">
+								<input id="kindType1" class="radio-button" type="checkbox" name="kindType" value="한식"/>
+								<div class="radio-tile">
+								<label for="kindType1" class="radio-tile-label" style="font-size: 15px;">한식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType2" class="radio-button" type="checkbox" name="kindType" value="중식" />
+								<div class="radio-tile">
+								<label for="kindType2" class="radio-tile-label" style="font-size: 15px;">중식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType3" class="radio-button" type="checkbox" name="kindType" value="일식"/>
+								<div class="radio-tile">
+								<label for="kindType3" class="radio-tile-label" style="font-size: 15px;">일식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType4" class="radio-button" type="checkbox" name="kindType" value="양식"/>
+								<div class="radio-tile">
+								<label for="kindType4" class="radio-tile-label" style="font-size: 15px;">양식</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType5" class="radio-button" type="checkbox" name="kindType" value="카페"/>
+								<div class="radio-tile">
+								<label for="kindType5" class="radio-tile-label" style="font-size: 15px;">카페</label>
+								</div>
+							</div>
+							<div class="input-container">
+								<input id="kindType6" class="radio-button" type="checkbox" name="kindType" value="기타"/>
+								<div class="radio-tile">
+								<label for="kindType6" class="radio-tile-label" style="font-size: 15px;">기타</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="search">
+			        	<input class="button searchBtn" type="button" value="적용" onclick="searchType()" />
+			        </div>
+			   	</div>
+		   	</div>
+	   	</div>
+	</div>
+    
+		 
+		 
+<!--        <input type="checkbox" name="kindType" class="kindType" value="한식">한식
+            <input type="checkbox" name="kindType" class="kindType" value="회집">회집
+            <input type="checkbox" name="kindType" class="kindType" value="일식">일식
+            <input type="checkbox" name="kindType" class="kindType" value="중식">중식
+            <input type="checkbox" name="kindType" class="kindType" value="양식">양식
+            <input type="checkbox" name="kindType" class="kindType" value="까페">까페 -->
 </body>
-<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-function search() {
-	var param = $("#searchInput").val()
-	url = "${root}/searchKeyword.go?keyword=" + param;
-	location.href = url;
+var root = "${root}";
+var keyword = "${keyword}";
+
+/* 필터 관련 */
+var orderType = "";
+var areaType = "";
+var kindType = "";
+
+/* 검색 결과 출력 관련 */
+var boardSize = 10;		// 한페이지당 출력 수
+var pageBlock = 5;		// 구간당 페이지 표기 수
+var currentPage = 1;	// 현재 페이지
+var resultCount = 0;	// 검색 결과 수
+var pageCount = 0;
+
+function searchCountAjax() {
+// 	alert(orderType + areaType + kindType);
+	$.ajax({
+		type : "POST",
+		url : root + "/searchCountAjax.do",
+		data : { keyword : keyword, areaType : areaType, kindType : kindType},
+		success : function (data) {
+			resultCount = data;
+			pageCount = Math.ceil(resultCount/boardSize);				/* 결과 페이지 수 */
+			var currentBlock = Math.floor((currentPage-1)/pageBlock);		/* 현재 블락 */
+			var startPage = currentBlock * pageBlock + 1;
+			var endPage = startPage + pageBlock -1;
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+			var button = "";
+			if (startPage > pageBlock) {
+				button += "<a href='javascript:changePage(\"first\")'>[처음]</a>";
+				button += "<a href='javascript:changePage(\"prev\")'>[이전]</a>";
+			}
+			for (var i = startPage; i <= endPage; i++) {
+				button += "<a href='javascript:changePage("+i+")'> ["+i+"] </a>";
+			}
+			
+			
+			if (endPage < pageCount) {
+				button += "<a href='javascript:changePage(\"next\")'>[다음]</a>";
+				button += "<a href='javascript:changePage(\"last\")'>[마지막]</a>";
+			}
+			$(".page").html(button);
+		},
+		error: function (request, status, error) {
+			var str = 'code: '+request.status+'\n';
+			str += 'message: ' + request.responseText+'\n';
+			str += 'error: ' + error;
+			alert(str);
+		}
+	});
 }
+
+function searchResultAjax() {
+	var arr = new Array();
+	$.ajax({
+		type : "POST",
+		url : root + "/searchResultAjax.do",
+		data : { keyword : keyword, currentPage : currentPage, orderType : orderType, areaType : areaType, kindType : kindType},
+		success : function (data) {
+			var cont = "";
+			if (resultCount > 0) {
+				for (var i = 0; i < data.length; i++) {
+					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode);
+					mark(arr);
+					//alert(arr);
+					var url = root + "/food/read.go?foodCode=" + data[i].foodCode;
+					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
+						cont += "<div>";
+							var err = root + "/resources/css/list.jpg";
+							cont += "<img alt='음식 이미지' src='"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodName'>"+data[i].foodName+"</span>";
+							if (data[i].reviewScore > 0) {
+							cont += "<span class='reviewScore'>"+data[i].reviewScore+"</span>";
+							}
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodArea'>"+data[i].foodArea+" - </span>";
+							cont += "<span class='foodKind'>"+data[i].foodKind+"</span>";
+						cont += "</div>";
+						cont += "<div>";
+							cont += "<span class='foodRead'>"+data[i].foodRead+"</span>";
+							if (data[i].reviewCount != null) {
+							cont += "<span class='reviewCount'>"+data[i].reviewCount+"</span>";
+							}
+						cont += "</div>";
+					cont += "</div>"
+				}
+			} else if (resultCount == 0) {
+				cont += "<div><p>검색된 음식점이 없습니다.</p></div>";
+			}
+			$(".result").html(cont);	
+			},
+		error: function (request, status, error) {
+			var str = 'code: '+request.status+'\n';
+			str += 'message: ' + request.responseText+'\n';
+			str += 'error: ' + error;
+			alert(str);
+		}
+	});
+}
+
+$(function() {
+	searchCountAjax();
+	searchResultAjax();
+});
+
+function searchType() {
+	areaType = "";
+	kindType = "";
+	currentPage=1;
+	orderType = $('input[name="orderType"]:checked').val();
+	$('input[name="areaType"]:checked').each(function() {
+		areaType += $(this).val() + ",";
+	});
+	$('input[name="kindType"]:checked').each(function() {
+		kindType += $(this).val() + ",";
+	});
+	searchCountAjax();
+	searchResultAjax();
+	filterModal.style.display = "none";
+}
+
+function changePage(n) {
+	if (n == "next") {
+		currentPage = Math.ceil(currentPage/pageBlock)*pageBlock+1;
+		searchCountAjax();
+	} else if (n == "prev") {
+		currentPage = (Math.floor(currentPage/pageBlock)-1)*pageBlock+1;
+		searchCountAjax();
+	} else if (n == "first") {
+		currentPage = 1;
+		searchCountAjax();
+	} else if (n == "last") {
+		currentPage = pageCount;
+		searchCountAjax();
+	} else {
+		currentPage = n;
+	}
+	searchResultAjax();
+}
+	var header = document.getElementById("header");
+	var filterModal = document.getElementById("filterModal");
+	var filterClick = document.getElementById("filterClick");
+	var span = document.getElementsByClassName("close")[3];
+	filterClick.onclick = function() {
+		filterModal.style.display = "block";
+		header.style.display = "none";
+		}
+	span.onclick = function() {
+		filterModal.style.display = "none";
+		header.style.display = "block";
+		}
+
 
 </script>
 </html>

@@ -264,6 +264,12 @@
 		    <version>2.9.8</version>
 		</dependency>
 		
+		<!-- send mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 		<!-- NAVER oatuh2 -->
 		<dependency>
 		    <groupId>com.github.scribejava</groupId>
@@ -276,7 +282,6 @@
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.4</version>
 		</dependency>
-		
 		
 		
 	</dependencies>

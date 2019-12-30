@@ -11,7 +11,124 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 <script src="${root}/resources/javascript/food/food.js"></script>
-<link rel="stylesheet" href="${root}/resources/css/admin/review.css"/>
+<%-- <link rel="stylesheet" href="${root}/resources/css/admin/review.css"/> --%>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+.button {
+    color: #FFFFFF;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
+}
+#title {
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+}
+#title > button {
+	float: right;
+	font-size: 23px;
+	color: black;
+	background: white;
+	border: #CED4DA solid 1px;
+	border-radius: 5px;
+}
+#title > span {
+	margin-left: 60px;
+	font-size: 23px;
+}
+#content {
+	width: 100%;
+	overflow: hidden;
+	margin: 0 auto;
+}
+#list {
+	width: 100%;
+	margin: 0 auto;
+}
+/* 식당관련 */
+#content_modal {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -400px;
+	margin-top: -400px;
+	background: #F2F4EF;
+	width: 800px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.content_modal {
+	width: 800px;
+	overflow: hidden;
+}
+.title_modal {
+	width: 800px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+/* 식당관련 */
+.food {
+	overflow: hidden;
+	width: 500px; 
+	margin: 10px auto;
+}
+.food > div {
+	margin-top: 5px;
+}
+.food > div span:nth-child(1) {
+	font-size: 23px;
+	display: inline-block;
+	width: 150px;
+}
+.food > div span:nth-child(2) {
+	font-size: 23px;
+	display: inline-block;
+	width: 345px;
+	text-align: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn > .button {
+	font-size: 23px;
+	width: 480px;
+	height: 50px;
+}
+
+.reviewModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+</style>
 </head>
 <body>
 	<div id="content">
@@ -61,31 +178,32 @@
 				<div class="food">
 					<div>
 						<span>리뷰 코드</span>
-						<div id="reviewCode"></div>
+						<span id="reviewCode"></span>
 					</div>
 					<div>
 						<span>음식점 코드</span>
-						<div id="foodCode"></div>						
+						<span id="foodCode"></span>						
 					</div>
 					<div>
 						<span>멤버 코드</span>
-						<div id="memberCode"></div>									
+						<span id="memberCode"></span>									
 					</div>					
 					<div>
 						<span>리뷰 날짜</span>
-						<div id="reviewDate"></div>					
+						<span id="reviewDate"></span>					
 					</div>
 					<div>
 						<span>리뷰 내용</span>
-						<textarea rows="10" cols="60" id="reviewCont" readonly="readonly"></textarea>				
+						<textarea rows="7" cols="65" id="reviewCont" readonly="readonly"></textarea>				
 					</div>								
 					<div>
 						<span>리뷰 점수</span>
-						<div id="reviewScore"></div>						
+						<span id="reviewScore"></span>						
 					</div>	
 					<div>
 						<span>이미지</span>
-						<div id="imgWrapper"></div>												
+						<!-- 이미지가 나오면 처리해야할 부분 -->
+						<span id="imgWrapper"></span>												
 					</div>				
 					<div class="btn">												
 						<button class="button">삭제하기</button>
@@ -110,10 +228,7 @@ $(".reviewClick").click(function(){
 		type : "GET",
 		dataType : "json",
 		success:function(data){
-			console.log(data);
-			//alert(data.listImage[0].imageName);
-			//alert(data.listImage[1].imageName);
-			//alert(data.listImage.length);
+			//console.log(data);			
 			$("#reviewHidden").val(data.reviewCode);
 			$("#reviewCode").text(data.reviewCode);
 			$("#foodCode").text(data.foodCode);

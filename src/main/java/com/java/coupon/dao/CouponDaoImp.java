@@ -58,6 +58,13 @@ public class CouponDaoImp implements CouponDao {
 		return sqlSessionTemplate.selectList("dao.CouponMapper.couponList", listMap);
 	}
 	
+	//쿠폰리스트(관리자)
+	@Override
+	public List<CouponDto> couponListAdmin() {
+		return sqlSessionTemplate.selectList("dao.CouponMapper.couponListAdmin");
+	}
+	
+	
 	@Override
 	@ResponseBody
 	public List<CouponDto> couponListAjax(int startRow, int endRow, Date today) {

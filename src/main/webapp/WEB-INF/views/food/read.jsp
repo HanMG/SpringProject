@@ -7,106 +7,14 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <html>
 <head>
+<meta charset="UTF-8">
+<title>음식점상세페이지</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%-- <link rel="stylesheet" href="${root}/resources/css/food/read.css" /> --%>
 <link rel="stylesheet" href="${root}/resources/css/slideshow.css" />
 <script src="${root}/resources/xhr.js"></script>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-<meta charset="UTF-8">
-<title>음식점상세페이지</title>
 <script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
-<script>
-	$(function(){
 
-		var reviewInfoClick = $(".reviewInfoClick");
-		for (var i = 0; i < reviewInfoClick.length; i++) {
-			reviewInfoClick[i].onclick = function() {
-				reViewInfoModal.css("display","block");
-			}
-		}
-		close_reViewInfo[0].onclick = function() {
-			reViewInfoModal.css("display","none");
-		}
-	});
-
-</script>
-<script>
-function favorite(x) {
-	if (x.className === "fa fa-heart-o") {
-		x.className = "fa fa-heart";
-	}
-}
-			
-var root = "${root}";
-var memberCode = "${memberCode}";
-var foodCode = "${foodDto.foodCode}";
-var favorStatus = "";
-
-$(function() {
-	if (memberCode != "") {
-		favorCheck();
-	} 
-});
-
-function favorCheck() {
-	$.ajax({
-		type : "POST",
-		url : root + "/favorite/check.do",
-		data : { "memberCode" : memberCode, "foodCode" : foodCode},
-		success : function(data) {
-			favorStatus = data;
-			if (favorStatus === "on") {
-				$("#favorite").attr('class', 'fa fa-heart');
-			} else if (favorStatus === "off") {
-				$("#favorite").attr('class', 'fa fa-heart-o');
-			}
-		}, error: function (request, status, error) {
-			alert("error");
-		}
-	});
-}
-
-function favorSwitch() {
-	if (memberCode == "") {
-		// 로그인
-		alert("로그인하세요");
-	} else if (memberCode != "") {
-		if (x.className == "fa fa-heart") {
-			favorStatus = "on";
-		} else {
-			favorStatus = "off";
-		}
-		$.ajax({
-			type : "POST",
-			url : root + "/favorite/switch.do",
-			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
-			success : function(data) {
-				favorStatus = data;
-				if (favorStatus === "on") {
-					$("#favorite").attr('class', 'fa fa-heart');
-				} else if (favorStatus === "off") {
-					$("#favorite").attr('class', 'fa fa-heart-o');
-				}
-			}, error: function (request, status, error) {
-				alert("error");
-			}
-		});
-	}
-}
-	
-	
-	function reviewList(root, selScore) {
-		let url = root + "/food/foodReviewList.go";
-		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
-		sendRequest("GET", url, fromServer, params);
-	}	
-	function fromServer() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let reviewDisplay = document.getElementById("review");
-			reviewDisplay.innerHTML = xhr.responseText;
-		}
-	}
-</script>
 <style type="text/css">
 a {
 	color: #030305;
@@ -118,7 +26,7 @@ a {
 }
 
 .fa:hover {
-  color: pink;
+  color: #EFB730;
 }
 
 * {
@@ -132,7 +40,6 @@ a {
 	margin : 10px auto;
 	width: 1240px;
 	overflow: hidden;
-   	border-bottom: 1px dotted;
    	margin-top: 30px;
 }
 /* 가게 상세 */
@@ -189,7 +96,6 @@ a {
 }
 .info_2 > span {
 	font-size: 12px;
-	margin-left: 10px;
 }
 /* 가게 상세설명 */
 .info_3 {
@@ -279,6 +185,7 @@ a {
 	overflow: hidden;
 	margin: 10px 0;
 	border-bottom: 1px dotted;
+	
 }
 /* 닉네임 */
 .re_2 > div:nth-child(1) {
@@ -343,16 +250,16 @@ a {
 	top: 50%;
 	margin-left: -500px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 1000px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 
 .reViewIn {
 	width: 1000px;
 	overflow: hidden;
-	background: #F2F4EF;
 }
 
 .title_reView > span:first-child {
@@ -375,7 +282,6 @@ a {
 	resize:none;
 	width: 980px;
 	height: 350px;
-	border: none;
 	font-size: 20px;
 	font-weight: bold;
 }
@@ -403,7 +309,6 @@ a {
 	background: white;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 }
 
 .title_reView {
@@ -412,7 +317,6 @@ a {
 	background: white;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	
 }
 .title_reViewInfo > span:first-child {
@@ -431,7 +335,7 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
 }
 
 .reViewInfoModal {
@@ -445,7 +349,7 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 .close_reView, .close_reViewInfo {
   color: #aaaaaa;
@@ -503,6 +407,15 @@ a {
 	margin-left: 20px;
 	min-height: 200px;
 }
+.icon {
+	width: 10px;
+	height: 10px;
+}
+.emoticon{
+	width: 48px;
+	height: 48px;
+}
+
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
@@ -540,9 +453,12 @@ a {
 				</div>
 			</div>
 			<div class="info_2">
-				<span>조회수 ${foodDto.foodRead }</span> 
-				<span>리뷰수 ${reviewCountDto.whole}</span> 
-				<span>즐겨찾기</span>
+				<img class="icon" alt="" src="${root}/resources/css/views.png">
+				<span>${foodDto.foodRead }</span> 
+				<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
+				<span>${reviewCountDto.whole}</span> 
+				<img class="icon" alt="" src="${root}/resources/css/favorites.png">
+				<span>${favoriteCnt}</span>
 			</div>
 			<div class="info_3">
 				<div>
@@ -626,7 +542,7 @@ a {
 			
 								<div onclick="myReview('${foodReviewDto.reviewCode}')">
 									<!-- ${root}/review/read.go?reviewCode=${foodReviewDto.reviewCode}  -->
-									<a href="#" class="reviewInfoClick" >
+									<a href="javascript:void(0)" class="reviewInfoClick" >
 										<div class="reviewCont">
 											<span><fmt:formatDate value="${foodReviewDto.reviewDate}" pattern="yyyy-MM-dd" /></span>
 											<span>${foodReviewDto.reviewCont}</span>
@@ -641,8 +557,31 @@ a {
 								</div>
 			
 								<div>
-									<span>(${foodReviewDto.reviewScore})</span>
+									<c:choose>
+										<c:when test="${foodReviewDto.reviewScore == 5}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_5.png">
+											<br/><span>맛있다</span>
+										</c:when>
+										<c:when test="${foodReviewDto.reviewScore == 3}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_3.png">
+											<br/><span>괜찮다</span>
+										</c:when>
+										<c:when test="${foodReviewDto.reviewScore == 1}">
+											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_1.png">
+											<br/><span>별로</span>
+										</c:when>
+									</c:choose>
+									<%-- <span>(${foodReviewDto.reviewScore})</span> --%>
 								</div>
+								<c:if test="${memberCode == foodReviewDto.memberCode}">
+								<div>
+								</div>
+								<div>
+									<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
+									<a href="javascript:void(0)" onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>									
+								</div>
+								
+								</c:if>
 							</div>
 						</c:forEach>
 					</c:when>
@@ -679,7 +618,7 @@ a {
 				</div>
 				<div class="in">
 					<p><strong>${foodDto.foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</p>
-					<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data">			
+					<form action="${root}/review/insertOk.go" method="POST" enctype="multipart/form-data" onsubmit="return reviewForm(this)">			
 						<input type="hidden" name="foodCode" value="${foodDto.foodCode}" />
 						<input type="hidden" name="memberCode" value="${memberCode}" />
 						<div class="container_1">
@@ -710,7 +649,7 @@ a {
 						<label for="bad">별로에요</label><input type="radio" id="bad" name="reviewScore" value="1"/> -->
 						<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="식당의 분위기, 서비스가 궁금해요!"></textarea>
 						<div id="fileDiv">     
-							<div class="box-file-input"><label><input type="file" multiple="multiple" name="imgFile" class="file-input"  accept="image/*"></label><span class="filename">파일을 선택해주세요</span></div>
+							<div class="box-file-input"><label><input type="file" multiple="multiple" name="imgFile" class="file-input" accept="image/*"></label><span class="filename">파일을 선택해주세요</span></div>
 				            <!-- <input type="file" name="imgFile" multiple="multiple" accept="image/*"/> -->                  
 				        </div>        
 				        <input class="button" type="submit" value="글쓰기"/>
@@ -732,7 +671,7 @@ a {
 					<div class="slideshow-review">
 					<c:forEach var="imageDto" items="${listImage}">
 						<div class="mySlides fade">
-							<img class="imageName" alt="image" style="width: 800px; height: 500px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br />
+							<img class="imageName"  style="width: 800px; height: 500px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br />
 						</div>
 						<div>	
 							<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -748,33 +687,61 @@ a {
 			</div>
 		</div>
 	</div>
-</body>
-	<script type="text/javascript">
+
+
+
+<!-- 리뷰 상세보기 모달, 내용 가져오는 ajax -->
+<script>
+//본인 리뷰 내용 & 리뷰 내용 
+
+function myReview(reviewCode) {
+	var url = "${root}/review/read.go?reviewCode=" + reviewCode;
+	$("#reViewInfoModal").css("display","block");
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success : function(data){
+			var json=data;
+			$("#reviewCont").text(json.reviewCont);
+			$("#reviewScore").text(json.reviewScore);
+			//alert(json.reviewCont);
+			//alert(json.reviewScore);
+			/* for(var i=0; json.imgList.length;i++){
+				alert(json.imgList[i].imagePath);
+			} */
+		}
+	});
+}
+
+// 리뷰 상세 모달 끄기 
+$(".close_reViewInfo").click(function(){
+	$("#reViewInfoModal").css("display","none");
+});
+</script>
+
+<!-- 리뷰 리스트 불러오는 자바 스크립트 ajax -->
+<script>
+// 리뷰 리스트  ajax로 불러오기 (XHR.js 이용) 
+function reviewList(root, selScore) {
+	let url = root + "/food/foodReviewList.go";
+	let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
+	sendRequest("GET", url, fromServer, params);
+}	
+// reivew/list.jsp를 거쳐 값을 #reviewDisplay에 뿌려줌 
+function fromServer() {
+	if (xhr.readyState == 4 && xhr.status == 200) {
+		let reviewDisplay = document.getElementById("review");
+		reviewDisplay.innerHTML = xhr.responseText;
+	}
+}
+</script>
+
+<script type="text/javascript">
 	
 	// 본인 리뷰 내용
 	
-	function myReview(reviewCode) {
-		var url = "${root}/review/read.go?reviewCode=" + reviewCode;
-		$.ajax({
-			url : url,
-			type : "GET",
-			dataType : "json",
-			success : function(data){
-				var json=data;
-				$("#reviewCont").text(json.reviewCont);
-				$("#reviewDate").text(json.reviewDate);
-				//alert(json.reviewCont);
-				//alert(json.reviewScore);
-				for(var i=0; json.imgList.length;i++){
-					//alert(json.imgList[i].imageName);
-					var imageName = json.imgList[i].imageName;
-					$(".imageName").attr("src", function(){
-							return "${root}/resources/ftp/"+imageName;
-						});
-					}
-				} 
-			});
-		}
+	
 	/* 파일 버튼 */
 	$(document).on("change", ".file-input", function(){
 	 
@@ -788,20 +755,22 @@ a {
 	});
 	
 	/*  리뷰쓰기 클릭시 작동 */
+	
 	var reViewInModal = document.getElementById("reViewInModal");
 	var reViewInClick = document.getElementById("reViewInClick");
 	var close_reView = document.getElementsByClassName("close_reView")[0];
 	reViewInClick.onclick = function() {
 		reViewInModal.style.display = "block";
+		header.style.display = "none";
 		}
 	close_reView.onclick = function() {
 		reViewInModal.style.display = "none";
-		}
+		header.style.display = "block";
+		}	
 	
 	/*  리뷰내용 클릭시 작동 */
 	var reViewInfoModal = $("#reViewInfoModal");
 	var close_reViewInfo = $(".close_reViewInfo");
-	
 	
 	// 지도 관련 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -870,6 +839,7 @@ a {
 	  slides[slideIndex-1].style.display = "block";  
 	  dots[slideIndex-1].className += " active";
 	}
+<<<<<<< HEAD
 
 var root = "${root}";
 var memberCode = "${memberCode}";
@@ -881,39 +851,35 @@ $(function() {
 		favorCheck();
 	} 
 });
+=======
+	</script>
+	
+	
+	<script>
+>>>>>>> cce213f50753ff958610d891cb31549112cd3c88
 
-function favorCheck() {
-	$.ajax({
-		type : "POST",
-		url : root + "/favorite/check.do",
-		data : { "memberCode" : memberCode, "foodCode" : foodCode},
-		success : function(data) {
-			favorStatus = data;
-			if (favorStatus === "on") {
-				$("#favorite").attr('class', 'fa fa-heart');
-			} else if (favorStatus === "off") {
-				$("#favorite").attr('class', 'fa fa-heart-o');
-			}
-		}, error: function (request, status, error) {
-			alert("error");
+	function favorite(x) {
+		if (x.className === "fa fa-heart-o") {
+			x.className = "fa fa-heart";
 		}
+	}
+				
+	var root = "${root}";
+	var memberCode = "${memberCode}";
+	var foodCode = "${foodDto.foodCode}";
+	var favorStatus = "";
+
+	$(function() {
+		if (memberCode != "") {
+			favorCheck();
+		} 
 	});
-}
 
-function favorSwitch(aa) {
-	if (memberCode == "") {
-		// 로그인
-		alert("로그인하세요");
-	} else if (memberCode != "") {
-		if (aa.className == "fa fa-heart") {
-			favorStatus = "on";
-		} else {
-			favorStatus = "off";
-		}
+	function favorCheck() {
 		$.ajax({
 			type : "POST",
-			url : root + "/favorite/switch.do",
-			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			url : root + "/favorite/check.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode},
 			success : function(data) {
 				favorStatus = data;
 				if (favorStatus === "on") {
@@ -926,19 +892,35 @@ function favorSwitch(aa) {
 			}
 		});
 	}
-}
-	
-	
-	function reviewList(root, selScore) {
-		let url = root + "/food/foodReviewList.go";
-		let params = "foodCode=${foodDto.foodCode}&selScore="+selScore;		
-		sendRequest("GET", url, fromServer, params);
-	}	
-	function fromServer() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let reviewDisplay = document.getElementById("review");
-			reviewDisplay.innerHTML = xhr.responseText;
+
+	function favorSwitch(x) {
+		if (memberCode == "") {
+			// 로그인
+			alert("로그인하세요");
+		} else if (memberCode != "") {
+			if (x.className == "fa fa-heart") {
+				favorStatus = "on";
+			} else {
+				favorStatus = "off";
+			}
+			$.ajax({
+				type : "POST",
+				url : root + "/favorite/switch.do",
+				data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+				success : function(data) {
+					favorStatus = data;
+					if (favorStatus === "on") {
+						$("#favorite").attr('class', 'fa fa-heart');
+					} else if (favorStatus === "off") {
+						$("#favorite").attr('class', 'fa fa-heart-o');
+					}
+				}, error: function (request, status, error) {
+					alert("error");
+				}
+			});
 		}
 	}
 </script>
+<script src="${root}/resources/javascript/review/review.js"></script>
+</body>
 </html>

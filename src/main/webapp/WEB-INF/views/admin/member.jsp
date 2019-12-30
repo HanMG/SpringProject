@@ -16,8 +16,8 @@
 }
 .button {
     color: #FFFFFF;
-    border: #EFB730 solid 1px;
-    background-color: #EFB730;
+    border: #343A40 solid 1px;
+    background-color: #343A40;
 }
 #title {
 	width: 100%;
@@ -42,57 +42,49 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -400px;
-	margin-top: -450px;
+	margin-left: -300px;
+	margin-top: -300px;
 	background: #F2F4EF;
-	width: 800px;
+	width: 600px;
 	border-radius: 5px;
-	background: tomato;
 	overflow: hidden;
 }
 .content_modal {
-	width: 800px;
+	width: 600px;
 	overflow: hidden;
-	background: skyblue;
 }
 .title_modal {
-	width: 800px;
+	width: 600px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-	background: olive;
-}
-.title_modal > span:first-child {
-	margin-left: 40px;
+	text-align: center;
 }
 
 /* 회원관련 */
 .member {
 	overflow: hidden;
 	width: 500px; 
-	border-bottom: 1px dotted;
 	margin: 10px auto;
-	background: tomato;
 }
 .member > div {
 	margin-top: 10px;
-	margin-left: 30px;
 }
 .member > div span:nth-child(1) {
-	display: block;
-	font-size: 20px;
-	
+	font-size: 23px;
+	display: inline-block;
+	width: 120px;
+	line-height: 50px;
 }
 .member > div > input[type=text] {
 	display: inline-block;
-	width: 400px;
-	height: 20px;
-	font-size: 20px;
+	width: 375px;
+	height: 50px;
+	font-size: 23px;
 }
 .member > div > .button {
-	width: 120px;
+	width: 230px;
 	height: 50px;
 }
 .btn > .button {
@@ -128,7 +120,9 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
+.span {
+	font-size: 23px;
+}
 </style>
 
 </head>
@@ -149,6 +143,7 @@
 						<th>회원상태</th>
 					</tr>				
 				</thead>
+<<<<<<< HEAD
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
@@ -160,6 +155,19 @@
 	                     <th>${memberList.memberStatus}</th>
 	                  </tr>
                		</c:forEach>
+=======
+				<tbody>
+				<c:forEach var="memberList" items="${memberList}">
+					<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
+						<th>${memberList.memberCode}</th>
+						<th>${memberList.memberMail}</th>
+						<th>${memberList.memberName}</th>
+						<th>${memberList.memberDate}</th>
+						<th>${memberList.memberPhone}</th>
+						<th>${memberList.memberStatus}</th>
+					</tr>
+				</c:forEach>
+>>>>>>> cce213f50753ff958610d891cb31549112cd3c88
 				</tbody>
 			</table>
 		</div>	
@@ -176,9 +184,9 @@
 				</div>
 				<form action="${root}/admin/adminUpdateOk.go" method="post">
 				<div class="member">
-					<input type="hidden" id="memberCode" value="${memberDto.memberCode}" name="memberCode"/>	
 					<div>
-						<span id="memberCode">멤버코드 : ${memberDto.memberCode}</span>
+						<span>멤버코드</span>
+						<span class="span" id="memberCode"></span>
 					</div>
 					<div>
 						<span>이름</span>
@@ -194,12 +202,13 @@
 						<input type="text" id="memberPhone" name="memberPhone" value="">
 					</div>
 					<div>
-						<span id="memberDate">가입일 : ${memberDto.memberDate}</span>
+						<span>가입일</span>
+						<span class="span" id="memberDate"></span>
 					</div>
 					<div>
 						<span>회원상태</span>
-						<input type="radio" name="memberStatus" value="y"><label>활성화</label>
-						<input type="radio" name="memberStatus" value="n"><label>비활성화</label>
+						<input type="radio" name="memberStatus" value="y"><label class="span">활성화</label>
+						<input type="radio" name="memberStatus" value="n"><label class="span">비활성화</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="수정하기"></input>
@@ -231,8 +240,8 @@ function getMember(memberCode){
 		dataType : "json",
 		success : function(data){
 			console.log(data);
-			$("#memberCode").text("멤버코드 : " + data.memberCode);
-			$("#memberDate").text("가입일 : " + data.memberDate);
+			$("#memberCode").text(data.memberCode);
+			$("#memberDate").text(data.memberDate);
 			$("#memberCode").val(data.memberCode);
 			$("#memberName").val(data.memberName);
 			$("#memberMail").val(data.memberMail);

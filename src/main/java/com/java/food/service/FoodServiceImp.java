@@ -3,8 +3,8 @@ package com.java.food.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +83,7 @@ public class FoodServiceImp implements FoodService {
 			// 파일명 = 현재시간을 초단위로 변환한 값 + 올려질때 파일명
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 			// 파일 생성위치 
-			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가...
 			path.mkdirs();
 			// 만들고자하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
@@ -118,6 +118,7 @@ public class FoodServiceImp implements FoodService {
 		FoodDto foodDto = new FoodDto();
 		ImageDto imageDto = new ImageDto();
 		ReviewCountDto reviewCountDto = new ReviewCountDto();
+
 		// 리뷰 리스트 가져오기 위한 Dao
 		List<FoodReviewDto> reviewList = null;
 		reviewList = foodDao.reviewList(foodCode);
@@ -177,16 +178,17 @@ public class FoodServiceImp implements FoodService {
             // 조회수 증가
             foodDao.foodReadUpdate(foodCode);
         }		
-		
+		// 즐겨찾기 카운트 
+        String favoriteCnt = Integer.toString(foodDao.foodFavorite(foodCode));
 		// 리뷰 카운트
         reviewCountDto = foodDao.foodReivewCount(foodCode);
         JejuAspect.logger.info(JejuAspect.logMsg+"reviewCount"+reviewCountDto.toString());
         // 리뷰 평균 점수
         float reviewAvg = foodDao.foodReviewAvg(foodCode);
         // 보낼 데이터
+        mav.addObject("favoriteCnt", favoriteCnt);
 		mav.addObject("reviewAvg", reviewAvg);
-		mav.addObject("reviewCountDto",reviewCountDto);	
-			
+		mav.addObject("reviewCountDto",reviewCountDto);			
 		mav.addObject("couponDtoList", couponDtoList);
 		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	
@@ -235,7 +237,7 @@ public class FoodServiceImp implements FoodService {
 		if (fileSize != 0) {
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + upFile.getOriginalFilename();
 
-			File path = new File("C:\\Spring\\workspace\\eathejeju\\src\\main\\webapp\\resources\\ftp");
+			File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 			//C://Spring//workspace//springProject//resources//ftp
 			//C:\\ftp\\
 			path.mkdirs();	
@@ -270,6 +272,7 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/updateOk.tiles");		
 	}
 	
+	// 음식점 정보 삭제
 	@Override
 	public void foodDelete(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -298,6 +301,7 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("food/delete.tiles");		
 	}
 
+	
 	@Override
 	public void foodReviewList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -317,6 +321,10 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("review/list.empty");
 		
 	}
+	
+	
+	// 관리자 음식점페이지로 이동 및 전체 정보를 가져오기
+
 
 	@Override
 	public void adminFoodList(ModelAndView mav) {		
@@ -326,35 +334,38 @@ public class FoodServiceImp implements FoodService {
 		mav.setViewName("admin/food.admin");		
 	}
 
+	
+	// 관리자 음식점페이지에서 게시글 클릭시 해당 게시글의 정보를 ajax로 가져오기
 	@Override
 	public void getFood(ModelAndView mav) {
 		Map<String, Object> map = mav.getModel();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");		
 		String foodCode = request.getParameter("foodCode");
 		FoodDto foodDto = foodDao.foodRead(foodCode);
-		ImageDto imageDto = imageDao.imgRead(foodCode);
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		JSONObject jsonFoodDto = new JSONObject();
-		JSONObject jsonImgDto = new JSONObject();
-		if(imageDto != null) {
-			jsonImgDto.put("imageName", imageDto.getImageName());
-		}
+		ImageDto imageDto = imageDao.imgRead(foodCode);		
 		
-		JejuAspect.logger.info(JejuAspect.logMsg+jsonFoodDto.toString());
-		jsonFoodDto.put("foodCode", foodDto.getFoodCode());
-		jsonFoodDto.put("foodName", foodDto.getFoodName());
-		jsonFoodDto.put("foodAddr", foodDto.getFoodAddr());
-		jsonFoodDto.put("foodArea", foodDto.getFoodArea());
-		jsonFoodDto.put("foodPhone", foodDto.getFoodPhone());
-		jsonFoodDto.put("foodKind", foodDto.getFoodKind());
-		jsonFoodDto.put("foodMenu", foodDto.getFoodMenu());
-		jsonFoodDto.put("foodTime", foodDto.getFoodTime());
-		jsonFoodDto.put("foodBreak", foodDto.getFoodBreak());
-		jsonFoodDto.put("foodIntro", foodDto.getFoodIntro());		
-		jsonFoodDto.put("foodStatus", foodDto.getFoodStatus());
-		jsonFoodDto.put("memberCode", foodDto.getMemberCode());
-		jsonFoodDto.put("imageDto", jsonImgDto);
+		HashMap<String, Object> jsonHashMap = new HashMap<String, Object>();		
+		
+		if(imageDto != null) {			
+			jsonHashMap.put("imageName", imageDto.getImageName());
+		}	
+
+		jsonHashMap.put("foodCode", foodDto.getFoodCode());
+		jsonHashMap.put("foodName", foodDto.getFoodName());
+		jsonHashMap.put("foodAddr", foodDto.getFoodAddr());
+		jsonHashMap.put("foodArea", foodDto.getFoodArea());
+		jsonHashMap.put("foodPhone", foodDto.getFoodPhone());
+		jsonHashMap.put("foodKind", foodDto.getFoodKind());
+		jsonHashMap.put("foodMenu", foodDto.getFoodMenu());
+		jsonHashMap.put("foodTime", foodDto.getFoodTime());
+		jsonHashMap.put("foodBreak", foodDto.getFoodBreak());
+		jsonHashMap.put("foodIntro", foodDto.getFoodIntro());
+		jsonHashMap.put("foodStatus", foodDto.getFoodStatus());
+		jsonHashMap.put("foodStatus", foodDto.getFoodStatus());
+		jsonHashMap.put("memberCode", foodDto.getMemberCode());	
+		JSONObject jsonFoodDto = new JSONObject(jsonHashMap);
+		JejuAspect.logger.info(JejuAspect.logMsg+jsonFoodDto.toString());		
 		
 		String jsonText = jsonFoodDto.toJSONString();
 		JejuAspect.logger.info(JejuAspect.logMsg+"jsonText: "+jsonText);

@@ -7,15 +7,42 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>삭제 페이지</title>
+		<script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			$("#purchaseDelBtn_cus").on('click', function(){
+				var purchaseCode = $('input[name=purchaseCode]').val();
+				var delUrl = "${root}/purchase/purchaseDeleteOk.go?purchaseCode="+purchaseCode;
+				$.ajax({
+					url: delUrl,
+					type: 'POST',
+					dataType: 'json',
+					success: function(data){
+						var check = data.check;
+						if(check == 1){
+							opener.alert("구매취소 완료되었습니다.");
+							opener.location.reload();
+						} else {
+							opener.alert("정상처리 실패; 관리자 문의 요망; 구매 취소 가능 여부 확인해주세요.")
+						}
+						self.close();
+					}, error : function(request,status,error){
+						console.log("실패");
+				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				})
+			});
+		})
+	</script>
 	</head>
 	<body>
-		<p><strong>${couponCode} ${couponName}</strong> 쿠폰 (을)를 <br>
+		<p><strong>구매번호: ${purchaseCode}<br>${couponName}</strong> 쿠폰 (을)를 <br>
 			정말로 취소 요청하시겠습니까?</p>
-		<form action="${root}/purchase/purchaseDeleteOk.go" method="post">
-			<input type="hidden" name="couponCode" value="${couponCode}">
-			<input type="hidden" name="pageNumber" value="${pageNumber}">
-			<input type="submit"  value="상품 취소 신청">
+		<form>
+			<input type="hidden" name="purchaseCode" value="${purchaseCode}">
+			<input id="purchaseDelBtn_cus" type="button"  value="상품 취소 신청">
 		</form>
 		<a href="javascript:self.close()">닫기</a>
+		
 	</body>
 </html>

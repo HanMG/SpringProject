@@ -15,53 +15,55 @@
 a {
 	text-decoration: none;
 }
-			#content_mypage {
+#content_mypage {
 	margin : 10px auto;
 	width: 1240px;
 	overflow: hidden;
 }
 .title_mypage {
-	width: 1000px;
+	width: 800px;
 	height: 50px;
-	background: #F2F4EF;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
+	text-align: center;
 }
 
 /* 마이페이지 */
 .myPage {
-	width: 1000px;
+	width: 800px;
 	overflow: hidden;
-	margin: 40px 120px;
-	background: #F2F4EF;
+	margin: 70px 220px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+	
 }
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
-	width: 300px;
-	font-size: 35px;
+	width: 200px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
-	width: 600px;
-	font-size: 35px;
+	width: 500px;
+	font-size: 23px;
 	margin: 5px 0;
 }
 .nav_5 {
-	width: 900px;
+	width: 700px;
 	font-size: 23px;
 }
+
 
 .myPage button {
 	float: right;
 	right: 10px;
 	width: 100px;
 	height: 50px;
-	font-size: 20px;
+	font-size: 23px;
 }
 .input {
 	width: 200px;
@@ -70,6 +72,7 @@ a {
 .button {
 	height: 30px; 
 }
+
 </style>
 	<script type="text/javascript">
 		function phoneCheck(){
@@ -167,15 +170,15 @@ a {
 			</div>
 			<div>
 				<span>원가</span>
-				<span>${couponDto.couponCostori}</span>
+				<span>${couponDto.couponCostori}원</span>
 			</div>
 			<div>
 				<span>할인가격</span>
-				<span>${couponDto.couponCostsale}</span>
+				<span>${couponDto.couponCostsale}원</span>
 			</div>
 			<div>
 				<span>유효기간</span>
-				<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
+				<span>${couponDto.couponStartdate}부터 ${couponDto.couponEnddate}까지 사용가능</span>
 			</div>
 			<div>
 				<span>쿠폰소개</span>
@@ -183,26 +186,36 @@ a {
 			</div>
 		</div>
 		<div>
-			<form action="${root}/purchase/purchaseInsert.go" method="get">
+		     <form action="${root}/purchase/purchaseInsert.go" method="get" onsubmit="return purchaseForm(this)">
 				<input type="hidden" name="couponCode" value="${couponDto.couponCode}">
-				<!-- <input type="hidden" name="memberCode"> -->
 				<% 	
 					String memberCode = (String) session.getAttribute("memberCode");
 					if(memberCode != null){ 
 				%>
+				
 					<div>
-						<span class="nav_5"> *휴대폰번호(해당 번호로 구매한 쿠폰을 보내드립니다.)</span>
+						<span class="nav_5"> *휴대폰번호(해당 번호로 쿠폰을 보내드립니다.)</span>
 						<input class="input" type="text" name="purchasePhone">
-						<input class="button" type="button" value="인증" onclick="phoneCheck()">
 					</div>
 					<div style="text-align: center; margin-top: 10px;">
 						<input class="button" type="submit" value="구매하기" style="height: 50px; font-size: 23px; width: 100px;">
+					
 					</div>
 				<% 
 				} if(memberCode == null){ 	
 				%>
 					<p>로그인 후 구매하실 수 있습니다.</p>
-					<a href="${root}/member/login.go">로그인하기</a>
+					<a href="#" onclick="memberCodeCheck(${memberCode})" >로그인하기</a>
+					
+					<script type="text/javascript">
+						function memberCodeCheck(memberCode){
+							if (memberCode == null) {
+								alert("로그인이 필요합니다.");
+								/* 리뷰 등록 모달창 숨기고, 로그인 모달창 띄우기 */
+								modal.style.display = "block";
+							}
+						};
+					</script>
 				<% 
 				} 
 				%>

@@ -12,12 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.java.food.dto.FoodDto;
 import com.java.food.service.FoodService;
-import com.java.image.dto.ImageDto;
 
 /**
  * @작성자 : 한문구
  * @작성일 : 2019. 12. 12.
- * @설명 : 음식점 컨트롤러 . 
+ * @설명 : 음식점 컨트롤러
  */
 
 @Controller
@@ -34,17 +33,17 @@ public class FoodController {
 		return mav;		
 	}
 
+	// 음식점 정보 입력시 
 	@RequestMapping(value = "/food/insertOk.go", method = RequestMethod.POST)
 	public ModelAndView foodInsertOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
 		mav.addObject("foodDto",foodDto);		
-		// 서비스에 model and view 보냄
 		foodService.foodInsertOk(mav);
 		return mav;
 	}
 	
-	// 음식점 정보 수정 관련
+	// 음식점 정보 수정 시 정보 읽기
 	@RequestMapping(value = "/food/update.go", method = RequestMethod.GET)
 	public ModelAndView foodUpdate(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
@@ -53,12 +52,12 @@ public class FoodController {
 		return mav;
 	}
 	
+	// 음식점 정보 수정 시 정보 입력
 	@RequestMapping(value = "/food/updateOk.go", method = RequestMethod.POST)
 	public ModelAndView foodUpdateOk(HttpServletRequest request, HttpServletResponse response, FoodDto foodDto) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
 		mav.addObject("foodDto",foodDto);	
-		// 서비스에 model and view 보냄
 		foodService.foodUpdateOk(mav);
 		return mav;
 	}
@@ -79,17 +78,26 @@ public class FoodController {
 	public ModelAndView foodRead(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);	
-		mav.addObject("response",response);
-		//JejuAspect.logger.info(JejuAspect.logMsg+request.getParameter("foodCode"));		
+		mav.addObject("response",response);				
 		foodService.foodRead(mav);		
 		return mav;
 	}	
 	
+	// ajax 리스트 불러오기 
 	@RequestMapping(value="/food/foodReviewList.go", method = RequestMethod.GET)
 	public ModelAndView foodReviewList(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);			
 		foodService.foodReviewList(mav);				
 		return mav;
+	}
+	
+	// 관리자 페이지 ajax로 읽기
+	@RequestMapping(value="/admin/getFood.go", method= RequestMethod.GET)
+	public void getFood(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		foodService.getFood(mav);
 	}
 }

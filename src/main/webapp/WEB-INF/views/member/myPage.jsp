@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
@@ -14,7 +16,7 @@
 }
 a {
 	text-decoration: none;
-	color: #F2F4EF;
+	color: #030305;
 }
 #content_mypage {
 	margin : 10px auto;
@@ -24,18 +26,15 @@ a {
 .title_mypage {
 	width: 1000px;
 	height: 50px;
-	background: #F2F4EF;
 	line-height: 50px;
-	font-size: 30px;
-	border-bottom: 1px dotted;
 }
-
 /* 마이페이지 */
 .myPage {
 	width: 1000px;
 	overflow: hidden;
-	margin: 40px 120px;
-	background: #F2F4EF;
+	margin: 70px 120px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
@@ -43,7 +42,7 @@ a {
 .myPage > div span {
 	display: inline-block;
 	width: 300px;
-	font-size: 35px;
+	font-size: 30px;
 	text-align: center;
 	margin: 5px 0;
 }
@@ -61,22 +60,19 @@ a {
 	top: 50%;
 	margin-left: -250px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 500px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+	text-align: center;
 }
 .title {
 	width: 500px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-}
-/* 개인정보 */
-.title > span:first-child {
-	margin-left: 40px;
 }
 .member {
 	width: 400px;
@@ -115,7 +111,9 @@ a {
 	overflow: hidden;
 	margin-bottom: 10px;
 	margin: 5px auto;
-	border: solid 1px skyblue;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+	text-align: left;
 }
 .info_1 {
 	width: 140px;
@@ -150,36 +148,42 @@ a {
 	top: 50%;
 	margin-left: -400px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 800px;
 	height: 800px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+	text-align: center;
 }
 .history_review {
 	width: 800px;
-	overflow: hidden;
+	overflow: auto;
 }
 .title_review {
 	width: 800px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
 }
 
 .review {
 	overflow: hidden;
 	width: 780px; 
-	border-bottom: 1px dotted;
 	margin: 10px;
-	background: tomato;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
+	text-align: left;
 }
 .review_1 {
-	width: 700px;
+	width: 680px;
 	overflow: hidden;
 	float: left;
-	margin: 10px auto;
+	margin: 10px 10px;
+}
+.review_1 > div:first-child {
+	color: #9b9b9b;
+	font-size: 12px;
 }
 .review_1 > div:nth-child(2){
 	min-height: 100px;
@@ -205,9 +209,10 @@ a {
 .like {
 	overflow: hidden;
 	width: 480px; 
-	border-bottom: 1px dotted;
 	margin: 10px;
-	background: tomato;
+	text-align: left;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .like_1 {
 	width: 200px;
@@ -244,6 +249,7 @@ a {
 .register {
 	overflow: hidden;
 	width: 500px; 
+	height: 630px; 
 }
 .reg_btn {
 	width: 500px;
@@ -259,8 +265,10 @@ a {
 .reg {
 	width: 500px;
 	height: 140px;
-	background: skyblue;
 	margin: 5px 0;
+	text-align: left;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .reg_1 {
 	width: 500px;
@@ -303,9 +311,45 @@ a {
 	margin-bottom: 10px;
 	
 }
+.eat_scroll, .favorite_scroll {
+	height: 650px;
+	width: 500px;
+}
+.review_scroll {
+	height: 700px;
+	width: 800px;
+}
+.register, .eat_scroll, .review_scroll, .favorite_scroll {
+	 overflow: hidden;
+	 -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
 
+display:none;
 
+}
+.register:hover, .eat_scroll:hover, .review_scroll:hover, .favorite_scroll:hover {
+  	overflow-y: scroll;
+}
 
+/* 가고싶다  */
+.fa {
+  font-size: 25px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: pink;
+}
+
+.emoticon{
+	width: 48px;
+	height: 48px;
+}
+.button > a {
+	color: white;
+}
 /* 모달 관련 */
 .infoModal, .foodModal, .foodInModal, .eatModal, .reViewModal, .favoriteModal, .myFoodUpModal {
   display: none; /* Hidden by default */
@@ -318,9 +362,11 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
@@ -417,10 +463,10 @@ a {
 					<span>구매한 EAT딜</span>
 					<span class="close">&times;</span>
 				</div>
-				
+				<div class="eat_scroll">
 				<c:forEach var="couponList" items="${couponList}">
-					<div class="eat" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponList.foodCode}'">
-						<div class="info_1">
+					<div class="eat" >
+						<div class="info_1" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponList.foodCode}'">
 							<img alt="쿠폰" src="${couponList.imagePath}" onerror="this.src='${root}/resources/css/list.jpg'">
 						</div>
 						<div class="info_2">
@@ -435,12 +481,19 @@ a {
 							</div>
 							<div>
 								<span style="color: #EFB730;">${couponList.couponCostsale}</span>
-								<button class="button"><a href="#">취소</a></button>
+								<c:choose>
+									<c:when test="${couponList.couponStatus == 'Y'}">
+										<button id="${couponList.couponCode}" class="button" onclick="myCouponDel('${couponList.couponCode}')" style="z-index: 999;">취소</button>
+									</c:when>
+									<c:when test="${couponList.couponStatus == 'N'}">
+										<span style="color: #EFB730; float: right;">취소됨</span>
+									</c:when>
+								</c:choose>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
-				
+				</div>
 			</div>
 		</div>
 	</div>
@@ -453,22 +506,50 @@ a {
 					<span class="close">&times;</span>
 				</div>
 				
+				<div class="review_scroll">
 				<c:forEach var="reviewList" items="${reviewList}">
-					<div class="review">
+					<div class="review" style="cursor: pointer;" onclick="location.href='${root}/food/read.go?foodCode=${reviewList.foodCode}'">
 						<div class="review_1">
-							<div>${reviewList.reviewDate}작성일</div>
+							<div><fmt:formatDate value="${reviewList.reviewDate}" pattern="yyyy-MM-dd" /></div>
 							<div>${reviewList.reviewCont}</div>
 							<div>
+								<c:set var="img" value="${fn:split(reviewList.imageName,',')}" />
+								<c:forEach var="imgList" items="${img}">
+									<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+								</c:forEach>
 								<%-- <c:forEach items="${reviewList}"> --%>							
 									<%-- <img alt="리뷰" src="${reviewList.imageName}"> --%>
 								<%-- </c:forEach> --%>
 							</div> 
 						</div>
 						<div class="review_2">
-							<span>${reviewList.reviewScore}</span>
+							<c:choose>
+								<c:when test="${reviewList.reviewScore == 5}">
+									<img class="emoticon" alt="" src="${root}/resources/css/emoticon_5.png">
+									<br/><span>맛있다</span>
+								</c:when>
+								<c:when test="${reviewList.reviewScore == 3}">
+									<img class="emoticon" alt="" src="${root}/resources/css/emoticon_3.png">
+									<br/><span>괜찮다</span>
+								</c:when>
+								<c:when test="${reviewList.reviewScore == 1}">
+									<img class="emoticon" alt="" src="${root}/resources/css/emoticon_1.png">
+									<br/><span>별로</span>
+								</c:when>
+							</c:choose>
+							<%-- <span>${reviewList.reviewScore}</span> --%>
 						</div>
+						<c:if test="${memberCode == reviewList.memberCode}">
+							<div>
+							</div>
+							<div>
+								<a href="${root}/review/update.go?foodCode=${reviewList.foodCode}&reviewCode=${reviewList.reviewCode}">수정</a>
+								<a href="javascript:void(0)" onclick="userDelete('${root}','${reviewList.foodCode}','${reviewList.reviewCode}')">삭제</a>									
+							</div>
+						</c:if>
 					</div>
 				</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -481,9 +562,9 @@ a {
 					<span>가고싶다</span>
 					<span class="close">&times;</span>
 				</div>
-				
+				<div class="favorite_scroll">
 				<c:forEach var="favoriteList" items="${favoriteList}">
-					<div class="like">
+					<div class="like" id="${favoriteList.foodCode}">
 						<div class="like_1">
 							<img alt="가게" src="${root}/resources/ftp/${favoriteList.imageName}">
 						</div>
@@ -495,11 +576,11 @@ a {
 							<div>리뷰수: ${favoriteList.count}</div>
 						</div>
 						<div class="like_3">
-							<img alt="별점" src="${root}/resources/css/icon.PNG">
+							<i onclick="favorSwitch(this, '${favoriteList.foodCode}')" id="favorite" class="fa fa-heart"><br /></i>
 						</div>
 					</div>
 				</c:forEach>
-			
+				</div>
 			</div>
 		</div>
 	</div>
@@ -535,7 +616,7 @@ a {
 								<div>
 									<span>${foodList.foodKind}</span>
 									<button class="button" onclick="myFoodDel('${foodList.foodCode}')">삭제</button>
-									<button class="button" id="myFoodUpClick">수정</button>
+									<!-- <button class="button" id="myFoodUpClick">수정</button> -->
 								</div>
 								<div>
 									<span>${foodList.foodAddr}</span>
@@ -698,7 +779,57 @@ a {
 		</div>
 	</div>
 <script type="text/javascript">
-	
+	//리뷰 삭제 관련
+	function userDelete(root, foodCode, reviewCode){
+		let isOk = confirm("정말로 리뷰를 삭제하시겠습니까?");
+		if(isOk == true){
+		let url = root+"/review/userDelete.go?reviewCode="+reviewCode+"&foodCode="+foodCode;		
+		location.href=url;	
+		}
+	}
+
+	/* 가고싶다 버튼 */
+	var root = "${root}";
+	var memberCode = "${memberCode}";
+	var foodCode = "";
+	var favorStatus = "";	
+
+	function favorSwitch(x, foodCode) {
+		foodCode = foodCode;
+		if (memberCode == "") {
+			// 로그인
+			alert("로그인하세요");
+		} else if (memberCode != "") {
+			if (x.className == "fa fa-heart") {
+				favorStatus = "on";
+			} else {
+				favorStatus = "off";
+			}
+			$.ajax({
+				type : "POST",
+				url : root + "/favorite/switch.do",
+				data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+				success : function(data) {
+					console.log(data);
+					favorStatus = data;
+					if (favorStatus === "on") {
+						$("#favorite").attr('class', 'fa fa-heart');
+						console.log(foodCode);
+						$("#"+foodCode).remove();
+					} else if (favorStatus === "off") {
+						$("#favorite").attr('class', 'fa fa-heart-o');
+						$("#"+foodCode).remove();
+					}
+				}, error: function (request, status, error) {
+					alert("error");
+				}
+			});
+		}
+	}
+
+
+	var header = document.getElementById("header");
+	/* 내가 등록한 식당 삭제 */	
 	function myFoodDel(foodCode){
 		var url = "${root}/myFoodDel.go?foodCode=" + foodCode;
 		$.ajax({
@@ -710,6 +841,27 @@ a {
 			}
 		});
 	}
+	function refreshCoupon(){
+		location.reload();
+		eatModal.style.display = "block";
+	}
+	
+	/* 내가 구매한 쿠폰 삭제 */
+	function myCouponDel(couponCode){
+		var url = "${root}/coupon/couponDeleteOk.go?couponCode=" + couponCode;
+		let isOk = confirm("정말로 취소 하시겠습니까?");
+		if(isOk == true){
+			$.ajax({
+				url : url,
+				type : "POST",
+				dataType : "json",
+				success : function(data){
+					alert("취소처리 되었습니다.")
+					refreshCoupon();
+				}
+			});
+		}
+	}
 
 	/*  개인정보 클릭시 작동 */
 	var infoModal = document.getElementById("infoModal");
@@ -717,9 +869,11 @@ a {
 	var span = document.getElementsByClassName("close")[3];
 	infoClick.onclick = function() {
 		infoModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		infoModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/*  구매한 EAT 딜 클릭시 작동 */
 	var eatModal = document.getElementById("eatModal");
@@ -727,9 +881,11 @@ a {
 	var span = document.getElementsByClassName("close")[4];
 	eatClick.onclick = function() {
 		eatModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		eatModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/*  리뷰 클릭시 작동 */
 	var reViewModal = document.getElementById("reViewModal");
@@ -737,9 +893,11 @@ a {
 	var span = document.getElementsByClassName("close")[5];
 	reViewClick.onclick = function() {
 		reViewModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		reViewModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/*  가고싶다 클릭시 작동 */
 	var favoriteModal = document.getElementById("favoriteModal");
@@ -747,9 +905,11 @@ a {
 	var span = document.getElementsByClassName("close")[6];
 	favoriteClick.onclick = function() {
 		favoriteModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		favoriteModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/*  내가 등록한 식당 클릭시 작동 */
 	var foodModal = document.getElementById("foodModal");
@@ -757,9 +917,11 @@ a {
 	var span = document.getElementsByClassName("close")[7];
 	foodClick.onclick = function() {
 		foodModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		foodModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/* 식당 등록 클릭시 작동 */
 	var foodInModal = document.getElementById("foodInModal");
@@ -767,9 +929,11 @@ a {
 	var span = document.getElementsByClassName("close")[8];
 	foodInClick.onclick = function() {
 		foodInModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		foodInModal.style.display = "none";
+		header.style.display = "block";
 		}
 	/* 식당 수정 클릭시 작동 */
 	var myFoodUpModal = document.getElementById("myFoodUpModal");
@@ -777,9 +941,11 @@ a {
 	var span = document.getElementsByClassName("close")[9];
 	myFoodUpClick.onclick = function() {
 		myFoodUpModal.style.display = "block";
+		header.style.display = "none";
 		}
 	span.onclick = function() {
 		myFoodUpModal.style.display = "none";
+		header.style.display = "block";
 		}
 	
 	

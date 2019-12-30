@@ -8,13 +8,58 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 100;
+  src: url(${root}/resources/fonts/NotoSansKR-Thin.woff2) format('woff2'),
+       url(${root}/resources/fonts/NotoSansKR-Thin.woff) format('woff'),
+       url(${root}/resources/fonts/NotoSansKR-Thin.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  src: url(${root}/resources/fonts/NotoSansKR-Light.woff2) format('woff2'),
+       url(${root}/resources/fonts/NotoSansKR-Light.woff) format('woff'),
+       url(${root}/resources/fonts/NotoSansKR-Light.otf) format('opentype');
+}
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 400;
+   src: url(${root}/resources/fonts/NotoSansKR-Regular.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Regular.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 500;
+   src: url(${root}/resources/fonts/NotoSansKR-Medium.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Medium.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Medium.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 700;
+   src: url(${root}/resources/fonts/NotoSansKR-Bold.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Bold.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 900;
+   src: url(${root}/resources/fonts/NotoSansKR-Black.woff2) format('woff2'),
+        url(${root}/resources/fonts/NotoSansKR-Black.woff) format('woff'),
+        url(${root}/resources/fonts/NotoSansKR-Black.otf) format('opentype');
+ } 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: nanum-square bold;
-}
-input {
-	border:none;
+	font-family: Noto Sans KR;
 }
 a {
 	text-decoration: none;
@@ -59,21 +104,19 @@ a {
 	top: 50%;
 	margin-left: -250px;
 	margin-top: -400px;
-	background: #F2F4EF;
 	width: 500px;
 	height: 700px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background: white;
 }
 .title_main {
 	width: 500px;
 	height: 50px;
 	line-height: 50px;
 	font-size: 30px;
-	border-bottom: 1px dotted;
 	font-weight: bold;
-}
-.title_main > span:first-child {
-	margin-left: 40px;
+	text-align: center;
 }
 /* 로그인  */
 .login {
@@ -88,8 +131,9 @@ a {
 }
 .login > button {
 	font-size: 23px;
-	margin: 30px auto;
+	margin: 0 auto;
 	display: block;
+	margin-bottom: 15px;
 }
 
 /* 이메일 로그인 */
@@ -149,7 +193,7 @@ a {
 }
 
 /* 모달 관련 */
-.modal, .modal_2, .modal_3{
+.modal{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -160,12 +204,24 @@ a {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
+}
+
+.modal_2, .modal_3{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: #000;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -173,7 +229,7 @@ a {
 }
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #aaa;
   text-decoration: none;
   cursor: pointer;
 }
@@ -206,7 +262,7 @@ html {
 
 
 </style>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+
 <link rel="stylesheet" href="//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -245,7 +301,6 @@ html {
 	<div id="myModal" class="modal">
 		<div id="content_main">
 			<div class="title_main">
-				<span>로그인</span>
 				<span class="close">&times;</span>
 			</div>
 			<div class="login">
@@ -253,7 +308,7 @@ html {
 				<button class="button" id="emailClick" style="width:180pt;height:35pt;">이메일 로그인</button>
 				<button class="button" style="width:180pt;height:35pt;" onclick="loginForm()">카카오 로그인</button>
 				<div id="naver_id_login" style="text-align:center"><a href="${url}">
-				<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
+				<img style="width: 240px;" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
 			</div>
 		</div>
 	</div>
@@ -319,9 +374,10 @@ html {
 	</div>
 	
 	<div id="search" class="search">
-		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent" placeholder="검색어를 입력하여 주세요" autofocus />
+		<input type="text" id="searchInput" name="searchInput" style="background-color:transparent; border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 	</div>
 	
+<<<<<<< HEAD
 
 <script type="text/javascript">
 	var url = null;
@@ -393,22 +449,45 @@ html {
 		var param = $("#searchInput").val()
 		url = "${root}/searchKeyword.go?keyword=" + param;
 		location.href = url;
+=======
+<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
+<script type="text/javascript">
+var url = null;
+
+function search() {
+	var param = $("#searchInput").val()
+	url = "${root}/searchKeyword.go?keyword=" + param;
+	location.href = url;
+}
+
+$("#searchButton").click(function() {
+	search();
+});
+
+$("#searchInput").keypress(function(event) {
+	if (event.which == 13) {
+		search();
+>>>>>>> cce213f50753ff958610d891cb31549112cd3c88
 	}
-	
-	$("#searchInput").keypress(function(event) {
-		if (event.which == 13) {
-			search();
-		}
-	})
-	
-	$(document).ready(function() {
-		$("#searchInput").on("change", function() {
-			getKeywordList($("#testInput").val());
-			
-			$('#testInput').autocomplete({
+});
+
+$("#searchInput").on("change keyup paste", function() {
+	var keywordList = [];
+	$.ajax({
+		type : "POST",
+		url : "${root}/searchAutoAjax.do",
+		data : {"keyword" : $("#searchInput").val()},
+		dataType:"json",
+		success : function(data){
+			$('#searchInput').autocomplete({
+			    source: data
 			});
-		});
-	});
+		}
+	}); 
+});
+
 	
 
 	/* 메인화면 로그인 클릭시 작동 */

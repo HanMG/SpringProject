@@ -688,7 +688,7 @@ function searchResultAjax() {
 					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
 						cont += "<div>";
 							var err = root + "/resources/css/list.jpg";
-							cont += "<img alt='음식 이미지' src='"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+							cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 						cont += "</div>";
 						cont += "<div>";
 							cont += "<span class='foodName'>"+data[i].foodName+"</span>";
@@ -702,9 +702,9 @@ function searchResultAjax() {
 							cont += "<span class='foodKind'>"+data[i].foodKind+"</span>";
 						cont += "</div>";
 						cont += "<div>";
-							cont += "<span class='foodRead'>"+data[i].foodRead+"</span>";
+							cont += "<span class='foodRead'>조회수 "+data[i].foodRead+" / </span>";
 							if (data[i].reviewCount != null) {
-							cont += "<span class='reviewCount'>"+data[i].reviewCount+"</span>";
+							cont += "<span class='reviewCount'>리뷰수 "+data[i].reviewCount+"</span>";
 							}
 						cont += "</div>";
 					cont += "</div>"

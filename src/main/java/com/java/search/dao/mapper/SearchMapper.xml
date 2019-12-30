@@ -146,7 +146,7 @@
 	<select id="searchResult" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
 			SELECT * FROM 
 			(SELECT ROWNUM rnum, A.* FROM
-			(SELECT * FROM 
+			(SELECT food_code, food_name, food_addr, food_area, food_phone, food_kind, food_menu, image_name, image_path, review_food, nvl(review_score,0) review_score, nvl(review_count,0) review_count FROM 
 			(SELECT * FROM food WHERE food_code in(
 			(SELECT distinct food_code from (
 			SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
@@ -161,7 +161,7 @@
 			when food_name like ('%'||#{keyword}||'%') then 0
 			when food_menu like ('%'||#{keyword}||'%') then 1
 			when food_kind like ('%'||#{keyword}||'%') then 2
-			else 3 end asc) fo, image, (SELECT food_code review_food, AVG(review_score) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
+			else 3 end asc) fo, image, (SELECT food_code review_food, NVL(AVG(review_score),0) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
 			WHERE fo.food_code = image.refer_code(+)
 			AND fo.food_code = rv.review_food(+)
 			<if test="areaArr[0] != ''">
@@ -173,16 +173,17 @@
 			<if test="kindArr[0] != ''">
 				AND food_kind IN
 				<foreach collection="kindArr" item="kind" index="index" open="(" close=")" separator=",">
-					#{kind}
+					('%'||#{kind}||'%')
 				</foreach>
 			</if>
+			)A
 			<if test="orderType == '조회수'">
 				ORDER BY food_read DESC
 			</if>
 			<if test="orderType == '평점'">
 				ORDER BY review_score DESC
 			</if>
-			)A)
+			)
 		<![CDATA[
 			WHERE rnum >=#{startRow} and rnum <=#{endRow}
 		]]>

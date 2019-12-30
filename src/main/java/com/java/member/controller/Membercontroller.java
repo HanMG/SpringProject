@@ -78,6 +78,15 @@ public class Membercontroller {
 		memberService.memberSignInOk(mav);
 		return mav;
 	}
+	//이메일 중복 체크
+	@RequestMapping(value="/member/mailCheck.go", method= {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView mailCheck(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		memberService.mailCheck(mav);
+		return mav;
+	}
 	// 카카오, 이메일 성공시
 	@RequestMapping(value="/member/mailLoginOk.go", method= {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView memberMailLoginOk(HttpServletRequest request, HttpServletResponse response) {

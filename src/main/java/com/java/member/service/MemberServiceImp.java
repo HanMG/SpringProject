@@ -51,6 +51,29 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("check",check);
 		mav.setViewName("member/signInOk.tiles");
 	}
+	//이메일 중복 체크
+	@Override
+	public void mailCheck(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		String mail=request.getParameter("mail");
+		int check=memberDao.emailCheck(mail);
+		JejuAspect.logger.info(JejuAspect.logMsg + check);
+		
+		response.setContentType("application/text;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(check);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//mav.addObject("check", check);
+		//mav.setViewName("member/emailCheckOk.empty");
+	}
 	// 이메일 로그인 성공 과정
 	@Override
 	public void memberMailLoginOk(ModelAndView mav) {

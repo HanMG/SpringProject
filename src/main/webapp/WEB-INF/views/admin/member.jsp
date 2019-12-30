@@ -151,17 +151,6 @@
 				</thead>
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
-						<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
-							<th>${memberList.memberCode}</th>
-							<th>${memberList.memberMail}</th>
-							<th>${memberList.memberName}</th>
-							<th>${memberList.memberDate}</th>
-							<th>${memberList.memberPhone}</th>
-							<th>${memberList.memberStatus}</th>
-						</tr>
-					</c:forEach>
-				<tbody>
-					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
 	                     <th>${memberList.memberCode}</th>
 	                     <th>${memberList.memberMail}</th>

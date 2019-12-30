@@ -21,4 +21,9 @@
 		select * FROM ( select food_code, food_name, food_read, ROW_NUMBER() OVER (ORDER BY food_read desc) rank from food) where rownum <=10
 	]]>	
 	</select>
+	<select id="couponReadRank" resultType="com.java.admin.dto.AdminFoodReadDto">
+	<![CDATA[
+		SELECT * FROM ()
+	]]>	
+	</select>
 </mapper>

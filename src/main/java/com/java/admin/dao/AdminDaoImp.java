@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java.admin.dto.AdminCouponReadDto;
 import com.java.admin.dto.AdminFoodDto;
 import com.java.admin.dto.AdminFoodReadDto;
 
@@ -34,4 +35,8 @@ public class AdminDaoImp implements AdminDao {
 		return sqlSession.selectOne("memberMapper.loginCheck", map);
 	}
 
+	// 구매쿠폰 top10
+	@Override
+	public List<AdminCouponReadDto> couponReadRank() {
+		return sqlSession.selectList("dao.AdminMapper.couponReadRank");	}
 }

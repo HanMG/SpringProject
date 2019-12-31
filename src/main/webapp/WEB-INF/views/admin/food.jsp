@@ -212,8 +212,18 @@ thead > tr > th {
 					<div id="map" style="width:200px;height:200px;margin-top:10px;display:none; margin-left: 155px"></div>
 					<div>
 						<span>*지역</span>
-						<input type="radio" name="foodArea" id="insertAreaJeju" value="제주시" checked="checked"><label class="span" for="insertAreaJeju">제주시</label>
-						<input type="radio" name="foodArea" id="insertAreaSeo" value="서귀포시"><label class="span" for="insertAreaSeo">서귀포시</label>
+						<select name="foodArea">
+							<option value="제주시내">제주시내</option>
+							<option value="서귀포시내">서귀포시내</option>
+							<option value="푸드트럭">푸드트럭</option>
+							<option value="중문/예래">중문/예래</option>
+							<option value="성산/우도">성산/우도</option>
+							<option value="구좌/김녕">구좌/김녕</option>
+							<option value="월정/평대/세화">월정/평대/세화</option>
+							<option value="조천/함덕">조천/함덕</option>
+							<option value="애월">애월</option>
+							<option value="한림/협재/비양도">한림/협재/비양도</option>
+						</select>						
 					</div>		
 					<div>
 						<span>*전화번호</span>
@@ -221,12 +231,17 @@ thead > tr > th {
 					</div>			
 					<div>
 						<span>*종류</span>
-						<input type="radio" name="foodKind" id="insertKor" value="한식" checked="checked"><label class="span" for="insertKor">한식</label>
-						<input type="radio" name="foodKind" id="insertChn" value="중식"><label class="span" for="insertChn">중식</label>
-						<input type="radio" name="foodKind" id="insertJp" value="일식"><label class="span" for="insertJp">일식</label>
-						<input type="radio" name="foodKind" id="insertWt" value="양식"><label class="span" for="insertWt">양식</label>
-						<input type="radio" name="foodKind" id="insertCf" value="카페"><label class="span" for="insertCf">카페</label>
-						<input type="radio" name="foodKind" id="insertEtc" value="기타"><label class="span" for="insertEtc">기타</label>
+						<select id="foodKind1" onchange="kindChange('foodKind')">
+							<option value="">대분류</option>
+							<option value="한식">한식</option>
+							<option value="중식">중식</option>
+							<option value="일식">일식</option>
+							<option value="양식">양식</option>
+							<option value="카페/술">카페/술</option>
+							<option value="기타">기타</option>					
+						</select>	
+						<select id="foodKind2"></select>
+						<input type="hidden" name="foodKind" id="foodKind" />					
 					</div>
 					<div>
 						<span>대표음식</span>
@@ -271,7 +286,7 @@ thead > tr > th {
 					<span>식당 관리</span>
 					<span class="close foodClose">&times;</span>
 				</div>
-				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" name="foodForm" onsubmit="return foodForm(this)">
+				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" name="foodForm" onsubmit="return foodUpForm(this)">
 				<input type="hidden" name="foodCode" id="foodCode" value="" />
 				<div class="food">
 					<div>
@@ -287,9 +302,19 @@ thead > tr > th {
 						<input type="text" name="foodAddr" id="foodAddr" value=""/>					
 					</div>
 					<div>
-						<span>지역</span>
-						<input type="radio" name="foodArea" id="updateAreaJeju" value="제주시"><label class="span" for="updateAreaJeju">제주시</label>
-						<input type="radio" name="foodArea" id="updateAreaSeo" value="서귀포시"><label class="span" for="updateAreaSeo">서귀포시</label>
+						<span>*지역</span>
+						<select name="foodArea" id="foodArea">
+							<option value="제주시내">제주시내</option>
+							<option value="서귀포시내">서귀포시내</option>
+							<option value="푸드트럭">푸드트럭</option>
+							<option value="중문/예래">중문/예래</option>
+							<option value="성산/우도">성산/우도</option>
+							<option value="구좌/김녕">구좌/김녕</option>
+							<option value="월정/평대/세화">월정/평대/세화</option>
+							<option value="조천/함덕">조천/함덕</option>
+							<option value="애월">애월</option>
+							<option value="한림/협재/비양도">한림/협재/비양도</option>
+						</select>
 					</div>
 					<div>
 						<span>*전화번호</span>
@@ -297,13 +322,18 @@ thead > tr > th {
 					</div>					
 					<div>
 						<span>*종류</span>
-						<input type="radio" name="foodKind" id="updateKor" value="한식"><label class="span" for="updateKor">한식</label>
-						<input type="radio" name="foodKind" id="updateChn" value="중식"><label class="span" for="updateChn">중식</label>
-						<input type="radio" name="foodKind" id="updateJp" value="일식"><label class="span" for="updateJp">일식</label>
-						<input type="radio" name="foodKind" id="updateWt" value="양식"><label class="span" for="updateWt">양식</label>
-						<input type="radio" name="foodKind" id="updateCf" value="카페"><label class="span" for="updateCf">카페</label>
-						<input type="radio" name="foodKind" id="updateEtc" value="기타"><label class="span" for="updateEtc">기타</label>
-					</div>				
+						<select class="foodKind1" id="foodKindUp1" onchange="kindChange('foodKindUp')">
+							<option value="">대분류</option>
+							<option value="한식">한식</option>
+							<option value="중식">중식</option>
+							<option value="일식">일식</option>
+							<option value="양식">양식</option>
+							<option value="카페/술">카페/술</option>
+							<option value="기타">기타</option>					
+						</select>	
+						<select id="foodKindUp2"></select>
+						<input type="hidden" name="foodKind" id="foodKindUp" />					
+					</div>			
 					<div>
 						<span>대표음식</span>
 						<input type="text" name="foodMenu" id="foodMenu" value="">
@@ -346,14 +376,13 @@ thead > tr > th {
 		</div>
 	</div>
 	
-<!-- 식당 등록 유효성 검사 -->
-<script>
 
-</script>
 <script type="text/javascript">
 /*  게시판  클릭시 작동 */
  
-$(".foodClick").click(function(){
+$(".foodClick").click(function(){	
+	$(".foodKind1 option:eq(0)").prop("selected", true);
+	$("#foodKindUp2").empty();
 	$("#imgWrapper").empty();
 	$("#foodDeleteBtn").removeAttr("onclick");
 	$("#foodModal").css("display","block");	
@@ -369,9 +398,15 @@ $(".foodClick").click(function(){
 			$("#foodCodeTemp").text(data.foodCode);			
 			$("#foodName").val(data.foodName);
 			$("#foodAddr").val(data.foodAddr);
-			$("input:radio[name='foodArea'][value='"+data.foodArea+"']",document.foodForm).prop("checked", true);			
-			$("#foodPhone").val(data.foodPhone);			
-			$("input:radio[name='foodKind'][value='"+data.foodKind+"']",document.foodForm).prop("checked", true);
+			$("#foodArea").val(data.foodArea);			
+			$("#foodPhone").val(data.foodPhone);	
+			let foodKind = data.foodKind;	
+			if(foodKind != null){
+				let foodKindArr = foodKind.split(" > ");			
+				$("#foodKindUp1").val(foodKindArr[0]);
+				kindChange("foodKindUp");			
+				$("#foodKindUp2").val(foodKindArr[1]);
+			}
 			$("#foodMenu").val(data.foodMenu);
 			$("#foodTime").val(data.foodTime);
 			$("#foodBreak").val(data.foodBreak);
@@ -394,6 +429,8 @@ $(".foodClose").click(function(){
 });
 /*  식당 등록 클릭시 작동 */
 $("#foodInClick").click(function(){
+	$(".foodKind1 option:eq(0)").prop("selected", true);
+	kindChange();
 	$("#foodInModal").css("display","block");
 });
 $(".foodInClose").click(function(){

@@ -150,17 +150,17 @@ public class PurchaseServiceImp implements PurchaseService {
 		int count = purchaseDao.getCount(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: "+ count);
 		
-		int boardSize = 6;
-		int startRow = (currentPage-1)*boardSize+1;
-		int endRow = currentPage*boardSize;
-		JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
+		//int boardSize = 6;
+		//int startRow = (currentPage-1)*boardSize+1;
+		//int endRow = currentPage*boardSize;
+		//JejuAspect.logger.info(JejuAspect.logMsg + "startRow/endRow: "+ startRow +"/"+ endRow);
 		
 		List<PurchaseListDto> purchaseList = purchaseDao.purchaseSelectAll(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.size());
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseList: "+ purchaseList.toString());
 		
-		mav.addObject("pageNumber", pageNumber);
-		mav.addObject("boardSize", boardSize);
+		//mav.addObject("pageNumber", pageNumber);
+		//mav.addObject("boardSize", boardSize);
 		mav.addObject("count", count);
 		mav.addObject("purchaseList", purchaseList);
 		mav.setViewName("purchase/purchaseList.tiles");

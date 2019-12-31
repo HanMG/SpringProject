@@ -77,17 +77,17 @@
 					<thead>
 						<tr>
 							<th>순위</th>
-							<th>음식점 명</th>
-							<th>조회수</th>
+							<th>쿠폰명</th>
+							<th>구매 수</th>
 							<th>링크</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="foodAdminRank" items="${adminFoodRank}">
+						<c:forEach var="couponAdminRank" items="${adminCouponRank}">
 							<tr>
-								<td>${foodAdminRank.rank}</td>
-								<td>${foodAdminRank.foodName}</td>
-								<td>${foodAdminRank.foodRead}</td>
+								<td>${couponAdminRank.rank}</td>
+								<td>${couponAdminRank.couponName}</td>
+								<td>${couponAdminRank.purchaseCnt}</td>
 								<td><a
 									href="${root}/food/read.go?foodCode=${foodAdminRank.foodCode}">링크</a></td>
 							</tr>

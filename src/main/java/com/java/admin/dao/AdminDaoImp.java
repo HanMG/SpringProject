@@ -38,5 +38,6 @@ public class AdminDaoImp implements AdminDao {
 	// 구매쿠폰 top10
 	@Override
 	public List<AdminCouponReadDto> couponReadRank() {
-		return sqlSession.selectList("dao.AdminMapper.couponReadRank");	}
+		return sqlSession.selectList("dao.AdminMapper.couponReadRank");	
+	}
 }

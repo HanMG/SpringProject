@@ -37,9 +37,7 @@ public class AdminServiceImp implements AdminService {
 		
 		List<AdminCouponReadDto> adminCouponRank = adminDao.couponReadRank();
 		JejuAspect.logger.info(JejuAspect.logMsg + "adminCouponRank:" +adminCouponRank.toString());
-		
-		
-		
+		mav.addObject("adminCouponRank", adminCouponRank);
 		
 		mav.setViewName("admin/main.admin");	
 	}

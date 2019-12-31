@@ -4,6 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.AdminMapper">
+<!-- 	<resultMap type="com.java.admin.dto.AdminCouponReadDto" id="AdminCouponReadDto"/>
+ -->
 	<select id="foodCnt" resultType="com.java.admin.dto.AdminFoodDto">
 		 <![CDATA[
 		 	select * from
@@ -21,9 +23,13 @@
 		select * FROM ( select food_code, food_name, food_read, ROW_NUMBER() OVER (ORDER BY food_read desc) rank from food) where rownum <=10
 	]]>	
 	</select>
-	<select id="couponReadRank" resultType="com.java.admin.dto.AdminFoodReadDto">
-	<![CDATA[
-		SELECT * FROM ()
-	]]>	
+	
+	<!-- 구매된 쿠폰 top10 -->
+	<select id="couponReadRank" resultType="com.java.admin.dto.AdminCouponReadDto">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM AS rank, B.* FROM (SELECT * FROM (select count(purchase.coupon_code) AS purchaseCnt, purchase.coupon_code from purchase
+		group by purchase.coupon_code) A
+		JOIN coupon ON A.coupon_code = coupon.coupon_code order by purchaseCnt DESC)B) where rank <= 10
+		]]>
 	</select>
 </mapper>

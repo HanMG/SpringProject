@@ -45,7 +45,7 @@
 		    (select count(purchase.coupon_code) AS wtCoupon from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
 		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '양식' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
 		    (select count(purchase.coupon_code) AS cafe from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
-		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '카페' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '카페/술' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
 		    (select count(purchase.coupon_code) AS etc from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
 		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '기타' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate))
 		]]>

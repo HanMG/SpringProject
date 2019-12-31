@@ -72,7 +72,7 @@
 				<h2>월별 구매 현황</h2>
 				<div id="columnchart_material2" style="width: 90%; height: 500px;"></div>
 				<h2>구매 쿠폰 TOP10</h2>
-				<p>판매액 기반</p>
+				<p>판매수 기반</p>
 				<table class="table table-dark">
 					<thead>
 						<tr>
@@ -88,8 +88,7 @@
 								<td>${couponAdminRank.rank}</td>
 								<td>${couponAdminRank.couponName}</td>
 								<td>${couponAdminRank.purchaseCnt}</td>
-								<td><a
-									href="${root}/food/read.go?foodCode=${foodAdminRank.foodCode}">링크</a></td>
+								<td><a href="${root}/coupon/couponRead.go?couponCode=${couponAdminRank.couponCode}">링크</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

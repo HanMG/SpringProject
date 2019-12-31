@@ -28,8 +28,8 @@
       
       function drawChart2() {
           var data = google.visualization.arrayToDataTable([
-            ['음식점 수','한식', '중식', '일식', '양식','까페','기타'],
-            ['전체 ${adminFoodDto.totalFoodCnt}', ${adminFoodDto.korFood}, ${adminFoodDto.chnFood},${adminFoodDto.jpFood},${adminFoodDto.wtFood},${adminFoodDto.cafe},${adminFoodDto.etc}]         
+            ['구매 수','한식', '중식', '일식', '양식','카페','기타'],
+            ['전체 ${adminCouponDto.totalCouponCnt}', ${adminCouponDto.korCoupon}, ${adminCouponDto.chnCoupon},${adminCouponDto.jpCoupon},${adminCouponDto.wtCoupon},${adminCouponDto.cafe},${adminCouponDto.etc}]         
           ]);       
 
           var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
@@ -77,17 +77,17 @@
 					<thead>
 						<tr>
 							<th>순위</th>
-							<th>음식점 명</th>
-							<th>조회수</th>
+							<th>쿠폰명</th>
+							<th>구매 수</th>
 							<th>링크</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="foodAdminRank" items="${adminFoodRank}">
+						<c:forEach var="couponAdminRank" items="${adminCouponRank}">
 							<tr>
-								<td>${foodAdminRank.rank}</td>
-								<td>${foodAdminRank.foodName}</td>
-								<td>${foodAdminRank.foodRead}</td>
+								<td>${couponAdminRank.rank}</td>
+								<td>${couponAdminRank.couponName}</td>
+								<td>${couponAdminRank.purchaseCnt}</td>
 								<td><a
 									href="${root}/food/read.go?foodCode=${foodAdminRank.foodCode}">링크</a></td>
 							</tr>

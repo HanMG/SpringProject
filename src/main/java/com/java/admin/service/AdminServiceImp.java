@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.admin.dao.AdminDao;
+import com.java.admin.dto.AdminCouponDto;
+import com.java.admin.dto.AdminCouponReadDto;
 import com.java.admin.dto.AdminFoodDto;
 import com.java.admin.dto.AdminFoodReadDto;
+import com.java.aop.JejuAspect;
 
 @Component
 public class AdminServiceImp implements AdminService {
@@ -32,6 +35,18 @@ public class AdminServiceImp implements AdminService {
 		if(adminFoodRank!=null) {
 			mav.addObject("adminFoodRank",adminFoodRank);
 		}
+		
+		List<AdminCouponReadDto> adminCouponRank = adminDao.couponReadRank();
+		JejuAspect.logger.info(JejuAspect.logMsg + "adminCouponRank:" +adminCouponRank.toString());
+		mav.addObject("adminCouponRank", adminCouponRank);
+		
+		AdminCouponDto adminCouponDto = adminDao.couponCount();
+		JejuAspect.logger.info(JejuAspect.logMsg + "adminCouponDto:" +adminCouponDto.toString());
+		if(adminCouponDto != null) {
+			mav.addObject("adminCouponDto", adminCouponDto);
+		}
+		
+		
 		mav.setViewName("admin/main.admin");	
 	}
 	@Override
@@ -46,8 +61,6 @@ public class AdminServiceImp implements AdminService {
 		
 		mav.addObject("check", check);
 		mav.setViewName("admin/adminLoginOk.empty");
-		
-		
 	}
 
 }

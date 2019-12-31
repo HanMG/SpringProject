@@ -48,7 +48,7 @@ public class AdminController {
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request",request);
-		adminService.getMainData(mav);	
+		adminService.getMainData(mav);
 				
 		return mav;		
 	}

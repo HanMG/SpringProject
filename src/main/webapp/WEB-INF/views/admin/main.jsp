@@ -46,7 +46,7 @@
 				<div id="columnchart_material1" style="width: 90%; height: 500px;"></div>
 				<h2>음식점 TOP10</h2>
 				<p>조회수 기반</p>
-				<table class="table table-dark">
+				<table class="table table-dark table-hover">
 					<thead>
 						<tr>
 							<th>순위</th>
@@ -73,7 +73,7 @@
 				<div id="columnchart_material2" style="width: 90%; height: 500px;"></div>
 				<h2>구매 쿠폰 TOP10</h2>
 				<p>판매액 기반</p>
-				<table class="table table-dark">
+				<table class="table table-dark table-hover">
 					<thead>
 						<tr>
 							<th>순위</th>

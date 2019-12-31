@@ -6,7 +6,7 @@
   
 <mapper namespace="dao.FoodMapper"> 
  	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
- 		insert into food(food_code,food_name,food_addr,food_area,food_phone,food_kind,food_menu,food_time,food_break,food_intro,food_date,food_read,food_status,member_code) values ('food'||LPAD(SEQFOOD.nextval,4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodPhone}, #{foodKind}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus}, #{memberCode})
+ 		insert into food(food_code,food_name,food_addr,food_area,food_phone,food_kind,food_menu,food_time,food_break,food_intro,food_date,food_read,food_status,member_code) values ('FOOD'||LPAD(SEQFOOD.nextval,4,0), #{foodName}, #{foodAddr}, #{foodArea}, #{foodPhone}, #{foodKind}, #{foodMenu}, #{foodTime}, #{foodBreak}, #{foodIntro}, #{foodDate}, #{foodRead}, #{foodStatus}, #{memberCode})
  	</insert> 
  	
  	<select id="foodMax" resultType="String">
@@ -68,7 +68,9 @@
 	</select>
 	
 	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
-		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
+	<![CDATA[
+		select * from coupon where food_code = #{foodCode} AND to_date(coupon_enddate,'yy/mm/dd') >= sysdate
+	]]>
 	</select>
 	
 	<select id="adminfoodList" resultType="com.java.food.dto.FoodDto">

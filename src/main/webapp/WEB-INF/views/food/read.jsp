@@ -840,24 +840,6 @@ function fromServer() {
 	  dots[slideIndex-1].className += " active";
 	}
 
-
-	var root = "${root}";
-	var memberCode = "${memberCode}";
-	var foodCode = "${foodDto.foodCode}";
-	var favorStatus = "";
-	
-	$(function() {
-		if (memberCode != "") {
-			favorCheck();
-		} 
-	});
-
-
-	function favorite(x) {
-		if (x.className === "fa fa-heart-o") {
-			x.className = "fa fa-heart";
-		}
-	}
 				
 	var root = "${root}";
 	var memberCode = "${memberCode}";

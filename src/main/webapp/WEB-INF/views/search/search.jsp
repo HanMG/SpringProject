@@ -470,7 +470,7 @@ a {
 		<c:if test="${couponCount > 0}">
 				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
 				<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
-					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
+					<div style="background-image: url('${root}/resources/ftp/${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
 						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
 						<span>\ ${couponDto.couponCostsale}</span>
 						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>

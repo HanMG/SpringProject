@@ -384,9 +384,9 @@
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input style="width: 213px;" id="datepickStart" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
+							<input style="width: 213px;" id="datepickStartUp" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
 							~
-							<input style="width: 212px;" id="datepickEnd" type="text" name="couponEnddate">
+							<input style="width: 212px;" id="datepickEndUp" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>
@@ -506,9 +506,9 @@
 						<div>
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input style="width: 213px;" id="datepickStartInsert" type="text" name="couponStartdate">
+							<input style="width: 213px;" id="datepickStart" type="text" name="couponStartdate">
 							~
-							<input style="width: 212px;" id="datepickEndInsert" type="text" name="couponEnddate">
+							<input style="width: 212px;" id="datepickStart" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>

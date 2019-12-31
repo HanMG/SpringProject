@@ -27,6 +27,8 @@ import com.java.food.dto.FoodReviewDto;
 import com.java.member.dao.MemberDao;
 import com.java.member.dto.MemberDto;
 import com.java.member.dto.MemberFavoriteDto;
+import com.java.purchase.dao.PurchaseDao;
+import com.java.purchase.dto.PurchaseListDto;
 import com.java.review.dto.ReviewDto;
 
 @Component
@@ -34,6 +36,9 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private PurchaseDao purchaseDao;
 	
 
 	// 회원가입 과정
@@ -188,7 +193,8 @@ public class MemberServiceImp implements MemberService{
 		mav.addObject("reviewList",reviewList);
 		
 		// EAT딜
-		List<CouponDto> couponList = memberDao.getMyCoupon(memberCode);
+		List<PurchaseListDto> couponList = purchaseDao.purchaseSelectAll(memberCode);
+		//List<CouponDto> couponList = memberDao.getMyCoupon(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
 		mav.addObject("couponList", couponList);
 		

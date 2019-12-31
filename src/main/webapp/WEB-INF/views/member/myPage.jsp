@@ -466,7 +466,7 @@ display:none;
 				<div class="eat_scroll">
 				<c:forEach var="couponList" items="${couponList}">
 					<div class="eat" >
-						<div class="info_1" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?purchaseCode=${couponList.purchaseCode}'">
+						<div class="info_1" style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">
 							<img alt="쿠폰" src="${couponList.imagePath}" onerror="this.src='${root}/resources/css/list.jpg'">
 						</div>
 						<div class="info_2">
@@ -482,10 +482,10 @@ display:none;
 							<div>
 								<span style="color: #EFB730;">${couponList.couponCostsale}</span>
 								<c:choose>
-									<c:when test="${couponList.couponStatus == 'Y'}">
-										<button id="${couponList.couponCode}" class="button" onclick="myCouponDel('${couponList.couponCode}')" style="z-index: 999;">취소</button>
+									<c:when test="${couponList.purchaseStatus == 'Y'}">
+										<button id="${couponList.couponCode}" class="button" onclick="myCouponDel('${couponList.purchaseCode}')" style="z-index: 999;">취소</button>
 									</c:when>
-									<c:when test="${couponList.couponStatus == 'N'}">
+									<c:when test="${couponList.purchaseStatus == 'N'}">
 										<span style="color: #EFB730; float: right;">취소됨</span>
 									</c:when>
 								</c:choose>
@@ -847,8 +847,8 @@ display:none;
 	}
 	
 	/* 내가 구매한 쿠폰 삭제 */
-	function myCouponDel(couponCode){
-		var url = "${root}/coupon/couponDeleteOk.go?couponCode=" + couponCode;
+	function myCouponDel(purchaseCode){
+		var url = "${root}/purchase/purchaseDeleteOk.go?purchaseCode=" + purchaseCode;
 		let isOk = confirm("정말로 취소 하시겠습니까?");
 		if(isOk == true){
 			$.ajax({

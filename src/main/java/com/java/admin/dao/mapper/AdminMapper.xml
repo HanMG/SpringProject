@@ -8,12 +8,12 @@
 		 <![CDATA[
 		 	select * from
 			(select count(food_code) as totalFoodCnt from food),
-			(select count(food_kind) as korFood from food where food_kind like '한식 -%'),
-			(select count(food_kind) as chnFood from food where food_kind like '중식 -%'),
-			(select count(food_kind) as jpFood from food where food_kind like '일식 -%'),
-			(select count(food_kind) as wtFood from food where food_kind like '양식 -%'),
-			(select count(food_kind) as cafe from food where food_kind like '카페/술 -%'),
-			(select count(food_kind) as etc from food where food_kind like '기타 -%')
+			(select count(food_kind) as korFood from food where food_kind like '한식 >%'),
+			(select count(food_kind) as chnFood from food where food_kind like '중식 >%'),
+			(select count(food_kind) as jpFood from food where food_kind like '일식 >%'),
+			(select count(food_kind) as wtFood from food where food_kind like '양식 >%'),
+			(select count(food_kind) as cafe from food where food_kind like '카페/술 >%'),
+			(select count(food_kind) as etc from food where food_kind like '기타 >%')
 		 ]]>
 	</select>
 	<select id="foodReadRank" resultType="com.java.admin.dto.AdminFoodReadDto">

@@ -27,29 +27,10 @@ public class SearchServiceImp implements SearchService {
 	@Override
 	public void searchKeyword(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
-//		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String keyword = (String) map.get("keyword");
 		JejuAspect.logger.info(JejuAspect.logMsg + keyword);
-		
-		/*
-		 * String pageNumber = request.getParameter("pageNumber");
-		 * 
-		 * if(pageNumber == null) { pageNumber = "1"; }
-		 * 
-		 * int currentPage = Integer.parseInt(pageNumber); // 요청페이지 번호 (def.1) int
-		 * boardSize = 10; // 페이지당 출력할 게시물 수 int startRow = boardSize * (currentPage -
-		 * 1) + 1; // 시작번호 int endRow = boardSize * currentPage; // 끝번호
-		 * 
-		 * // 음식점 수 int foodCount = searchDao.foodCount(keyword);
-		 * JejuAspect.logger.info(JejuAspect.logMsg + foodCount);
-		 * 
-		 * List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>(); if (foodCount
-		 * > 0) { foodList = searchDao.foodList(keyword, startRow, endRow); }
-		 * JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
-		 * JejuAspect.logger.info(JejuAspect.logMsg + foodList.toString());
-		 */
-		
+
 		// 쿠폰 수
 		int couponCount = searchDao.couponCount(keyword);
 		JejuAspect.logger.info(JejuAspect.logMsg + couponCount);
@@ -60,17 +41,10 @@ public class SearchServiceImp implements SearchService {
 		}
 		JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
 
-		
-		
-		/*
-		 * mav.addObject("currentPage", currentPage); mav.addObject("boardSize",
-		 * boardSize); mav.addObject("foodCount", foodCount); mav.addObject("foodList",
-		 * foodList);
-		 */
 		mav.addObject("couponCount", couponCount);
 		mav.addObject("couponList", couponList);
 		
-		mav.setViewName("search/searchResult.tiles");
+		mav.setViewName("search/search.tiles");
 	}
 
 	@Override
@@ -94,6 +68,7 @@ public class SearchServiceImp implements SearchService {
 			jMap.put("foodMenu", sFoodDto.getFoodMenu());
 			jMap.put("foodKind", sFoodDto.getFoodKind());
 			jMap.put("foodAddr", sFoodDto.getFoodAddr());
+			jMap.put("foodArea", sFoodDto.getFoodArea());
 			jMap.put("imageName", sFoodDto.getImageName());
 			jMap.put("imagePath", sFoodDto.getImagePath());
 			arr.add(jMap);
@@ -131,19 +106,19 @@ public class SearchServiceImp implements SearchService {
 		Map<String, Object> map = mav.getModelMap();
 		
 		String keyword = (String) map.get("keyword");
-		String areaType = (String) map.get("areaType");
+		String addrType = (String) map.get("addrType");
 		String kindType = (String) map.get("kindType");
 		
-		String[] areaArr = null;
+		String[] addrArr = null;
 		String[] kindArr = null;
-		if (areaType != null) {
-			areaArr = areaType.split(",");
+		if (addrType != null) {
+			addrArr = addrType.split(",");
 		}
 		if (kindType != null) {
 			kindArr = kindType.split(",");
 		}
 		JejuAspect.logger.info(JejuAspect.logMsg + "arrLength : " + kindArr.length);
-		int searchCount = searchDao.searchCount(keyword, areaArr, kindArr);
+		int searchCount = searchDao.searchCount(keyword, addrArr, kindArr);
 		
 		return searchCount;
 	}
@@ -155,15 +130,15 @@ public class SearchServiceImp implements SearchService {
 		String keyword = (String) map.get("keyword");
 		String currentPage = (String) map.get("currentPage");
 		String orderType = (String) map.get("orderType");
-		String areaType = (String) map.get("areaType");
+		String addrType = (String) map.get("addrType");
 		String kindType = (String) map.get("kindType");
-		JejuAspect.logger.info(JejuAspect.logMsg + keyword + " || " + currentPage + " || " + orderType + " || " + areaType + " || " + kindType);
+		JejuAspect.logger.info(JejuAspect.logMsg + keyword + " || " + currentPage + " || " + orderType + " || " + addrType + " || " + kindType);
 		
 		// 검색 조건 Arr 변환
-		String[] areaArr = null;
+		String[] addrArr = null;
 		String[] kindArr = null;
-		if (areaType != null) {
-			areaArr = areaType.split(",");
+		if (addrType != null) {
+			addrArr = addrType.split(",");
 		}
 		if (kindType != null) {
 			kindArr = kindType.split(",");
@@ -174,11 +149,11 @@ public class SearchServiceImp implements SearchService {
 		int startRow = boardSize * (pageNumber - 1) + 1;		// 시작번호
 		int endRow = boardSize * pageNumber;
 		
-		int searchCount = searchDao.searchCount(keyword, areaArr, kindArr);
+		int searchCount = searchDao.searchCount(keyword, addrArr, kindArr);
 		
 		List<SearchFoodDto> searchResultList = new ArrayList<SearchFoodDto>();
 		if (searchCount > 0) {
-			searchResultList = searchDao.searchResult(keyword, orderType, areaArr, kindArr, startRow, endRow);
+			searchResultList = searchDao.searchResult(keyword, orderType, addrArr, kindArr, startRow, endRow);
 		}
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + searchCount + " / " + searchResultList.size());

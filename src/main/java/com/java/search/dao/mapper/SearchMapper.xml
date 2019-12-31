@@ -5,46 +5,6 @@
   
 <mapper namespace="dao.mapper.SearchMapper">
 
-	<select id="foodCount" parameterType="String" resultType="int">
-		SELECT count(distinct food_code) from (
-			SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_menu like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
-			)
-	</select>
-
-	<select id="foodList" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
-		<![CDATA[
-			SELECT * FROM 
-			(SELECT ROWNUM rnum, A.* FROM
-			(SELECT * FROM 
-			(SELECT * FROM food WHERE food_code in(
-			(SELECT distinct food_code from (
-			SELECT food_code from food where food_name like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_menu like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
-			union all
-			SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
-			)))
-			order by case 
-			when food_name like ('%'||#{keyword}||'%') then 0
-			when food_menu like ('%'||#{keyword}||'%') then 1
-			when food_kind like ('%'||#{keyword}||'%') then 2
-			else 3 end asc) fo, image, (SELECT food_code review_food, AVG(review_score) review_score, COUNT(review_code) review_count FROM review GROUP BY food_code) rv
-			WHERE fo.food_code = image.refer_code(+)
-			AND fo.food_code = rv.review_food(+)
-			)A)
-			WHERE rnum >=#{startRow} and rnum <=#{endRow}
-		]]>
-	</select>
-	
-	
 	<select id="couponCount" parameterType="String" resultType="int">
 		SELECT count(*) FROM coupon, food 
 			WHERE coupon.food_code = food.food_code
@@ -93,6 +53,9 @@
 				<if test="tagType.equals('area')">
 				WHERE food_area like ('%'||#{tagValue}||'%')
 				</if>
+				<if test="tagType.equals('tag')">
+				WHERE food_tag like ('%'||#{tagValue}||'%')
+				</if>
 			ORDER BY food_read DESC)A, image
 			WHERE A.food_code = image.refer_code(+))
 		<![CDATA[
@@ -129,10 +92,9 @@
 		union all
 		SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
 		)))
-		<if test="areaArr[0] != ''">
-			AND food_area IN
-			<foreach collection="areaArr" item="area" index="index" open="(" close=")" separator=",">
-				#{area}
+		<if test="addrArr[0] != ''">
+			<foreach collection="addrArr" item="addr" index="index" open=" and (" close=")" separator=" or">
+				food_addr LIKE ('%'||#{addr}||'%')
 			</foreach>
 		</if>
 		<if test="kindArr[0] != ''">
@@ -163,10 +125,9 @@
 			else 3 end asc) fo, image, (SELECT food_code review_food, NVL(AVG(review_score),0) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
 			WHERE fo.food_code = image.refer_code(+)
 			AND fo.food_code = rv.review_food(+)
-			<if test="areaArr[0] != ''">
-				AND food_area IN
-				<foreach collection="areaArr" item="area" index="index" open="(" close=")" separator=",">
-					#{area}
+			<if test="addrArr[0] != ''">
+				<foreach collection="addrArr" item="addr" index="index" open=" and (" close=")" separator=" or">
+					food_addr LIKE ('%'||#{addr}||'%')
 				</foreach>
 			</if>
 			<if test="kindArr[0] != ''">
@@ -174,14 +135,13 @@
 					food_kind LIKE (#{kind}||'%')
 				</foreach>
 			</if>
-			)A
 			<if test="orderType == '조회수'">
 				ORDER BY food_read DESC
 			</if>
 			<if test="orderType == '평점'">
 				ORDER BY review_score DESC
 			</if>
-			)
+			)A)
 		<![CDATA[
 			WHERE rnum >=#{startRow} and rnum <=#{endRow}
 		]]>

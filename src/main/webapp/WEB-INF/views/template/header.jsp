@@ -451,7 +451,7 @@ html {
 
 	function search() {
 		var param = $("#searchInput").val()
-		url = "${root}/searchKeyword.go?keyword=" + param;
+		url = "${root}/search.go?keyword=" + param;
 		location.href = url;
 	}
 

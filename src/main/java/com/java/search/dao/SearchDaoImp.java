@@ -64,22 +64,22 @@ public class SearchDaoImp implements SearchDao {
 	}
 
 	@Override
-	public int searchCount(String keyword, String[] areaArr, String[] kindArr) {
+	public int searchCount(String keyword, String[] addrArr, String[] kindArr) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
-		map.put("areaArr", areaArr);
+		map.put("addrArr", addrArr);
 		map.put("kindArr", kindArr);
 		return sqlSessionTemplate.selectOne("searchCount", map);
 	}
 
 	@Override
-	public List<SearchFoodDto> searchResult(String keyword, String orderType, String[] areaArr, String[] kindArr,
+	public List<SearchFoodDto> searchResult(String keyword, String orderType, String[] addrArr, String[] kindArr,
 			int startRow, int endRow) {
 		JejuAspect.logger.info(JejuAspect.logMsg + Arrays.toString(kindArr));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
 		map.put("orderType", orderType);
-		map.put("areaArr", areaArr);
+		map.put("addrArr", addrArr);
 		map.put("kindArr", kindArr);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);

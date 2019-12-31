@@ -65,7 +65,7 @@ public class SearchController {
 	}
 	
 	// 키워드 검색
-	@RequestMapping(value="/searchKeyword.go", method= RequestMethod.GET)
+	@RequestMapping(value="/search.go", method= RequestMethod.GET)
 	public ModelAndView searchKeyword(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		
@@ -85,7 +85,7 @@ public class SearchController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("keyword", request.getParameter("keyword"));
-		mav.addObject("areaType", request.getParameter("areaType"));
+		mav.addObject("addrType", request.getParameter("addrType"));
 		mav.addObject("kindType", request.getParameter("kindType"));
 		
 		return Integer.toString(searchService.searchCount(mav));
@@ -101,13 +101,13 @@ public class SearchController {
 		String keyword = request.getParameter("keyword");
 		String currentPage = request.getParameter("currentPage");
 		String orderType = request.getParameter("orderType");
-		String areaType = request.getParameter("areaType");
+		String addrType = request.getParameter("addrType");
 		String kindType = request.getParameter("kindType");
 
 		mav.addObject("keyword", keyword);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("orderType", orderType);
-		mav.addObject("areaType", areaType);
+		mav.addObject("addrType", addrType);
 		mav.addObject("kindType", kindType);
 		
 		String jsonText = searchService.searchResult(mav);

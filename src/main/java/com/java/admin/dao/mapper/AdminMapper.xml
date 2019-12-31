@@ -4,8 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.AdminMapper">
-<!-- 	<resultMap type="com.java.admin.dto.AdminCouponReadDto" id="AdminCouponReadDto"/>
- -->
 	<select id="foodCnt" resultType="com.java.admin.dto.AdminFoodDto">
 		 <![CDATA[
 		 	select * from
@@ -32,4 +30,25 @@
 		JOIN coupon ON A.coupon_code = coupon.coupon_code order by purchaseCnt DESC)B) where rank <= 10
 		]]>
 	</select>
+	
+	<!-- 월별 구매내역 -->
+	<select id="couponCnt" resultType="com.java.admin.dto.AdminCouponDto">
+		<![CDATA[
+		SELECT * FROM 
+		    (select count(coupon_code) as totalCouponCnt from purchase WHERE purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS korCoupon from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '한식' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS chnCoupon from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '중식' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS jpCoupon from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '일식' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS wtCoupon from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '양식' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS cafe from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '카페' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate)),
+		    (select count(purchase.coupon_code) AS etc from purchase INNER JOIN coupon ON purchase.coupon_code = coupon.coupon_code 
+		    INNER JOIN food ON coupon.food_code = food.food_code WHERE food_kind like '기타' AND purchase_status = 'Y' AND purchase_date BETWEEN trunc(sysdate,'mm') AND last_day(sysdate))
+		]]>
+	</select>
+	
 </mapper>

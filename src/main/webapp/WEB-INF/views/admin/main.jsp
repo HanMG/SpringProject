@@ -28,8 +28,8 @@
       
       function drawChart2() {
           var data = google.visualization.arrayToDataTable([
-            ['음식점 수','한식', '중식', '일식', '양식','까페','기타'],
-            ['전체 ${adminFoodDto.totalFoodCnt}', ${adminFoodDto.korFood}, ${adminFoodDto.chnFood},${adminFoodDto.jpFood},${adminFoodDto.wtFood},${adminFoodDto.cafe},${adminFoodDto.etc}]         
+            ['구매 수','한식', '중식', '일식', '양식','카페','기타'],
+            ['전체 ${adminCouponDto.totalCouponCnt}', ${adminCouponDto.korCoupon}, ${adminCouponDto.chnCoupon},${adminCouponDto.jpCoupon},${adminCouponDto.wtCoupon},${adminCouponDto.cafe},${adminCouponDto.etc}]         
           ]);       
 
           var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));

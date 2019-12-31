@@ -23,7 +23,7 @@ public interface SearchDao {
 
 	int searchCount(String keyword, String[] areaArr, String[] kindArr);
 
-	List<SearchFoodDto> searchResult(String keyword, String orderType, String[] areaArr, String[] kindArr, int startRow,
+	List<SearchFoodDto> searchResult(String keyword, String orderType, String[] addrArr, String[] kindArr, int startRow,
 			int endRow);
 
 }

@@ -473,19 +473,13 @@ html {
 				return false;
 			}
 		}
-	function search() {
-		var param = $("#searchInput").val()
-		url = "${root}/searchKeyword.go?keyword=" + param;
-		location.href = url;
-	}
-	
 	</script>
 <script type="text/javascript">
 var url = null;
 
 function search() {
 	var param = $("#searchInput").val()
-	url = "${root}/searchKeyword.go?keyword=" + param;
+	url = "${root}/search.go?keyword=" + param;
 	location.href = url;
 }
 

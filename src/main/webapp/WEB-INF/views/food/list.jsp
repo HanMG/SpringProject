@@ -129,38 +129,23 @@ a {
 			<span>믿고 보는 맛집 리스트</span>
 		</div>
 		<div class="tag">
-			<button class="button"><a href="#">#TOP10</a></button>
-			<button class="button"><a href="#">#애월</a></button>
+			<button class="button"><a href="#">#푸드트럭</a></button>
+			<button class="button"><a href="#">#중문</a></button>
 			<button class="button"><a href="#">#성산</a></button>
+			<button class="button"><a href="#">#김녕</a></button>
+			<button class="button"><a href="#">#애월</a></button>
 			<button class="button"><a href="#">#함덕</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
-			<button class="button"><a href="#">#우도</a></button>
+			<button class="button"><a href="#">#협재</a></button>
+			<button class="button"><a href="#">#전복</a></button>
+			<button class="button"><a href="#">#전망</a></button>
+			<button class="button"><a href="#">#여유</a></button>
+			<button class="button"><a href="#">#데이트</a></button>
+			<button class="button"><a href="#">#가족</a></button>
+			<button class="button"><a href="#">#친구</a></button>
 			<button class="button"><a href="#">#흑돼지</a></button>
 			<button class="button"><a href="#">#고기국수</a></button>
 		</div>
 		<div class="list">
-	<%-- 	<div class="test" style="width: 430px; height: 300px; float: left; background: skyblue; margin: 10px">
-			<div>
-				<img class="img" alt="" src="" onerror="this.src='${root}/resources/css/list.jpg'">
-			</div>
-			<div>
-				<div>
-					<strong>가게명</strong>
-					<span>종류</span>
-					<span>대표메뉴</span>
-				</div>
-				<div>
-					<span>주소</span>
-				</div>
-			</div>
-		</div> --%>
 			<div class="page"></div>
 		</div>
 		
@@ -188,16 +173,25 @@ function updateList() {
 				
 				cont += "<div style='cursor: pointer;' onclick="+"'location.href=\""+foodCode+"\"'>";
 					cont += "<div>";
-						cont += '<img src='+image+'/>';
+						var err = root + "/resources/css/list.jpg";
+						cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 					cont += "</div>";
 					cont += "<div>";
 						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span>";
 					cont += "</div>";
 					cont += "<div>";
-						cont += "<span>"+data[i].foodAddr+"</span> <span>"+data[i].foodMenu+"</span>";
+						cont += "<span>";
+						if (data[i].foodAddr != null) {
+							cont += data[i].foodAddr;
+						}
+						cont += "</span>";
+						cont += "<span>";
+						if (data[i].foodMenu != null) {
+							cont += data[i].foodMenu;
+						}
+						cont += "</span>";
 					cont += "</div>";
 					
-/* 						cont += "<img src='"+${root}+"/resources/ftp/"+data[i].imageName+"' style='width: 400px; height: 400px;' />"; */
 					
 				cont += "</div>"
 				
@@ -219,11 +213,14 @@ $(function() {
 
 $('button').click(function() {
 	tagValue = $(this).find('a').text().substring(1);
-	if (tagValue == "애월" || tagValue == "성산" || tagValue == "함덕" || tagValue == "우도") {
-		tagType = "addr";
-	} else if (tagValue == "흑돼지" || tagValue == "고기국수") {
+	if (tagValue == "푸드트럭" || tagValue == "중문" || tagValue == "성산" || tagValue == "김녕" || tagValue == "애월" || tagValue == "함덕" || tagValue == "협재") {
+		tagType = "area";
+	} else if (tagValue == "흑돼지" || tagValue == "고기국수" || tagValue == "전복") {
 		tagType = "menu";
-	} else {
+	} else if (tagValue == "데이트" || tagValue == "가족" || tagValue == "친구" || tagValue == "여유" || tagValue == "전망") {
+		tagType = "tag";
+	}
+	else {
 		tagType = "read";
 		tagValue = "refresh";
 	}

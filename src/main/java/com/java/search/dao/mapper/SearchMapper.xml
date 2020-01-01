@@ -39,7 +39,7 @@
 	
 	<select id="tagList" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
 			SELECT * FROM 
-			(SELECT ROWNUM rnum, A.* FROM
+			(SELECT ROWNUM rnum, A.*, image.* FROM
 			(SELECT * FROM food
 				<if test="tagType.equals('addr')">
 				WHERE food_addr like ('%'||#{tagValue}||'%')

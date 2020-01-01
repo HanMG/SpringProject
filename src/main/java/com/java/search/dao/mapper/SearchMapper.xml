@@ -16,6 +16,8 @@
 			food_kind like ('%'||#{keyword}||'%')
 			or
 			food_menu like ('%'||#{keyword}||'%')
+			or
+			food_tag like ('%'||#{keyword}||'%')
 			)
 	</select>
 	
@@ -33,7 +35,10 @@
 			food_kind like ('%'||#{keyword}||'%')
 			or
 			food_menu like ('%'||#{keyword}||'%')
+			or
+			food_tag like ('%'||#{keyword}||'%')
 			)
+			ORDER BY COUPON_SALERATE DESC
 	</select>
 	
 	
@@ -91,6 +96,8 @@
 		SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
 		union all
 		SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
+		union all
+		SELECT food_code from food where food_tag like ('%'||#{keyword}||'%')
 		)))
 		<if test="addrArr[0] != ''">
 			<foreach collection="addrArr" item="addr" index="index" open=" and (" close=")" separator=" or">
@@ -117,12 +124,15 @@
 			SELECT food_code from food where food_kind like ('%'||#{keyword}||'%')
 			union all
 			SELECT food_code from food where food_addr like ('%'||#{keyword}||'%')
+			union all
+			SELECT food_code from food where food_tag like ('%'||#{keyword}||'%')
 			)))
 			order by case 
 			when food_name like ('%'||#{keyword}||'%') then 0
 			when food_menu like ('%'||#{keyword}||'%') then 1
 			when food_kind like ('%'||#{keyword}||'%') then 2
-			else 3 end asc) fo, image, (SELECT food_code review_food, NVL(AVG(review_score),0) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
+			when food_tag like ('%'||#{keyword}||'%') then 3
+			else 4 end asc) fo, image, (SELECT food_code review_food, NVL(AVG(review_score),0) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
 			WHERE fo.food_code = image.refer_code(+)
 			AND fo.food_code = rv.review_food(+)
 			<if test="addrArr[0] != ''">

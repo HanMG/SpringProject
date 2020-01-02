@@ -705,7 +705,10 @@ function searchResultAjax() {
 	});
 }
 
+
 $(function() {
+	$('input:checkbox[name=kindType]:input[value='+"${foodKind}"+']').attr("checked", true);
+	searchType();
 	searchCountAjax();
 	searchResultAjax();
 });

@@ -88,12 +88,15 @@ public class PurchaseServiceImp implements PurchaseService {
 		String memberMail = request.getParameter("memberMail");
 		String memberCode = request.getParameter("memberCode");
 		String couponCode = request.getParameter("couponCode");
+		int purchaseCost = Integer.parseInt(request.getParameter("purchaseCost"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "memberMail: "+ memberMail);
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
+		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseCost: "+ purchaseCost);
 		
 		purchaseDto.setPurchaseDate(new Date());
 		purchaseDto.setMemberCode(memberCode);
 		purchaseDto.setCouponCode(couponCode);
+		purchaseDto.setPurchaseCost(purchaseCost);
 		JejuAspect.logger.info(JejuAspect.logMsg + "purchaseDto: "+ purchaseDto.toString());
 		
 		String purchaseCode = purchaseDao.purchaseInsertOk(purchaseDto);
@@ -267,6 +270,6 @@ public class PurchaseServiceImp implements PurchaseService {
 		mav.addObject("foodName", foodName);
 		mav.addObject("couponCostsale", couponCostsale);
 		
-		mav.setViewName("purchase/kakaoPay.tiles");
+		mav.setViewName("purchase/kakaoPay.empty");
 	}
 }

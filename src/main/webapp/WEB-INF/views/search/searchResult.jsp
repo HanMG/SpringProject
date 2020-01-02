@@ -9,76 +9,68 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-}
-a {
-	text-decoration: none;
-}
 #content {
-	margin : 50px auto;
-	width: 1240px;
-	overflow: hidden;
+	margin : 0 auto;
+	max-width: 1240px;
+	display: flex;
 }
-/* 검색 순위, 필터, 가게 리스트 */
-.nav_1 {
-	width: 740px;
-	/* 임시 높이 설정  */
-	overflow: hidden;
-	float: left;
-	margin: 0 30px;
+.food_nav_1 {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+}
+.food_nav_2 {
+	flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.filter {
+	display: flex;
+    justify-content: space-between;
+    font-size: 23px;
+    margin-bottom: 20px;
+    padding: 0 40px;
+}
+.dragend {
+	position:absolute;
+	z-index: 7;
+	top: 350px;
+	left: 180px;
+}
+
+.result {
+	display: flex;
+    margin: 0 auto;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.list {
+	display: flex;
+	height: 300px;
+	flex-direction: column;
+    margin-right: 10px;
+}
+.list > div > img {
+	width: 350px;
+	height: 200px;
+	/* position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 50%;
+	left: 50%; */
+}
+.list > div:last-child {
+	font-size: 8px;
 }
 /* 지도 */
-.nav_2 {
-	width: 440px;
-	/* 임시 높이 설정  */
-	overflow: hidden;
-	float: left;
-	
-}
-/* 인기검색, 필터 */
-.filter {
-	width: 740px;
-	height: 50px;
-}
-/* 인기검색 */
-.filter > span {
-	text-align: left;
-    color: #EFB730;
-    font-size: 24px;
-    height: 50px;
-    line-height: 50px;
-    margin-left: 10px;
-}
-/* 필터 */
-.filter > a {
-	float: right;
-	height: 50px;
-	line-height: 50px;
-	color: #EFB730;
-	margin-right: 10px;
-	font-size: 24px;
-}
-/* 가게 리스트 */
-.list {
-	width: 350px;
-	height: 300px;
-	float: left;
-	margin: 10px;
+.couponNav {
+	display: flex; 
+	flex-direction: column;
 }
 /* 가게 이미지 */
-.list > div:first-child {
-	width: 350px;
-	height: 200px;
-	margin-bottom: 5px;
-}
-.list > div:first-child > img {
-	width: 350px;
-	height: 200px;
-}
 .foodName {
 	font-size: 23px;
+	margin-right: 5px;
 }
 .reviewScore {
 	font-size: 23px;
@@ -90,11 +82,10 @@ a {
 .foodRead, .reviewCount {
 	font-size: 13px;
 }
-
 /* 페이지 */
 .page {
-	text-align: center;
-	width: 740px;
+	display: flex;
+    justify-content: center;
 }
 .page a {
 	font-size: 23px;
@@ -102,17 +93,51 @@ a {
 }
 
 .map {
-	width: 450px;
-	margin: 10px;
 	height: 450px;
+	display: flex;
 }
-.abc {
-	width: 400px;
-	margin: 5px 20px;
-	background: maroon;
+.couponList {
 	height: 150px;
+	display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+	
 }
-
+.couponList > div:nth-child(1) {
+	height: 150px;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+	text-align: center;
+	width: 300px;
+}
+.couponList > div:nth-child(1) > span {
+	display: inline-block;
+	position: absolute;
+	bottom: 25px;
+	right: 15px;
+	font-size: 19px;
+	font-weight: bold;
+	color: white;
+}
+.couponList > div:nth-child(1) > span:nth-child(2) {
+	bottom: 55px;
+	font-size: 14px;
+}
+.couponList > div:nth-child(1) > span:nth-child(3) {
+	bottom: 75px;
+	font-size: 23px;
+	display: inline-block;
+}
+.couponList > div:nth-child(1) > a {
+	display: inline-block;
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
+	font-weight: bold;
+	color: white;
+}
+/* 마커 내용 */
 .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
 .wrap * {padding: 0;margin: 0;}
 .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
@@ -132,67 +157,8 @@ a {
 	position: relative;
 }
 
-.dragend {
-	position:absolute;
-	z-index: 7;
-	top: 350px;
-	left: 180px;
-	}
-}
-
-.abc {
-	width: 400px;
-	margin: 5px 20px;
-	background: maroon;
-	height: 150px;
-}
-
 /* 쿠폰 관련 */
-.couponList {
-	width: 300px;
-	height: 150px;
-	float: left;
-	margin: 10px;
-	margin-left: 70px;
-}
-.couponList > div:nth-child(1) {
-	width: 300px;
-	height: 150px;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	position: relative;
-	text-align: center;
-}
-.couponList > div:nth-child(1) > span {
-	float: right;
-	display: inline-block;
-	position: absolute;
-	bottom: 25px;
-	right: 15px;
-	font-size: 23px;
-	font-weight: bold;
-	color: white;
-	
-}
-.couponList > div:nth-child(1) > span:nth-child(2) {
-	bottom: 55px;
-	font-size: 14px;
-}
-.couponList > div:nth-child(1) > span:nth-child(3) {
-	bottom: 75px;
-	font-size: 23px;
-	right: inherit;
-	display: inline-block;
-}
-.couponList > div:nth-child(1) > a {
-	float: right;
-	display: inline-block;
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	font-weight: bold;
-	color: white;
-}
+
 /* 필터 모달 관련 */
 .filterModal {
   display: none; /* Hidden by default */
@@ -259,6 +225,10 @@ a {
 	width: 10px;
 	height: 10px;
 }
+.filter_modal {
+	width: 740px;
+	height: 50px;
+}
 
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
@@ -266,61 +236,21 @@ a {
 <body>
 
 <div id="content">
-	<div class="nav_1">
+	<div class="food_nav_1">
 		<div class="filter">
 			<span>${keyword} 맛집 인기 검색 순위</span>
 			<a href="#" id="filterClick">필터</a>
 		</div>
-		
-
-		
 		<!-- 검색된 음식점 리스트 불러오기  -->
-		<div class="result" style="height: 1600px;">
-<%-- 			<!-- 검색 결과가 없는 경우  -->
-			<c:if test="${foodCount == 0}">
-				<div>
-					<p>검색된 음식점이 없습니다.</p>
-				</div>
-			</c:if>	
-			
-			<c:if test="${foodCount > 0}">
-			<c:forEach var = "searchFoodDto" items="${foodList}">
-			<div class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${searchFoodDto.foodCode}'">
-				<div>
-					<img alt="음식 이미지" src="${searchFoodDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
-				</div>
-				<div>
-					<span class="foodName">${searchFoodDto.foodName}</span>
-					<c:if test="${searchFoodDto.reviewScore > 0}">
-					<span class="reviewScore"><fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern="#.#"/></span>
-					</c:if>				
-				</div>
-				<div>
-					<span class="foodArea">${searchFoodDto.foodArea} - </span>  
-					<span class="foodKind">${searchFoodDto.foodKind}</span>
-				</div>
-				<div>
-					<img class="icon" alt="" src="${root}/resources/css/views.png">
-					<span class="foodRead">${searchFoodDto.foodRead}</span>
-					<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
-					<span class="reviewCount">${searchFoodDto.reviewCount}</span>
-				</div>
-			</div>
-			</c:forEach>
-			</c:if> --%>
-		</div>
-		<div class="page">
-		</div>
+		<div class="result"></div>
+		<div class="page"></div>
 	</div>
 		
-	<div class="nav_2">
+	<div class="food_nav_2">
 		<div class="map" id="map">
-			<div class="dragend" id="dragend">
-	        <!-- <button><a href="#">현재 위치에서 재검색</a></button> -->
-		    </div> 
+			<div class="dragend" id="dragend"></div> 
 		</div>
 		<script type="text/javascript">
-		
 			// 지도 관련 
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			
@@ -333,16 +263,24 @@ a {
 			var addrList = new Array();
 		
 			var clickedOverlay = null;
+		    
+			
+			var markers = [];
+			var overlays = [];
 		
-			function mark(arr){
-				var array = arr.join();
-				var abc = array.split(",");
+			function mark(addr, name, filter, foodCode, imageName){
 				
-				var addr = abc[0];
-				var name = abc[1];
-				var filter = abc[2];
-				var foodCode = abc[3];
+				markers.forEach(function (marker) { marker.setMap(null); });
+			    markers.length = 0 // 마커 배열 초기화
+				//var array = arr.join();
+				//var abc = arr.split(",");
+				var addr = addr;
+				var name = name;
+				var filter = filter;
+				var foodCode = foodCode;
+				var imageName = imageName;
 				// 주소-좌표 변환 객체를 생성합니다
+				
 				var geocoder = new kakao.maps.services.Geocoder();
 				
 				geocoder.addressSearch(addr, function(result, status) {
@@ -376,6 +314,7 @@ a {
 				    	    images : markerImage
 				    	});
 			    	   map.setBounds(bounds);
+			    	   markers.push(marker);
 			    	// 마커 위에 커스텀오버레이를 표시합니다
 					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 					var CustomOverlay = new daum.maps.CustomOverlay({
@@ -385,7 +324,8 @@ a {
 					    yAnchor: 0.5,
 						position: marker.getPosition()
 					});
-					 
+					
+					var root = '${root}';
 			    	// 커스텀 오버레이에 표시할 컨텐츠 입니다
 			    	// 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 			    	// 별도의 이벤트 메소드를 제공하지 않습니다 
@@ -412,7 +352,9 @@ a {
 						img.className = "img";
 						body.prepend(img);
 					var image = document.createElement("img");
-						image.setAttribute("src", "${searchFoodDto.imageName}");
+					var foodImage = "${root}/resources/ftp/"+imageName;
+						console.log(foodImage);
+						image.setAttribute("src", foodImage);
 						image.setAttribute("width", "73px");
 						image.setAttribute("height", "70px");
 						img.prepend(image);
@@ -438,6 +380,7 @@ a {
 			    	          
 			    	// 마커에 click 이벤트를 등록합니다
 			        kakao.maps.event.addListener(marker, 'click', function() {
+			        	//overlays.push(customOverlay); 
 			        	// clickedOverlay 존재하면 다 없앰
 			        	if (clickedOverlay) {
 			                clickedOverlay.setMap(null);
@@ -466,52 +409,27 @@ a {
 		mark(arr);
 		</script>
 		</c:forEach>
-		
-		<c:if test="${couponCount > 0}">
-				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-				<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
-					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-						<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
-						<span>\ ${couponDto.couponCostsale}</span>
-						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
-						<span>${couponDto.couponName}</span>
-						<a class="button" href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=1">구매하기</a>
-					</div>
-					<div>
-					</div>
-					
+		<div class="couponNav">
+			<c:if test="${couponCount > 0}">
+			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
+			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
+				<div style="background-image: url('${root}/resources/ftp/${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
+					<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
+					<span>\ ${couponDto.couponCostsale}</span>
+					<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
+					<span>${couponDto.couponName}</span>
 				</div>
-				</c:forEach>
-		</c:if>
+				<div>
+				</div>
+			</div>
+			</c:forEach>
+			</c:if>
+		</div>
 	</div>
 </div>
-<!-- 
-		<div>
-			<h4>필터</h4>
-			<p>조회 기준</p>
-				<input type="radio" name="orderType" class="orderType" value="조회수">인기순
-				<input type="radio" name="orderType" class="orderType" value="평점">평점순
-			<p>음식점 지역</p>
-				<input type="checkbox" name="areaType" class="areaType" value="제주시">제주시
-				<input type="checkbox" name="areaType" class="areaType" value="서귀포시">서귀포시
-			<p>음식 종류</p>
-				<input type="checkbox" name="kindType" class="kindType" value="한식">한식
-				<input type="checkbox" name="kindType" class="kindType" value="회집">회집
-				<input type="checkbox" name="kindType" class="kindType" value="일식">일식
-				<input type="checkbox" name="kindType" class="kindType" value="중식">중식
-				<input type="checkbox" name="kindType" class="kindType" value="양식">양식
-				<input type="checkbox" name="kindType" class="kindType" value="까페">까페
-			<input type="button" value="적용" onclick="searchType()" />
-		</div>
-
-		<div align="center">
-		
-	</div>
-		 -->
-		 
 	<div id="filterModal" class="filterModal">
 		<div id="contentFilter">
-			<div class="filter">
+			<div class="filter_modal">
 				<div class="titleFilter">
 					<span>필터</span>
 					<span class="close">&times;</span>
@@ -605,15 +523,6 @@ a {
 		   	</div>
 	   	</div>
 	</div>
-    
-		 
-		 
-<!--        <input type="checkbox" name="kindType" class="kindType" value="한식">한식
-            <input type="checkbox" name="kindType" class="kindType" value="회집">회집
-            <input type="checkbox" name="kindType" class="kindType" value="일식">일식
-            <input type="checkbox" name="kindType" class="kindType" value="중식">중식
-            <input type="checkbox" name="kindType" class="kindType" value="양식">양식
-            <input type="checkbox" name="kindType" class="kindType" value="까페">까페 -->
 </body>
 <script type="text/javascript">
 var root = "${root}";
@@ -639,8 +548,8 @@ function searchCountAjax() {
 		data : { keyword : keyword, areaType : areaType, kindType : kindType},
 		success : function (data) {
 			resultCount = data;
-			pageCount = Math.ceil(resultCount/boardSize);				/* 결과 페이지 수 */
-			var currentBlock = Math.floor((currentPage-1)/pageBlock);		/* 현재 블락 */
+			pageCount = Math.ceil(resultCount/boardSize);				
+			var currentBlock = Math.floor((currentPage-1)/pageBlock);		
 			var startPage = currentBlock * pageBlock + 1;
 			var endPage = startPage + pageBlock -1;
 			if (endPage > pageCount) {
@@ -681,14 +590,22 @@ function searchResultAjax() {
 			var cont = "";
 			if (resultCount > 0) {
 				for (var i = 0; i < data.length; i++) {
-					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode);
-					mark(arr);
-					//alert(arr);
+					//console.log(data);
+					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode, data[i].imageName);
+					console.log(data[i].foodAddr);
+					console.log(data[i].foodName);
+					console.log(data[i].foodKind);
+					console.log(data[i].foodCode);
+					console.log(data[i].imageName);
+					mark(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode, data[i].imageName);
+					
+					console.log(arr);
 					var url = root + "/food/read.go?foodCode=" + data[i].foodCode;
+					var root = '${root}';
 					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
 						cont += "<div>";
 							var err = root + "/resources/css/list.jpg";
-							cont += "<img alt='음식 이미지' src='"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+							cont += "<img alt='음식 이미지' src='"+root+'/resources/ftp/'+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 						cont += "</div>";
 						cont += "<div>";
 							cont += "<span class='foodName'>"+data[i].foodName+"</span>";
@@ -701,9 +618,9 @@ function searchResultAjax() {
 							cont += "<span class='foodKind'>"+data[i].foodKind+"</span>";
 						cont += "</div>";
 						cont += "<div>";
-							cont += "<span class='foodRead'>"+data[i].foodRead+"</span>";
+							cont += "<i class='fa fa-eye' style='color:#9b9b9b;'></i><span class='foodRead'>"+data[i].foodRead+"</span>&nbsp; &nbsp;";
 							if (data[i].reviewCount != null) {
-							cont += "<span class='reviewCount'>"+data[i].reviewCount+"</span>";
+							cont += "<i class='fa fa-pencil' style='color:#9b9b9b;'></i><span class='reviewCount'>"+data[i].reviewCount+"</span>";
 							}
 						cont += "</div>";
 					cont += "</div>"
@@ -760,6 +677,7 @@ function changePage(n) {
 		currentPage = n;
 	}
 	searchResultAjax();
+	
 }
 	var header = document.getElementById("header");
 	var filterModal = document.getElementById("filterModal");
@@ -767,11 +685,9 @@ function changePage(n) {
 	var span = document.getElementsByClassName("close")[3];
 	filterClick.onclick = function() {
 		filterModal.style.display = "block";
-		header.style.display = "none";
 		}
 	span.onclick = function() {
 		filterModal.style.display = "none";
-		header.style.display = "block";
 		}
 
 

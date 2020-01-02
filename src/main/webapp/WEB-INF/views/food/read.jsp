@@ -9,16 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <title>음식점상세페이지</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%-- <link rel="stylesheet" href="${root}/resources/css/food/read.css" /> --%>
-<link rel="stylesheet" href="${root}/resources/css/slideshow.css" />
-<script src="${root}/resources/xhr.js"></script>
-<script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
 
 <style type="text/css">
-a {
-	color: #030305;
-}
 .fa {
   font-size: 25px;
   cursor: pointer;
@@ -29,182 +22,149 @@ a {
   color: #EFB730;
 }
 
-* {
-	margin: 0;
-	padding: 0;
-}
-a {
-	text-decoration: none;
-}
 #content {
-	margin : 10px auto;
-	width: 1240px;
-	overflow: hidden;
-   	margin-top: 30px;
+	margin : 0 auto;
+	max-width: 1200px;
+   	margin-top: 40px;
+   	display: flex;
 }
 /* 가게 상세 */
-.nav_1 {
-	width: 740px;
-	overflow: hidden;
-	float: left;
-	margin: 0 30px;
+.read_nav_1 {
+	display: flex;
+	flex: 2;
+	flex-direction: column;
 }
 /* 가게 대표 이미지, 지도 */
-.nav_2 {
-	width: 440px;
-	float: left;
-	overflow: hidden;
+.read_nav_2 {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+.info_1 {
+	display: flex;
 }
 /* 가게명, 별점, 리뷰쓰기, 가고싶다 */
-.info_1 {
-	width: 740px;
-	height: 100px;
-}
-.info_1 > span:nth-child(2) {
+.info_1 > span > span {
 	color: #EFB730;
 }
 /* 가게명, 별점 */
 .info_1 > span {
-	line-height: 100px;
 	font-size: 30px;
-	margin-left: 15px;
-}
-
-.info_1 > div {
-	width: 70px;
-	height: 100px;
-	float: right;
-	text-align: center;
-	line-height: 130px;
-}
-/* 리뷰,가고 이미지 */
-.info_1 img {
-	width: 70px;
-	height: 70px;
 }
 /* 리뷰쓰기, 가고싶다 */
 .info_1 > div i > span {
 	font-size: 12px;
-	line-height: 30px;
 }
+.info_1 > div {
+	display: flex;
+    text-align: center;
+    margin-left: auto;
+}
+.info_1 > div > a {
+	margin-left: 10px;
+	color: #030305;
+}
+
 /* 조회수, 리뷰수, 즐겨찾기 */
-.info_2 {
-	width: 740px;
-	height: 50px;
-	line-height: 50px;
-	border-bottom: 1px dotted;
+.info_2, .info_3, .coupon {
+	border-bottom: 3px solid black;
 }
-.info_2 > span {
+
+.info_2 > span, .info_2 > i {
 	font-size: 12px;
 }
 /* 가게 상세설명 */
 .info_3 {
-	width: 740px;
-	height: 250px;
-	border-bottom: 1px dotted;
+	display: flex;
+    flex-direction: column;
 }
 .info_3 > div {
-	margin: 10px 0;
-}
-.info_3 > div:last-child {
-	float: right;	
-}
-.info_3 > div > span {
-	margin-top: 5px;
+	display: flex;
+	padding-left: 20px;
 }
 .info_3 > div > span:first-child {
 	font-size: 12px;
 	color: #9b9b9b;
-	margin-left: 10px;
-	display: inline-block;
-	width: 120px;
+	flex: 2;
+}
+.info_3 > div > span:last-child {
+	flex: 8;
 }
 /* EAT 딜 */
 .coupon {
-	width: 740px;
-	height: 300px;
-	border-bottom: 1px dotted;
+	display: flex;
 }
-/* 텍스트 EAT딜 */
 .eat_1 {
-	width: 120px;
-	height: 300px;
 	text-align: center;
-	float: left;
-	margin-top: 10px;
 	color: #EFB730;
 	font-size: 23px;
+	flex: 1;
+	margin-top: 10px;
 }
 /* 쿠폰 상세 설명 */
 .eat_2 {
-	width: 620px;
-	height: 300px;
-	float: left;
+	flex: 9;
+	flex-direction: column;
+	display: flex;
 }
 .eat_2 > div:first-child {
-	text-align: center;
-	font-weight: bold;
-	margin-top: 10px;
+	margin: 10px 0;
+	padding-left: 100px;
 }
 .eat_2 img {
-	width: 580px;
-	height: 190px;
+	width: 100%;
+	height: 200px;
 }
-.eat_2 > div:nth-child(n+2) {
-	width: 580px;
-	height: 190px;
-	margin: 17px;
-	float: left;
+.slideshow-container {
+	display: flex;
 }
+.eat_2 .prev, .eat_2 .next {
+	margin-top: -60px;
+}
+.fade {
+	display: flex;
+	flex-direction: column;
+}
+
 /* 리뷰 */
-.review {
-	width: 740px;
-	overflow: hidden;
-	background: green;
+#review {
+	display: flex;
+	flex-direction: column;
 }
 /* 리뷰수, 별점(전체, 맛있다, 괜찮다, 별로) */
 .re_1 {
-	width: 740px;
-	height: 40px;
-	line-height: 40px;
-	margin-top: 10px;
+	display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 20px;
+    margin-top: 10px;
 }
+
 .re_1 > span {
-	margin-left: 30px;
 	color: #EFB730;
-	font-size: 23px;
 }
 /* 별점(전체, 맛있다, 괜찮다, 별로) */
-.re_1 > a > span{
-	float: right;
-	margin: 0 5px;
-}
 /* 닉네임, 리뷰내용, 별점 */
-.re_2 {
-	width: 740px;
-	overflow: hidden;
-	margin: 10px 0;
-	border-bottom: 1px dotted;
-	
-}
 /* 닉네임 */
+.re_2 {
+	display: flex;
+	align-items: center;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+}
+.re_2 > div > a {
+	color: #030305;
+}
 .re_2 > div:nth-child(1) {
-	width: 70px;
-	float: left;
-	font-size: #030305;
-	margin-top: 10px;
 	text-align: center;
+	flex: 2;
 }
 /* 리뷰내용 */
 .re_2 > div:nth-child(2) {
-	width: 600px;
-	overflow: hidden;
-	float: left;
-	margin-top: 10px;
+	flex: 7;
 }
 .re_2 > div:nth-child(3) {
+	flex: 1;
 	text-align: center;
-	margin-top: 10px;
 }
 /* 리뷰 내용 - 등록일 */
 
@@ -213,33 +173,31 @@ a {
 	font-size: 14px;
 	color: #9b9b9b;
 }
-.reviewCont > span:last-child {
-	overflow: hidden;
-}
 
 /* 리뷰 이미지들 */
-.reviewImg {
-	width: 600px;
+.reviewImg > img {
+	width: 100px;
 	height: 100px;
-	margin: 5px;
 }
 
 /* 리뷰 별점 */
-.re_2 > div:nth-child(3) {
-	width: 70px;
-	float: left;
-}
-.img {
+.read_nav_2 .img > img{
 	width: 400px;
 	height: 400px;
 	margin: 0 20px;
 	margin-bottom: 10px;
+}
+.emoticon {
+	font-size: 30px;
+	color: #EFB730;
+	text-align: center;
 }
 .map {
 	width: 400px;
 	height: 400px;
 	margin: 0 20px;
 	position: fixed;
+	display: flex;
 }
 
 /* 모달 관련 */
@@ -407,32 +365,27 @@ a {
 	margin-left: 20px;
 	min-height: 200px;
 }
-.icon {
-	width: 10px;
-	height: 10px;
-}
-.emoticon{
-	width: 48px;
-	height: 48px;
-}
 
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
 <body>
 	<div id="content">
-		<div class="nav_1">
+		<div class="read_nav_1">
 			<div class="info_1">
-				<span>${foodDto.foodName}</span> 
 				<span>
-					<c:choose>
-						<c:when test="${searchFoodDto != null}">
-							<fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern=".0"/>
-						</c:when>
-						<c:otherwise>별점 없음</c:otherwise>
-					</c:choose>
-				</span>
+					${foodDto.foodName}
+					<span>
+						<c:choose>
+							<c:when test="${searchFoodDto != null}">
+								<fmt:formatNumber value="${searchFoodDto.reviewScore}" pattern=".0"/>
+							</c:when>
+							<c:otherwise>별점 없음</c:otherwise>
+						</c:choose>
+					</span>
+				</span> 
 				<div>
+					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /><span>가고싶다</span></i>
 					<!-- ${root}/review/insert.go?foodCode=${foodDto.foodCode} -->
 					<a href="#" onclick="memberCodeCheck(${memberCode})"><i class="fa fa-pencil-square-o" id="reViewInClick" ><br/><span>리뷰쓰기</span></i></a>
 					<!-- memberCode 존재유무 --> 
@@ -447,17 +400,13 @@ a {
 						};
 					</script>
 				</div>
-				<div>
-					<!-- <i onclick="favorite(this)" class="fa fa-heart-o"><br/><span>가고싶다</span></i> -->
-					<i onclick="favorSwitch(this)" id="favorite" class="fa fa-heart-o"><br /><span>가고싶다</span></i>
-				</div>
 			</div>
 			<div class="info_2">
-				<img class="icon" alt="" src="${root}/resources/css/views.png">
+				<i class="fa fa-eye" aria-hidden="true"></i>
 				<span>${foodDto.foodRead }</span> 
-				<img class="icon" alt="" src="${root}/resources/css/reviewCount.png">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
 				<span>${reviewCountDto.whole}</span> 
-				<img class="icon" alt="" src="${root}/resources/css/favorites.png">
+				<i class="fa fa-star"></i>
 				<span>${favoriteCnt}</span>
 			</div>
 			<div class="info_3">
@@ -525,11 +474,15 @@ a {
 			<!-- 리뷰 공간 -->
 			<div id="review">
 				<div class="re_1">
-					<span>리뷰(${reviewCountDto.whole})</span> 
-					<a href="javascript:void(0)" onclick="reviewList('${root}','1')"><span>별로(${reviewCountDto.bad})</span></a> 
-					<a href="javascript:void(0)" onclick="reviewList('${root}','3')"><span>괜찮다(${reviewCountDto.soso})</span></a> 
-					<a href="javascript:void(0)" onclick="reviewList('${root}','5')"><span>맛있다(${reviewCountDto.good})</span></a> 
-					<a href="javascript:void(0)" onclick="reviewList('${root}','0')"><span>전체(${reviewCountDto.whole})</span></a> 
+					<div>
+						<span>리뷰(${reviewCountDto.whole})</span>
+					</div>
+					<div> 
+						<a href="javascript:void(0)" onclick="reviewList('${root}','0')"><span>전체(${reviewCountDto.whole})</span></a>
+						<a href="javascript:void(0)" onclick="reviewList('${root}','5')"><span>맛있다(${reviewCountDto.good})</span></a> 
+						<a href="javascript:void(0)" onclick="reviewList('${root}','3')"><span>괜찮다(${reviewCountDto.soso})</span></a> 
+						<a href="javascript:void(0)" onclick="reviewList('${root}','1')"><span>별로(${reviewCountDto.bad})</span></a> 
+					</div> 
 				</div>
 				<c:choose>
 					<c:when test="${reviewList != null}">
@@ -550,7 +503,7 @@ a {
 										<div class="reviewImg">
 											<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 											<c:forEach var="imgList" items="${img}">
-												<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+												<img src="${root}/resources/ftp/${imgList}" alt="" onerror="this.src='${root}/resources/css/list.jpg'" />
 											</c:forEach>
 										</div>							
 									</a>
@@ -559,29 +512,23 @@ a {
 								<div>
 									<c:choose>
 										<c:when test="${foodReviewDto.reviewScore == 5}">
-											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_5.png">
-											<br/><span>맛있다</span>
+											<i class="fa fa-smile-o emoticon" aria-hidden="true"></i>
 										</c:when>
 										<c:when test="${foodReviewDto.reviewScore == 3}">
-											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_3.png">
-											<br/><span>괜찮다</span>
+											<i class="fa fa-meh-o emoticon" aria-hidden="true"></i>
 										</c:when>
 										<c:when test="${foodReviewDto.reviewScore == 1}">
-											<img class="emoticon" alt="" src="${root}/resources/css/emoticon_1.png">
-											<br/><span>별로</span>
+											<i class="fa fa-frown-o emoticon" aria-hidden="true"></i>
 										</c:when>
 									</c:choose>
+										<c:if test="${memberCode == foodReviewDto.memberCode}">
+										<div>
+											<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
+											<a href="javascript:void(0)" onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>									
+										</div>
+										</c:if>
 									<%-- <span>(${foodReviewDto.reviewScore})</span> --%>
 								</div>
-								<c:if test="${memberCode == foodReviewDto.memberCode}">
-								<div>
-								</div>
-								<div>
-									<a href="javascript:void(0)" onclick="userUpdate('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">수정</a>
-									<a href="javascript:void(0)" onclick="userDelete('${root}','${foodReviewDto.foodCode}','${foodReviewDto.reviewCode}')">삭제</a>									
-								</div>
-								
-								</c:if>
 							</div>
 						</c:forEach>
 					</c:when>
@@ -593,15 +540,15 @@ a {
 				</c:choose>
 			</div>
 		</div>
-		<div class="nav_2">
+		<div class="read_nav_2">
 			<div class="img">
 				<c:choose>
-					<c:when test="${foodDto.foodStatus == '완료'}">
+					<c:when test="${foodDto.foodStatus == 'y'}">
 						<img src="${root}/resources/ftp/${imageDto.imageName}" alt="이미지"
-							style="width: 400px; height: 400px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+							 onerror="this.src='${root}/resources/css/list.jpg'" />
 					</c:when>
-					<c:when test="${foodDto.foodStatus != '완료'}">
-						<h3>검토중입니다.</h3>
+					<c:when test="${foodDto.foodStatus != 'n'}">
+						<img alt="이미지 검토중" src="${root}/resources/css/list.jpg'">
 					</c:when>
 				</c:choose>
 			</div>
@@ -669,15 +616,13 @@ a {
 				</div>
 				<div class="info">
 					<div class="slideshow-review">
-					<c:forEach var="imageDto" items="${listImage}">
 						<div class="mySlides fade">
-							<img class="imageName"  style="width: 800px; height: 500px;" onerror="this.src='${root}/resources/css/list.jpg'" /><br />
+							<img class="imageName" style="width: 800px; height: 500px;"/><br />
 						</div>
 						<div>	
 							<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 							<a class="next" onclick="plusSlides(1)">&#10095;</a>
 						</div>	
-					</c:forEach>
 					</div>
 					<div class="reviewContent">
 						<div id="reviewDate"></div>
@@ -707,9 +652,23 @@ function myReview(reviewCode) {
 			$("#reviewScore").text(json.reviewScore);
 			//alert(json.reviewCont);
 			//alert(json.reviewScore);
-			/* for(var i=0; json.imgList.length;i++){
-				alert(json.imgList[i].imagePath);
-			} */
+			/* 
+			
+			<div class="mySlides fade">
+				<img class="imageName" style="width: 800px; height: 500px;"/><br />
+			</div>
+			<div>	
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+				<a class="next" onclick="plusSlides(1)">&#10095;</a>
+			</div>	
+			var imageList = "";
+			for(var i=0; json.imgList.length;i++){
+				imageList += '<'
+			$(".imageName").attr("src", "${root}/resources/ftp/IMAGE0670.jpg");
+				
+				 */
+/* 			$(".imageName").attr("src", "${root}/resources/ftp/"+json.imgList[i].imageName+")"; */
+				alert(json.imgList[i].imageName);
 		}
 	});
 }

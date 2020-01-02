@@ -152,21 +152,25 @@ public class MemberServiceImp implements MemberService{
 		// 내가 등록한 식당 리스트를 보기 위한 
 		List<FoodDto> foodList = memberDao.getMyFood(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + foodList.toString());
 		mav.addObject("foodList", foodList);
 		
 		// 가고싶다
 		List<MemberFavoriteDto> favoriteList = memberDao.getMyFavorite(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + favoriteList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + favoriteList.toString());
 		mav.addObject("favoriteList", favoriteList);
 		
 		// 리뷰
 		List<FoodReviewDto> reviewList = memberDao.getMyReview(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewList.toString());
 		mav.addObject("reviewList",reviewList);
 		
 		// EAT딜
 		List<CouponDto> couponList = memberDao.getMyCoupon(memberCode);
 		JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
+		JejuAspect.logger.info(JejuAspect.logMsg + couponList.toString());
 		mav.addObject("couponList", couponList);
 		
 		mav.setViewName("member/myPage.tiles");

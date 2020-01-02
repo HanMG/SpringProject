@@ -9,53 +9,41 @@
 <meta charset="UTF-8">
 <title>기프티콘 리스트</title>
 <style type="text/css">
-
-* {
-	margin: 0;
-	padding: 0;
-}
-a {
-	text-decoration: none;
-}
 #content {
 	margin : 10px auto;
-	width: 1240px;
 	overflow: hidden;
-}
-.title {
-	width: 1240px;
-	height: 50px;
-	line-height: 50px;
-	font-size: 30px;
+	max-width: 1000px;
+	margin: 0 auto;
 	margin-top: 40px;
 }
-.title > span {
-	margin-left: 220px;
+.title {
+	font-size: 30px;
 }
-.eat {
-	overflow: hidden;
-	width: 800px; 
-	margin: 30px 170px;
-	
+#next {
+	display: flex;
+	flex-direction: row;
+	flex-flow: row wrap;
+	margin: 0 auto;
 }
+
 .list {
-	width: 780px;
-	height: 430px;
-	float: left;
-	margin: 10px;
+	width: 300px;
+	height: 250px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	margin-right: 10px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
 }
 .list > div:nth-child(1) {
-	width: 650px;
-	margin: 0 65px;
-	height: 300px;
+	width: 300px;
+	height: 200px;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	position: relative;
 }
 .list > div:nth-child(1) > span {
-	float: right;
 	display: inline-block;
 	position: absolute;
 	bottom: 5px;
@@ -63,6 +51,7 @@ a {
 	font-size: 23px;
 	font-weight: bold;
 	color: white;
+	margin-left: auto;
 	
 }
 .list > div:nth-child(1) > span:nth-child(2) {
@@ -70,22 +59,14 @@ a {
 	font-size: 14px;
 }
 .list > div:nth-child(2) {
-	width: 650px;
-	margin: 0 65px;
-	font-size: 23px;
+	font-size: 20px;
 	color: #030305;
-	margin-top: 10px;
 }
 .list > div:nth-child(3) {
-	width: 650px;
-	margin: 0 65px;
 	font-size: 14px;
 	color: #9b9b9b;
-	margin-top: 10px;
 }
 .list > div:nth-child(4) {
-	width: 650px;
-	margin: 0 65px;
 	margin-top: 10px;
 }
 .list > div:nth-child(4) > .button {
@@ -134,8 +115,8 @@ a {
 					
 					for(var i=0; i< data.length; i++){
 		                var foodCode = "${root}/coupon/couponRead.go?couponCode="+data[i].couponCode+"&&pageNumber=1";
-		                var image = "${root}/resources/css/list.jpg";
-		                console.log(foodCode);
+		                var image = "${root}/resources/ftp/"+data[i].imageName;
+		                console.log(image);
 		                var list = "<div class='list' onclick="+"'location.href=\""+foodCode+"\"'>";
 		                        list += "<div style="+"'background-image: url(\""+image+"\")';>";
 		                            list += '<span>'+data[i].couponCostsale+'</span>';
@@ -174,25 +155,6 @@ a {
 					<p>판매중인 쿠폰이 없습니다</p>
 				</div>
 			</c:if>
-	<%-- 		
-			<c:if test="${count > 0}">
-				<c:forEach var="couponDto" items="${couponList}" begin="0" step="1">
-				<div id="inner" class="list" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
-					<div style="background-image: url('${path}${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-						<img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
-						<span>${couponDto.couponCostsale}</span>
-						<span style="text-decoration:line-through;">\ ${couponDto.couponCostori}</span>
-					</div>
-					<div>
-						<span>${couponDto.couponName}</span>
-					</div>
-					<div>
-						<span>${couponDto.couponStartdate} ~ ${couponDto.couponEnddate}</span>
-					</div>
-				</div>
-				</c:forEach>
-				</c:if>
-				 --%>
 				<c:if test="${count > 0}">
 					<div id="next"></div>
 				</c:if>

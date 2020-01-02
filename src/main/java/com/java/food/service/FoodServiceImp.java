@@ -63,8 +63,6 @@ public class FoodServiceImp implements FoodService {
 		foodDto.setFoodDate(new Date());
 		// 조회수 0 으로 설정
 		foodDto.setFoodRead(0);
-		// 음식점 공개상태는 처음시 검토중으로
-		foodDto.setFoodStatus("n");		
 		// 음식점 등록
 		check = foodDao.foodInsert(foodDto);
 		// food_code의 마지막 값 가져옴

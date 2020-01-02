@@ -177,7 +177,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 4;
+		int scrollSize = 9;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 		JejuAspect.logger.info(JejuAspect.logMsg + "startRow: " + startRow + " endRow:" + endRow);
@@ -224,7 +224,7 @@ public class CouponServiceImp implements CouponService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode : " + couponCode + " pageNumber: " + pageNumber);
 
 		CouponDto couponDto = couponDao.couponRead(couponCode);
-		couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n", "<br/>"));
+		//couponDto.setCouponIntro(couponDto.getCouponIntro().replace("\r\n", "<br/>"));
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : " + couponDto.toString());
 
 		if (couponDto.getImageName() != null) {

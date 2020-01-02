@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>      
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>      
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,7 +150,7 @@
 						<th>${memberList.memberCode}</th>
 						<th>${memberList.memberMail}</th>
 						<th>${memberList.memberName}</th>
-						<th>${memberList.memberDate}</th>
+						<th><fmt:formatDate value="${memberList.memberDate}" pattern="yyyy-MM-dd" /></th>
 						<th>${memberList.memberPhone}</th>
 						<th>${memberList.memberStatus}</th>
 					</tr>

@@ -68,7 +68,9 @@
 	</select>
 	
 	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
-		select * from coupon where food_code = #{foodCode} AND coupon_enddate > sysdate
+		<![CDATA[
+      select * from coupon where food_code = #{foodCode} AND to_date(coupon_enddate,'yy/mm/dd') >= sysdate
+   ]]>
 	</select>
 	
 	<select id="adminfoodList" resultType="com.java.food.dto.FoodDto">

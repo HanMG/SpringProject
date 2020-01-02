@@ -57,12 +57,12 @@
 	
 	<insert id="foodInsert" parameterType="com.java.food.dto.FoodDto">
 		insert into food(FOOD_CODE, MEMBER_CODE, FOOD_NAME, FOOD_ADDR, FOOD_KIND, FOOD_STATUS, FOOD_DATE, FOOD_READ, food_phone)
-		values('food'||LPAD(seqFood.nextval,4,0),
+		values('FOOD'||LPAD(seqFood.nextval,4,0),
 		#{memberCode},
 		#{foodName},
 		#{foodAddr},
 		#{foodKind},
-		'검토중',
+		'n',
 		sysdate,
 		'0',
 		'0'

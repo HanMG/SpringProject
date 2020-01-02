@@ -47,7 +47,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("url", naverAuthUrl);
 
-		return "main.main";
+		return "main.tiles";
 	}
 	
 }

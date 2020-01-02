@@ -6,13 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-	.container{
-		width: 300px; 
-		margin : 0 auto;
-	}
-</style>
+<title>Insert</title>
 </head>
 <body>	
 	<script>

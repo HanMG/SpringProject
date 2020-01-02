@@ -18,8 +18,8 @@
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- jQuery UI -->
-<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="${root}/resources/Jquery/ui/jquery-ui.css" />
+<script type="text/javascript" src="${root}/resources/jquery/ui/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${root}/resources/jquery/ui/jquery-ui.css" />
 <!-- AJAX (xhr) -->
 <script type="text/javascript" src="${root}/resources/xhr.js"></script>
 <!-- 카카오  -->

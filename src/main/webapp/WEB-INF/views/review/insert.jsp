@@ -5,7 +5,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+<script src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>리뷰등록</title>
 <style>

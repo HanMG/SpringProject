@@ -20,7 +20,7 @@
       </footer>
 	<!-- Bootstrap core JavaScript-->
 	<%-- <script src="${root}/resources/sb/vendor/jquery/jquery.min.js"></script> --%>
-	<script type="text/javascript" src="${root}/resources/Jquery/ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="${root}/resources/jquery/ui/jquery-ui.js"></script>
 	<script
 		src="${root}/resources/sb/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

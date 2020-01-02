@@ -72,7 +72,7 @@ public class SearchServiceImp implements SearchService {
 			jMap.put("imageName", sFoodDto.getImageName());
 			jMap.put("imagePath", sFoodDto.getImagePath());
 			arr.add(jMap);
-			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
+//			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
 		}
 		String jsonText = JSONValue.toJSONString(arr);
 		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);

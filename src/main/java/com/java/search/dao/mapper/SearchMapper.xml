@@ -64,7 +64,7 @@
 			ORDER BY food_read DESC)A, image
 			WHERE A.food_code = image.refer_code(+))
 		<![CDATA[
-			WHERE rnum >=1 and rnum <=10
+			WHERE rnum >=1 and rnum <=15
 		]]>
 	</select>
 	

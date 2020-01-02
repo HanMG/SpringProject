@@ -800,22 +800,51 @@ function fromServer() {
 	}
 
 				
-	var root = "${root}";
-	var memberCode = "${memberCode}";
-	var foodCode = "${foodDto.foodCode}";
-	var favorStatus = "";
 
-	$(function() {
-		if (memberCode != "") {
-			favorCheck();
-		} 
+</script>
+<script type="text/javascript">
+var root = "${root}";
+var memberCode = "${memberCode}";
+var foodCode = "${foodDto.foodCode}";
+var favorStatus = "";
+
+$(function() {
+	if (memberCode != "") {
+		favorCheck();
+	} 
+});
+
+function favorCheck() {
+	$.ajax({
+		type : "POST",
+		url : root + "/favorite/check.do",
+		data : { "memberCode" : memberCode, "foodCode" : foodCode},
+		success : function(data) {
+			favorStatus = data;
+			if (favorStatus === "on") {
+				$("#favorite").attr('class', 'fa fa-heart');
+			} else if (favorStatus === "off") {
+				$("#favorite").attr('class', 'fa fa-heart-o');
+			}
+		}, error: function (request, status, error) {
+			alert("error");
+		}
 	});
+}
 
-	function favorCheck() {
+function favorSwitch(x) {
+	if (memberCode == "") {
+		modal.style.display = "block";
+	} else if (memberCode != "") {
+		if (x.className == "fa fa-heart") {
+			favorStatus = "on";
+		} else {
+			favorStatus = "off";
+		}
 		$.ajax({
 			type : "POST",
-			url : root + "/favorite/check.do",
-			data : { "memberCode" : memberCode, "foodCode" : foodCode},
+			url : root + "/favorite/switch.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
 			success : function(data) {
 				favorStatus = data;
 				if (favorStatus === "on") {
@@ -828,34 +857,8 @@ function fromServer() {
 			}
 		});
 	}
+}
 
-	function favorSwitch(x) {
-		if (memberCode == "") {
-			// 로그인
-			alert("로그인하세요");
-		} else if (memberCode != "") {
-			if (x.className == "fa fa-heart") {
-				favorStatus = "on";
-			} else {
-				favorStatus = "off";
-			}
-			$.ajax({
-				type : "POST",
-				url : root + "/favorite/switch.do",
-				data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
-				success : function(data) {
-					favorStatus = data;
-					if (favorStatus === "on") {
-						$("#favorite").attr('class', 'fa fa-heart');
-					} else if (favorStatus === "off") {
-						$("#favorite").attr('class', 'fa fa-heart-o');
-					}
-				}, error: function (request, status, error) {
-					alert("error");
-				}
-			});
-		}
-	}
 </script>
 <script src="${root}/resources/javascript/review/review.js"></script>
 </body>

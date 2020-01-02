@@ -83,7 +83,7 @@
 	width: 100px;
 }
 </style>
-<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="${root}/resources/xhr.js"></script>
 <!-- Ajax -->
 		<script type="text/javascript">

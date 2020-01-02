@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>쿠폰 상품 수정</title>
-		<script type="text/javascript" src="${root}/resources/javascript/lib/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 		<script type="text/javascript">
 			//유효성 체크

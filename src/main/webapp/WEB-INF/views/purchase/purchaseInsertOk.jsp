@@ -19,6 +19,7 @@
 	line-height: 50px;
 	font-size: 30px;
 	text-align: center;
+	padding-top: 20px;
 }
 
 /* 마이페이지 */
@@ -35,19 +36,19 @@
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
 	width: 200px;
-	font-size: 23px;
+	font-size: 18px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
 	width: 500px;
-	font-size: 23px;
+	font-size: 15px;
 	margin: 5px 0;
 }
 .button {
 	width: 200px;
 	height: 50px;
-	font-size: 23px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -59,9 +60,6 @@
 			<span>상품 구매가 완료되었습니다!</span>
 		</div>
 	<div class="nav_1">
-		<div>
-			<img alt="쿠폰이미지" src="list.jpg">
-		</div>
 		<div>
 			<span>쿠폰명 : </span>
 			<span>${couponDto.couponName}</span>
@@ -76,7 +74,7 @@
 		</div>
 		<div>
 			<span>결제금액 : </span>
-			<span>${couponDto.couponCostsale}</span>
+			<span>${couponDto.couponCostsale}원</span>
 		</div>
 		<div>
 			<span>쿠폰 받을 번호 : </span>
@@ -90,7 +88,7 @@
 	</c:if>
 	<% 	String memberCode = (String) session.getAttribute("memberCode");
 		if(memberCode != null){ %>
-	<p style="text-align: center; margin: 10px;">
+	<p style="text-align: center; margin: 10px 0 20px 0;">
 		<a class="button" href="${root}/member/myPage.go">구매내역 확인</a>
 	</p>
 	<% 	}

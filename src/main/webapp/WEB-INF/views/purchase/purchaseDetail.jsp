@@ -19,6 +19,7 @@
 	line-height: 50px;
 	font-size: 30px;
 	text-align: center;
+	padding-top: 20px;
 }
 
 /* 마이페이지 */
@@ -35,26 +36,26 @@
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
 	width: 200px;
-	font-size: 23px;
+	font-size: 18px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
 	width: 500px;
-	font-size: 23px;
+	font-size: 15px;
 	margin: 5px 0;
 }
 
 form span {
 	display: inline-block;
 	width: 200px;
-	font-size: 23px;
+	font-size: 18px;
 	margin: 5px 0;
 }
 form input {
 	width: 300px;
 	height: 30px;
-	font-size: 23px;
+	font-size: 15px;
 	border: none;
 }
 .input {
@@ -64,6 +65,15 @@ form input {
 	width: 200px;
 	height: 50px;
 }
+
+.nav_1 img {
+	width: 100%;
+	height: 100%;
+}
+.nav_1 > div:first-child{
+	margin-bottom: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -74,7 +84,7 @@ form input {
 			</div>
 			<div class="nav_1">
 				<div>
-					<img alt="쿠폰이미지" src="list.jpg">
+					<img alt="쿠폰이미지" src="/jeju/resources/ftp/${couponDto.imageName}">
 				</div>
 				<div>
 					<span>쿠폰명</span>

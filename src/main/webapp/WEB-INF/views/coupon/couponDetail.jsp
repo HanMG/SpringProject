@@ -26,6 +26,7 @@ a {
 	line-height: 50px;
 	font-size: 30px;
 	text-align: center;
+	padding-top: 20px;
 }
 
 /* 마이페이지 */
@@ -40,21 +41,29 @@ a {
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
+.nav_1 img {
+	width: 100%;
+	height: 100%;
+}
+.nav_1 > div:first-child{
+	margin-bottom: 10px;
+}
+
 .nav_1 > div > span:nth-child(1) {
 	display: inline-block;
 	width: 200px;
-	font-size: 23px;
+	font-size: 18px;
 	margin: 5px 0;
 }
 .myPage > div span:nth-child(2) {
 	display: inline-block;
 	width: 500px;
-	font-size: 23px;
+	font-size: 15px;
 	margin: 5px 0;
 }
 .nav_5 {
 	width: 700px;
-	font-size: 23px;
+	font-size: 18px;
 }
 
 
@@ -73,10 +82,20 @@ a {
 	height: 30px; 
 }
 
+.phone_input {
+	display: block;
+	margin: 10px auto 0;
+}
+
+
 </style>
 	<script type="text/javascript">
-		function phoneCheck(){
-			confirm("휴대폰 인증되었습니다.");
+		function purchaseForm(obj){
+			if(obj.purchasePhone.value == ""){
+				alert("휴대폰 번호를 입력해주세요.");
+				obj.purchasePhone.focus();
+				return false;
+			}
 		}
 		
 		function couponDelete(root, couponCode, couponName, pageNumber){
@@ -125,7 +144,7 @@ a {
 		</div>
 		<div class="nav_1">
 			<div>
-				<img alt="쿠폰이미지" src="list.jpg">
+				<img alt="쿠폰이미지" src="/jeju/resources/ftp/${couponDto.imageName}">
 			</div>
 			<div>
 				<span>쿠폰명</span>
@@ -156,12 +175,12 @@ a {
 					if(memberCode != null){ 
 				%>
 				
-					<div>
-						<span class="nav_5"> *휴대폰번호(해당 번호로 쿠폰을 보내드립니다.)</span>
-						<input class="input" type="text" name="purchasePhone" onChange="inputPhone(this)">
+					<div style="text-align: center;">
+						<span class="nav_5"> *휴대폰 번호<span style="font-size: 14px;">(해당 번호로 쿠폰을 보내드립니다.)</span></span>
+						<input class="input phone_input" type="text" name="purchasePhone" onChange="inputPhone(this)">
 					</div>
 					<div style="text-align: center; margin-top: 10px;">
-						<input class="button" type="submit" value="구매하기" style="height: 50px; font-size: 23px; width: 100px;">
+						<input class="button" type="submit" value="구매하기" style="height: 50px; font-size: 16px; width: 100px;">
 					
 					</div>
 				<% 

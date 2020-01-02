@@ -52,6 +52,12 @@ a {
 	margin: 0 10px 6px;
 	line-height: 26px;
 }
+.tag > button:hover{
+	background: #EFB730;
+}
+.tag > button:hover a {
+	color: #fff;
+}
 
 .tag > .button.active {
 	background: #EFB730;
@@ -84,6 +90,29 @@ a {
 	padding: 0;
 	width: 300px;
 	height: 300px;
+	position: relative;
+	overflow: hidden;
+}
+
+.list > div > div:first-child:after{
+	content:"";
+	background-color: rgba(0,0,0,0.08);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left:0;
+	right: 0;
+	bottom: 0;
+}
+.list > div > div:first-child:hover img{
+	transform: scale(1.05);
+	transition-duration: 0.5s;
+}
+
+.list > div > div:first-child:hover:after{
+	
+	background: transparent;
 }
 
 .list > div > div:last-child {

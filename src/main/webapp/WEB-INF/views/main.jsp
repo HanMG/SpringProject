@@ -33,6 +33,7 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	margin: 50px 0;
 }
 
 .con_2 > div {
@@ -57,8 +58,13 @@
 	display: flex;
 }
 .con_3 > div:first-child {
-	border-bottom: solid 3px black;
+	border-bottom: solid 2px #EFB730;
 	font-size: 23px;
+}
+
+.con_3 > div:first-child span{
+	color: #EFB730;
+	line-height: 40px;
 }
 
 .con_3 > div:last-child {
@@ -94,7 +100,19 @@
 }
 .search > span:first-child {
 	font-size: 30px;
+	margin-bottom: 20px;
 }
+
+.popularList > div:hover {
+	animation-name: listMove;
+	animation-duration: 0.5s;
+}
+
+@keyframes listMove{
+	from {margin-top: 35px;}
+	to {margin-top: 40px;}
+}
+
 </style>
 <body onkeypress="if(event.keyCode == 13){search();}">
 	<div id="content">
@@ -143,6 +161,7 @@
 	</div>
 </body>
 <script type="text/javascript">
+
 $(function() {
 	popularFood();	
 });
@@ -182,7 +201,7 @@ function popularFood() {
 
 
 </script>
-<<script type="text/javascript">
+<script type="text/javascript">
 function searchKind(foodKind) {
 	url = "${root}/search.go?foodKind=" + foodKind;
 	location.href = url;

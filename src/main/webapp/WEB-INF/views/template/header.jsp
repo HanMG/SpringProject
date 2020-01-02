@@ -18,7 +18,8 @@
 .nav_1 > input {
     width: 400px;
     font-size: 23px;
-    padding-left: 20px;
+    margin-left: 10px;
+    /* padding-left: 20px; */
     color: #EFB730;
     font-family: 'Noto Sans KR';
     border: 2px solid #EFB730;
@@ -191,11 +192,22 @@
 	cursor: pointer;
 }
 
+#searchInput {
+	border: none;
+	border-bottom: 2px solid #EFB730;
+}
+
+#searchInput::placeholder,
+#searchInput::-webkit-input-placeholder {
+	font-weight: 400;
+	font-size: 18px;
+}
+
 </style>
 	<div id="header">
 		<div class="nav_1">
 			<a href="${root}/index.jsp">EAT THE JEJU</a>
-			<input type="text" id="searchInput" name="searchInput" style="border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
+			<input type="text" id="searchInput" name="searchInput" placeholder="검색어를 입력하여 주세요"  autofocus />
 		</div>
 		<div class="nav_2">
 			<c:choose>

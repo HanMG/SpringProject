@@ -306,7 +306,7 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public void adminReviewList(ModelAndView mav) {
 		List<ReviewDto> reviewDtoList = reviewDao.reviewDtoList();
-		JejuAspect.logger.info(JejuAspect.logMsg+reviewDtoList.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg+reviewDtoList.toString());
 		mav.addObject("reviewDtoList",reviewDtoList);
 		mav.setViewName("admin/review.admin");		
 	}

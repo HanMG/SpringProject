@@ -118,7 +118,17 @@
 		where food.food_code = favorite.food_code and favorite.member_code=#{memberCode}
     </select>
      -->
-
+	<select id="getCouponCount" parameterType="String" resultType="String">
+		select count(*) from purchase where MEMBER_CODE=#{memberCode}
+	</select>
+	
+	<select id="getFavoriteCount" parameterType="String" resultType="String">
+		select count(*) from favorite where MEMBER_CODE=#{memberCode}
+	</select>
+	
+	<select id="getReviewCount" parameterType="String" resultType="String">
+		select count(*) from review where MEMBER_CODE=#{memberCode}
+	</select>
 	
 	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
 		select * from member	

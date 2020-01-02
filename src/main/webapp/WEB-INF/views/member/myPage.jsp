@@ -209,9 +209,9 @@
 			</div>
 			<div>
 				<span>가입일  : <fmt:formatDate value="${memberDto.memberDate}" pattern="yyyy-MM-dd" /></span>
-				<span>리뷰 : </span>
-				<span>쿠폰 : </span>
-				<span>가고싶다 : </span>
+				<span>리뷰 : ${reviewCount}</span>
+				<span>쿠폰 : ${couponCount}</span>
+				<span>가고싶다 : ${favoriteCount}</span>
 			</div>
 		</div>
 		<div id="myReview">

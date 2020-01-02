@@ -705,10 +705,12 @@ function searchResultAjax() {
 	});
 }
 
-
+var kind = "${foodKind}";
 $(function() {
-	$('input:checkbox[name=kindType]:input[value='+"${foodKind}"+']').attr("checked", true);
-	searchType();
+	if (kind != null && kind != "") {
+		$('input:checkbox[name=kindType]:input[value='+kind+']').attr("checked", true);
+		searchType();
+	}
 	searchCountAjax();
 	searchResultAjax();
 });

@@ -59,7 +59,7 @@
                // var membarMail = ${memberMail};
                // console.log(membarMail);
                 //location.href='${root}/member/myPage.go';
-                location.href='${root}/purchase/purchaseInsertOk.go?memberMail='+rsp.buyer_email+'&couponCode='+rsp.buyer_addr+'&purchasePhone='+rsp.buyer_tel+"&memberCode=${memberCode}";
+                location.href='${root}/purchase/purchaseInsertOk.go?memberMail='+rsp.buyer_email+'&couponCode='+rsp.buyer_addr+'&purchasePhone='+rsp.buyer_tel+'&purchaseCost=${couponCostsale}'+'&memberCode=${memberCode}';
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;

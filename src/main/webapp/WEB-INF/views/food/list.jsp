@@ -27,28 +27,21 @@ a {
 .button > a {
 	color: #EFB730;
 }
-
-
 #content {
 	margin : 10px auto;
-	width: 1240px;
 	overflow: hidden;
+	max-width : 1000px;
+	margin-top: 40px;
 }
 .title {
-	width: 1240px;
-	height: 50px;
-	line-height: 50px;
 	font-size: 30px;
-	margin: 40px;
-}
-.title > span {
-	margin-left: 50px;
 }
 .tag {
-	width: 1240px;
-	height: 50px;
-	line-height: 50px;
 	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	
 }
 .tag > button {
 	width: 120px;
@@ -56,50 +49,36 @@ a {
 	margin: 0 10px;
 }
 .list {
-	overflow: hidden;
-	width: 1200px; 
-	margin: 0 20px;
+	display: flex;
+	flex-flow: row wrap;
+	margin: 0 auto;
 }
-.page {
-	width: 1150px;
-	margin: 25px;
-	overflow: hidden;
-}
-.page > div {
-	width: 550px;
-	height: 430px;
-	float: left;
-	margin: 10px;
+
+.list > div {
+	width: 300px;
+	margin: 10px 0;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	margin-right: 10px;
+	flex-direction: column;
 }
-.page img {
-	height: 350px;
-    width: 550px;
+.list img {
+	height: 300px;
+    width: 300px;
 }
-.page strong, .page span {
+.list strong, .page span {
 	margin: 0 5px;
-	display: inline-block;
 	color: #9b9b9b;
 }
-.page strong {
-	width: 420px;
+.list strong {
 	font-size: 23px;
 	color: #EFB730;
 }
-.page span {
-	width: 100px;
+.list span {
 	font-size: 14px;
-	display: inline-block;
-	float: right;
+}
+.list > div > div:first-child {
 }
 
-.page > div > div:last-child > span:first-child{
-	width: 420px;
-	float: none;
-}
-.page > div > div:last-child > span:last-child{
-	width: 100px;
-}
 /* 
 .page > div > span {
 	display: block;
@@ -177,26 +156,33 @@ function updateList() {
 						cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 					cont += "</div>";
 					cont += "<div>";
-						cont += "<strong>"+data[i].foodName+"</strong> <span>"+data[i].foodKind+"</span>";
+						cont += "<strong>"+data[i].foodName+"</strong>";
 					cont += "</div>";
 					cont += "<div>";
-						cont += "<span>";
-						if (data[i].foodAddr != null) {
-							cont += data[i].foodAddr;
-						}
-						cont += "</span>";
+						cont += "<span>"+data[i].foodKind+"</span>";
+					cont += "</div>";
+					cont += "<div>";
 						cont += "<span>";
 						if (data[i].foodMenu != null) {
 							cont += data[i].foodMenu;
 						}
 						cont += "</span>";
+						cont += "</div>";	
+						cont += "<div>";
+						cont += "<span>";
+						if (data[i].foodAddr != null) {
+							cont += data[i].foodAddr;
+						}
+						cont += "</span>";
+						cont += "</div>";
+						/* cont += "<span>"+data[i].foodAddr+"</span>"; */
 					cont += "</div>";
 					
 					
 				cont += "</div>"
 				
 			}
-			$(".page").html(cont);
+			$(".list").html(cont);
 		},
 		error: function (request, status, error) {
 			var str = 'code: '+request.status+'\n';

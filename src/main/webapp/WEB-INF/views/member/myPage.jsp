@@ -264,8 +264,13 @@
 				<ul>
 					<li><img alt="쿠폰" src="${root}/resources/ftp/${couponList.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"></li>
 					<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
-					<li>${couponList.couponStartdate} <br/> ${couponList.couponEnddate}</li>
-					<li>${couponList.couponCostsale}</li>
+					<li>
+						<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="YYYY-MM-dd" />
+						<fmt:formatDate value="${startDate}" pattern="YYYY년  MM월  dd일" /> ~ 
+						<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="YYYY-MM-dd " />
+						<fmt:formatDate value="${endDate}" pattern="YYYY년  MM월  dd일 " />
+					</li>
+					<li>${couponList.couponCostsale}원</li>
 					<li>
 					<c:choose>
 						<c:when test="${couponList.purchaseStatus == 'Y'}">

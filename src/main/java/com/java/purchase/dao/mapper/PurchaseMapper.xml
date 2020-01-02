@@ -57,7 +57,7 @@
 		<![CDATA[
 		SELECT * FROM
     	(SELECT ROWNUM AS numb, A.* FROM (
-    	SELECT o coupon_code, coupon_name, coupon_costori, coupon_costsale, purchase_date, purchase_phone, purchase_code, purchase_status, image_name, image_path, image_code FROM(
+    	SELECT o coupon_code, coupon_name, coupon_startdate, coupon_enddate, coupon_costori, coupon_costsale, purchase_date, purchase_phone, purchase_code, purchase_status, image_name, image_path, image_code FROM(
         SELECT purchase.coupon_code o, purchase.*, coupon.*, image.* FROM purchase 
     	INNER JOIN (coupon INNER JOIN image ON image.refer_code = coupon.coupon_code) ON purchase.coupon_code = coupon.coupon_code)
     	WHERE  member_code = #{memberCode} ORDER BY purchase_date DESC) A) B 

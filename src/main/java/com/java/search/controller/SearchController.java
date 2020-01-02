@@ -38,6 +38,29 @@ public class SearchController {
 		return "food/list.tiles";
 	}
 	
+	// 인기 음식점 리스트 AJAX
+	@RequestMapping(value="/searchPopularAjax.do")
+	@ResponseBody
+	public void searchPopularAjax(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		String jsonText = searchService.popularList(mav);
+		
+		if (jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			try {
+				PrintWriter out;
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	// 음식점 리스트 AJAX
 	@RequestMapping(value="/food/listAjax.go")
 	@ResponseBody
@@ -71,9 +94,11 @@ public class SearchController {
 		ModelAndView mav = new ModelAndView();
 		
 		String keyword = request.getParameter("keyword");
+		String foodKind = request.getParameter("foodKind");
 		
 		mav.addObject("request", request);
 		mav.addObject("keyword", keyword);
+		mav.addObject("foodKind", foodKind);
 		
 		searchService.searchKeyword(mav);
 		return mav;

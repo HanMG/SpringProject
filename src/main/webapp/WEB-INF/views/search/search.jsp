@@ -81,7 +81,9 @@ a {
 	font-size: 23px;
 }
 .reviewScore {
+	margin-left: 4px;
 	font-size: 23px;
+	line-height: 26px;
 	color: #EFB730;
 }
 .foodArea, .foodKind, .foodRead, .reviewCount {
@@ -163,26 +165,45 @@ a {
 	position: relative;
 	text-align: center;
 }
+
+.couponList > div:nth-child(1):after{
+	content:"";
+	background-color: rgba(0,0,0,0.3);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left:0;
+	right: 0;
+	bottom: 0;
+} 
+
+.couponList > div:nth-child(1):hover:after{
+	background: transparent;
+}
+
 .couponList > div:nth-child(1) > span {
 	float: right;
 	display: inline-block;
 	position: absolute;
-	bottom: 25px;
+	bottom: 33px;
 	right: 15px;
 	font-size: 23px;
-	font-weight: bold;
 	color: white;
+	z-index: 1;
 	
 }
 .couponList > div:nth-child(1) > span:nth-child(2) {
-	bottom: 55px;
+	bottom: 60px;
 	font-size: 14px;
+	z-index: 1;
 }
 .couponList > div:nth-child(1) > span:nth-child(3) {
-	bottom: 75px;
-	font-size: 23px;
-	right: inherit;
+	bottom: 82px;
+	font-size: 20px;
+	/* right: inherit; */
 	display: inline-block;
+	z-index: 1;
 }
 .couponList > div:nth-child(1) > a {
 	float: right;
@@ -192,6 +213,7 @@ a {
 	right: 15px;
 	font-weight: bold;
 	color: white;
+	z-index: 1;
 }
 /* 필터 모달 관련 */
 .filterModal {

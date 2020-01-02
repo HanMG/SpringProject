@@ -67,8 +67,16 @@
 
 /* 조회수, 리뷰수, 즐겨찾기 */
 .info_2, .info_3, .coupon {
-	border-bottom: 3px solid black;
+	/* border-bottom: 3px solid black; */
+	border-bottom: 2px solid #ddd;
 }
+
+.info_3, .coupon {
+	/* border-bottom: 3px solid black; */
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
 
 .info_2 > span, .info_2 > i {
 	font-size: 12px;
@@ -137,7 +145,8 @@
     justify-content: space-between;
     padding: 0 20px;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .re_1 > span {
@@ -149,8 +158,11 @@
 .re_2 {
 	display: flex;
 	align-items: center;
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	/* box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px; */
+	padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
+
 .re_2 > div > a {
 	color: #030305;
 }
@@ -175,6 +187,9 @@
 }
 
 /* 리뷰 이미지들 */
+.reviewImg {
+	margin-top: 6px;
+}
 .reviewImg > img {
 	width: 100px;
 	height: 100px;

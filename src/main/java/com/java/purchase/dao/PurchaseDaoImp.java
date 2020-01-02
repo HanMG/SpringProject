@@ -25,8 +25,8 @@ public class PurchaseDaoImp implements PurchaseDao {
 	
 	//구매 회원정보 불러오기
 	@Override
-	public MemberDto purchaseMember(String memberMail) {
-		return sqlsessionTemplate.selectOne("dao.PurchaseMapper.memberSelect", memberMail);
+	public MemberDto purchaseMember(String memberCode) {
+		return sqlsessionTemplate.selectOne("dao.PurchaseMapper.memberSelect", memberCode);
 	}
 	
 	//구매 완료

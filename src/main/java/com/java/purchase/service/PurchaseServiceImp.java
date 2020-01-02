@@ -58,7 +58,7 @@ public class PurchaseServiceImp implements PurchaseService {
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponCode: "+ couponCode);
 		
 		CouponDto couponDto = couponDao.purchaseSelect(couponCode);
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg + "couponDto: "+ couponDto.toString());
 		
 		
 		//세션으로 회원정보 가져오기
@@ -68,7 +68,6 @@ public class PurchaseServiceImp implements PurchaseService {
 			JejuAspect.logger.info(JejuAspect.logMsg + "memberCode: "+ memberCode);
 			MemberDto memberDto = purchaseDao.purchaseMember(memberCode);
 			
-			JejuAspect.logger.info(JejuAspect.logMsg + "memberDto: "+ memberDto.toString());
 			mav.addObject("memberDto", memberDto);
 		}
 		

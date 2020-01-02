@@ -69,16 +69,16 @@
 				</table>
 			</div>
 			<div class="col-6">
-				<h2>월별 구매 현황</h2>
+				<h2>이번 달 판매 현황<span style="font-size: 12px;">(취소된 구매는 제외)</span></h2>
 				<div id="columnchart_material2" style="width: 90%; height: 500px;"></div>
-				<h2>구매 쿠폰 TOP10</h2>
+				<h2>구매된 쿠폰 TOP10</h2>
 				<p>판매수 기반</p>
 				<table class="table table-dark">
 					<thead>
 						<tr>
 							<th>순위</th>
 							<th>쿠폰명</th>
-							<th>구매 수</th>
+							<th>판매 수</th>
 							<th>링크</th>
 						</tr>
 					</thead>

@@ -55,11 +55,11 @@ public class CouponServiceImp implements CouponService {
 
 			long imageSize = upImage.getSize();
 
-			String rootPath = request.getSession().getServletContext().getRealPath("/");
-			String attachPath = "resources/ftp/";
+			//String rootPath = request.getSession().getServletContext().getRealPath("/");
+			//String attachPath = "resources/ftp/";
 			String imageName = Long.toString(System.currentTimeMillis()) + "_" + upImage.getOriginalFilename();
 
-			File imagePath = new File(rootPath + attachPath);
+			File imagePath = new File("C:\\spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 			imagePath.mkdir();
 
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: " + imageSize);
@@ -141,7 +141,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 10;
+		int scrollSize = 9;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 
@@ -314,10 +314,11 @@ public class CouponServiceImp implements CouponService {
 					long imageSize = upImage.getSize();
 					String imageName = Long.toString(System.currentTimeMillis()) + "_" + upImage.getOriginalFilename();
 
-					String dir = "/ftp/";
-					ServletContext context = request.getSession().getServletContext();
-					String realFolder = context.getRealPath(dir);
-					File imagePath = new File(realFolder);
+					//String dir = "/ftp/";
+					//ServletContext context = request.getSession().getServletContext();
+					//String realFolder = context.getRealPath(dir);
+					//File imagePath = new File(realFolder);
+					File imagePath = new File("C:\\spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
 					imagePath.mkdir();
 					JejuAspect.logger.info(JejuAspect.logMsg + "imagePath: " + imagePath);
 
@@ -332,7 +333,7 @@ public class CouponServiceImp implements CouponService {
 						imageDto.setImageName(imageName);
 						imageDto.setReferCode(couponCode);
 						imageDto.setImageSize(imageSize);
-						imageDto.setImagePath(request.getContextPath() + dir + imageName);
+						imageDto.setImagePath(file.getAbsolutePath());
 						JejuAspect.logger.info(JejuAspect.logMsg + "imageDto: " + imageDto.toString());
 
 						// 쿠폰 이미지 수정

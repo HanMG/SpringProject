@@ -198,3 +198,49 @@
 		</div>
 	</div>
 </body>
+	<script type="text/javascript">
+	var url = null;
+
+	function search() {
+		var param = $("#searchInput").val()
+		url = "${root}/search.go?keyword=" + param;
+		location.href = url;
+	}
+
+	$("#searchButton").click(function() {
+		search();
+	});
+
+	$("#searchInput").keypress(function(event) {
+		if (event.which == 13) {
+			search();
+		}
+	});
+
+	$("#searchInput").on("change keyup paste", function() {
+		var keywordList = [];
+		$.ajax({
+			type : "POST",
+			url : "${root}/searchAutoAjax.do",
+			data : {"keyword" : $("#searchInput").val()},
+			dataType:"json",
+			success : function(data){
+				$('#searchInput').autocomplete({
+					source : data,
+				    focus: function(eventCheck, ui) {
+						eventCheck.preventDefault();
+						console.log(ui.item.label);
+						
+						$("#searchInput").keydown(function(key) {
+							
+							if(key.which == 13) {
+								$("#searchInput").val(ui.item.label);
+								search();
+							}
+						});
+					}
+				});
+			}
+		}); 
+	});
+	</script>

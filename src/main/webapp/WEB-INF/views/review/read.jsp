@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰상세페이지</title>
-<script src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+<script src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 </head>
 <body onload="reviewUpdate()">
 	<p>

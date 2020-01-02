@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>삭제 페이지</title>
-		<script type="text/javascript" src="${root}/resources/Jquery/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 		<script type="text/javascript">
 		$(function(){
 			$("#purchaseDelBtn_cus").on('click', function(){

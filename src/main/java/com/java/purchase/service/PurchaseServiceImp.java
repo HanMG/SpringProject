@@ -111,14 +111,14 @@ public class PurchaseServiceImp implements PurchaseService {
 		int couponCost = couponDto.getCouponCostsale();	
 		
 		String subject = "구매해주셔서 감사합니다.";
-		String mailContent = "결제가 완료되었습니다." + "구매하신 상품: "+ couponName + "결제된 금액: "+ couponCost;
+		String mailContent = "결제가 완료되었습니다."+"\n\n" + "구매하신 상품: "+ couponName + "\n" + "결제된 금액: "+ couponCost+ "원";
 		
 		if(check > 0) {
 			try {
 				MimeMessage msg = mailSender.createMimeMessage();
 				MailDto mailDto = new MailDto();
 				msg.addRecipient(RecipientType.TO, new InternetAddress(memberMail));
-				msg.addFrom(new InternetAddress[] {new InternetAddress("labelle410@gmail.com")});
+				msg.addFrom(new InternetAddress[] {new InternetAddress("labelle410@gmail.com", "잇더제주 eatthejeju")});
 				msg.setSubject(subject, "utf-8");								
 				msg.setText(mailContent, "utf-8");									
 				

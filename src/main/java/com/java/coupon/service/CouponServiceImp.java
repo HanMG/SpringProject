@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
@@ -141,7 +140,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 9;
+		int scrollSize = 15;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 
@@ -177,7 +176,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 9;
+		int scrollSize = 15;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 		JejuAspect.logger.info(JejuAspect.logMsg + "startRow: " + startRow + " endRow:" + endRow);

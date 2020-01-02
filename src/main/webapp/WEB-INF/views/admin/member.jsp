@@ -144,8 +144,7 @@
 						<th>회원상태</th>
 					</tr>				
 				</thead>
-
-					<tbody>
+				<tbody>
 					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
 	                     <th>${memberList.memberCode}</th>
@@ -156,8 +155,6 @@
 	                     <th>${memberList.memberStatus}</th>
 	                  </tr>
                		</c:forEach>
-               		
-
 				</tbody>
 			</table>
 		</div>	
@@ -185,7 +182,7 @@
 					</div>
 					<div>
 						<span>이메일</span>
-						<input type="hidden" value="" name="memberMail"/>
+						<input type="hidden" value="" name="memberMail" id="memberMail"/>
 						<input type="text" id="memberMail" name="mail" value="" disabled="disabled"/>
 					</div>
 					<div>

@@ -81,8 +81,6 @@
 .con_3 > div > div > span:nth-of-type(1){
 	padding-top: 8px;
 }
-
-
 .search {
 	position: absolute;
 	left: 50%;
@@ -97,26 +95,6 @@
 .search > span:first-child {
 	font-size: 30px;
 }
-.search > input {
-	width: 200px;
-	height: 30px; 
-	font-size: 1rem;
-	padding-left: 30px;
-	margin: 10px auto;
-}
-.search > input::placeholder {
-	font-size: 1rem;
-	font-family: Noto Sans KR;
-	font-weight: 500;
-	color: #EFB730;
-}
-.searchIcon {
-	font-size: 23px;
-	color: #EFB730;
-	position: absolute;
-    top: 150px;
-    left: 110px;
-}
 </style>
 <body onkeypress="if(event.keyCode == 13){search();}">
 	<div id="content">
@@ -125,7 +103,6 @@
 			<div id="search" class="search">
 				<span>EAT THE JEJU<br/>둘러보기</span>
 				<span>EAT THE JEJU에 등록된 ?여 개의 맛집과 ?여 개의 리뷰를 통해 <br/>다양한 맛집을 경험해 보세요.</span>
-				<i class="fa fa-search searchIcon"></i><input type="text" id="searchInput" name="searchInput" style="border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 			</div>
 		</div>
 		<div id="section_container">

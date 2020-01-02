@@ -15,6 +15,19 @@
 <script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="${root}/resources/datatables.min.js"></script>
 <link rel="stylesheet" href="${root}/resources/datatables.min.css">
+<style type="text/css">
+table {
+	table-layout: fixed;
+}
+thead > tr > th {
+	white-space: nowrap;
+}
+tbody > tr > th {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 

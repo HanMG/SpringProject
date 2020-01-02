@@ -192,7 +192,7 @@
 	color: #EFB730;
 	text-align: center;
 }
-.map {
+.map {	
 	width: 400px;
 	height: 400px;
 	margin: 0 20px;
@@ -366,6 +366,30 @@
 	min-height: 200px;
 }
 
+.cp_prev, .cp_next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -60px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.cp_next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.cp_prev:hover, .cp_next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f30f46c40f26ed513be4c81611d91389&libraries=services"></script>
 </head>
@@ -450,7 +474,7 @@
 						</div>
 						<div class="slideshow-container">
 						<c:forEach var="couponDto" items="${couponDtoList}" varStatus="status" >
-							<div class="mySlides fade">
+							<div class="cp_mySlides fade">
 								<a href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=1">
 								<img alt="쿠폰이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
 								</a>
@@ -461,14 +485,14 @@
 									<span class="couponCostori"> ${couponDto.couponCostori}</span> 
 								</div>
 								<div>	
-									<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-									<a class="next" onclick="plusSlides(1)">&#10095;</a>
+									<a class="cp_prev" onclick="cp_plusSlides(-1)">&#10094;</a>
+									<a class="cp_next" onclick="cp_plusSlides(1)">&#10095;</a>
 								</div>
 							</div>
 						</c:forEach>
 						</div>
 					</div>
-				</div>
+				</div> 
 			</c:if>
 
 			<!-- 리뷰 공간 -->
@@ -503,7 +527,7 @@
 										<div class="reviewImg">
 											<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 											<c:forEach var="imgList" items="${img}">
-												<img src="${root}/resources/ftp/${imgList}" alt="" onerror="this.src='${root}/resources/css/list.jpg'" />
+												<img src="${root}/resources/ftp/${imgList}" alt="이미지" onerror="this.src='${root}/resources/css/list.jpg'"/>
 											</c:forEach>
 										</div>							
 									</a>
@@ -543,11 +567,11 @@
 		<div class="read_nav_2">
 			<div class="img">
 				<c:choose>
-					<c:when test="${foodDto.foodStatus == 'y'}">
+					<c:when test="${foodDto.foodStatus == 'Y'}">
 						<img src="${root}/resources/ftp/${imageDto.imageName}" alt="이미지"
 							 onerror="this.src='${root}/resources/css/list.jpg'" />
 					</c:when>
-					<c:when test="${foodDto.foodStatus != 'n'}">
+					<c:when test="${foodDto.foodStatus != 'N'}">
 						<img alt="이미지 검토중" src="${root}/resources/css/list.jpg'">
 					</c:when>
 				</c:choose>
@@ -616,9 +640,7 @@
 				</div>
 				<div class="info">
 					<div class="slideshow-review">
-						<div class="mySlides fade">
-							<img class="imageName" style="width: 800px; height: 500px;"/><br />
-						</div>
+						<!-- <div class="mySlides fade"></div> -->
 						<div>	
 							<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 							<a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -632,9 +654,47 @@
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+/* 쿠폰 관련 */
+var cp_slideIndex = 1;
+cp_showSlides(cp_slideIndex);
 
+function cp_plusSlides(n) {
+	cp_showSlides(cp_slideIndex += n);
+}
 
+function cp_showSlides(n) {
+	var i;
+	var cp_slides = document.getElementsByClassName("cp_mySlides");
+	if (n > cp_slides.length) {cp_slideIndex = 1}    
+	if (n < 1) {cp_slideIndex = cp_slides.length}
+	for (i = 0; i < cp_slides.length; i++) {
+		cp_slides[i].style.display = "none";  
+	}
+	cp_slides[cp_slideIndex-1].style.display = "block";  
+}
+</script>
+<script type="text/javascript">
 
+/* 리뷰 관련 */
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function showSlides(n) {
+	var i;
+	var slides = document.getElementsByClassName("mySlides");
+	if (n > slides.length) {slideIndex = 1}    
+	if (n < 1) {slideIndex = slides.length}
+	for (i = 0; i < slides.length; i++) {
+	    slides[i].style.display = "none";  
+	}
+	slides[slideIndex-1].style.display = "block";  
+}
+</script>
 <!-- 리뷰 상세보기 모달, 내용 가져오는 ajax -->
 <script>
 //본인 리뷰 내용 & 리뷰 내용 
@@ -650,25 +710,26 @@ function myReview(reviewCode) {
 			var json=data;
 			$("#reviewCont").text(json.reviewCont);
 			$("#reviewScore").text(json.reviewScore);
-			//alert(json.reviewCont);
-			//alert(json.reviewScore);
-			/* 
-			
-			<div class="mySlides fade">
-				<img class="imageName" style="width: 800px; height: 500px;"/><br />
-			</div>
-			<div>	
-				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-				<a class="next" onclick="plusSlides(1)">&#10095;</a>
-			</div>	
-			var imageList = "";
-			for(var i=0; json.imgList.length;i++){
-				imageList += '<'
-			$(".imageName").attr("src", "${root}/resources/ftp/IMAGE0670.jpg");
 				
-				 */
-/* 			$(".imageName").attr("src", "${root}/resources/ftp/"+json.imgList[i].imageName+")"; */
-				alert(json.imgList[i].imageName);
+			var root = "${root}";
+			var mySlides = "";
+			for(var i=0; i < Object.keys(json.imgList).length;i++){
+				if (i == 0) {
+					mySlides = '<div class="mySlides fade" style="block;">';
+					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
+					mySlides += '</div>';
+					$(".slideshow-review").append(mySlides);
+					
+				} else {
+					mySlides = '<div class="mySlides fade" style="display:none;">';
+					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
+					mySlides += '</div>';
+					$(".slideshow-review").append(mySlides);
+				}
+				//console.log("1");
+				//console.log(json.imgList[i].imageName);
+				console.log("<img style='width: 800px; height: 500px; ' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>");
+			}
 		}
 	});
 }
@@ -676,6 +737,7 @@ function myReview(reviewCode) {
 // 리뷰 상세 모달 끄기 
 $(".close_reViewInfo").click(function(){
 	$("#reViewInfoModal").css("display","none");
+	$(".mySlides").remove();
 });
 </script>
 
@@ -696,6 +758,48 @@ function fromServer() {
 }
 </script>
 
+<script type="text/javascript">
+	//지도 관련 
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    level: 1 // 지도의 확대 레벨
+	};  
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('${foodDto.foodAddr}', function(result, status) {
+
+	// 정상적으로 검색이 완료됐으면 
+	 if (status === kakao.maps.services.Status.OK) {
+	
+	    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	  	
+	    var y = result[0].y;
+	    var x = result[0].x;
+	  	var xx = '${foodDto.foodName}';
+		
+	    // 결과값으로 받은 위치를 마커로 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: coords
+	    });
+	
+	    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	    map.setCenter(coords);
+	    map.setDraggable(false); 
+	    map.setZoomable(false);   
+	} 
+	 kakao.maps.event.addListener(marker, 'click', function() {
+	     // 마커 위에 인포윈도우를 표시합니다
+	     window.open('https://map.kakao.com/link/map/'+xx+','+y+','+x);   
+	});
+
+});    
+</script>
 <script type="text/javascript">
 	
 	// 본인 리뷰 내용
@@ -731,74 +835,7 @@ function fromServer() {
 	var reViewInfoModal = $("#reViewInfoModal");
 	var close_reViewInfo = $(".close_reViewInfo");
 	
-	// 지도 관련 
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 1 // 지도의 확대 레벨
-    };  
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
 	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('${foodDto.foodAddr}', function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-      	
-        var y = result[0].y;
-        var x = result[0].x;
-      	var xx = '${foodDto.foodName}';
-		
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-        map.setDraggable(false); 
-        map.setZoomable(false);   
-    } 
-     kakao.maps.event.addListener(marker, 'click', function() {
-         // 마커 위에 인포윈도우를 표시합니다
-         window.open('https://map.kakao.com/link/map/'+xx+','+y+','+x);   
-   });
-    
-});    
-	
-	var slideIndex = 1;
-	showSlides(slideIndex);
-
-	function plusSlides(n) {
-	  showSlides(slideIndex += n);
-	}
-
-	function currentSlide(n) {
-	  showSlides(slideIndex = n);
-	}
-
-	function showSlides(n) {
-	  var i;
-	  var slides = document.getElementsByClassName("mySlides");
-	  var dots = document.getElementsByClassName("dot");
-	  if (n > slides.length) {slideIndex = 1}    
-	  if (n < 1) {slideIndex = slides.length}
-	  for (i = 0; i < slides.length; i++) {
-	      slides[i].style.display = "none";  
-	  }
-	  for (i = 0; i < dots.length; i++) {
-	      dots[i].className = dots[i].className.replace(" active", "");
-	  }
-	  slides[slideIndex-1].style.display = "block";  
-	  dots[slideIndex-1].className += " active";
-	}
-
 				
 	var root = "${root}";
 	var memberCode = "${memberCode}";

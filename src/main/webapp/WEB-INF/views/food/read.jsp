@@ -543,12 +543,12 @@
 		<div class="read_nav_2">
 			<div class="img">
 				<c:choose>
-					<c:when test="${foodDto.foodStatus == 'y'}">
+					<c:when test="${foodDto.foodStatus == 'Y'}">
 						<img src="${root}/resources/ftp/${imageDto.imageName}" alt="이미지"
 							 onerror="this.src='${root}/resources/css/list.jpg'" />
 					</c:when>
-					<c:when test="${foodDto.foodStatus != 'n'}">
-						<img alt="이미지 검토중" src="${root}/resources/css/list.jpg'">
+					<c:when test="${foodDto.foodStatus != 'N'}">
+						<img alt="이미지 검토중" src="${root}/resources/css/list.jpg">
 					</c:when>
 				</c:choose>
 			</div>

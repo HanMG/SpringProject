@@ -120,7 +120,7 @@ $(document).on("change", ".file-input", function(){
 				<span><strong style="color: #EFB730;">${foodName}</strong>에 대한 솔직한 리뷰를 써주세요.</span>
 			</div>
 			<div class="nav_1">
-			<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data" onsubmit="return reviewForm(this)">
+			<form action="${root}/review/updateOk.go" method="POST"	enctype="multipart/form-data" onsubmit="return reviewUpForm(this)">
 				<input type="hidden" name="reviewCode" value="${reviewDto.reviewCode }" />
 				<input type="hidden" name="foodCode" value="${reviewDto.foodCode}" /> 
 				<input type="hidden" name="memberCode" value="${reviewDto.memberCode }" />
@@ -147,7 +147,7 @@ $(document).on("change", ".file-input", function(){
 					</div>
 				</div>
 				<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="식당의 분위기, 서비스가 궁금해요!">${reviewDto.reviewCont}</textarea>
-				<div id="fileDiv" style="margin-left: 10px">
+				<div id="imgDiv" style="margin-left: 10px">
 					<c:if test="${listImage != null}">
 						<table>
 							<tr>

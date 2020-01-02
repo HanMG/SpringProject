@@ -26,6 +26,8 @@ a {
 }
 .button > a {
 	color: #EFB730;
+	font-size: 18px;
+    line-height: 32px;
 }
 #content {
 	margin : 10px auto;
@@ -35,18 +37,28 @@ a {
 }
 .title {
 	font-size: 30px;
+	padding-bottom: 20px;
 }
 .tag {
 	text-align: center;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	margin-bottom: 40px;
 	
 }
 .tag > button {
 	width: 120px;
-	height: 40px;
-	margin: 0 10px;
+	margin: 0 10px 6px;
+	line-height: 26px;
+}
+
+.tag > .button.active {
+	background: #EFB730;
+}
+
+.tag > .button.active a {
+	color: #fff;
 }
 .list {
 	display: flex;
@@ -56,14 +68,31 @@ a {
 
 .list > div {
 	width: 300px;
-	margin: 10px 0;
+	margin: 0 13px 40px;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	margin-right: 10px;
 	flex-direction: column;
 }
-.list img {
+.list > div strong {
+	margin: 0;
+	line-height: 40px;
+}
+
+.list > div > div {
+	padding: 0 10px;
+}
+.list > div > div:first-child {
+	padding: 0;
+	width: 300px;
 	height: 300px;
-    width: 300px;
+}
+
+.list > div > div:last-child {
+	margin-bottom: 10px;
+}
+
+.list img {
+	height: 100%;
+    width: 100%;
 }
 .list strong, .page span {
 	margin: 0 5px;
@@ -99,8 +128,25 @@ a {
 	width: 430px;
 	height: 250px;
 }
-
+.goTop {
+	font-size: 22px;
+	width: 50px;
+	color: #EFB730;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	position: fixed;
+	bottom: 30px;
+	right: 100px;
+}
 </style>
+<script type="text/javascript">
+	$(function(){
+		$('.button').click(function(){
+			$('.button').removeClass("active");
+			$(this).addClass("active");
+		})
+	})
+</script>
 </head>
 <body>
 	<div id="content">
@@ -127,7 +173,7 @@ a {
 		<div class="list">
 			<div class="page"></div>
 		</div>
-		
+		<a href="#header" class="goTop">TOP</a>
 	</div>
 </body>
 <script type="text/javascript">

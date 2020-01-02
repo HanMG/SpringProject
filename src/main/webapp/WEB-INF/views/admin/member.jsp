@@ -144,6 +144,7 @@
 						<th>회원상태</th>
 					</tr>				
 				</thead>
+<<<<<<< HEAD
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
@@ -156,6 +157,19 @@
 	                  </tr>
                		</c:forEach>
                		
+=======
+				<tbody>
+				<c:forEach var="memberList" items="${memberList}">
+					<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
+						<th>${memberList.memberCode}</th>
+						<th>${memberList.memberMail}</th>
+						<th>${memberList.memberName}</th>
+						<th><fmt:formatDate value="${memberList.memberDate}" pattern="yyyy-MM-dd" /></th>
+						<th>${memberList.memberPhone}</th>
+						<th>${memberList.memberStatus}</th>
+					</tr>
+				</c:forEach>
+>>>>>>> nth
 				</tbody>
 			</table>
 		</div>	

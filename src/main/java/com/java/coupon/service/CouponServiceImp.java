@@ -177,7 +177,7 @@ public class CouponServiceImp implements CouponService {
 		int count = couponDao.couponListCount();
 		JejuAspect.logger.info(JejuAspect.logMsg + "count: " + count);
 
-		int scrollSize = 10;
+		int scrollSize = 9;
 		int startRow = (currentPage - 1) * scrollSize + 1;
 		int endRow = currentPage * scrollSize;
 		JejuAspect.logger.info(JejuAspect.logMsg + "startRow: " + startRow + " endRow:" + endRow);

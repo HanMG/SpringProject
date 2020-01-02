@@ -1,128 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>      
 <style type="text/css">
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 100;
-	src: url(${root}/resources/fonts/NotoSansKR-Thin.woff2) format('woff2'),
-		url(${root}/resources/fonts/NotoSansKR-Thin.woff) format('woff'),
-		url(${root}/resources/fonts/NotoSansKR-Thin.otf) format('opentype');
-}
-
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 300;
-	src: url(${root}/resources/fonts/NotoSansKR-Light.woff2) format('woff2'),
-		url(${root}/resources/fonts/NotoSansKR-Light.woff) format('woff'),
-		url(${root}/resources/fonts/NotoSansKR-Light.otf) format('opentype');
-}
-
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 400;
-	src: url(${root}/resources/fonts/NotoSansKR-Regular.woff2)
-		format('woff2'), url(${root}/resources/fonts/NotoSansKR-Regular.woff)
-		format('woff'), url(${root}/resources/fonts/NotoSansKR-Regular.otf)
-		format('opentype');
-}
-
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 500;
-	src: url(${root}/resources/fonts/NotoSansKR-Medium.woff2)
-		format('woff2'), url(${root}/resources/fonts/NotoSansKR-Medium.woff)
-		format('woff'), url(${root}/resources/fonts/NotoSansKR-Medium.otf)
-		format('opentype');
-}
-
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 700;
-	src: url(${root}/resources/fonts/NotoSansKR-Bold.woff2) format('woff2'),
-		url(${root}/resources/fonts/NotoSansKR-Bold.woff) format('woff'),
-		url(${root}/resources/fonts/NotoSansKR-Bold.otf) format('opentype');
-}
-
-@font-face {
-	font-family: 'Noto Sans KR';
-	font-style: normal;
-	font-weight: 900;
-	src: url(${root}/resources/fonts/NotoSansKR-Black.woff2) format('woff2'),
-		url(${root}/resources/fonts/NotoSansKR-Black.woff) format('woff'),
-		url(${root}/resources/fonts/NotoSansKR-Black.otf) format('opentype');
-}
-
-* {
-	margin: 0;
-	padding: 0;
-	font-family: Noto Sans KR;
-}
-
-a {
-	text-decoration: none;
-	font-family: Noto Sans KR;
-}
 
 #header {
-	width: 100%;
-	height: 50px;
-	position: fixed;
-	z-index: 999;
-	box-shadow: 0 4px 11px rgba(0, 0, 0, 0.1);
-	top: 0px;
-	background-color: white;
+	display: flex;
+	flex-wrap: nowrap;
+	padding: 0.8rem;
+	justify-content: space-around;
+}
+.nav_1 > a{
+	color: #EFB730;
+}
+.nav_2 > a {
+	margin-left: 20px;
 }
 
-#header>div {
-	float: left;
-}
-
-#header>div * {
-	color: #030305;
-}
-
-#header>div:nth-child(1) {
-	margin-left: 280px;
-}
-
-#header>div:nth-child(n+3) {
-	height: 50px;
-	text-align: center;
-	line-height: 50px;
-	font-size: 25px;
-	margin: 0 15px;
-}
-
-#header>div>input {
-	width: 990px;
-	height: 50px;
-	border: none;
-	font-size: 25px;
-	background-color: white;
-	padding-left: 20px;
-}
-
-#header>div>input::placeholder {
-	color: #030305;
-}
-
-#header>div>a>img {
-	width: 50px;
-	height: 50px;
-}
-
+/* 모달 */
 #content_main {
 	position: absolute;
 	left: 50%;
@@ -144,7 +39,6 @@ a {
 	font-weight: bold;
 	text-align: center;
 }
-
 .title_main>span:first-child {
 	margin-left: 40px;
 }
@@ -276,99 +170,27 @@ a {
 	text-decoration: none;
 	cursor: pointer;
 }
-html { 
-	background: url(${root}/resources/css/food_6.jpg) no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
 
 </style>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-<link rel="stylesheet" type="text/css" href="${root}/resources/css/button.css" />
-<link rel="stylesheet" type="text/css" href="${root}/resources/css/radioButton.css" />
-<link rel="stylesheet" type="text/css" href="${root}/resources/css/fileButton.css" />
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-</head>
-<!-- body부분에도 엔터 이벤트를 추가하면 input태그 외의 공간에서도 엔터 이벤트가 발생  -->
-<body>
-
-	<%-- 
-	<div class="container">
-
-		<a href="${root}/coupon/couponInsert.go">상품등록</a>
-		<a href="${root}/coupon/couponList.go">상품리스트</a>
-		<a href="${root}/search.go">검색</a>
-		<a href="${root}/food/list.go">음식점 리스트</a>
-		<a href="${root}/food/read.go?foodCode=food0472">음식상세페이지 </a>			
-		<a href="${root}/review/read.go?reviewCode=review0011">리뷰상세페이지</a>	
-		<a href="${root}/purchase/purchaseList.go">구매내역</a>
-		
-		
-	<c:choose>
-		<c:when test="${memberCode == null }">
-			<a href="${root}/member/login.go">로그인</a>
-			<a href="${root}/member/signIn.go">회원가입</a>
-		</c:when>
-		<c:when test="${memberCode != null }">
-			<a href="${root}/member/logout.go">로그아웃</a>
-			<a href="${root}/member/myPage.go">마이페이지</a>
-			<a href="${root}/food/insert.go">음식정보등록</a>
-			<a href="${root}/food/update.go?foodCode=food0472">음식정보수정</a>
-			<a href="${root}/food/insert.go">음식정보등록</a>
-			<a href="${root}/coupon/couponInsert.go">상품등록</a>
-			<a href="${root}/food/update.go?foodCode=food0468">음식정보수정</a>
-			<a href="${root}/food/delete.go?foodCode=food0467">음식정보삭제</a>			
-			<a href="${root}/review/update.go?reviewCode=review0011">리뷰수정</a>
-			<a href="${root}/review/delete.go?reviewCode=review0041">리뷰삭제</a>
-			<a href="${root}/admin/main.go">관리자!!</a>
-			
-		</c:when>
-		<c:when test="${memberCode != null }">
-			<a href="${root}/member/logout.go">로그아웃</a>
-			<a href="${root}/member/myPage.go">마이페이지</a>
-			<a href="${root}/purchase/purchaseList.go">구매내역</a>
-			${memberCode}
-		</c:when>
-	</c:choose> 
-	 --%>
-
-	</div>
 	<div id="header">
-		<div>
-			<a href="${root}/index.jsp"> <img alt="로고"
-				src="${root}/resources/css/jeju.png">
-			</a>
+		<div class="nav_1">
+			<a href="${root}/index.jsp">EAT THE JEJU</a>
 		</div>
-		<div>
-			<!-- form 안에 text 타입의 input 박스가 하나만 존재 할 경우 (hidden 제외) input 박스에서 엔터를 치면 자동으로 form submit이 된다고 함 
-				그걸 방지하기 위해서는 form onsubmit="return false" 처리를 해주어야 자동으로 submit 되는 것을 막을 수 있기함 -->
-			<input type="text" id="searchInput" name="searchInput"
-				placeholder="검색어를 입력하여 주세요" />
-		</div>
-		<c:choose>
-			<c:when test="${memberCode == null }">
-				<div>
-					<a href="#" id="loginClick">로그인</a>
-				</div>
-			</c:when>
-			<c:when test="${memberCode != null }">
-				<div>
-					<a href="${root}/member/logout.go">로그아웃</a>
-				</div>
-				<div>
-					<a href="${root}/member/myPage.go">마이페이지</a>
-				</div>
-			</c:when>
-		</c:choose>
-		<div>
+		<div class="nav_2">
+			<c:choose>
+				<c:when test="${memberCode == null }">
+						<a href="#" id="loginClick">로그인</a>
+				</c:when>
+				<c:when test="${memberCode != null }">
+						<a href="${root}/member/logout.go">로그아웃</a>
+						<a href="${root}/member/myPage.go">마이페이지</a>
+				</c:when>
+			</c:choose>
 			<a href="${root}/coupon/couponList.go">EAT딜</a>
-		</div>
-		<div>
 			<a href="${root}/food/list.go">맛집리스트</a>
 		</div>
 	</div>
+	<!-- 모달 -->
 	<!-- 로그인 -->
 	<div id="myModal" class="modal">
 		<div id="content_main">
@@ -439,15 +261,9 @@ html {
 			</div>
 		</div>
 	</div>
-
-
-
-</body>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
-
-<script type="text/javascript">
+	
+	<script type="text/javascript">
 	var url = null;
-
 
 	function search() {
 		var param = $("#searchInput").val()
@@ -455,10 +271,9 @@ html {
 		location.href = url;
 	}
 
-
 	$("#searchButton").click(function() {
 		search();
-	})
+	});
 
 	$("#searchInput").keypress(function(event) {
 		if (event.which == 13) {
@@ -471,11 +286,9 @@ html {
 		$.ajax({
 			type : "POST",
 			url : "${root}/searchAutoAjax.do",
-			data : {
-				"keyword" : $("#searchInput").val()
-			},
-			dataType : "json",
-			success : function(data) {
+			data : {"keyword" : $("#searchInput").val()},
+			dataType:"json",
+			success : function(data){
 				$('#searchInput').autocomplete({
 					source : data,
 				    focus: function(eventCheck, ui) {
@@ -490,113 +303,74 @@ html {
 							}
 						});
 					}
+				   /*  source: data */
 				});
 			}
-		});
+		}); 
 	});
-
-	/* 메인화면 로그인 클릭시 작동 */
-	var header = document.getElementById("header");
-	var modal = document.getElementById("myModal");
-	var loginClick = document.getElementById("loginClick");
-	var span = document.getElementsByClassName("close")[0];
-	loginClick.onclick = function() {
-		modal.style.display = "block";
-		header.style.display = "none";
-	}
-	span.onclick = function() {
-		modal.style.display = "none";
-		header.style.display = "block";
-	}
-	/* 로그인 모달창에서 이메일 로그인 클릭시 작동 */
-	var span_2 = document.getElementsByClassName("close")[1];
-	var emailClick = document.getElementById("emailClick");
-	var modal_2 = document.getElementById("myModal_2");
-	emailClick.onclick = function() {
-		modal_2.style.display = "block";
-	}
-	span_2.onclick = function() {
-		modal_2.style.display = "none";
-	}
-
-	var span_3 = document.getElementsByClassName("close")[2];
-	var emailClick = document.getElementById("joinClick");
-	var modal_3 = document.getElementById("myModal_3");
-	joinClick.onclick = function() {
-		modal_3.style.display = "block";
-	}
-	span_3.onclick = function() {
-		modal_3.style.display = "none";
-	}
-	/* 공용 */
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-		if (event.target == modal_2) {
-			modal_2.style.display = "none";
-		}
-		if (event.target == modal_3) {
-			modal_3.style.display = "none";
-		}
-	}
-</script>
-<script type='text/javascript'>
-	function signForm(obj) {
-		/* 	    var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-			    if (reg.test(obj.mail.value)==false){ 
-			    	alert("이메일주소 형식에 맞지 않습니다.")
-			    	obj.mail.focus();
-			    	return false;
-			    } 
-
-				if(obj.name.value == ""){
-					alert("닉네임을 입력하세요.")
-					obj.name.focus();
-					return false;
-				}
-				if(obj.pwd.value == ""){
-					alert("비밀번호를 입력하세요.")
-					obj.pwd.focus();
-					return false;
-				}
-				if(obj.pwdCheck.value == ""){
-					alert("비밀번호 확인란을 입력하세요.")
-					obj.pwdCheck.focus();
-					return false;
-				}
-				if(obj.pwd.value != obj.pwdCheck.value){
-					alert("비밀번호가 같지 않습니다.")
-					obj.pwdCheck.focus();
-					return false;
-				} */
-	}
-
-	// 사용할 앱의 JavaScript 키를 설정해 주세요.
-	Kakao.init('f30f46c40f26ed513be4c81611d91389');
-
-	function loginForm() {
-		Kakao.Auth.loginForm({
-			success : function(authObj) {
-				Kakao.API.request({
-					url : '/v2/user/me',
-					success : function(res) {
-						var url = "";
-						$.ajax({
-							url : url,
-							type : "get",
-							dataType : "text",
-							success : function(data) {
-								window.location.href = "${root}"
-										+ "/kakaoLogin.go?nickname="
-										+ res.properties['nickname'] + "&mail="
-										+ res.kakao_account.email;
-							}
-						});
-					}
-				});
+		/* 메인화면 로그인 클릭시 작동 */
+		var modal = document.getElementById("myModal");
+		var loginClick = document.getElementById("loginClick");
+		var span = document.getElementsByClassName("close")[0];
+		loginClick.onclick = function() {
+			modal.style.display = "block";
 			}
-		});
-	}
-</script>
-</html>
+		span.onclick = function() {
+			modal.style.display = "none";
+			}
+		/* 로그인 모달창에서 이메일 로그인 클릭시 작동 */
+		var span_2 = document.getElementsByClassName("close")[1];
+		var emailClick = document.getElementById("emailClick");
+		var modal_2 = document.getElementById("myModal_2");
+		emailClick.onclick = function() {
+			modal_2.style.display = "block";
+			}
+		span_2.onclick = function() {
+			modal_2.style.display = "none";
+			}
+		
+		var span_3 = document.getElementsByClassName("close")[2];
+		var emailClick = document.getElementById("joinClick");
+		var modal_3 = document.getElementById("myModal_3");
+		joinClick.onclick = function() {
+			modal_3.style.display = "block";
+			}
+		span_3.onclick = function() {
+			modal_3.style.display = "none";
+			}
+		/* 공용 */
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+			  modal.style.display = "none";
+		  }
+		  if (event.target == modal_2) {
+			  modal_2.style.display = "none";
+		  }
+		  if (event.target == modal_3) {
+			  modal_3.style.display = "none";
+		  }
+		}
+		
+		Kakao.init('f30f46c40f26ed513be4c81611d91389');
+	    
+	    function loginForm() {
+	    	Kakao.Auth.loginForm({
+	    		success : function(authObj) {
+	    			Kakao.API.request({
+	    				url: '/v2/user/me',
+	    				success : function(res) {
+			    			var url = "";
+				            $.ajax({
+				    			url: url,
+				    			type: "get",
+				    			dataType: "text",
+				    			success: function(data) {
+				    				window.location.href = "${root}" + "/kakaoLogin.go?nickname=" + res.properties['nickname'] + "&mail=" + res.kakao_account.email;
+				    	        }
+				    		});
+	    				}
+	    			});
+	    		}
+	    	});
+	    }
+	</script>

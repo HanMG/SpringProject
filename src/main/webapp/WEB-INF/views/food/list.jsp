@@ -134,12 +134,14 @@ a {
 var tagType = "";
 var tagValue = "";
 var root = "${root}";
+var pageNumber = 1;
+
 
 function updateList() {
 	$.ajax({
 		type : "POST",
 		url : root + "/food/listAjax.go",
-		data : { "tagType" : tagType, "tagValue" : tagValue},
+		data : { "tagType" : tagType, "tagValue" : tagValue, "pageNumber" : pageNumber},
 		dataType : "json",
 		success : function (data) {
 			var cont = "";
@@ -175,14 +177,14 @@ function updateList() {
 						}
 						cont += "</span>";
 						cont += "</div>";
-						/* cont += "<span>"+data[i].foodAddr+"</span>"; */
 					cont += "</div>";
-					
-					
 				cont += "</div>"
-				
 			}
-			$(".list").html(cont);
+			if (pageNumber == 1) {
+				$(".list").html(cont);
+			} else {
+				$(".list").append(cont);
+			}
 		},
 		error: function (request, status, error) {
 			var str = 'code: '+request.status+'\n';
@@ -210,7 +212,15 @@ $('button').click(function() {
 		tagType = "read";
 		tagValue = "refresh";
 	}
+	pageNumber = 1;
 	updateList();
 });
+
+$(window).scroll(function(){
+	if($(window).scrollTop() >= $(document).height()-$(window).height()){
+		pageNumber++;
+		updateList();
+	}
+})
 </script>
 </html>

@@ -42,6 +42,29 @@
 	</select>
 	
 	
+	<select id="tagListCount" parameterType="java.util.Map" resultType="int">
+			SELECT count(*) FROM 
+			(SELECT ROWNUM rnum, A.*, image.* FROM
+			(SELECT * FROM food
+				<if test="tagType.equals('addr')">
+				WHERE food_addr like ('%'||#{tagValue}||'%')
+				</if>
+				<if test="tagType.equals('menu')">
+				WHERE food_menu like ('%'||#{tagValue}||'%')
+				</if>
+				<if test="tagType.equals('kind')">
+				WHERE food_kind like ('%'||#{tagValue}||'%')
+				</if>
+				<if test="tagType.equals('area')">
+				WHERE food_area like ('%'||#{tagValue}||'%')
+				</if>
+				<if test="tagType.equals('tag')">
+				WHERE food_tag like ('%'||#{tagValue}||'%')
+				</if>
+			ORDER BY food_read DESC)A, image
+			WHERE A.food_code = image.refer_code(+))
+	</select>
+	
 	<select id="tagList" parameterType="java.util.Map" resultType="com.java.search.dto.SearchFoodDto">
 			SELECT * FROM 
 			(SELECT ROWNUM rnum, A.*, image.* FROM
@@ -64,7 +87,7 @@
 			ORDER BY food_read DESC)A, image
 			WHERE A.food_code = image.refer_code(+))
 		<![CDATA[
-			WHERE rnum >=1 and rnum <=15
+			WHERE rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
 	

@@ -46,6 +46,7 @@ public class SearchController {
 
 		mav.addObject("tagType", request.getParameter("tagType"));
 		mav.addObject("tagValue", request.getParameter("tagValue"));
+		mav.addObject("pageNumber", request.getParameter("pageNumber"));
 		mav.addObject("request", request);
 		
 		String jsonText = searchService.foodList(mav);

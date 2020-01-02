@@ -15,7 +15,9 @@ public interface SearchDao {
 
 	List<SearchCouponDto> couponList(String keyword);
 
-	List<SearchFoodDto> tagList(String tagValue, String tagType);
+	int tagListCount(String tagValue, String tagType);
+
+	List<SearchFoodDto> tagList(String tagValue, String tagType, int startRow, int endRow);
 
 	SearchFoodDto getReviewScore(String foodCode);
 	
@@ -25,5 +27,6 @@ public interface SearchDao {
 
 	List<SearchFoodDto> searchResult(String keyword, String orderType, String[] addrArr, String[] kindArr, int startRow,
 			int endRow);
+
 
 }

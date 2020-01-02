@@ -54,11 +54,28 @@ public class SearchServiceImp implements SearchService {
 		
 		String tagValue = (String) map.get("tagValue");
 		String tagType = (String) map.get("tagType");
+		String pageNumber = (String) map.get("pageNumber");
 		JejuAspect.logger.info(JejuAspect.logMsg + tagValue + " || " + tagType);
 		
+		int count = searchDao.tagListCount(tagValue, tagType);
+		JejuAspect.logger.info(JejuAspect.logMsg + "tagListCount: " + count);
+		
+		if (pageNumber == null)
+			pageNumber = "1";
+		int currentPage = Integer.parseInt(pageNumber);
+		int scrollSize = 12;
+		int startRow = (currentPage - 1) * scrollSize + 1;
+		int endRow = currentPage * scrollSize;
+		if (endRow > count) {
+			endRow = count;
+		}
+
+
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
-		foodList = searchDao.tagList(tagValue, tagType);
-		JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
+		if (count > 0 && count >= startRow) {
+			foodList = searchDao.tagList(tagValue, tagType, startRow, endRow);
+			JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
+		}
 
 		JSONArray arr = new JSONArray();
 		for(SearchFoodDto sFoodDto : foodList) {

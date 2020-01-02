@@ -46,10 +46,20 @@ public class SearchDaoImp implements SearchDao {
 	}
 
 	@Override
-	public List<SearchFoodDto> tagList(String tagValue, String tagType) {
-		Map<String, String> map = new HashMap<String, String>();
+	public int tagListCount(String tagValue, String tagType) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("tagValue", tagValue);
 		map.put("tagType", tagType);
+		return sqlSessionTemplate.selectOne("tagListCount", map);
+	}
+	
+	@Override
+	public List<SearchFoodDto> tagList(String tagValue, String tagType, int startRow, int endRow) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tagValue", tagValue);
+		map.put("tagType", tagType);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
 		return sqlSessionTemplate.selectList("tagList", map);
 	}
 	
@@ -85,6 +95,7 @@ public class SearchDaoImp implements SearchDao {
 		map.put("endRow", endRow);
 		return sqlSessionTemplate.selectList("searchResult", map);
 	}
+
 
 
 }

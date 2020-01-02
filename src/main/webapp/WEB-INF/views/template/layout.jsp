@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 필요한 스크립트 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- jQuery UI -->
 <script type="text/javascript" src="${root}/resources/jquery/ui/jquery-ui.js"></script>

@@ -49,7 +49,8 @@
 .con_3 {
 	display: flex;
 	flex-direction: column;
-	max-width: 880px;
+	/* max-width: 880px; */
+	max-width: 1000px;
 	margin: 0 auto;
 }
 .con_3 > div {
@@ -66,6 +67,7 @@
 }
 
 .con_3 > div > div {
+	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	margin: 0 10px;
@@ -76,6 +78,11 @@
 	width: 200px;
 	height: 200px;
 }
+.con_3 > div > div > span:nth-of-type(1){
+	padding-top: 8px;
+}
+
+
 .search {
 	position: absolute;
 	left: 50%;

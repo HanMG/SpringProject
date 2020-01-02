@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 
-<script type="text/javascript" src="${root}/resources/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 
 
 <!-- jQuery UI -->

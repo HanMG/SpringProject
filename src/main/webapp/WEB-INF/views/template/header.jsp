@@ -141,6 +141,8 @@
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	z-index:2; 
+	
 }
 
 .modal_2, .modal_3 {
@@ -154,6 +156,7 @@
 	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	z-index: 3;
 }
 
 /* The Close Button */
@@ -242,20 +245,28 @@
 				<form action="${root}/member/signInOk.go" method="post"
 					onsubmit="return signForm(this)">
 					<div>
-						<span>이메일</span> <input type="text" id="mail" name="mail">
+						<span>이메일</span>
+						<input type="text" id="mail1" name="mail">
+						<span class="warnId"></span>
 					</div>
 					<div>
-						<span>닉네임</span> <input type="text" name="name">
+						<span>닉네임</span>
+						<input type="text" id="name1" name="name">
+						<span class="warnName"></span>
 					</div>
 					<div>
-						<span>비밀번호</span> <input type="password" name="pwd">
+						<span>비밀번호</span>
+						<input type="password" id="pwd1" name="pwd">
+						<span class="warnPwd1"></span>
 					</div>
 					<div>
-						<span>비밀번호 확인</span> <input type="password" name="pwdCheck">
+						<span>비밀번호 확인</span>
+						<input type="password" id="pwd2" name="pwdCheck">
+						<span class="warnPwd2"></span>
 					</div>
 					<div>
-						<input class="button" type="submit" value="가입"> <input
-							class="button" type="reset" value="취소">
+						<input class="button" type="submit" value="가입">
+						<input class="button" type="reset" value="취소">
 					</div>
 				</form>
 			</div>
@@ -264,7 +275,96 @@
 	
 	<script type="text/javascript">
 	var url = null;
+	$(function(){
+		$("#mail1").blur(function(){
+			var mail= $("#mail1").val();
+			var url= "${root}/member/mailCheck.go?mail="+mail;
+			var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if(mail=="") {
+				$(".warnId").text("필수 정보입니다.").css("color","red");
+			}else if (reg.test(mail)==false) {
+				$(".warnId").text("이메일 주소 형식에 맞지 않습니다..").css("color","red");
+			}
+			else {
+				$.ajax({
+					url:url,
+					method:"get",
+					success: function(text){
+						if(text==1){
+							$(".warnId").text("이미 사용중이거나 탈퇴한 아이디입니다.").css("color","red");
+						}else{
+							$(".warnId").text("사용 가능한 이메일 주소 입니다.").css("color","#08a600");
+						}
+						
+					},
+						
+				});
+			}
 
+		});
+	});
+	$(function(){
+		$("#name1").blur(function(){
+			var name= $("#name1").val();
+			if(name=="") {
+				$(".warnName").text("필수 정보입니다.").css("color","red");
+			}else{
+				$(".warnName").text("")
+			}
+		});
+	});
+	$(function(){
+		$("#pwd1").blur(function(){
+			var pwd1= $("#pwd1").val();
+			if(pwd1=="") {
+				$(".warnPwd1").text("비밀번호를 입력하세요.").css("color","red");
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(pwd1)){
+				$(".warnPwd1").text("숫자 영문 포함 4~10자리를 입력하세요.").css("color","red");
+			}else{
+				$(".warnPwd1").text("")
+			}
+		});
+	});
+	$(function(){
+		$("#pwd2").blur(function(){
+			var pwd1= $("#pwd1").val();
+			var pwd2= $("#pwd2").val();
+			if(pwd2=="") {
+				$(".warnPwd2").text("비밀번호 확인란을 입력하세요.").css("color","red");
+			}else if (pwd1 != pwd2) {
+				$(".warnPwd2").text("비밀번호가 같지않습니다.").css("color","red");
+			}else{
+				$(".warnPwd2").text("")
+			}
+		});
+	});
+	function signForm(obj){
+	 	   var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		    if (reg.test(obj.mail.value)==false){
+		    	obj.mail.focus();
+		    	return false;
+		    } 
+
+			if(obj.name.value == ""){
+				obj.name.focus();
+				return false;
+			}
+			if(obj.pwd.value == ""){
+				obj.pwd.focus();
+				return false;
+			}else if (!/^[a-zA-Z0-9]{4,10}$/.test(obj.pwd.value)) {
+				obj.pwd.focus();
+				return false;
+			} 
+			if(obj.pwdCheck.value == ""){
+				obj.pwdCheck.focus();
+				return false;
+			}
+			if(obj.pwd.value != obj.pwdCheck.value){
+				obj.pwdCheck.focus();
+				return false;
+			}
+		}
 	function search() {
 		var param = $("#searchInput").val()
 		url = "${root}/search.go?keyword=" + param;

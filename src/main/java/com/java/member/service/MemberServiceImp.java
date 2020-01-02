@@ -170,6 +170,12 @@ public class MemberServiceImp implements MemberService{
 		HttpSession session = request.getSession();
 		String memberCode = (String) session.getAttribute("memberCode");
 		
+		String couponCount = memberDao.couponCount(memberCode);
+		String reviewCount = memberDao.reviewCount(memberCode);
+		String favoriteCount = memberDao.favoriteCount(memberCode);
+		mav.addObject("couponCount", couponCount);
+		mav.addObject("reviewCount", reviewCount);
+		mav.addObject("favoriteCount", favoriteCount);
 		
 		JejuAspect.logger.info(JejuAspect.logMsg + memberCode);
 		// 개인정보를 보기 위한

@@ -95,6 +95,19 @@ public class MemberDaoImp implements MemberDao {
 		return sqlSessionTemplate.selectList("memberMapper.getMyFavorite", memberCode);
 	}
 	
+	@Override
+	public String couponCount(String memberCode) {
+		return sqlSessionTemplate.selectOne("memberMapper.getCouponCount", memberCode);
+	}
+	@Override
+	public String favoriteCount(String memberCode) {
+		return sqlSessionTemplate.selectOne("memberMapper.getFavoriteCount", memberCode);
+	}
+	@Override
+	public String reviewCount(String memberCode) {
+		return sqlSessionTemplate.selectOne("memberMapper.getReviewCount", memberCode);
+	}
+	
 	//관리자
 	@Override
 	public List<MemberDto> getMember(MemberDto memberDto) {

@@ -144,7 +144,7 @@
 						<th>회원상태</th>
 					</tr>				
 				</thead>
-<<<<<<< HEAD
+
 					<tbody>
 					<c:forEach var="memberList" items="${memberList}">
 	                  <tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
@@ -157,19 +157,7 @@
 	                  </tr>
                		</c:forEach>
                		
-=======
-				<tbody>
-				<c:forEach var="memberList" items="${memberList}">
-					<tr class="memberClick" onclick="getMember('${memberList.memberCode}')">
-						<th>${memberList.memberCode}</th>
-						<th>${memberList.memberMail}</th>
-						<th>${memberList.memberName}</th>
-						<th><fmt:formatDate value="${memberList.memberDate}" pattern="yyyy-MM-dd" /></th>
-						<th>${memberList.memberPhone}</th>
-						<th>${memberList.memberStatus}</th>
-					</tr>
-				</c:forEach>
->>>>>>> nth
+
 				</tbody>
 			</table>
 		</div>	
@@ -189,6 +177,7 @@
 					<div>
 						<span>멤버코드</span>
 						<span class="span" id="memberCode"></span>
+						<input type="hidden" value="" name="memberCode" id="memberHidden">
 					</div>
 					<div>
 						<span>이름</span>
@@ -244,7 +233,7 @@ function getMember(memberCode){
 			console.log(data);
 			$("#memberCode").text(data.memberCode);
 			$("#memberDate").text(data.memberDate);
-			$("#memberCode").val(data.memberCode);
+			$("#memberHidden").val(data.memberCode);
 			$("#memberName").val(data.memberName);
 			$("#memberMail").val(data.memberMail);
 			$("#memberPhone").val(data.memberPhone);

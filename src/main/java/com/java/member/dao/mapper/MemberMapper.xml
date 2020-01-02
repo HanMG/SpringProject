@@ -8,7 +8,7 @@
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
-		values('member'||LPAD(seqMember.nextval,4,0),
+		values('MEMBER'||LPAD(seqMember.nextval,4,0),
 		#{memberDate},
 		#{memberMail},
 		#{memberPwd},
@@ -30,7 +30,7 @@
 
 	<insert id="insertKakao" parameterType="com.java.member.dto.MemberDto">
 		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
-		values('member'||LPAD(seqMember.nextval,4,0),
+		values('MEMBER'||LPAD(seqMember.nextval,4,0),
 		#{mail},
 		#{nickname},
 		sysdate
@@ -39,7 +39,7 @@
 	
 		<insert id="insertNaver" parameterType="java.util.Map">
 		insert into member(MEMBER_CODE, MEMBER_MAIL, MEMBER_NAME, MEMBER_DATE) 
-		values('member'||LPAD(seqMember.nextval,4,0),
+		values('MEMBER'||LPAD(seqMember.nextval,4,0),
 		#{email},
 		#{name},
 		sysdate
@@ -118,7 +118,17 @@
 		where food.food_code = favorite.food_code and favorite.member_code=#{memberCode}
     </select>
      -->
-
+	<select id="getCouponCount" parameterType="String" resultType="String">
+		select count(*) from purchase where MEMBER_CODE=#{memberCode}
+	</select>
+	
+	<select id="getFavoriteCount" parameterType="String" resultType="String">
+		select count(*) from favorite where MEMBER_CODE=#{memberCode}
+	</select>
+	
+	<select id="getReviewCount" parameterType="String" resultType="String">
+		select count(*) from review where MEMBER_CODE=#{memberCode}
+	</select>
 	
 	<select id="getMember" parameterType="com.java.member.dto.MemberDto" resultType="com.java.member.dto.MemberDto">
 		select * from member	

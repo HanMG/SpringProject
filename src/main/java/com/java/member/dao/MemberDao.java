@@ -43,5 +43,11 @@ public interface MemberDao {
 
 	public int adminUpdateOk(MemberDto memberDto);
 
+	public String couponCount(String memberCode);
+
+	public String reviewCount(String memberCode);
+
+	public String favoriteCount(String memberCode);
+
 
 }

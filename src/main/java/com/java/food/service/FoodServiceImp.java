@@ -120,7 +120,7 @@ public class FoodServiceImp implements FoodService {
 		// 리뷰 리스트 가져오기 위한 Dao
 		List<FoodReviewDto> reviewList = null;
 		reviewList = foodDao.reviewList(foodCode);
-		JejuAspect.logger.info(JejuAspect.logMsg+ "reviewList : " +reviewList.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg+ "reviewList : " +reviewList.toString());
 		mav.addObject("reviewList",reviewList);
 		String reviewCode = null;
 		// 리뷰코드를 통해 리뷰 상세페이지를 가져오기 위한 Dao
@@ -188,9 +188,10 @@ public class FoodServiceImp implements FoodService {
 		mav.addObject("reviewAvg", reviewAvg);
 		mav.addObject("reviewCountDto",reviewCountDto);			
 		mav.addObject("couponDtoList", couponDtoList);
-		JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
+		//JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.addObject("foodDto", foodDto);	
 		mav.addObject("imageDto", imageDto);
+		//JejuAspect.logger.info(JejuAspect.logMsg+"couponDtoList"+couponDtoList.toString());
 		mav.setViewName("food/read.tiles");		
 	}
 

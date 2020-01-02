@@ -59,7 +59,7 @@ public class CouponServiceImp implements CouponService {
 			//String attachPath = "resources/ftp/";
 			String imageName = Long.toString(System.currentTimeMillis()) + "_" + upImage.getOriginalFilename();
 
-			File imagePath = new File("C:\\spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
+			File imagePath = new File("C:\\spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp\\");
 			imagePath.mkdir();
 
 			JejuAspect.logger.info(JejuAspect.logMsg + "imageSize: " + imageSize);
@@ -230,17 +230,6 @@ public class CouponServiceImp implements CouponService {
 		}
 		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : " + couponDto.toString());
 
-		if (couponDto.getImageName() != null) {
-			int index = couponDto.getImageName().indexOf("_") + 1;
-			couponDto.setImageName(couponDto.getImageName().substring(index));
-		}
-		JejuAspect.logger.info(JejuAspect.logMsg + "couponDto : " + couponDto.toString());
-
-		String path = request.getContextPath() + "\\ftp\\";
-		JejuAspect.logger.info(JejuAspect.logMsg + "path : " + path);
-
-		//request.setAttribute("pageNumber", pageNumber);
-		mav.addObject("path", path);
 		mav.addObject("couponDto", couponDto);
 		mav.setViewName("coupon/couponDetail.tiles");
 	}

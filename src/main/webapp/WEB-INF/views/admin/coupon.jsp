@@ -164,6 +164,10 @@
     background-color: #343A40;
     margin: 5px;
 }
+.date > input {
+}
+
+
 </style>
 <script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 
@@ -178,7 +182,7 @@
 					return false;
 				}
 				if(obj.foodCode.value==""){
-					alert("등록하실 식당명을 입력해주세요.");
+					alert("등록하실 음식점명을 입력해주세요.");
 					obj.foodCode.focus();
 					return false;
 				}
@@ -229,7 +233,7 @@
 				}
 			}
 	
-			//식당코드 리스트 출력
+			//음식점코드 리스트 출력
 			function foodcodeRead(root, cInsert){
 				console.log(cInsert);
 				if(cInsert == null){
@@ -283,7 +287,7 @@
 				<thead>
 					<tr>
 						<th>쿠폰코드</th>
-						<th>가게코드</th>
+						<th>음식점코드</th>
 						<th>쿠폰명</th>
 						<th>유효기간</th>
 						<th>할인가</th>
@@ -299,10 +303,10 @@
 							<th>${couponDto.foodCode}</th>
 							<th>${couponDto.couponName}</th>
 							<th>
-								<fmt:parseDate value="${couponDto.couponStartdate}" var="startDate" pattern="YYYY-MM-dd" />
-								<fmt:formatDate value="${startDate}" pattern="YYYY년  MM월  dd일" /> ~ 
-								<fmt:parseDate value="${couponDto.couponEnddate}" var="endDate" pattern="YYYY-MM-dd " />
-								<fmt:formatDate value="${endDate}" pattern="YYYY년  MM월  dd일 " />
+								<fmt:parseDate value="${couponDto.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /> ~ 
+								<fmt:parseDate value="${couponDto.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
+								<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
 							</th>
 							<th>${couponDto.couponSalerate}</th>
 							<th>${couponDto.couponCostsale}</th>
@@ -372,21 +376,21 @@
 							<input id="upCouponName" type="text" name="couponName" />
 						</div>
 						<div>
-							<span>가게코드</span>
+							<span>음식점코드</span>
 							<input type="text" name="foodCode">
-							<input class="button foodBtn" type="button" value="식당검색" onclick="foodcodeRead('${root}')">
+							<input class="button foodBtn" type="button" value="음식점검색" onclick="foodcodeRead('${root}')">
 							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
 							<span>쿠폰내용</span>
 							<textarea rows="5" cols="60" name="couponIntro" style="vertical-align: top;"></textarea>
 						</div>
-						<div>
+						<div class="date">
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input style="width: 213px;" id="datepickStartUp" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
+							<input style="width: 195px;" id="datepickStartUp" type="text" name="couponStartdate" value="${couponDto.couponStartdate}">
 							~
-							<input style="width: 212px;" id="datepickEndUp" type="text" name="couponEnddate">
+							<input style="width: 195px;" id="datepickEndUp" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>
@@ -494,21 +498,21 @@
 							<span>쿠폰명</span> <input type="text" name="couponName" />
 						</div>
 						<div>
-							<span>가게코드</span>
+							<span>음식점코드</span>
 							<input type="text" name="foodCode"> 
-							<input class="button foodBtn" type="button" value="식당검색" onclick="foodcodeRead('${root}','${cInsert}')">
+							<input class="button foodBtn" type="button" value="음식점검색" onclick="foodcodeRead('${root}','${cInsert}')">
 							<input type="text" name="foodName" disabled>
 						</div>
 						<div>
 							<span>쿠폰내용</span>
 							<textarea rows="5" cols="60" name="couponIntro" style="vertical-align: top;"></textarea>
 						</div>
-						<div>
+						<div class="date">
 							<span>유효기간</span>
 							<!-- 달력로 대체예정  -->
-							<input style="width: 213px;" id="datepickStart" type="text" name="couponStartdate">
+							<input style="width: 195px;" id="datepickStart" type="text" name="couponStartdate">
 							~
-							<input style="width: 212px;" id="datepickEnd" type="text" name="couponEnddate">
+							<input style="width: 195px;" id="datepickEnd" type="text" name="couponEnddate">
 						</div>
 						<div>
 							<span>원가격</span>

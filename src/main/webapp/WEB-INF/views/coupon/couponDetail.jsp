@@ -41,15 +41,15 @@ a {
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
-.nav_1 img {
+.cou_nav_1 img {
 	width: 100%;
 	height: 100%;
 }
-.nav_1 > div:first-child{
+.cou_nav_1 > div:first-child{
 	margin-bottom: 10px;
 }
 
-.nav_1 > div > span:nth-child(1) {
+.cou_nav_1 > div > span:nth-child(1) {
 	display: inline-block;
 	width: 200px;
 	font-size: 18px;
@@ -142,7 +142,7 @@ a {
 		<div class="title_mypage">
 			<span>쿠폰 상세페이지</span>
 		</div>
-		<div class="nav_1">
+		<div class="cou_nav_1">
 			<div>
 				<img alt="쿠폰이미지" src="/jeju/resources/ftp/${couponDto.imageName}">
 			</div>

@@ -28,26 +28,27 @@
    	margin-top: 40px;
    	display: flex;
 }
-/* 가게 상세 */
+/* 음식점 상세 */
 .read_nav_1 {
 	display: flex;
 	flex: 2;
 	flex-direction: column;
 }
-/* 가게 대표 이미지, 지도 */
+/* 음식점 대표 이미지, 지도 */
 .read_nav_2 {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
+	height: 800px;
 }
 .info_1 {
 	display: flex;
 }
-/* 가게명, 별점, 리뷰쓰기, 가고싶다 */
+/* 음식점명, 별점, 리뷰쓰기, 가고싶다 */
 .info_1 > span > span {
 	color: #EFB730;
 }
-/* 가게명, 별점 */
+/* 음식점명, 별점 */
 .info_1 > span {
 	font-size: 30px;
 }
@@ -81,7 +82,7 @@
 .info_2 > span, .info_2 > i {
 	font-size: 12px;
 }
-/* 가게 상세설명 */
+/* 음식점 상세설명 */
 .info_3 {
 	display: flex;
     flex-direction: column;
@@ -201,6 +202,7 @@
 	height: 400px;
 	margin: 0 20px;
 	margin-bottom: 10px;
+	position: fixed;
 }
 .emoticon {
 	font-size: 30px;
@@ -213,6 +215,7 @@
 	margin: 0 20px;
 	position: fixed;
 	display: flex;
+	top: 500px;
 }
 
 /* 모달 관련 */
@@ -633,7 +636,7 @@
 <!-- 						<label for="good">맛있어요</label><input type="radio" id="good" name="reviewScore" value="5"/>
 						<label for="soso">괜찮아요</label><input type="radio" id="soso" name="reviewScore" value="3"/>
 						<label for="bad">별로에요</label><input type="radio" id="bad" name="reviewScore" value="1"/> -->
-						<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="식당의 분위기, 서비스가 궁금해요!"></textarea>
+						<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="음식점의 분위기, 서비스가 궁금해요!"></textarea>
 						<div id="fileDiv">     
 							<div class="box-file-input"><label><input type="file" multiple="multiple" name="imgFile" class="file-input" accept="image/*"></label><span class="filename">파일을 선택해주세요</span></div>
 				            <!-- <input type="file" name="imgFile" multiple="multiple" accept="image/*"/> -->                  

@@ -106,7 +106,7 @@ $(document).ready(function() {
 					<i class="fas fa-fw fa-chart-area"></i> <span>회원관리</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="${root}/admin/food.go">
-					<i class="fas fa-fw fa-chart-area"></i> <span>식당관리</span>
+					<i class="fas fa-fw fa-chart-area"></i> <span>음식점관리</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="${root}/admin/coupon.go">
 					<i class="fas fa-fw fa-table"></i> <span>쿠폰관리</span>

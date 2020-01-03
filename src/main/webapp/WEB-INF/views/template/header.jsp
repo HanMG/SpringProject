@@ -25,12 +25,12 @@
     /* padding-left: 20px; */
     color: #EFB730;
     font-family: 'Noto Sans KR';
-    outline-style: solid;
-    margin-left: 5px;
+    margin-left: 34px;
+    border: none;
+	border-bottom: 2px solid #EFB730;
 }
 
-.nav_1 > input:focus {outline:solid;}
-.nav_1 > input::placeholder {
+.nav_1 > input::placeholder, .nav_1 > input::-webkit-input-placeholder {
 	font-size: 23px;
 	font-family: Noto Sans KR;
 	font-weight: 500;
@@ -120,7 +120,7 @@
 .join {
 	width: 400px;
 	height: 600px;
-	margin: 100px 50px;
+	margin: 50px 50px;
 }
 
 .join>form>div {
@@ -197,16 +197,6 @@
 	cursor: pointer;
 }
 
-#searchInput {
-	border: none;
-	border-bottom: 2px solid #EFB730;
-}
-
-#searchInput::placeholder,
-#searchInput::-webkit-input-placeholder {
-	font-weight: 400;
-	font-size: 18px;
-}
 
 </style>
 	<div id="header">

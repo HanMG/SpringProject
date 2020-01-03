@@ -165,7 +165,7 @@
   background-color: rgba(255, 255, 255, 0.75);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
-/* 식당 등록 */
+/* 음식점 등록 */
 .foodReg {
 	overflow: hidden;
 	width: 500px; 
@@ -265,10 +265,10 @@
 					<li><img alt="쿠폰" src="${root}/resources/ftp/${couponList.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"></li>
 					<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
 					<li>
-						<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="YYYY-MM-dd" />
-						<fmt:formatDate value="${startDate}" pattern="YYYY년  MM월  dd일" /> ~ 
-						<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="YYYY-MM-dd " />
-						<fmt:formatDate value="${endDate}" pattern="YYYY년  MM월  dd일 " />
+						<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
+						<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /> ~ 
+						<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
+						<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
 					</li>
 					<li>${couponList.couponCostsale}원</li>
 					<li>
@@ -292,7 +292,7 @@
 			<div class="favorite_2">
 				<ul>
 				  <li>이미지</li>
-				  <li>가게명</li>
+				  <li>음식점명</li>
 				  <li>지역군</li>
 				  <li>평점</li>
 				  <li>조회수</li>
@@ -301,7 +301,7 @@
 				</ul>
 				<c:forEach var="favoriteList" items="${favoriteList}">
 				<ul id="${favoriteList.foodCode}">
-				  <li><img alt="가게" src="${root}/resources/ftp/${favoriteList.imageName}"></li>
+				  <li><img alt="음식점" src="${root}/resources/ftp/${favoriteList.imageName}"></li>
 				  <li>${favoriteList.foodName}</li>
 				  <li>${favoriteList.foodArea} </li>
 				  <li><fmt:formatNumber value="${favoriteList.avg}" pattern=".0"></fmt:formatNumber></li>
@@ -314,11 +314,11 @@
 		</div>
 		<div id="myFood">
 			<div class="food_1">
-				<span>내가 등록한 식당</span>
+				<span>내가 등록한 음식점</span>
 			</div>
 			<div class="food_2">
 				<ul>
-				  <li>식당명</li>
+				  <li>음식점명</li>
 				  <li>주소</li>
 				  <li>종류</li>
 				  <li>상태</li>
@@ -335,7 +335,7 @@
 				</c:forEach>
 			</div>
 			<div class="food_3">
-				<button id="foodInClick">식당등록</button>
+				<button id="foodInClick">음식점등록</button>
 			</div>
 		</div>
 	</div>
@@ -379,18 +379,18 @@
 			</div>
 		</form>
 	</div>
-	<!-- 식당 등록 -->
+	<!-- 음식점 등록 -->
 	<div id="foodInModal" class="foodInModal">
 		<div id="content">
 			<div class="food">
 				<div class="title">
-					<span>식당 등록</span>
+					<span>음식점 등록</span>
 					<span class="close">&times;</span>
 				</div>
 				<div class="foodReg">
 					<form action="${root}/member/myFoodWrite.go" method="post">
 						<div>
-							<span>식당이름 (예:카멜리아)</span>
+							<span>음식점이름 (예:카멜리아)</span>
 						</div>
 						<div>
 							<input type="text" name="foodName">
@@ -465,7 +465,7 @@
 	span.onclick = function() {
 		infoModal.style.display = "none";
 		}
-	/* 식당 등록 클릭시 작동 */
+	/* 음식점 등록 클릭시 작동 */
 	var foodInModal = document.getElementById("foodInModal");
 	var foodInClick = document.getElementById("foodInClick");
 	var span = document.getElementsByClassName("close")[4];
@@ -484,7 +484,7 @@
 		location.href=url;	
 		}
 	}
-	// 내가 등록한 식당 삭제
+	// 내가 등록한 음식점 삭제
 	function myFoodDel(foodCode){
 		var url = "${root}/myFoodDel.go?foodCode=" + foodCode;
 		$.ajax({
@@ -530,7 +530,7 @@
 
 
 	var header = document.getElementById("header");
-	/* 내가 등록한 식당 삭제 */	
+	/* 내가 등록한 음식점 삭제 */	
 	function myFoodDel(foodCode){
 		var url = "${root}/myFoodDel.go?foodCode=" + foodCode;
 		$.ajax({

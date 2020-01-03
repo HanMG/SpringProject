@@ -3,8 +3,11 @@ package com.java.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Component
 public class Interceptor extends HandlerInterceptorAdapter{
 
 	@Override
@@ -17,10 +20,10 @@ public class Interceptor extends HandlerInterceptorAdapter{
 //			return true;
 //		}
 //		if (request.getSession().getAttribute("memberCode") != null) {
-//			System.out.println("확인용");
+//			System.out.println("�솗�씤�슜");
 //			return true;
 //		} else {
-//			System.out.println("확인용2");
+//			System.out.println("�솗�씤�슜2");
 //			response.sendRedirect("main.jsp");
 //			return false;
 //		}

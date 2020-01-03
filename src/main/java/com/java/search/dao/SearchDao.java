@@ -30,5 +30,8 @@ public interface SearchDao {
 
 	List<SearchFoodDto> popularList();
 
+	int countFood();
+
+	int countReview();
 
 }

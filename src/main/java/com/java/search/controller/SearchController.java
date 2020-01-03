@@ -61,6 +61,29 @@ public class SearchController {
 		}
 	}
 	
+	// 컨텐츠 수 AJAX
+	@RequestMapping(value="/countContAjax.do")
+	@ResponseBody
+	public void countContentsAjax(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		String jsonText = searchService.countCont(mav);
+		
+		if (jsonText != null) {
+			response.setContentType("application/x-json;charset=utf-8");
+			try {
+				PrintWriter out;
+				out = response.getWriter();
+				out.print(jsonText);
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	// 음식점 리스트 AJAX
 	@RequestMapping(value="/food/listAjax.go")
 	@ResponseBody

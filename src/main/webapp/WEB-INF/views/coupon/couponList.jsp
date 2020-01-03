@@ -78,19 +78,27 @@
 	font-weight: bold;
 	color: white;
 	margin-left: auto;
-	z-index: 1;
-}
-
-.list>div:nth-child(1)>span:nth-child(2) {
-	bottom: 35px;
-	font-size: 14px;
-	z-index: 1;
+	background: #EFB730;
+	padding: 3px 10px;
 }
 
 .list>div:nth-child(2) {
-	margin-top: 8px;
+	padding-top: 8px;
 	font-size: 20px;
 	color: #030305;
+}
+
+.list>div:nth-child(3) > span:first-child {
+	font-size: 18px;
+	color: #EFB730;
+}
+.list>div:nth-child(3) > span:last-child {
+	font-size: 13px;
+	color: #9b9b9b;
+}
+.list>div:nth-child(4) {
+	font-size: 12px;
+	color: #9b9b9b;
 }
 
 
@@ -160,11 +168,6 @@
 				var image = "${root}/resources/ftp/" + data[i].imageName;
 				console.log(image);
 				var list = "<div class='list' onclick="+"'location.href=\""+foodCode+"\"'>";
-				list += "<div style=" + "'background-image: url(\"" + image
-						+ "\")';>";
-				list += '<span>' + data[i].couponCostsale + '원</span>';
-				list += '<span style="text-decoration:line-through;">'+ data[i].couponCostori + '</span>';
-/* =======
 					list += "<div style=" + "'background-image: url(\"" + image
 							+ "\")';>";
 						list += '<span>' + data[i].couponSalerate + ' %</span>';
@@ -174,8 +177,7 @@
 					list += '</div>';
 					list += '<div>';
 						list += '<span>' + data[i].couponCostsale + '</span> <span style="text-decoration:line-through;">'
->>>>>>> nth
- */						
+						+ data[i].couponCostori + '</span>';
 					list += '</div>';
 					list += '<div>';
 						list += '<span>' + data[i].couponStartdate + '~'

@@ -15,7 +15,7 @@
 function reviewUpdate() {
 	var memberCode = "${memberCode}";
 	var reviewMemberCode = "${reviewDto.memberCode}";
-	// 페이지 로드시 세션의 멤버코드와 불러온 멤버코드를 비교해 안맞으면 뒤로 돌아가게
+	// 페이지 로드시 세션의 멤버코드와 불러온 멤버코드를 비교해 안맞으면 뒤로 돌아음식점
 	if(reviewMemberCode !== memberCode){
 		alert("잘못된 접근입니다!!!");
 		history.back();
@@ -146,7 +146,7 @@ $(document).on("change", ".file-input", function(){
 						</div>
 					</div>
 				</div>
-				<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="식당의 분위기, 서비스가 궁금해요!">${reviewDto.reviewCont}</textarea>
+				<textarea class="reViewArea" name="reviewCont" id="" cols="30" rows="10" placeholder="음식점의 분위기, 서비스가 궁금해요!">${reviewDto.reviewCont}</textarea>
 				<div id="imgDiv" style="margin-left: 10px">
 					<c:if test="${listImage != null}">
 						<table>

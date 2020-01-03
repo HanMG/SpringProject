@@ -6,25 +6,25 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>식당코드 검색</title>
+		<title>음식점코드 검색</title>
 		<script type="text/javascript" src="${root}/resources/javascript/coupon/coupon.js"></script>
 		<script type="text/javascript">
 		//유효성 체크
 		function searchForm(obj){
 			if(obj.foodName.value==""){
-				alert("검색하실 식당명을 입력해주세요.");
+				alert("검색하실 음식점명을 입력해주세요.");
 				obj.foodName.focus();
 				return false;
 			}
 		}
 
-		//식당코드 리스트 출력
+		//음식점코드 리스트 출력
 		/* function foodcodeRead (root){
 			var url = root + "/coupon/searchFoodCode.go";
 			open(url, "", "width= 800, height=500, scrollbars=yes");
 		} */
 		
-		//식당코드 기입
+		//음식점코드 기입
 		function sendFoodCode(foodCode, foodName, foodAddr, cInsert){
 			if(cInsert == 0){
 				opener.couponFormInsert.foodCode.value= foodCode;

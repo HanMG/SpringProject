@@ -37,6 +37,9 @@
           chart.draw(data, google.charts.Bar.convertOptions());
         }
     </script>
+    <style>
+    	.table th { text-align: center;}
+    </style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -49,7 +52,7 @@
 				<table class="table table-dark table-hover">
 					<thead>
 						<tr>
-							<th>순위</th>
+							<th style="width:15%;">순위</th>
 							<th>음식점 명</th>
 							<th>조회수</th>
 							<th>링크</th>
@@ -58,10 +61,10 @@
 					<tbody>
 						<c:forEach var="foodAdminRank" items="${adminFoodRank}">
 							<tr>
-								<td>${foodAdminRank.rank}</td>
+								<td style="text-align:center;">${foodAdminRank.rank}</td>
 								<td>${foodAdminRank.foodName}</td>
-								<td>${foodAdminRank.foodRead}</td>
-								<td><a
+								<td style="text-align:center;">${foodAdminRank.foodRead}</td>
+								<td style="text-align:center;"><a
 									href="${root}/food/read.go?foodCode=${foodAdminRank.foodCode}">링크</a></td>
 							</tr>
 						</c:forEach>
@@ -76,7 +79,7 @@
 				<table class="table table-dark">
 					<thead>
 						<tr>
-							<th>순위</th>
+							<th style="width:15%;">순위</th>
 							<th>쿠폰명</th>
 							<th>판매 수</th>
 							<th>링크</th>
@@ -85,10 +88,10 @@
 					<tbody>
 						<c:forEach var="couponAdminRank" items="${adminCouponRank}">
 							<tr>
-								<td>${couponAdminRank.rank}</td>
+								<td style="text-align:center;">${couponAdminRank.rank}</td>
 								<td>${couponAdminRank.couponName}</td>
-								<td>${couponAdminRank.purchaseCnt}</td>
-								<td><a href="${root}/coupon/couponRead.go?couponCode=${couponAdminRank.couponCode}">링크</a></td>
+								<td style="text-align:center;">${couponAdminRank.purchaseCnt}</td>
+								<td style="text-align:center;"><a href="${root}/coupon/couponRead.go?couponCode=${couponAdminRank.couponCode}">링크</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

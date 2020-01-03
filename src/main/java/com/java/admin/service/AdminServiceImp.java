@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.java.admin.dao.AdminDao;
 import com.java.admin.dto.AdminCouponDto;
 import com.java.admin.dto.AdminCouponReadDto;
+import com.java.admin.dto.AdminDto;
 import com.java.admin.dto.AdminFoodDto;
 import com.java.admin.dto.AdminFoodReadDto;
 import com.java.aop.JejuAspect;
@@ -57,9 +58,15 @@ public class AdminServiceImp implements AdminService {
 		String adminId = request.getParameter("adminId");
 		String adminPwd = request.getParameter("adminPwd");
 		
+		
 		int check = adminDao.loginCheck(adminId, adminPwd);
+		AdminDto adminDto = null;
+		if (check == 1) {
+			adminDto = adminDao.getAdminCode(adminId);
+		}
 		
 		mav.addObject("check", check);
+		mav.addObject("adminDto", adminDto);
 		mav.setViewName("admin/adminLoginOk.empty");
 	}
 

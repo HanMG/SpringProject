@@ -51,4 +51,8 @@
 		]]>
 	</select>
 	
+	<select id="adminCode" parameterType="String" resultType="com.java.admin.dto.AdminCouponDto">
+		SELECT * FROM ADMIN WHERE ADMIN_ID = #{adminId}
+	</select>
+	
 </mapper>

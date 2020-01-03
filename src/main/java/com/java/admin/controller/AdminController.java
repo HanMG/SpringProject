@@ -61,6 +61,14 @@ public class AdminController {
 		
 		return mav;		
 	}
+	// 관리자 로그아웃
+	@RequestMapping(value = "/admin/logout.go", method= {RequestMethod.GET,RequestMethod.POST})
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		
+		return "admin/logout.empty";		
+	}
+	
+	
 	// 관리자 음식점페이지로 이동 및 리스트 불러오기
 	@RequestMapping(value = "/admin/food.go", method = RequestMethod.GET)
 	public ModelAndView food(HttpServletRequest request, HttpServletResponse response) {

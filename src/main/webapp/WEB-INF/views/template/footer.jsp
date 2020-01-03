@@ -9,6 +9,7 @@
 	max-width: 1000px;
 	position: relative;
 	height: 180px;
+	margin-top: auto;
 }
 .foo_1 {
 	margin-bottom: 0.7rem;

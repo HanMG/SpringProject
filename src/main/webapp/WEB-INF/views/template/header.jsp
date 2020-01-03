@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>      
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>   
 <style type="text/css">
 
 #header {
 	display: flex;
 	flex-wrap: nowrap;
 	padding: 0.8rem;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	height: 60px;
     font-size: 23px;
+}
+.nav_1 {
+	display: flex;
 }
 .nav_1 > a{
 	color: #EFB730;
@@ -21,9 +24,11 @@
     padding-left: 20px;
     color: #EFB730;
     font-family: 'Noto Sans KR';
-    border: 2px solid #EFB730;
+    outline-style: solid;
+    margin-left: 5px;
 }
-.nav_1 > input:focus {outline:none;}
+
+.nav_1 > input:focus {outline:solid;}
 .nav_1 > input::placeholder {
 	font-size: 23px;
 	font-family: Noto Sans KR;
@@ -118,7 +123,7 @@
 }
 
 .join>form>div {
-	margin: 30px 0;
+	margin: 20px 0;
 }
 
 .join>form>div>span {
@@ -195,7 +200,7 @@
 	<div id="header">
 		<div class="nav_1">
 			<a href="${root}/index.jsp">EAT THE JEJU</a>
-			<input type="text" id="searchInput" name="searchInput" style="border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
+			<input type="text" id="searchInput" name="searchInput" style="border: none;" placeholder="검색어를 입력하여 주세요"   autofocus />
 		</div>
 		<div class="nav_2">
 			<c:choose>

@@ -11,6 +11,7 @@
 <!-- css 관련 -->
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/radioButton.css" />
 <link rel="stylesheet" href="${root}/resources/css/slideshow.css" />
+<link rel="icon" type="image/png" sizes="16x16" href="${root}/resources/css/favicon-16x16.png/">
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 필요한 스크립트 -->
@@ -122,6 +123,9 @@ button {
     border: #EFB730 solid 1px;
     background-color: #EFB730;
     border-radius: 5px;
+}
+img {
+	object-fit: cover;
 }
 </style>
 </head>

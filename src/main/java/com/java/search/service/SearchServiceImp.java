@@ -232,4 +232,23 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
+
+	@Override
+	public String countCont(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		
+		String countFood = Integer.toString(searchDao.countFood());
+		String countReview = Integer.toString(searchDao.countReview());
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "countFood : " + countFood + "countReview : " + countReview);
+
+		HashMap<String, String> jMap = new HashMap<String, String>();
+		jMap.put("countFood", countFood);
+		jMap.put("countReview", countReview);
+
+		String jsonText = JSONValue.toJSONString(jMap);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
 }

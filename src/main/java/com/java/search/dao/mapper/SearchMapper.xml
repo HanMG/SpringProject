@@ -180,7 +180,7 @@
 		]]>
 	</select>
 	
-		<select id="popularList" resultType="com.java.search.dto.SearchFoodDto">
+	<select id="popularList" resultType="com.java.search.dto.SearchFoodDto">
 			SELECT * FROM 
 			(SELECT ROWNUM rnum, A.* FROM
 			(SELECT food_code, food_name, food_addr, food_area, food_phone, food_kind, food_read, food_menu, image_name, image_path, review_food, nvl(review_score,0) review_score, nvl(review_count,0) review_count FROM 
@@ -192,5 +192,14 @@
 			WHERE rnum >=1 and rnum <=4
 		]]>
 	</select>
+	
+	<select id="countFood" resultType="int">
+		SELECT count(*) FROM FOOD
+	</select>
+	
+	<select id="countReview" resultType="int">
+		SELECT count(*) FROM REVIEW
+	</select>
+	
 
 </mapper>

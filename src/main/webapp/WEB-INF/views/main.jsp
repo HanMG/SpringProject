@@ -119,8 +119,6 @@
 		
 		<div id="img_wrapper">
 			<div id="search" class="search">
-				<span>EAT THE JEJU<br/>둘러보기</span>
-				<span>EAT THE JEJU에 등록된 ?여 개의 맛집과 ?여 개의 리뷰를 통해 <br/>다양한 맛집을 경험해 보세요.</span>
 			</div>
 		</div>
 		<div id="section_container">
@@ -163,7 +161,8 @@
 <script type="text/javascript">
 
 $(function() {
-	popularFood();	
+	popularFood();
+	countCont();
 });
 
 var root = "${root}";
@@ -195,6 +194,20 @@ function popularFood() {
 				cont += "</div>"
 				}
 			$(".popularList").html(cont);	
+		}
+	});
+}
+
+function countCont() {
+	$.ajax({
+		type : "POST",
+		url :  root + "/countContAjax.do",
+		dataType : "json",
+		success : function(data) {
+			var cont = "";
+			cont += "<span>EAT THE JEJU<br/>둘러보기</span>"
+			cont += "<span>EAT THE JEJU에 등록된   "+data.countFood+"여 개의 맛집과   "+data.countReview+"여 개의 리뷰를 통해 <br/>다양한 맛집을 경험해 보세요.</span>"
+			$(".search").html(cont);	
 		}
 	});
 }

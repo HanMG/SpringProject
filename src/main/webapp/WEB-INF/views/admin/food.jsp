@@ -43,7 +43,7 @@
 	width: 100%;
 	margin: 0 auto;
 }
-/* 식당관련 */
+/* 음식점관련 */
 #content_modal {
 	position: absolute;
 	left: 50%;
@@ -68,7 +68,7 @@
 	text-align: center;
 }
 
-/* 식당관련 */
+/* 음식점관련 */
 .food {
 	overflow: hidden;
 	width: 600px; 
@@ -153,21 +153,21 @@ thead > tr > th {
 <body>
 	<div id="content">
 		<div id="title">
-			<span>식당관리</span>
-			<button class="menuBtn" id="foodInClick">식당등록</button>
+			<span>음식점관리</span>
+			<button class="menuBtn" id="foodInClick">음식점등록</button>
 		</div>
 		<div id="list">
 			<table id="example" class="display" style="width:100%">
 				<thead>
 					<tr>
-						<th>식당코드</th>
+						<th>음식점코드</th>
 						<th>지역</th>
-						<th>가게명</th>
+						<th>음식점명</th>
 						<th>대표음식</th>
 						<th>종류</th>
 						<th>주소</th>
 						<th>등록날짜</th>
-						<th>식당상태</th>
+						<th>음식점상태</th>
 					</tr>				
 				</thead>
 				<tbody>
@@ -189,19 +189,19 @@ thead > tr > th {
 			</table>
 		</div>	
 	</div>
-		<!-- 식당 등록 모달 -->
+		<!-- 음식점 등록 모달 -->
 	<div id="foodInModal" class="foodInModal">
 		<div id="content_modal">
 			<div class="content_modal">
 				<div class="title_modal">
-					<span>식당 등록</span>
+					<span>음식점 등록</span>
 					<span class="close foodInClose">&times;</span>
 				</div>
 				<form action="${root}/food/insertOk.go" method="post" enctype="multipart/form-data" onsubmit="return foodInForm(this)">
 				<input type="hidden" name="memberCode" value="${memberCode}" />
 				<div class="food">		
 					<div>
-						<span>*가게명</span>
+						<span>*음식점명</span>
 						<input type="text" name="foodName" value=""/>
 					</div>		
 					<div>
@@ -264,9 +264,9 @@ thead > tr > th {
 						<textarea name="foodIntro" id="" cols="60" rows="5" placeholder="소개" style="vertical-align: top;"></textarea>
 					</div>
 					<div>
-						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" value="Y" id="insertStatY" checked="checked"><label class="span" for="insertStatY">Y</label>
-						<input type="radio" name="foodStatus" value="N" id="insertStatN"><label class="span" for="insertStatN">N</label>
+						<span>*음식점상태</span>
+						<input type="radio" name="foodStatus" value="y" id="insertStatY" checked="checked"><label class="span" for="insertStatY">Y</label>
+						<input type="radio" name="foodStatus" value="n" id="insertStatN"><label class="span" for="insertStatN">N</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="등록하기"></input>
@@ -278,23 +278,23 @@ thead > tr > th {
 		</div>
 	</div>
 	
-	<!-- 식당 모달 -->
+	<!-- 음식점 모달 -->
 	<div id="foodModal" class="foodModal">
 		<div id="content_modal">
 			<div class="content_modal">
 				<div class="title_modal">
-					<span>식당 관리</span>
+					<span>음식점 관리</span>
 					<span class="close foodClose">&times;</span>
 				</div>
 				<form action="${root}/food/updateOk.go" method="post" enctype="multipart/form-data" name="foodForm" onsubmit="return foodUpForm(this)">
 				<input type="hidden" name="foodCode" id="foodCode" value="" />
 				<div class="food">
 					<div>
-						<span>식당코드</span>
+						<span>음식점코드</span>
 						<span class="span" id="foodCodeTemp"></span>
 					</div>
 					<div>
-						<span>*가게명</span>
+						<span>*음식점명</span>
 						<input type="text" name="foodName" id="foodName" value=""/>
 					</div>
 					<div>
@@ -357,9 +357,9 @@ thead > tr > th {
 						<textarea name="foodIntro" id="foodIntro" cols="60" rows="5" placeholder="소개" style="vertical-align: top;"></textarea>
 					</div>
 					<div>
-						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" id="updateStatY" value="Y"><label class="span" for="updateStatY">Y</label>
-						<input type="radio" name="foodStatus" id="updateStatN"value="N"><label class="span" for="updateStatN">N</label>
+						<span>*음식점상태</span>
+						<input type="radio" name="foodStatus" id="updateStatY" value="y"><label class="span" for="updateStatY">Y</label>
+						<input type="radio" name="foodStatus" id="updateStatN"value="n"><label class="span" for="updateStatN">N</label>
 					</div>
 					<div>
 						<span>등록자(읽기)</span>
@@ -427,7 +427,7 @@ $(".foodClick").click(function(){
 $(".foodClose").click(function(){
 	$("#foodModal").css("display","none");
 });
-/*  식당 등록 클릭시 작동 */
+/*  음식점 등록 클릭시 작동 */
 $("#foodInClick").click(function(){
 	$(".foodKind1 option:eq(0)").prop("selected", true);
 	kindChange();
@@ -511,8 +511,6 @@ $(".foodInClose").click(function(){
             }
         }).open();
     }
-
- 
 </script>
 	
 </body>

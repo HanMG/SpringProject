@@ -49,7 +49,7 @@
 	width: 100%;
 	margin: 0 auto;
 }
-/* 식당관련 */
+/* 음식점관련 */
 #content_modal {
 	position: absolute;
 	left: 50%;
@@ -74,7 +74,7 @@
 	font-weight: bold;
 	text-align: center;
 }
-/* 식당관련 */
+/* 음식점관련 */
 .food {
 	overflow: hidden;
 	width: 500px; 
@@ -165,7 +165,7 @@
 		</div>	
 	</div>
 		
-	<!-- 식당 모달 -->
+	<!-- 음식점 모달 -->
 	<div id="reviewModal" class="reviewModal">
 		<div id="content_modal">
 			<div class="content_modal">

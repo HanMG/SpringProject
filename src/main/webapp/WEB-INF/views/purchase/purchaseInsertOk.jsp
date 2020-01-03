@@ -33,7 +33,7 @@
 .myPage > div:nth-child(n+2) {
 	margin: 30px;
 }
-.nav_1 > div > span:nth-child(1) {
+.ok_nav_1 > div > span:nth-child(1) {
 	display: inline-block;
 	width: 200px;
 	font-size: 18px;
@@ -59,7 +59,7 @@
 	<div class="title_mypage">
 			<span>상품 구매가 완료되었습니다!</span>
 		</div>
-	<div class="nav_1">
+	<div class="ok_nav_1">
 		<div>
 			<span>쿠폰명 : </span>
 			<span>${couponDto.couponName}</span>

@@ -82,10 +82,10 @@ a {
 <body>	
 	<div id="content">
 		<div class="food">
-			<div class="title">내가 등록한 식당</div>
+			<div class="title">내가 등록한 음식점</div>
 			<div class="register">
 				<div class="reg_btn">
-					<button><a href="${root}/member/myFoodIn.go">식당 등록</a></button>
+					<button><a href="${root}/member/myFoodIn.go">음식점 등록</a></button>
 				</div>
 				<div class="reg">
 					<div class="reg_1">

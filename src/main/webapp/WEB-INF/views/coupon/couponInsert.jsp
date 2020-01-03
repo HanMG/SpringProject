@@ -19,7 +19,7 @@
 					return false;
 				}
 				if(obj.foodCode.value==""){
-					alert("등록하실 식당명을 입력해주세요.");
+					alert("등록하실 음식점명을 입력해주세요.");
 					obj.foodCode.focus();
 					return false;
 				}
@@ -56,7 +56,7 @@
 				}
 			}
 	
-			//식당코드 리스트 출력
+			//음식점코드 리스트 출력
 			function foodcodeRead (root){
 				var url = root + "/coupon/searchFoodCode.go";
 				open(url, "", "width= 500, height=500, scrollbars=yes");
@@ -98,11 +98,11 @@
 						</p>
 					</li>
 					<li>
-						<p>식당명</p>
+						<p>음식점명</p>
 						<p>
 							<input type="text" name="foodCode">
 							
-							<input type="button" value="식당검색" onclick="foodcodeRead('${root}')">
+							<input type="button" value="음식점검색" onclick="foodcodeRead('${root}')">
 						</p>
 						<p><input type="text" name="foodName" disabled></p>
 					</li>

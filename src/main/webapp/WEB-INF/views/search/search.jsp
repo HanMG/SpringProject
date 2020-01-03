@@ -70,7 +70,7 @@
 	display: flex; 
 	flex-direction: column;
 }
-/* 가게 이미지 */
+/* 음식점 이미지 */
 .foodName {
 	font-size: 23px;
 	margin-right: 5px;

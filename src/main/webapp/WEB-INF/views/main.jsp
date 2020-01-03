@@ -31,21 +31,26 @@
 }
 .con_2 {
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
 	margin: 50px 0;
+	text-align: center;
+    color: #EFB730;
+    font-size: 18px;
 }
 
 .con_2 > div {
 	display: flex;
 	flex-direction: column;
-	text-align: center;
 	margin: 0 10px;
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	border: 1px solid #EFB730;
+	border-radius: 50%;
+    padding: 12px 21px;
+    cursor: pointer;
 }
 .con_2 > div > img {
-	width: 100px;
-	height: 100px;
+	width: 70px;
+	height: 70px;
 }
 .con_3 {
 	display: flex;
@@ -124,33 +129,33 @@
 		<div id="section_container">
 			<div class="con_2">
 				<div class="searchKind" onclick="searchKind('한식')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-rice-bowl-100.png">
 					<span>한식</span>
 				</div>
 				<div class="searchKind" onclick="searchKind('중식')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-noodles-100.png">
 					<span>중식</span>
 				</div>
 				<div class="searchKind" onclick="searchKind('일식')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-sushi-100.png">
 					<span>일식</span>
 				</div>
 				<div class="searchKind" onclick="searchKind('양식')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-hamburger-100.png">
 					<span>양식</span>
 				</div>
 				<div class="searchKind" onclick="searchKind('카페')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-cafe-100.png">
 					<span>카페</span>
 				</div>
 				<div class="searchKind" onclick="searchKind('기타')">
-					<img alt="" src="${root}/resources/css/list.jpg">
+					<img alt="" src="${root}/resources/css/icons8-food-cart-100.png">
 					<span>기타</span>
 				</div>
 			</div>
 			<div class="con_3">
 				<div>
-					<span>인기식당</span>
+					<span>인기음식점</span>
 				</div>
 				<div class="popularList">
 				</div>

@@ -15,7 +15,7 @@
 				alert("insertForm Ok");
 			}
 	
-			//식당코드 리스트 출력
+			//음식점코드 리스트 출력
 			function foodcodeRead (root){
 				var url = root + "/coupon/searchFoodCode.go";
 				open(url, "", "width= 500, height=500, scrollbars=yes");
@@ -36,11 +36,11 @@
 						</p>
 					</li>
 					<li>
-						<p>식당명</p>
+						<p>음식점명</p>
 						<p>
 							<input type="text" name="foodCode" value="${couponDto.foodCode}">
 							
-							<input type="button" value="식당검색" onclick="foodcodeRead('${root}')">
+							<input type="button" value="음식점검색" onclick="foodcodeRead('${root}')">
 						</p>
 						<p><input type="text" name="foodName" value="${couponDto.foodName}" disabled></p>
 					</li>

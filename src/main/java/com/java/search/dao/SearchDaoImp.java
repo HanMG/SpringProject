@@ -96,6 +96,21 @@ public class SearchDaoImp implements SearchDao {
 		return sqlSessionTemplate.selectList("searchResult", map);
 	}
 
+	@Override
+	public List<SearchFoodDto> popularList() {
+		return sqlSessionTemplate.selectList("popularList");
+	}
+
+	@Override
+	public int countFood() {
+		return sqlSessionTemplate.selectOne("countFood");
+	}
+
+	@Override
+	public int countReview() {
+		return sqlSessionTemplate.selectOne("countReview");
+	}
+
 
 
 }

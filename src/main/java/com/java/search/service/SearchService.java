@@ -14,4 +14,8 @@ public interface SearchService {
 
 	String searchResult(ModelAndView mav);
 
+	String popularList(ModelAndView mav);
+
+	String countCont(ModelAndView mav);
+
 }

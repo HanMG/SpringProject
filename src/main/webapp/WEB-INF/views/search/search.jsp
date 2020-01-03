@@ -81,7 +81,9 @@ a {
 	font-size: 23px;
 }
 .reviewScore {
+	margin-left: 4px;
 	font-size: 23px;
+	line-height: 26px;
 	color: #EFB730;
 }
 .foodArea, .foodKind, .foodRead, .reviewCount {
@@ -163,26 +165,45 @@ a {
 	position: relative;
 	text-align: center;
 }
+
+.couponList > div:nth-child(1):after{
+	content:"";
+	background-color: rgba(0,0,0,0.3);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left:0;
+	right: 0;
+	bottom: 0;
+} 
+
+.couponList > div:nth-child(1):hover:after{
+	background: transparent;
+}
+
 .couponList > div:nth-child(1) > span {
 	float: right;
 	display: inline-block;
 	position: absolute;
-	bottom: 25px;
+	bottom: 33px;
 	right: 15px;
 	font-size: 23px;
-	font-weight: bold;
 	color: white;
+	z-index: 1;
 	
 }
 .couponList > div:nth-child(1) > span:nth-child(2) {
-	bottom: 55px;
+	bottom: 60px;
 	font-size: 14px;
+	z-index: 1;
 }
 .couponList > div:nth-child(1) > span:nth-child(3) {
-	bottom: 75px;
-	font-size: 23px;
-	right: inherit;
+	bottom: 82px;
+	font-size: 20px;
+	/* right: inherit; */
 	display: inline-block;
+	z-index: 1;
 }
 .couponList > div:nth-child(1) > a {
 	float: right;
@@ -192,6 +213,7 @@ a {
 	right: 15px;
 	font-weight: bold;
 	color: white;
+	z-index: 1;
 }
 /* 필터 모달 관련 */
 .filterModal {
@@ -334,15 +356,22 @@ a {
 		
 			var clickedOverlay = null;
 		
-			function mark(arr){
-				var array = arr.join();
-				var abc = array.split(",");
+			var markers = [];
+			var overlays = [];
+		
+			function mark(addr, name, filter, foodCode, imageName){
 				
-				var addr = abc[0];
-				var name = abc[1];
-				var filter = abc[2];
-				var foodCode = abc[3];
+				markers.forEach(function (marker) { marker.setMap(null); });
+			    markers.length = 0 // 마커 배열 초기화
+				//var array = arr.join();
+				//var abc = arr.split(",");
+				var addr = addr;
+				var name = name;
+				var filter = filter;
+				var foodCode = foodCode;
+				var imageName = imageName;
 				// 주소-좌표 변환 객체를 생성합니다
+				
 				var geocoder = new kakao.maps.services.Geocoder();
 				
 				geocoder.addressSearch(addr, function(result, status) {
@@ -376,6 +405,7 @@ a {
 				    	    images : markerImage
 				    	});
 			    	   map.setBounds(bounds);
+			    	   markers.push(marker);
 			    	// 마커 위에 커스텀오버레이를 표시합니다
 					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 					var CustomOverlay = new daum.maps.CustomOverlay({
@@ -385,7 +415,8 @@ a {
 					    yAnchor: 0.5,
 						position: marker.getPosition()
 					});
-					 
+					
+					var root = '${root}';
 			    	// 커스텀 오버레이에 표시할 컨텐츠 입니다
 			    	// 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 			    	// 별도의 이벤트 메소드를 제공하지 않습니다 
@@ -412,7 +443,9 @@ a {
 						img.className = "img";
 						body.prepend(img);
 					var image = document.createElement("img");
-						image.setAttribute("src", "${searchFoodDto.imageName}");
+					var foodImage = "${root}/resources/ftp/"+imageName;
+						console.log(foodImage);
+						image.setAttribute("src", foodImage);
 						image.setAttribute("width", "73px");
 						image.setAttribute("height", "70px");
 						img.prepend(image);
@@ -438,6 +471,7 @@ a {
 			    	          
 			    	// 마커에 click 이벤트를 등록합니다
 			        kakao.maps.event.addListener(marker, 'click', function() {
+			        	//overlays.push(customOverlay); 
 			        	// clickedOverlay 존재하면 다 없앰
 			        	if (clickedOverlay) {
 			                clickedOverlay.setMap(null);
@@ -459,12 +493,12 @@ a {
 		
 		<div style=" margin: 15px 30px; font-size: 28px; color: #EFB730;">관련 쿠폰</div>
 		<c:forEach var="i" items="${foodList}">
-		<script>
+	<!-- 	<script>
 		var arr = new Array();
 		arr.push("${i.foodAddr}","${i.foodName}","${i.foodKind}","${i.foodCode}");
 		//alert(arr);
 		mark(arr);
-		</script>
+		</script> -->
 		</c:forEach>
 		
 		<c:if test="${couponCount > 0}">
@@ -651,8 +685,8 @@ function searchResultAjax() {
 			var cont = "";
 			if (resultCount > 0) {
 				for (var i = 0; i < data.length; i++) {
-					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode);
-					mark(arr);
+					arr.push(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode, data[i].imageName);
+					mark(data[i].foodAddr,data[i].foodName,data[i].foodKind,data[i].foodCode, data[i].imageName);
 					//alert(arr);
 					var url = root + "/food/read.go?foodCode=" + data[i].foodCode;
 					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
@@ -693,7 +727,12 @@ function searchResultAjax() {
 	});
 }
 
+var kind = "${foodKind}";
 $(function() {
+	if (kind != null && kind != "") {
+		$('input:checkbox[name=kindType]:input[value='+kind+']').attr("checked", true);
+		searchType();
+	}
 	searchCountAjax();
 	searchResultAjax();
 });
@@ -738,11 +777,9 @@ function changePage(n) {
 	var span = document.getElementsByClassName("close")[3];
 	filterClick.onclick = function() {
 		filterModal.style.display = "block";
-		header.style.display = "none";
 		}
 	span.onclick = function() {
 		filterModal.style.display = "none";
-		header.style.display = "block";
 		}
 
 

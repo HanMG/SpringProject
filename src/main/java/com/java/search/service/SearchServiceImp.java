@@ -30,7 +30,10 @@ public class SearchServiceImp implements SearchService {
 		
 		String keyword = (String) map.get("keyword");
 		JejuAspect.logger.info(JejuAspect.logMsg + keyword);
-
+		if (keyword == null) {
+			keyword = "";
+		}
+		
 		// 쿠폰 수
 		int couponCount = searchDao.couponCount(keyword);
 		JejuAspect.logger.info(JejuAspect.logMsg + couponCount);
@@ -193,6 +196,57 @@ public class SearchServiceImp implements SearchService {
 //			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
 		}
 		String jsonText = JSONValue.toJSONString(arr);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
+
+	@Override
+	public String popularList(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		
+		List<SearchFoodDto> popularList = new ArrayList<SearchFoodDto>();
+		popularList = searchDao.popularList();
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "popularList : " + popularList.size());
+
+		JSONArray arr = new JSONArray();
+		for(SearchFoodDto sFoodDto : popularList) {
+			HashMap<String, Object> jMap = new HashMap<String, Object>();
+			jMap.put("foodCode", sFoodDto.getFoodCode());
+			jMap.put("foodName", sFoodDto.getFoodName());
+			jMap.put("foodMenu", sFoodDto.getFoodMenu());
+			jMap.put("foodKind", sFoodDto.getFoodKind());
+			jMap.put("foodAddr", sFoodDto.getFoodAddr());
+			jMap.put("foodArea", sFoodDto.getFoodArea());
+			jMap.put("foodRead", sFoodDto.getFoodRead());
+			jMap.put("reviewCount", sFoodDto.getReviewCount());
+			jMap.put("reviewScore", sFoodDto.getReviewScore());
+			jMap.put("imageName", sFoodDto.getImageName());
+			jMap.put("imagePath", sFoodDto.getImagePath());
+			arr.add(jMap);
+//			JejuAspect.logger.info(JejuAspect.logMsg + jMap.toString());
+		}
+		String jsonText = JSONValue.toJSONString(arr);
+		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
+		
+		return jsonText;
+	}
+
+	@Override
+	public String countCont(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		
+		String countFood = Integer.toString(searchDao.countFood());
+		String countReview = Integer.toString(searchDao.countReview());
+		
+		JejuAspect.logger.info(JejuAspect.logMsg + "countFood : " + countFood + "countReview : " + countReview);
+
+		HashMap<String, String> jMap = new HashMap<String, String>();
+		jMap.put("countFood", countFood);
+		jMap.put("countReview", countReview);
+
+		String jsonText = JSONValue.toJSONString(jMap);
 		JejuAspect.logger.info(JejuAspect.logMsg + "JSONtext : " + jsonText);
 		
 		return jsonText;

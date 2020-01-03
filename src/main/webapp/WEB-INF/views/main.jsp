@@ -33,6 +33,7 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	margin: 50px 0;
 }
 
 .con_2 > div {
@@ -57,8 +58,13 @@
 	display: flex;
 }
 .con_3 > div:first-child {
-	border-bottom: solid 3px black;
+	border-bottom: solid 2px #EFB730;
 	font-size: 23px;
+}
+
+.con_3 > div:first-child span{
+	color: #EFB730;
+	line-height: 40px;
 }
 
 .con_3 > div:last-child {
@@ -81,8 +87,6 @@
 .con_3 > div > div > span:nth-of-type(1){
 	padding-top: 8px;
 }
-
-
 .search {
 	position: absolute;
 	left: 50%;
@@ -96,61 +100,50 @@
 }
 .search > span:first-child {
 	font-size: 30px;
+	margin-bottom: 20px;
 }
-.search > input {
-	width: 200px;
-	height: 30px; 
-	font-size: 1rem;
-	padding-left: 30px;
-	margin: 10px auto;
+
+.popularList > div:hover {
+	animation-name: listMove;
+	animation-duration: 0.5s;
 }
-.search > input::placeholder {
-	font-size: 1rem;
-	font-family: Noto Sans KR;
-	font-weight: 500;
-	color: #EFB730;
+
+@keyframes listMove{
+	from {margin-top: 35px;}
+	to {margin-top: 40px;}
 }
-.searchIcon {
-	font-size: 23px;
-	color: #EFB730;
-	position: absolute;
-    top: 150px;
-    left: 110px;
-}
+
 </style>
 <body onkeypress="if(event.keyCode == 13){search();}">
 	<div id="content">
 		
 		<div id="img_wrapper">
 			<div id="search" class="search">
-				<span>EAT THE JEJU<br/>둘러보기</span>
-				<span>EAT THE JEJU에 등록된 ?여 개의 맛집과 ?여 개의 리뷰를 통해 <br/>다양한 맛집을 경험해 보세요.</span>
-				<i class="fa fa-search searchIcon"></i><input type="text" id="searchInput" name="searchInput" style="border: none;" placeholder="검색어를 입력하여 주세요"  autofocus />
 			</div>
 		</div>
 		<div id="section_container">
 			<div class="con_2">
-				<div>
+				<div class="searchKind" onclick="searchKind('한식')">
 					<img alt="" src="${root}/resources/css/list.jpg">
 					<span>한식</span>
 				</div>
-				<div>
-					<img alt="" src="${root}/resources/css/list.jpg">
-					<span>일식</span>
-				</div>
-				<div>
+				<div class="searchKind" onclick="searchKind('중식')">
 					<img alt="" src="${root}/resources/css/list.jpg">
 					<span>중식</span>
 				</div>
-				<div>
+				<div class="searchKind" onclick="searchKind('일식')">
+					<img alt="" src="${root}/resources/css/list.jpg">
+					<span>일식</span>
+				</div>
+				<div class="searchKind" onclick="searchKind('양식')">
 					<img alt="" src="${root}/resources/css/list.jpg">
 					<span>양식</span>
 				</div>
-				<div>
+				<div class="searchKind" onclick="searchKind('카페')">
 					<img alt="" src="${root}/resources/css/list.jpg">
 					<span>카페</span>
 				</div>
-				<div>
+				<div class="searchKind" onclick="searchKind('기타')">
 					<img alt="" src="${root}/resources/css/list.jpg">
 					<span>기타</span>
 				</div>
@@ -159,95 +152,119 @@
 				<div>
 					<span>인기식당</span>
 				</div>
-				<div>
-					<div>
-						<img alt="" src="${root}/resources/css/list.jpg">
-						<span>가게명 : foodName</span>
-						<span>리뷰 점수 : reviewScore</span>
-						<span>지역 : foodArea</span>
-						<span>종류 : foodKind</span>
-						<span>메뉴 : foodMenu</span>
-						<span>조회수  : foodRead</span>
-						<span>리뷰수 : reviewCount</span>
-					</div>
-					<div>
-						<img alt="" src="${root}/resources/css/list.jpg">
-						<span>가게명 : foodName</span>
-						<span>리뷰 점수 : reviewScore</span>
-						<span>지역 : foodArea</span>
-						<span>종류 : foodKind</span>
-						<span>메뉴 : foodMenu</span>
-						<span>조회수  : foodRead</span>
-						<span>리뷰수 : reviewCount</span>
-					</div>
-					<div>
-						<img alt="" src="${root}/resources/css/list.jpg">
-						<span>가게명 : foodName</span>
-						<span>리뷰 점수 : reviewScore</span>
-						<span>지역 : foodArea</span>
-						<span>종류 : foodKind</span>
-						<span>메뉴 : foodMenu</span>
-						<span>조회수  : foodRead</span>
-						<span>리뷰수 : reviewCount</span>
-					</div>
-					<div>
-						<img alt="" src="${root}/resources/css/list.jpg">
-						<span>가게명 : foodName</span>
-						<span>리뷰 점수 : reviewScore</span>
-						<span>지역 : foodArea</span>
-						<span>종류 : foodKind</span>
-						<span>메뉴 : foodMenu</span>
-						<span>조회수  : foodRead</span>
-						<span>리뷰수 : reviewCount</span>
-					</div>
+				<div class="popularList">
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-	<script type="text/javascript">
-	var url = null;
+<script type="text/javascript">
 
-	function search() {
-		var param = $("#searchInput").val()
-		url = "${root}/search.go?keyword=" + param;
-		location.href = url;
-	}
+$(function() {
+	popularFood();
+	countCont();
+});
 
-	$("#searchButton").click(function() {
-		search();
-	});
+var root = "${root}";
 
-	$("#searchInput").keypress(function(event) {
-		if (event.which == 13) {
-			search();
+function popularFood() {
+	$.ajax({
+		type : "POST",
+		url :  root + "/searchPopularAjax.do",
+		dataType : "json",
+		success : function(data) {
+			var cont = "";
+			for (var i = 0; i < data.length; i++) {
+				var url = root + "/food/read.go?foodCode=" + data[i].foodCode;
+				cont += "<div style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
+					var err = root + "/resources/css/list.jpg";
+					cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+					cont += "<span class='foodName'>음식점명 : "+data[i].foodName+"</span>";
+					if (data[i].reviewScore > 0) {
+						var reviewScore = Math.round(data[i].reviewScore * 10)/10
+					cont += "<span class='reviewScore'>리뷰점수 : "+reviewScore+"</span>";
+					}
+					cont += "<span class='foodArea'>지역 : "+data[i].foodArea+"  </span>";
+// 					cont += "<span class='foodKind'>종류 : "+data[i].foodKind+"</span>";
+// 					cont += "<span class='foodKind'>메뉴 : "+data[i].foodMenu+"</span>";
+					cont += "<span class='foodRead'>조회수 : "+data[i].foodRead+"</span>";
+					if (data[i].reviewCount != null) {
+					cont += "<span class='reviewCount'>리뷰수 : "+data[i].reviewCount+"</span>";
+					}
+				cont += "</div>"
+				}
+			$(".popularList").html(cont);	
 		}
 	});
+}
 
-	$("#searchInput").on("change keyup paste", function() {
-		var keywordList = [];
-		$.ajax({
-			type : "POST",
-			url : "${root}/searchAutoAjax.do",
-			data : {"keyword" : $("#searchInput").val()},
-			dataType:"json",
-			success : function(data){
-				$('#searchInput').autocomplete({
-					source : data,
-				    focus: function(eventCheck, ui) {
-						eventCheck.preventDefault();
-						console.log(ui.item.label);
-						
-						$("#searchInput").keydown(function(key) {
-							
-							if(key.which == 13) {
-								$("#searchInput").val(ui.item.label);
-								search();
-							}
-						});
-					}
-				});
-			}
-		}); 
+function countCont() {
+	$.ajax({
+		type : "POST",
+		url :  root + "/countContAjax.do",
+		dataType : "json",
+		success : function(data) {
+			var cont = "";
+			cont += "<span>EAT THE JEJU<br/>둘러보기</span>"
+			cont += "<span>EAT THE JEJU에 등록된   "+data.countFood+"여 개의 맛집과   "+data.countReview+"여 개의 리뷰를 통해 <br/>다양한 맛집을 경험해 보세요.</span>"
+			$(".search").html(cont);	
+		}
 	});
-	</script>
+}
+
+
+</script>
+<script type="text/javascript">
+function searchKind(foodKind) {
+	url = "${root}/search.go?foodKind=" + foodKind;
+	location.href = url;
+}
+
+</script>
+
+<script type="text/javascript">
+var url = null;
+
+function search() {
+	var param = $("#searchInput").val()
+	url = "${root}/search.go?keyword=" + param;
+	location.href = url;
+}
+
+$("#searchButton").click(function() {
+	search();
+});
+
+$("#searchInput").keypress(function(event) {
+	if (event.which == 13) {
+		search();
+	}
+});
+
+$("#searchInput").on("change keyup paste", function() {
+	var keywordList = [];
+	$.ajax({
+		type : "POST",
+		url : "${root}/searchAutoAjax.do",
+		data : {"keyword" : $("#searchInput").val()},
+		dataType:"json",
+		success : function(data){
+			$('#searchInput').autocomplete({
+				source : data,
+			    focus: function(eventCheck, ui) {
+					eventCheck.preventDefault();
+					console.log(ui.item.label);
+					
+					$("#searchInput").keydown(function(key) {
+						
+						if(key.which == 13) {
+							$("#searchInput").val(ui.item.label);
+							search();
+						}
+					});
+				}
+			});
+		}
+	}); 
+});
+</script>

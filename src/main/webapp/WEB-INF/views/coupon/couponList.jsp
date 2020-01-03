@@ -56,6 +56,21 @@
 	position: relative;
 }
 
+.list>div:nth-child(1):after{
+	content:"";
+	background-color: rgba(0,0,0,0.08);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left:0;
+	right: 0;
+	bottom: 0;
+}
+.list>div:nth-child(1):hover:after{
+	background: transparent;
+}
+
 .list>div:nth-child(1)>span {
 	display: inline-block;
 	position: absolute;
@@ -65,18 +80,21 @@
 	font-weight: bold;
 	color: white;
 	margin-left: auto;
+	z-index: 1;
 }
 
 .list>div:nth-child(1)>span:nth-child(2) {
 	bottom: 35px;
 	font-size: 14px;
+	z-index: 1;
 }
 
 .list>div:nth-child(2) {
-	padding-top: 8px;
+	margin-top: 8px;
 	font-size: 20px;
 	color: #030305;
 }
+
 
 .list>div:nth-child(3) {
 	font-size: 14px;
@@ -153,7 +171,7 @@
 				var list = "<div class='list' onclick="+"'location.href=\""+foodCode+"\"'>";
 				list += "<div style=" + "'background-image: url(\"" + image
 						+ "\")';>";
-				list += '<span>' + data[i].couponCostsale + '</span>';
+				list += '<span>' + data[i].couponCostsale + '원</span>';
 				list += '<span style="text-decoration:line-through;">'
 						+ data[i].couponCostori + '</span>';
 				list += '</div>';

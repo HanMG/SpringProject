@@ -224,7 +224,7 @@
 					<div>
 						<c:set var="img" value="${fn:split(reviewList.imageName,',')}" />
 						<c:forEach var="imgList" items="${img}">
-							<img src="${root}/resources/ftp/${imgList}" alt="" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'" />
+							<img src="${root}/resources/ftp/${imgList}" alt="이미지 준비중" style="width: 100px; height: 100px;" />
 						</c:forEach>
 					</div>
 				</div>

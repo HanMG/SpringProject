@@ -9,10 +9,29 @@
 	flex-wrap: nowrap;
 	padding: 0.8rem;
 	justify-content: space-around;
+	height: 60px;
+    font-size: 23px;
 }
 .nav_1 > a{
 	color: #EFB730;
 }
+.nav_1 > input {
+    width: 400px;
+    font-size: 23px;
+    margin-left: 10px;
+    /* padding-left: 20px; */
+    color: #EFB730;
+    font-family: 'Noto Sans KR';
+    border: 2px solid #EFB730;
+}
+.nav_1 > input:focus {outline:none;}
+.nav_1 > input::placeholder {
+	font-size: 23px;
+	font-family: Noto Sans KR;
+	font-weight: 500;
+	color: #EFB730;
+}
+
 .nav_2 > a {
 	margin-left: 20px;
 }
@@ -142,7 +161,6 @@
 	background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 	z-index:2; 
-	
 }
 
 .modal_2, .modal_3 {
@@ -174,10 +192,22 @@
 	cursor: pointer;
 }
 
+#searchInput {
+	border: none;
+	border-bottom: 2px solid #EFB730;
+}
+
+#searchInput::placeholder,
+#searchInput::-webkit-input-placeholder {
+	font-weight: 400;
+	font-size: 18px;
+}
+
 </style>
 	<div id="header">
 		<div class="nav_1">
 			<a href="${root}/index.jsp">EAT THE JEJU</a>
+			<input type="text" id="searchInput" name="searchInput" placeholder="검색어를 입력하여 주세요"  autofocus />
 		</div>
 		<div class="nav_2">
 			<c:choose>

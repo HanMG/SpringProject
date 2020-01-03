@@ -28,5 +28,10 @@ public interface SearchDao {
 	List<SearchFoodDto> searchResult(String keyword, String orderType, String[] addrArr, String[] kindArr, int startRow,
 			int endRow);
 
+	List<SearchFoodDto> popularList();
+
+	int countFood();
+
+	int countReview();
 
 }

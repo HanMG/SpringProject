@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.admin.dto.AdminCouponDto;
 import com.java.admin.dto.AdminCouponReadDto;
+import com.java.admin.dto.AdminDto;
 import com.java.admin.dto.AdminFoodDto;
 import com.java.admin.dto.AdminFoodReadDto;
 
@@ -22,6 +23,8 @@ public interface AdminDao {
 	int loginCheck(String adminId, String adminPwd);
 	
 	public AdminCouponDto couponCount();
+
+	public AdminDto getAdminCode(String adminId);
 	
 
 }

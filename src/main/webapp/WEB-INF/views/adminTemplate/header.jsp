@@ -90,8 +90,7 @@ $(document).ready(function() {
 					aria-labelledby="userDropdown">
 					<a class="dropdown-item" href="#">마이페이지</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#" data-toggle="modal"
-						data-target="#logoutModal">로그아웃</a>
+					<a class="dropdown-item" href="${root}/admin/logout.go">로그아웃</a>
 				</div></li>
 		</ul>
 

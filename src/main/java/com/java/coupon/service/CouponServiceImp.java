@@ -154,6 +154,7 @@ public class CouponServiceImp implements CouponService {
 			// 쿠폰 리스트 가져오기
 			couponList = couponDao.couponList(startRow, endRow, today);
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.size());
+			JejuAspect.logger.info(JejuAspect.logMsg + "couponList : " + couponList.toString());
 			mav.addObject("couponList", couponList);
 		}
 		mav.addObject("count", count);
@@ -189,7 +190,6 @@ public class CouponServiceImp implements CouponService {
 			// 쿠폰 리스트 가져오기
 			couponList = couponDao.couponListAjax(startRow, endRow, today);
 			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.size());
-			JejuAspect.logger.info(JejuAspect.logMsg + "couponList 사이즈: " + couponList.toString());
 		}
 
 		JSONArray arr = new JSONArray();
@@ -203,6 +203,7 @@ public class CouponServiceImp implements CouponService {
 			CommonMap.put("couponCostori", couponDto.getCouponCostori());
 			CommonMap.put("couponCostsale", couponDto.getCouponCostsale());
 			CommonMap.put("imageName", couponDto.getImageName());
+			CommonMap.put("couponSalerate", couponDto.getCouponSalerate());
 			arr.add(CommonMap);
 			JejuAspect.logger.info(JejuAspect.logMsg + CommonMap.toString());
 		}

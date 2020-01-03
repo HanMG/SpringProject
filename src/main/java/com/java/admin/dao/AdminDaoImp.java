@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.admin.dto.AdminCouponDto;
 import com.java.admin.dto.AdminCouponReadDto;
+import com.java.admin.dto.AdminDto;
 import com.java.admin.dto.AdminFoodDto;
 import com.java.admin.dto.AdminFoodReadDto;
 
@@ -46,5 +47,10 @@ public class AdminDaoImp implements AdminDao {
 	@Override
 	public AdminCouponDto couponCount() {
 		return sqlSession.selectOne("dao.AdminMapper.couponCnt");
+	}
+	// 세션
+	@Override
+	public AdminDto getAdminCode(String adminId) {
+		return sqlSession.selectOne("dao.AdminMapper.adminCode", adminId);
 	}
 }

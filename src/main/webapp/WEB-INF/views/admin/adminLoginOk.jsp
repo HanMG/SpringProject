@@ -10,6 +10,7 @@
 </head>
 <body>
 	<c:if test="${check == 1}">
+	<c:set var="adminId" value="${adminDto.adminId}" scope="session"/>
 		<script type="text/javascript">
 			alert("로그인 되었습니다.");
 			location.href="${root}/admin/main.go";

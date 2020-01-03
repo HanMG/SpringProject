@@ -187,6 +187,7 @@
 			 food, image, (SELECT food_code review_food, NVL(AVG(review_score),0) review_score, nvl(COUNT(review_code),0) review_count FROM review GROUP BY food_code) rv
 			WHERE food.food_code = image.refer_code(+)
 			AND food.food_code = rv.review_food(+)
+			ORDER BY food_read DESC
 			)A)
 		<![CDATA[
 			WHERE rnum >=1 and rnum <=4

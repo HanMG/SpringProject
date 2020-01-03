@@ -74,9 +74,7 @@
 .list>div:nth-child(1)>span {
 	display: inline-block;
 	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	font-size: 23px;
+	font-size: 17px;
 	font-weight: bold;
 	color: white;
 	margin-left: auto;
@@ -98,26 +96,18 @@
 
 .list>div:nth-child(3) {
 	font-size: 14px;
+}
+.list>div:nth-child(3) > span:first-child {
+	font-size: 18px;
+	color: #EFB730;
+}
+.list>div:nth-child(3) > span:last-child {
+	font-size: 13px;
 	color: #9b9b9b;
 }
-
 .list>div:nth-child(4) {
-	margin-top: 10px;
-}
-
-.list>div:nth-child(4)>.button {
-	width: 150px;
-	height: 50px;
-	font-size: 23px;
-	float: right;
-	text-align: center;
-	line-height: 50px;
-}
-
-.list button {
-	float: right;
-	margin: 0 10px;
-	width: 100px;
+	font-size: 12px;
+	color: #9b9b9b;
 }
 
 .goTop {
@@ -130,6 +120,7 @@
 	bottom: 30px;
 	right: 100px;
 }
+
 </style>
 <script type="text/javascript" src="${root}/resources/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="${root}/resources/xhr.js"></script>
@@ -172,16 +163,24 @@
 				list += "<div style=" + "'background-image: url(\"" + image
 						+ "\")';>";
 				list += '<span>' + data[i].couponCostsale + '원</span>';
-				list += '<span style="text-decoration:line-through;">'
-						+ data[i].couponCostori + '</span>';
-				list += '</div>';
-				list += '<div>';
-				list += '<span>' + data[i].couponName + '</span>';
-				list += '</div>';
-				list += '<div>';
-				list += '<span>' + data[i].couponStartdate + '~'
-						+ data[i].couponEnddate + '</span>';
-				list += '</div>';
+				list += '<span style="text-decoration:line-through;">'+ data[i].couponCostori + '</span>';
+/* =======
+					list += "<div style=" + "'background-image: url(\"" + image
+							+ "\")';>";
+						list += '<span>' + data[i].couponSalerate + ' %</span>';
+					list += '</div>';
+					list += '<div>';
+						list += '<span>' + data[i].couponName + '</span>';
+					list += '</div>';
+					list += '<div>';
+						list += '<span>' + data[i].couponCostsale + '</span> <span style="text-decoration:line-through;">'
+>>>>>>> nth
+ */						
+					list += '</div>';
+					list += '<div>';
+						list += '<span>' + data[i].couponStartdate + '~'
+								+ data[i].couponEnddate + '</span>';
+					list += '</div>';
 				list += '</div>';
 				$('#next').append(list);
 			}

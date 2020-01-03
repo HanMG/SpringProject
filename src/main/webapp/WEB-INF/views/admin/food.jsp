@@ -265,8 +265,8 @@ thead > tr > th {
 					</div>
 					<div>
 						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" value="y" id="insertStatY" checked="checked"><label class="span" for="insertStatY">Y</label>
-						<input type="radio" name="foodStatus" value="n" id="insertStatN"><label class="span" for="insertStatN">N</label>
+						<input type="radio" name="foodStatus" value="Y" id="insertStatY" checked="checked"><label class="span" for="insertStatY">Y</label>
+						<input type="radio" name="foodStatus" value="N" id="insertStatN"><label class="span" for="insertStatN">N</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="등록하기"></input>
@@ -358,8 +358,8 @@ thead > tr > th {
 					</div>
 					<div>
 						<span>*식당상태</span>
-						<input type="radio" name="foodStatus" id="updateStatY" value="y"><label class="span" for="updateStatY">Y</label>
-						<input type="radio" name="foodStatus" id="updateStatN"value="n"><label class="span" for="updateStatN">N</label>
+						<input type="radio" name="foodStatus" id="updateStatY" value="Y"><label class="span" for="updateStatY">Y</label>
+						<input type="radio" name="foodStatus" id="updateStatN"value="N"><label class="span" for="updateStatN">N</label>
 					</div>
 					<div>
 						<span>등록자(읽기)</span>

@@ -300,14 +300,14 @@
 				  <li>상태</li>
 				</ul>
 				<c:forEach var="favoriteList" items="${favoriteList}">
-				<ul>
+				<ul id="${favoriteList.foodCode}">
 				  <li><img alt="가게" src="${root}/resources/ftp/${favoriteList.imageName}"></li>
 				  <li>${favoriteList.foodName}</li>
 				  <li>${favoriteList.foodArea} </li>
-				  <li>${favoriteList.avg}</li>
+				  <li><fmt:formatNumber value="${favoriteList.avg}" pattern=".0"></fmt:formatNumber></li>
 				  <li>${favoriteList.foodRead}</li>
 				  <li>${favoriteList.count}</li>
-				  <li><i onclick="favorSwitch(this, '${favoriteList.foodCode}')" id="favorite" class="fa fa-heart"></i></li>
+				  <li><i style="cursor: pointer;" onclick="favorSwitch(this, '${favoriteList.foodCode}')" class="fa fa-heart"></i></li>
 				</ul>
 				</c:forEach>
 			</div>
@@ -322,13 +322,15 @@
 				  <li>주소</li>
 				  <li>종류</li>
 				  <li>상태</li>
+				  <li>비고</li>
 				</ul>
 				<c:forEach var="foodList" items="${foodList}">
-				<ul>
+				<ul id="${foodList.foodCode}">
 				  <li>${foodList.foodName}</li>
 				  <li>${foodList.foodAddr}</li>
 				  <li>${foodList.foodKind} </li>
 				  <li>${foodList.foodStatus}</li>
+				  <li style="cursor: pointer; color: #EFB730;" onclick="myFoodDel('${foodList.foodCode}')">취소</li>
 				</ul>
 				</c:forEach>
 			</div>
@@ -482,6 +484,18 @@
 		location.href=url;	
 		}
 	}
+	// 내가 등록한 식당 삭제
+	function myFoodDel(foodCode){
+		var url = "${root}/myFoodDel.go?foodCode=" + foodCode;
+		$.ajax({
+			url : url,
+			type : "GET",
+			dataType : "text",
+			success : function(data){
+				$("#"+data).remove();
+			}
+		});
+	}
 
 	/* 가고싶다 버튼 */
 	var root = "${root}";
@@ -491,35 +505,27 @@
 
 	function favorSwitch(x, foodCode) {
 		foodCode = foodCode;
-		if (memberCode == "") {
-			// 로그인
-			alert("로그인하세요");
-		} else if (memberCode != "") {
-			if (x.className == "fa fa-heart") {
-				favorStatus = "on";
-			} else {
-				favorStatus = "off";
-			}
-			$.ajax({
-				type : "POST",
-				url : root + "/favorite/switch.do",
-				data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
-				success : function(data) {
-					console.log(data);
-					favorStatus = data;
-					if (favorStatus === "on") {
-						$("#favorite").attr('class', 'fa fa-heart');
-						console.log(foodCode);
-						$("#"+foodCode).remove();
-					} else if (favorStatus === "off") {
-						$("#favorite").attr('class', 'fa fa-heart-o');
-						$("#"+foodCode).remove();
-					}
-				}, error: function (request, status, error) {
-					alert("error");
-				}
-			});
+		if (x.className == "fa fa-heart") {
+			favorStatus = "on";
+		} else {
+			favorStatus = "off";
 		}
+		$.ajax({
+			type : "POST",
+			url : root + "/favorite/switch.do",
+			data : { "memberCode" : memberCode, "foodCode" : foodCode, "favorStatus" : favorStatus},
+			success : function(data) {
+				console.log(data);
+				favorStatus = data;
+				if (favorStatus === "on") {
+					$("#"+foodCode).remove();
+				} else if (favorStatus === "off") {
+					$("#"+foodCode).remove();
+				}
+			}, error: function (request, status, error) {
+				alert("error");
+			}
+		});
 	}
 
 

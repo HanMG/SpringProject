@@ -69,7 +69,9 @@
 	
 	<select id="foodCouponList" parameterType="String" resultType="com.java.coupon.dto.CouponDto">
 	<![CDATA[
-		select * from coupon where food_code = #{foodCode} AND to_date(coupon_enddate,'yy/mm/dd') >= sysdate
+		SELECT B.coupon_code, B.food_code, B.coupon_name, B.coupon_costori, B.coupon_salerate, B.coupon_costsale, B.coupon_intro, 
+		TO_CHAR(B.coupon_startdate, 'YYYY-MM-DD') AS coupon_startdate, TO_CHAR(B.coupon_enddate, 'YYYY-MM-DD') AS coupon_enddate, image_name, image_path
+		FROM (SELECT ROWNUM as num, A.* FROM (select * from coupon, image WHERE coupon_code = refer_code AND coupon_enddate >= sysdate AND coupon_status = 'Y' AND food_code = #{foodCode} ORDER BY coupon_code DESC) A) B
 	]]>
 	</select>
 	

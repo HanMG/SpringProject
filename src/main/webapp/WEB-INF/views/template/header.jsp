@@ -80,6 +80,11 @@
 .nav_1 > a{
 	color: #EFB730;
 }
+
+
+
+
+
 .nav_1 > input {
     width: 400px;
     font-size: 23px;

@@ -26,6 +26,8 @@ public interface ReviewService {
 
 	public void userReviewDelete(ModelAndView mav);
 
+	public void myUserReviewDelete(ModelAndView mav);
+
 	
 	
 }

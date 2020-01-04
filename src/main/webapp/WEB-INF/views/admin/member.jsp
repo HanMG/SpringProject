@@ -182,8 +182,8 @@
 					</div>
 					<div>
 						<span>이메일</span>
-						<input type="hidden" value="" name="memberMail" id="memberMail"/>
-						<input type="text" id="memberMail" name="mail" value="" disabled="disabled"/>
+						<input type="hidden" value="" name="memberMail" class="memberMail"/>
+						<input type="text" class="memberMail" name="mail" value="" disabled="disabled"/>
 					</div>
 					<div>
 						<span>휴대폰</span>
@@ -232,7 +232,7 @@ function getMember(memberCode){
 			$("#memberDate").text(data.memberDate);
 			$("#memberHidden").val(data.memberCode);
 			$("#memberName").val(data.memberName);
-			$("#memberMail").val(data.memberMail);
+			$(".memberMail").val(data.memberMail);
 			$("#memberPhone").val(data.memberPhone);
 			$("input:radio[name='memberStatus']:input[value="+data.memberStatus+"]").attr("checked", true);
 		},

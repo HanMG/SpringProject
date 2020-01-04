@@ -22,6 +22,7 @@
 	<c:if test="${check == 0}">
 		<script type="text/javascript">
 			alert("로그인 되지 않았습니다.");
+			location.href="${root}/index.jsp";
 		</script>
 	</c:if>
 

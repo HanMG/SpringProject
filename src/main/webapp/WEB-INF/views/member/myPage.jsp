@@ -14,10 +14,11 @@
 
 #myInfo {
 	display: flex;
-	background: black;
+	background: #F7F7F7;
+	padding: 20px 30px;
 }
 #myInfo > div {
-	color: white;
+	color: #030305;
 }
 #myInfo > div:first-child {
 	display: flex;
@@ -26,6 +27,7 @@
 }
 #myInfo > div:first-child >span:first-child {
 	font-size: 30px;
+	margin-bottom: 20px;
 }
 #myInfo > div:last-child {
 	flex: 3;
@@ -68,21 +70,24 @@
 	border-bottom: solid 3px black;
 	display: block;
 	margin-top: 20px;
+	padding-bottom: 10px;
 }
 #myCoupon, #myFavorite, #myFood {
 	display: flex;
 	flex-direction: column;
 }
 .coupon_2, .favorite_2, .food_2 {
-  display: flex;
-  flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	margin-bottom: 20px;
 }
 .coupon_2 ul, .favorite_2 ul, .food_2 ul {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin: 5px 0;
 }
 .coupon_2 ul:first-child, .favorite_2 ul:first-child, .food_2 ul:first-child {
 	border-bottom: solid 1px black;
@@ -110,45 +115,48 @@
 	top: 50%;
 	margin-left: -250px;
 	margin-top: -400px;
-	width: 500px;
-	height: 700px;
-	border-radius: 5px;
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	background: white;
-	text-align: center;
+	min-width: 450px;
+	background: transparent;
 }
 .title {
-	width: 500px;
-	height: 50px;
-	line-height: 50px;
 	font-size: 30px;
 	font-weight: bold;
+	color: white;
+	display: flex;
+	padding: 30px 0;
 }
 .member {
-	width: 400px;
-	height: 700px;
-	margin: 20px 50px;
+	background: white;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	padding: 30px 0;
 }	
-.member > div {
-	margin-bottom: 20px;
-}
-.member > div span:nth-child(1) {
-	display: inline-block;
-	width: 300px;
+.member i {
 	font-size: 23px;
+}
+.member > div {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-bottom: solid 1px #9b9b9b;
+    padding: 10px 0;
+    align-items: center;
 }
 .member > div > input {
-	display: block;
-	width: 100%;
-	height: 50px;
 	text-align: center;
-	font-size: 23px;
+    font-size: 23px;
+    border: transparent;
 }
-.member > div > .button {
-	float: left;	
-	margin: 20px;
-	width: 160px;
-	height: 50px;
+.member > div > input[type="text"]:disabled {
+	background: white;
+}
+.member > div:last-child {
+    border-bottom: none;
+}
+.member > div:last-child > input {
+	margin: 0 10px;
+	padding: 5px 10px;
 }
 /* 모달 관련 */
 .infoModal, .foodInModal {
@@ -162,31 +170,32 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(255, 255, 255, 0.75);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+  background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
 }
 /* 음식점 등록 */
 .foodReg {
-	overflow: hidden;
-	width: 500px; 
+
+}
+.foodReg > form {
+	display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 5px;
 }
 .foodReg > form > div {
-	margin: 10px 40px;
 	font-size: 25px;
 }
 .foodReg > form > div > button {
-	width: 70px;
-	height: 33px;
 	font-size: 25px;
 }
 .foodReg > form > div > input {
-	width: 415px;
-	height: 50px;
-	padding-left: 15px;
 	font-size: 23px;
-	margin-bottom: 10px;
-	
 }
+.input-container {
+	width: 65px;
+	height: 50px;;
+}
+
 .emoticon {
 	font-size: 30px;
 	color: #EFB730;
@@ -259,6 +268,7 @@
 				  <li>유효기간</li>
 				  <li>결제금액</li>
 				  <li>상태</li>
+				  <li>비고</li>
 				</ul>
 				<c:forEach var="couponList" items="${couponList}">
 				<ul>
@@ -266,7 +276,7 @@
 					<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
 					<li>
 						<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
-						<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /> ~ 
+						<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /><br /> ~ 
 						<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
 						<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
 					</li>
@@ -274,10 +284,20 @@
 					<li>
 					<c:choose>
 						<c:when test="${couponList.purchaseStatus == 'Y'}">
-							<button id="${couponList.purchaseCode}" class="button" onclick="myCouponDel('${couponList.purchaseCode}')" style="z-index: 999;">취소</button>
+							<span style="color: #EFB730;">사용가능</span>
 						</c:when>
 						<c:when test="${couponList.purchaseStatus == 'N'}">
 							<span style="color: #EFB730;">취소됨</span>
+						</c:when>
+					</c:choose>
+					</li>
+					<li>
+					<c:choose>
+						<c:when test="${couponList.purchaseStatus == 'Y'}">
+							<button id="${couponList.purchaseCode}" class="button" onclick="myCouponDel('${couponList.purchaseCode}')" style="z-index: 999;">취소</button>
+						</c:when>
+						<c:when test="${couponList.purchaseStatus == 'N'}">
+							<span style="color: #EFB730;"></span>
 						</c:when>
 					</c:choose>
 					</li>
@@ -304,7 +324,14 @@
 				  <li><img alt="음식점" src="${root}/resources/ftp/${favoriteList.imageName}"></li>
 				  <li>${favoriteList.foodName}</li>
 				  <li>${favoriteList.foodArea} </li>
-				  <li><fmt:formatNumber value="${favoriteList.avg}" pattern=".0"></fmt:formatNumber></li>
+				  <c:choose>
+				  	<c:when test="${favoriteList.avg == 0.0}">
+				  		<li>0</li>
+				  	</c:when>
+				  	<c:otherwise>
+					  <li><fmt:formatNumber value="${favoriteList.avg}" pattern=".0"></fmt:formatNumber></li>
+				  	</c:otherwise>
+				  </c:choose>
 				  <li>${favoriteList.foodRead}</li>
 				  <li>${favoriteList.count}</li>
 				  <li><i style="cursor: pointer;" onclick="favorSwitch(this, '${favoriteList.foodCode}')" class="fa fa-heart"></i></li>
@@ -351,25 +378,20 @@
 				</div>
 				<div class="member">
 					<div>
-						<span>이름</span>
-						<input type="text" name="memberName" value="${memberDto.memberName}">
+						<i class="fa fa-user-circle-o" aria-hidden="true"></i><input type="text" name="memberName" value="${memberDto.memberName}" placeholder="닉네임">
 					</div>
 					<div>
-						<span>이메일</span>
 						<input type="hidden" value="${memberDto.memberMail}" name="memberMail"/>
-						<input type="text" name="mail_2" value="${memberDto.memberMail}" disabled="disabled"/>
+						<i class="fa fa-envelope-o" aria-hidden="true"></i><input type="text" name="mail_2" value="${memberDto.memberMail}" disabled="disabled"/>
 					</div>
 					<div>
-						<span>휴대폰</span>
-						<input type="text" name="memberPhone" value="${memberDto.memberPhone}">
+						<i class="fa fa-mobile" aria-hidden="true"></i><input type="text" name="memberPhone" value="${memberDto.memberPhone}" placeholder="휴대폰 번호">
 					</div>
 					<div>
-						<span>비밀번호</span>
-						<input type="password" name="memberPwd" value="${memberDto.memberPwd}">
+						<i class="fa fa-unlock-alt" aria-hidden="true"></i><input type="password" name="memberPwd" value="${memberDto.memberPwd}" placeholder="패스워드">
 					</div>
 					<div>
-						<span>비밀번호 확인</span>
-						<input type="password" name="pwdCheck" value="${memberDto.memberPwd}">
+						<i class="fa fa-check-square" aria-hidden="true"></i><input type="password" name="pwdCheck" value="${memberDto.memberPwd}" placeholder="패스워드 확인">
 					</div>
 					<div>
 						<input class="button" type="submit" value="수정">
@@ -480,7 +502,7 @@
 	function userDelete(root, foodCode, reviewCode){
 		let isOk = confirm("정말로 리뷰를 삭제하시겠습니까?");
 		if(isOk == true){
-		let url = root+"/review/userDelete.go?reviewCode="+reviewCode+"&foodCode="+foodCode;		
+		let url = root+"/review/myUserDelete.go?reviewCode="+reviewCode+"&foodCode="+foodCode;		
 		location.href=url;	
 		}
 	}

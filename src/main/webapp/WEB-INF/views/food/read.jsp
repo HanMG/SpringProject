@@ -68,12 +68,10 @@
 
 /* 조회수, 리뷰수, 즐겨찾기 */
 .info_2, .info_3, .coupon {
-	/* border-bottom: 3px solid black; */
-	border-bottom: 2px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 .info_3, .coupon {
-	/* border-bottom: 3px solid black; */
     padding-bottom: 20px;
     margin-top: 20px;
 }
@@ -90,6 +88,8 @@
 .info_3 > div {
 	display: flex;
 	padding-left: 20px;
+	margin-bottom: 5px;
+    align-items: center;
 }
 .info_3 > div > span:first-child {
 	font-size: 12px;
@@ -116,10 +116,15 @@
 	flex-direction: column;
 	display: flex;
 }
+.eat_2 > div > span {
+	font-size: 20px;
+}
+
 .eat_2 > div:first-child {
 	margin: 10px 0;
-	padding-left: 100px;
+	text-align: center;
 }
+
 .eat_2 img {
 	width: 100%;
 	height: 200px;
@@ -133,6 +138,44 @@
 .fade {
 	display: flex;
 	flex-direction: column;
+	padding: 0 100px;
+}
+.reviewFade {
+
+}
+
+.couponSalerate {
+	display: inline-block;
+    position: absolute;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background: #EFB730;
+    padding: 3px 10px;;
+  	top: 0;
+  	left: 100px;
+}
+.couponCouponName {
+	display: inline-block;
+    position: absolute;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(0,0,0,0.4);
+    padding: 3px 10px;
+    bottom: 5px;
+    right: 100px;
+}
+.couponCostsale {
+	display: inline-block;
+    position: absolute;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(0,0,0,0.4);
+    padding: 0px 10px;
+    bottom: 36px;
+    right: 100px;
 }
 
 /* 리뷰 */
@@ -149,7 +192,9 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
+.re_1 > div > a {
+	margin-right: 10px;
+}
 .re_1 > span {
 	color: #EFB730;
 }
@@ -198,24 +243,23 @@
 
 /* 리뷰 별점 */
 .read_nav_2 .img > img{
-	width: 400px;
-	height: 400px;
+	width: 350px;
+	height: 350px;
 	margin: 0 20px;
-	margin-bottom: 10px;
 	position: fixed;
 }
 .emoticon {
-	font-size: 30px;
+	font-size: 40px;
 	color: #EFB730;
 	text-align: center;
 }
 .map {	
-	width: 400px;
-	height: 400px;
+	width: 350px;
+	height: 300px;
 	margin: 0 20px;
 	position: fixed;
 	display: flex;
-	top: 500px;
+	top: 450px;
 }
 
 /* 모달 관련 */
@@ -226,16 +270,21 @@
 	top: 50%;
 	margin-left: -500px;
 	margin-top: -400px;
-	width: 1000px;
-	height: 700px;
+	max-width: 1000px;
 	border-radius: 5px;
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	background: white;
+	background: transparent;
 }
 
 .reViewIn {
-	width: 1000px;
-	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.reViewIn > .in {
+	display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 5px;
 }
 
 .title_reView > span:first-child {
@@ -288,13 +337,11 @@
 }
 
 .title_reView {
-	width: 1000px;
-	height: 50px;
-	background: white;
-	line-height: 50px;
 	font-size: 30px;
-	
+	color: white;
+	margin: 30px 0;
 }
+
 .title_reViewInfo > span:first-child {
 	margin-left: 20px;
 }
@@ -311,7 +358,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
 }
 
 .reViewInfoModal {
@@ -328,7 +375,7 @@
   background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 .close_reView, .close_reViewInfo {
-  color: #aaaaaa;
+  color: white;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -390,7 +437,7 @@
   top: 50%;
   width: auto;
   padding: 16px;
-  margin-top: -60px;
+  margin-top: -30px;
   color: white;
   font-weight: bold;
   font-size: 18px;
@@ -399,9 +446,10 @@
   user-select: none;
 }
 
+
 /* Position the "next button" to the right */
 .cp_next {
-  right: 0;
+  right: 100px;
   border-radius: 3px 0 0 3px;
 }
 /* On hover, add a black background color with a little bit see-through */
@@ -495,13 +543,10 @@
 							<div class="cp_mySlides fade">
 								<a href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=1">
 								<img alt="쿠폰이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
+								<span class="couponCouponName"> ${couponDto.couponName}</span>
+								<span class="couponSalerate"> ${couponDto.couponSalerate}%</span> 
+								<span class="couponCostsale"> ${couponDto.couponCostsale}원</span>
 								</a>
-								<div class="text">
-									<p> ${couponDto.couponName}</p>
-									<span class="couponSalerate"> ${couponDto.couponSalerate}%</span> 
-									<span class="couponCostsale"> ${couponDto.couponCostsale}</span>
-									<span class="couponCostori"> ${couponDto.couponCostori}</span> 
-								</div>
 								<div>	
 									<a class="cp_prev" onclick="cp_plusSlides(-1)">&#10094;</a>
 									<a class="cp_next" onclick="cp_plusSlides(1)">&#10095;</a>
@@ -512,7 +557,6 @@
 					</div>
 				</div> 
 			</c:if>
-
 			<!-- 리뷰 공간 -->
 			<div id="review">
 				<div class="re_1">
@@ -733,13 +777,13 @@ function myReview(reviewCode) {
 			var mySlides = "";
 			for(var i=0; i < Object.keys(json.imgList).length;i++){
 				if (i == 0) {
-					mySlides = '<div class="mySlides fade" style="block;">';
+					mySlides = '<div class="mySlides reviewFade" style="block;">';
 					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
 					mySlides += '</div>';
 					$(".slideshow-review").append(mySlides);
 					
 				} else {
-					mySlides = '<div class="mySlides fade" style="display:none;">';
+					mySlides = '<div class="mySlides reviewFade" style="display:none;">';
 					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
 					mySlides += '</div>';
 					$(".slideshow-review").append(mySlides);
@@ -751,6 +795,7 @@ function myReview(reviewCode) {
 		}
 	});
 }
+
 
 // 리뷰 상세 모달 끄기 
 $(".close_reViewInfo").click(function(){
@@ -842,11 +887,9 @@ function fromServer() {
 	var close_reView = document.getElementsByClassName("close_reView")[0];
 	reViewInClick.onclick = function() {
 		reViewInModal.style.display = "block";
-		header.style.display = "none";
 		}
 	close_reView.onclick = function() {
 		reViewInModal.style.display = "none";
-		header.style.display = "block";
 		}	
 	
 	/*  리뷰내용 클릭시 작동 */

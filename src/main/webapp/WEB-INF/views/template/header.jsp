@@ -12,6 +12,68 @@
 	height: 60px;
     font-size: 23px;
 }
+.nav_1 > a > span {
+  perspective: 1000px;
+}
+.nav_1 > a > span {
+  display: inline-block;
+  margin: 0 -.05em;
+  transform-origin: 50% 50% -10px;
+  transform-style: preserve-3d;
+  animation: loading 4.6s infinite;
+}
+.nav_1 > a > span:nth-child(2) {
+  animation-delay: .1s;
+}
+.nav_1 > a > span:nth-child(3) {
+  animation-delay: .2s;
+}
+.nav_1 > a > span:nth-child(4) {
+  animation-delay: .3s;
+}
+.nav_1 > a > span:nth-child(5) {
+  animation-delay: .4s;
+}
+.nav_1 > a > span:nth-child(6) {
+  animation-delay: .5s;
+}
+.nav_1 > a > span:nth-child(7) {
+  animation-delay: .6s;
+}
+.nav_1 > a > span:nth-child(8) {
+  animation-delay: .7s;
+}
+.nav_1 > a > span:nth-child(9) {
+  animation-delay: .8s;
+}
+.nav_1 > a > span:nth-child(10) {
+  animation-delay: .9s;
+}
+@keyframes loading {
+  0% {
+    transform: rotateX(-360deg);
+  }
+  70% {
+    transform: rotateX(0);
+  }
+}
+.nav_2 > a {
+  display: inline-block;
+}
+.nav_2 > a:hover {
+  -webkit-animation: zoom .3s;
+  animation: zoom .3s;
+}
+@-webkit-keyframes zoom {
+  50% {
+    -webkit-transform: scale(1.05);
+  }
+}
+@keyframes zoom {
+  50% {
+    transform: scale(1.05);
+  }
+}
 .nav_1 {
 	display: flex;
 }
@@ -29,14 +91,12 @@
     border: none;
 	border-bottom: 2px solid #EFB730;
 }
-
 .nav_1 > input::placeholder, .nav_1 > input::-webkit-input-placeholder {
 	font-size: 23px;
 	font-family: Noto Sans KR;
 	font-weight: 500;
 	color: #EFB730;
 }
-
 .nav_2 > a {
 	margin-left: 20px;
 }
@@ -48,34 +108,39 @@
 	top: 50%;
 	margin-left: -250px;
 	margin-top: -400px;
-	width: 500px;
-	height: 700px;
+	
 	border-radius: 5px;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	background: white;
+	min-width: 450px;
+	display: flex;
+	flex-direction: column;
+	background: transparent;
 }
 
 .title_main {
-	width: 500px;
-	height: 50px;
-	line-height: 50px;
 	font-size: 30px;
 	font-weight: bold;
-	text-align: center;
-}
-.title_main>span:first-child {
-	margin-left: 40px;
+	display: flex;
+	flex-direction: row;
+	color: white;
+	margin: 30px;
 }
 /* 로그인  */
 .login {
-	width: 400px;
-	height: 700px;
-	margin: 50px;
+	display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 5px;
+    margin: 25px;
 }
 
 .login>img {
-	width: 400px;
-	height: 400px;
+	width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+#naver_id_login img {
+	width: 50%;
 }
 
 .login>button {
@@ -83,67 +148,115 @@
 	margin: 0 auto;
 	display: block;
 	margin-bottom: 15px;
-	background: #EFB730;
+	padding: 5px 10px;
 }
+.login > button:nth-child(2) {
+	background: #414959;
+    border: 1px solid;
+}
+.login > button:nth-child(3) {
+	background: #EFB730;
+    border: 1px solid;
+}
+.login > button:nth-child(4) {
+	background: #3EC729;
+    border: 1px solid;
+}
+
 
 /* 이메일 로그인 */
 .email {
-	width: 400px;
-	height: 400px;
-	margin: 200px 50px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 25px;
+	background: white;
+	border-radius: 5px;
 }
-
+.email > form {
+	display: flex;
+	flex-direction: column;
+	margin: 40px 0;
+}
+.email > form i {
+	font-size: 20px;
+}
 .email>form>div:nth-child(1), .email>form>div:nth-child(2) {
-	margin: 20px 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	border-bottom: solid 1px #9b9b9b;
+	padding: 10px 0;
+	align-items: center;
 }
 
 .email>form>div:nth-child(3) {
-	margin: 100px 0;
-	width: 400px;
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
 }
 
 .email>form>div:nth-child(3)>a {
-	float: right;
-	margin: 5px 0;
+	margin: 5px 30px;
 	color: #030305;
 }
 
 .email>form>div>input {
-	display: block;
-	width: 100%;
-	height: 50px;
 	text-align: center;
 	font-size: 23px;
+	border: transparent;
+	
+}
+.input_Btn {
+	color: #FFFFFF;
+    border: #EFB730 solid 1px;
+    background-color: #EFB730;
+    border-radius: 5px;
 }
 
 /* 회원가입 */
 .join {
-	width: 400px;
-	height: 600px;
-	margin: 50px 50px;
+	display: flex;
+    flex-direction: column;
+    background: white;
+    margin: 25px;
+    border-radius: 5px;
+}
+.join > form {
+	margin: 40px 0;
 }
 
 .join>form>div {
-	margin: 20px 0;
+	display: flex;
+    flex-direction: column;
 }
-
+.join > form > div > div {
+	display: flex;
+	flex-direction: row;
+    justify-content: center;
+    border-bottom: solid 1px #9b9b9b;
+    padding: 10px 0;
+    align-items: center;
+}
+.join > form > div > div:last-child {
+	border-bottom: none;
+}
 .join>form>div>span {
-	display: block;
-	margin-bottom: 10px;
-}
-
-.join>form>div>input {
-	width: 385px;
-	height: 50px;
-	padding-left: 15px;
-}
-
-.join>form>div>.button {
-	width: 197px;
-	height: 50px;
 	text-align: center;
-	font-size: 23px;
 }
+.join > form i {
+	font-size: 20px;
+}
+.join>form>div>div >input {
+	text-align: center;
+    font-size: 23px;
+    border: transparent;
+}
+.join > form > div > div:last-child > input {
+	cursor: pointer;
+	margin: 5px 15px;
+}
+
 
 .join>form>a {
 	position: absolute;
@@ -163,8 +276,7 @@
 	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
 	z-index:2; 
 }
 
@@ -179,16 +291,17 @@
 	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
 	z-index: 3;
 }
 
 /* The Close Button */
 .close {
-	color: #000;
-	float: right;
+	color: white;
 	font-size: 28px;
 	font-weight: bold;
-	margin-right: 15px;
+	margin-left: auto;
 }
 
 .close:hover, .close:focus {
@@ -201,7 +314,7 @@
 </style>
 	<div id="header">
 		<div class="nav_1">
-			<a href="${root}/index.jsp">EAT THE JEJU</a>
+			<a href="${root}/index.jsp"><span>E</span><span>A</span><span>T</span>          <span>T</span><span>H</span><span>E</span>          <span>J</span><span>E</span><span>J</span><span>U</span></a>
 			<input type="text" id="searchInput" name="searchInput" placeholder="검색어를 입력하여 주세요"  autofocus />
 		</div>
 		<div class="nav_2">
@@ -223,18 +336,13 @@
 	<div id="myModal" class="modal">
 		<div id="content_main">
 			<div class="title_main">
-				<span class="close">&times;</span>
+				<span>로그인</span><span class="close">&times;</span>
 			</div>
 			<div class="login">
 				<img alt="로고" src="${root}/resources/css/jeju.png">
-				<button class="button" id="emailClick"
-					style="width: 180pt; height: 35pt;">이메일 로그인</button>
-				<button class="button" style="width: 180pt; height: 35pt;"
-					onclick="loginForm()">카카오 로그인</button>
-				<div id="naver_id_login" style="text-align: center">
-					<a href="${url}"> <img style="width: 240px;"
-						src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" /></a>
-				</div>
+				<button id="emailClick">이메일 로그인</button>
+				<button onclick="loginForm()">카카오 로그인</button>
+				<button onclick="location.href='${url}'" id="naver_id_login" >네이버 로그인</button>
 			</div>
 		</div>
 	</div>
@@ -242,18 +350,18 @@
 	<div id="myModal_2" class="modal_2">
 		<div id="content_main">
 			<div class="title_main">
-				<span>이메일로 로그인</span> <span class="close">&times;</span>
+				<span>이메일로 로그인</span><span class="close">&times;</span>
 			</div>
 			<div class="email">
-				<form action=${root}/member/mailLoginOk.go method="post">
+				<form action=${root}/member/mailLoginOk.go method="post" id="emailForm">
 					<div>
-						<input type="text" name="mail" placeholder="이메일">
+						<i class="fa fa-envelope-o" aria-hidden="true"></i><input type="text" name="mail" placeholder="이메일">
 					</div>
 					<div>
-						<input type="password" name="pwd" placeholder="비밀번호">
+						<i class="fa fa-unlock-alt" aria-hidden="true"></i><input type="password" name="pwd" placeholder="비밀번호">
 					</div>
 					<div>
-						<input class="button" type="submit" value="로그인" /> <a href="#"
+						<input class="input_Btn" type="submit" value="로그인" /> <a href="#"
 							id="joinClick">회원가입</a>
 					</div>
 				</form>
@@ -266,32 +374,31 @@
 			<div class="title_main">
 				<span>이메일 회원가입</span> <span class="close">&times;</span>
 			</div>
+			
 			<div class="join">
-				<form action="${root}/member/signInOk.go" method="post"
+				<form id="joinForm" action="${root}/member/signInOk.go" method="post"
 					onsubmit="return signForm(this)">
 					<div>
-						<span>이메일</span>
-						<input type="text" id="mail1" name="mail">
+						<div>
+							<i class="fa fa-envelope-o" aria-hidden="true"></i><input type="text" id="mail1" name="mail" placeholder="이메일">
+						</div>
 						<span class="warnId"></span>
-					</div>
-					<div>
-						<span>닉네임</span>
-						<input type="text" id="name1" name="name">
-						<span class="warnName"></span>
-					</div>
-					<div>
-						<span>비밀번호</span>
-						<input type="password" id="pwd1" name="pwd">
-						<span class="warnPwd1"></span>
-					</div>
-					<div>
-						<span>비밀번호 확인</span>
-						<input type="password" id="pwd2" name="pwdCheck">
-						<span class="warnPwd2"></span>
-					</div>
-					<div>
-						<input class="button" type="submit" value="가입">
-						<input class="button" type="reset" value="취소">
+						<div>
+							<i class="fa fa-user-circle-o" aria-hidden="true"></i><input type="text" id="name1" name="name" placeholder="닉네임">
+						</div>
+						<span class="warnName"> </span>
+						<div>
+							<i class="fa fa-unlock-alt" aria-hidden="true"></i><input type="password" id="pwd1" name="pwd" placeholder="비밀번호">
+						</div>
+						<span class="warnPwd1"> </span>
+						<div>
+							<i class="fa fa-check-square" aria-hidden="true"></i><input type="password" id="pwd2" name="pwdCheck" placeholder="비밀번호 확인">
+						</div>
+						<span class="warnPwd2"> </span>
+						<div>
+							<input class="input_Btn" type="submit" value="가입">
+							<input class="input_Btn" type="reset" value="취소">
+						</div>
 					</div>
 				</form>
 			</div>
@@ -449,19 +556,24 @@
 		var modal_2 = document.getElementById("myModal_2");
 		emailClick.onclick = function() {
 			modal_2.style.display = "block";
+			modal.style.display = "none";
 			}
 		span_2.onclick = function() {
 			modal_2.style.display = "none";
+			modal.style.display = "block";
+			$("#emailForm")[0].reset();
 			}
-		
 		var span_3 = document.getElementsByClassName("close")[2];
 		var emailClick = document.getElementById("joinClick");
 		var modal_3 = document.getElementById("myModal_3");
 		joinClick.onclick = function() {
 			modal_3.style.display = "block";
+			modal_2.style.display = "none";
 			}
 		span_3.onclick = function() {
 			modal_3.style.display = "none";
+			modal_2.style.display = "block";
+			$("#joinForm")[0].reset();
 			}
 		/* 공용 */
 		window.onclick = function(event) {

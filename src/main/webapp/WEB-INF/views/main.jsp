@@ -37,21 +37,46 @@
 	text-align: center;
     color: #EFB730;
     font-size: 18px;
+    background: #F7F7F7;
+    padding: 20px 0px;
 }
 
 .con_2 > div {
 	display: flex;
-	flex-direction: column;
-	margin: 0 10px;
-	border: 1px solid #EFB730;
-	border-radius: 50%;
-    padding: 12px 21px;
+    flex-direction: column;
+    margin: 0 10px;
+    border-radius: 50%;
+    padding: 15px 24px;
     cursor: pointer;
+    background: white;
+}
+.con_2 > div > span {
+	color: #030305;
 }
 .con_2 > div > img {
 	width: 70px;
 	height: 70px;
 }
+.con_2 > div > img {
+	-webkit-transform:scale(1);
+    -moz-transform:scale(1);
+    -ms-transform:scale(1); 
+    -o-transform:scale(1);  
+    transform:scale(1);
+    -webkit-transition:.3s;
+    -moz-transition:.3s;
+    -ms-transition:.3s;
+    -o-transition:.3s;
+    transition:.3s;
+}
+.con_2 > div:hover > img {
+	-webkit-transform:scale(1.2);
+    -moz-transform:scale(1.2);
+    -ms-transform:scale(1.2);   
+    -o-transform:scale(1.2);
+    transform:scale(1.2);
+}
+
 .con_3 {
 	display: flex;
 	flex-direction: column;
@@ -117,6 +142,11 @@
 	from {margin-top: 35px;}
 	to {margin-top: 40px;}
 }
+.foodInfo {
+	color: #9b9b9b;
+	font-size: 14px;
+}
+
 
 </style>
 <body onkeypress="if(event.keyCode == 13){search();}">
@@ -185,17 +215,19 @@ function popularFood() {
 					var err = root + "/resources/css/list.jpg";
 					cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 					cont += "<span class='foodName'>음식점명 : "+data[i].foodName+"</span>";
+					cont += "<div class='foodInfo'>"
 					if (data[i].reviewScore > 0) {
 						var reviewScore = Math.round(data[i].reviewScore * 10)/10
 					cont += "<span class='reviewScore'>리뷰점수 : "+reviewScore+"</span>";
 					}
-					cont += "<span class='foodArea'>지역 : "+data[i].foodArea+"  </span>";
+//					cont += "<span class='foodArea'>지역 : "+data[i].foodArea+"  </span>";
 // 					cont += "<span class='foodKind'>종류 : "+data[i].foodKind+"</span>";
 // 					cont += "<span class='foodKind'>메뉴 : "+data[i].foodMenu+"</span>";
-					cont += "<span class='foodRead'>조회수 : "+data[i].foodRead+"</span>";
+					cont += " <i class='fa fa-eye'></i><span class='foodRead'>"+data[i].foodRead+"</span>";
 					if (data[i].reviewCount != null) {
-					cont += "<span class='reviewCount'>리뷰수 : "+data[i].reviewCount+"</span>";
+					cont += " <i class='fa fa-pencil'></i><span class='reviewCount'>"+data[i].reviewCount+"</span>";
 					}
+					cont += "</div>"
 				cont += "</div>"
 				}
 			$(".popularList").html(cont);	

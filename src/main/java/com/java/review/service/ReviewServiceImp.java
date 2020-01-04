@@ -289,7 +289,30 @@ public class ReviewServiceImp implements ReviewService {
 		mav.setViewName("review/userDelete.tiles");		
 	}
 	
-	
+	@Override
+	public void myUserReviewDelete(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String reviewCode = request.getParameter("reviewCode");
+		String foodCode = request.getParameter("foodCode");
+		JejuAspect.logger.info(JejuAspect.logMsg+reviewCode);
+		int check = 0;
+		List<ImageDto> imageList = imageDao.imgList(reviewCode);
+		for(int i = 0; i< imageList.size(); i++) {
+			if (imageList.get(i).getImageName() != null) {
+				File checkFile = new File(imageList.get(i).getImagePath());
+				if (checkFile.exists() && checkFile.isFile()) {
+					checkFile.delete();
+				}
+			}
+		}		
+		check = reviewDao.reviewDelete(reviewCode);
+		check += imageDao.imgDelete(reviewCode);
+		mav.addObject("check",check);
+		mav.addObject("foodCode",foodCode);
+		mav.setViewName("review/myUserDelete.tiles");		
+		
+	}
 
 	/* 수정페이지에서 이미지 바로 삭제
 	 * @Override public void imageDelete(ModelAndView mav) { Map<String, Object> map

@@ -92,6 +92,16 @@ public class ReviewController {
 		return mav;
 	}
 	
+	// 마이 페이지 유저가 리뷰 삭제
+	@RequestMapping(value = "/review/myUserDelete.go", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView myUserDelete(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		reviewService.myUserReviewDelete(mav);
+		return mav;
+	}
+	
 	/*
 	 * // 이미지 바로 삭제 ( 사용 X )
 	 * 

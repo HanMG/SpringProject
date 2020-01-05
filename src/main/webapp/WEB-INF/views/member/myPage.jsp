@@ -16,6 +16,7 @@
 	display: flex;
 	background: #F7F7F7;
 	padding: 20px 30px;
+	margin-bottom: 30px;
 }
 #myInfo > div {
 	color: #030305;
@@ -67,14 +68,18 @@
 
 #myReview > span, .coupon_1 > span, .favorite_1 > span, .food_1 > span {
 	font-size: 27px;
-	border-bottom: solid 3px black;
-	display: block;
 	margin-top: 20px;
 	padding-bottom: 10px;
 }
 #myCoupon, #myFavorite, #myFood {
 	display: flex;
 	flex-direction: column;
+}
+.coupon_1, .favorite_1, .food_1 {
+	border-bottom: solid 3px black;
+	display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 .coupon_2, .favorite_2, .food_2 {
 	display: flex;
@@ -96,16 +101,14 @@
 	flex: 1 1 100px;
 	text-align: center;
 }
-.food_3 {
-	text-align: center;
-}
-.food_3 > button {`
-	font-size: 23px;
-}
 
 .coupon_2 ul img, .favorite_2 ul img {
 	width: 70px;
 	height: 70px;
+}
+.coupon_N {
+	color: #9b9b9b;
+	text-decoration: line-through;
 }
 
 /* 모달 공용 */
@@ -203,7 +206,6 @@
 }
 #foodInClick {
 	font-size: 23px;
-	margin-top: 10px;
 }
 </style>
 <body>
@@ -271,37 +273,62 @@
 				  <li>비고</li>
 				</ul>
 				<c:forEach var="couponList" items="${couponList}">
-				<ul>
-					<li><img alt="쿠폰" src="${root}/resources/ftp/${couponList.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"></li>
-					<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
-					<li>
-						<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
-						<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /><br /> ~ 
-						<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
-						<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
-					</li>
-					<li>${couponList.couponCostsale}원</li>
-					<li>
-					<c:choose>
-						<c:when test="${couponList.purchaseStatus == 'Y'}">
-							<span style="color: #EFB730;">사용가능</span>
-						</c:when>
-						<c:when test="${couponList.purchaseStatus == 'N'}">
-							<span style="color: #EFB730;">취소됨</span>
-						</c:when>
-					</c:choose>
-					</li>
-					<li>
-					<c:choose>
-						<c:when test="${couponList.purchaseStatus == 'Y'}">
-							<button id="${couponList.purchaseCode}" class="button" onclick="myCouponDel('${couponList.purchaseCode}')" style="z-index: 999;">취소</button>
-						</c:when>
-						<c:when test="${couponList.purchaseStatus == 'N'}">
-							<span style="color: #EFB730;"></span>
-						</c:when>
-					</c:choose>
-					</li>
-				</ul>
+				<c:choose>
+					<c:when test="${couponList.purchaseStatus == 'Y'}">
+						<ul>
+							<li><img alt="쿠폰" src="${root}/resources/ftp/${couponList.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"></li>
+							<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
+							<li>
+								<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /><br /> ~ 
+								<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
+								<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
+							</li>
+							<li>${couponList.couponCostsale}원</li>
+							<li>
+							<c:choose>
+								<c:when test="${couponList.purchaseStatus == 'Y'}">
+									<span>사용가능</span>
+								</c:when>
+								<c:when test="${couponList.purchaseStatus == 'N'}">
+									<span>사용완료</span>
+								</c:when>
+							</c:choose>
+							</li>
+							<li>
+								<span style="cursor: pointer; color: #EFB730;" onclick="myCouponDel('${couponList.purchaseCode}')">사용하기</span>
+							</li>
+						</ul>
+					</c:when>
+					<c:when test="${couponList.purchaseStatus == 'N'}">
+						<ul class="coupon_N">
+							<li><img alt="쿠폰" src="${root}/resources/ftp/${couponList.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"></li>
+							<li style="cursor:pointer;" onclick="location.href='${root}/coupon/couponRead.go?couponCode=${couponList.couponCode}'">${couponList.couponName} </li>
+							<li>
+								<fmt:parseDate value="${couponList.couponStartdate}" var="startDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${startDate}" pattern="yyyy년  MM월  dd일" /><br /> ~ 
+								<fmt:parseDate value="${couponList.couponEnddate}" var="endDate" pattern="yyyy-MM-dd " />
+								<fmt:formatDate value="${endDate}" pattern="yyyy년  MM월  dd일 " />
+							</li>
+							<li>${couponList.couponCostsale}원</li>
+							<li>
+							<c:choose>
+								<c:when test="${couponList.purchaseStatus == 'Y'}">
+									<span>사용가능</span>
+								</c:when>
+								<c:when test="${couponList.purchaseStatus == 'N'}">
+									<span>사용완료</span>
+								</c:when>
+							</c:choose>
+							</li>
+							<li>
+								<span style="color: #EFB730;"></span>
+							</li>
+						</ul>
+					</c:when>
+				</c:choose>
+				
+				
 				</c:forEach>
 			</div>
 		</div>
@@ -342,6 +369,7 @@
 		<div id="myFood">
 			<div class="food_1">
 				<span>내가 등록한 음식점</span>
+				<a id="foodInClick" href="#">음식점등록</a>
 			</div>
 			<div class="food_2">
 				<ul>
@@ -360,9 +388,6 @@
 				  <li style="cursor: pointer; color: #EFB730;" onclick="myFoodDel('${foodList.foodCode}')">취소</li>
 				</ul>
 				</c:forEach>
-			</div>
-			<div class="food_3">
-				<button id="foodInClick">음식점등록</button>
 			</div>
 		</div>
 	</div>

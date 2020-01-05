@@ -28,9 +28,18 @@
 	
 }
 .a {
-	font-size: 32px;
-    margin: 0 10px;
+	font-size: 25px;
+    margin: 5px 10px;
+    border: 2px solid #EFB730;
+    border-radius: 10px;
+    padding: 2px 12px;
 }
+.a:hover {
+	background: linear-gradient(90deg, rgb(235, 201, 114) 0%, rgb(235, 201, 114) 5%,rgb(232, 188, 112) 5%, rgb(232, 188, 112) 18%,rgb(230, 174, 109) 18%, rgb(230, 174, 109) 38%,rgb(227, 161, 107) 38%, rgb(227, 161, 107) 53%,rgb(224, 147, 104) 53%, rgb(224, 147, 104) 71%,rgb(222, 134, 102) 71%, rgb(222, 134, 102) 81%,rgb(219, 120, 99) 81%, rgb(219, 120, 99) 100%);
+	color: white;
+	border: 2px solid white;
+}
+
 
 .a.active {
   -webkit-animation: zoom .3s;

@@ -33,7 +33,6 @@
 	/* width: 300px;
 	height: 250px; */
 	width: 316px;
-	height: 272px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 	margin-right: 10px;
@@ -49,10 +48,6 @@
 }
 
 .list>div:nth-child(1) {
-	width: 300px;
-	height: 200px;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
 	position: relative;
 }
 
@@ -70,16 +65,20 @@
 .list>div:nth-child(1):hover:after{
 	background: transparent;
 }
+.list>div:nth-child(1) > img {
+	width: 300px;
+    height: 200px;
+}
 
 .list>div:nth-child(1)>span {
-	display: inline-block;
-	position: absolute;
-	font-size: 17px;
-	font-weight: bold;
-	color: white;
-	margin-left: auto;
-	background: #EFB730;
-	padding: 3px 10px;
+    position: absolute;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background: #EFB730;
+    padding: 3px 10px;
+    left: 0px;
+    z-index: 1;
 }
 
 .list>div:nth-child(2) {
@@ -161,15 +160,16 @@
 			var data = JSON.parse(xhr.responseText);
 			console.log(data);
 			console.log("length:" + data.length);
-
+			var root = "${root}";
+			var err = root + "/resources/css/list.jpg";
 			for (var i = 0; i < data.length; i++) {
 				var foodCode = "${root}/coupon/couponRead.go?couponCode="
 						+ data[i].couponCode + "&&pageNumber=1";
 				var image = "${root}/resources/ftp/" + data[i].imageName;
 				console.log(image);
 				var list = "<div class='list' onclick="+"'location.href=\""+foodCode+"\"'>";
-					list += "<div style=" + "'background-image: url(\"" + image
-							+ "\")';>";
+					list += "<div>";
+						list += "<img alt='음식 이미지' src='"+image+"' onerror='this.src=\""+err+"\"'>";
 						list += '<span>' + data[i].couponSalerate + ' %</span>';
 					list += '</div>';
 					list += '<div>';

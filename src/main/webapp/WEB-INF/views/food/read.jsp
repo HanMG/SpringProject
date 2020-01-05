@@ -698,7 +698,7 @@
 			<div class="reViewInfo">
 				<div class="title_reViewInfo">
 					<span>${foodDto.foodName}</span>
-					<span class="close_reViewInfo">&times;</span>
+					<span style="color: #030305;" class="close_reViewInfo">&times;</span>
 				</div>
 				<div class="info">
 					<div class="slideshow-review">

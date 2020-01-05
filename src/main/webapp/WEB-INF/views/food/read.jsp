@@ -358,7 +358,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 }
 
 .reViewInfoModal {
@@ -523,6 +523,10 @@
 				<div>
 					<span>휴일</span> 
 					<span>${foodDto.foodBreak}</span>
+				</div>
+				<div>
+					<span>음식점 소개</span> 
+					<span>${foodDto.foodIntro}</span>
 				</div>
 				<div>
 					<span>업데이트 <fmt:formatDate value="${foodDto.foodDate}" pattern="yyyy-MM-dd" /></span> 
@@ -698,7 +702,7 @@
 			<div class="reViewInfo">
 				<div class="title_reViewInfo">
 					<span>${foodDto.foodName}</span>
-					<span style="color: #030305;" class="close_reViewInfo">&times;</span>
+					<span class="close_reViewInfo" style="color: #030305;">&times;</span>
 				</div>
 				<div class="info">
 					<div class="slideshow-review">

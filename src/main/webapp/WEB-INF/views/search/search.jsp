@@ -122,68 +122,63 @@
 	margin-top: 53px;
 }
 .couponList {
-	height: 150px;
 	display: flex;
     justify-content: center;
     margin-bottom: 10px;
-	
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
-.couponList > div:nth-child(1) {
-	height: 150px;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	position: relative;
-	text-align: center;
-	width: 300px;
+.couponList img {
+	width: 350px;
+    height: 150px;
 }
 
+.couponList > div:nth-child(1) {
+	position: relative;
+}
+.couponList > div:nth-child(2) {
+	transform: rotate(90deg);
+    margin: auto 0;
+    width: 63px;
+}
+.couponList > div:nth-child(2) > span {
+	position: absolute;
+    font-size: 25px;
+    color: #EFB730;
+    display: block;
+    width: 150px;
+    left: -25px;
+    top: -20px;
+}
 .couponList > div:nth-child(1):after{
 	content:"";
 	background-color: rgba(0,0,0,0.3);
 	width: 100%;
-	height: 100%;
+	height: 30%;
 	position: absolute;
-	top: 0;
+	top: 55px;
 	left:0;
 	right: 0;
 	bottom: 0;
 } 
 
+
 .couponList > div:nth-child(1):hover:after{
 	background: transparent;
 }
-
-.couponList > div:nth-child(1) > span {
-	display: inline-block;
-	position: absolute;
-	bottom: 27px;
-	right: 15px;
-	font-size: 17px;
-	color: white;
-	z-index: 1;
-	
-}
 .couponList > div:nth-child(1) > span:nth-child(2) {
-	bottom: 0px;
+	color: white;
+	position: absolute;
+	bottom: 60px;
+	right: 15px;
 	font-size: 20px;
 	/* right: inherit; */
-	display: inline-block;
 	z-index: 1;
 }
-.couponList > div:nth-child(1) > a {
-	display: inline-block;
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	font-weight: bold;
-	color: white;
-	z-index: 1;
-}
-
 
 #map {
 	position: relative;
 }
+
 
 /* 쿠폰 관련 */
 
@@ -199,7 +194,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #contentFilter{
@@ -448,16 +443,31 @@ label {
 		mark(arr);
 		</script>
 		</c:forEach>
-		<div class="couponNav">
+		<%-- <div class="couponNav">
 			<c:if test="${couponCount > 0}">
 			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
 			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 				<div style="background-image: url('${root}/resources/ftp/${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-					<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
+					<img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
 					<span>${couponDto.couponCostsale}</span>
 					<span>${couponDto.couponName}</span>
 				</div>
 				<div>
+				</div>
+			</div>
+			</c:forEach>
+			</c:if>
+		</div> --%>
+		<div class="couponNav">
+			<c:if test="${couponCount > 0}">
+			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
+			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
+				<div>
+					<img alt="쿠폰 이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> 
+					<span>${couponDto.couponName}</span>
+				</div>
+				<div>
+					<span>${couponDto.couponSalerate} % OFF</span>
 				</div>
 			</div>
 			</c:forEach>

@@ -32,7 +32,7 @@
 .list {
 	/* width: 300px;
 	height: 250px; */
-	width: 316px;
+	width: 313px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 	margin-right: 10px;
@@ -79,6 +79,7 @@
     padding: 3px 10px;
     left: 0px;
     z-index: 1;
+    top: 0;
 }
 
 .list>div:nth-child(2) {

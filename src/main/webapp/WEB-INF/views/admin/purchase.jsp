@@ -77,8 +77,7 @@
 	width: 120px;
 }
 .purchase > div span:nth-child(2) {
-	font-size: 23px;
-	display: inline-block;
+	font-size: 20px;
 	width: 375px;
 	text-align: center;
 }
@@ -192,7 +191,7 @@
 						$('#purchaseDelBtn').show();
 					} else if(data.purchaseStatus == 'N'){
 						$('#purchaseDelBtn').hide();
-						$('#purchaseModal .btn span').text("취소된 구매내역 입니다.");
+						$('#purchaseModal .btn span').text("사용완료한 구매내역 입니다.");
 					}
 					
 					$('.purchaseModal').show();

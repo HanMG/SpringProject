@@ -195,8 +195,8 @@
 					</div>
 					<div>
 						<span>회원상태</span>
-						<input type="radio" name="memberStatus" value="y"><label class="span">활성화</label>
-						<input type="radio" name="memberStatus" value="n"><label class="span">비활성화</label>
+						<input type="radio" name="memberStatus" value="Y"><label class="span">활성화</label>
+						<input type="radio" name="memberStatus" value="N"><label class="span">비활성화</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="수정하기"></input>

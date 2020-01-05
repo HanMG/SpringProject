@@ -123,6 +123,22 @@ public class ReviewServiceImp implements ReviewService {
 		mav.addObject("listImage",listImage);
 		mav.setViewName("review/update.tiles");		
 	}
+	
+	@Override
+	public void reviewMyUpdate(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		String reviewCode = request.getParameter("reviewCode");
+		ReviewDto reviewDto = new ReviewDto();
+		reviewDto = reviewDao.reviewUpdate(reviewCode);
+		String foodName = reviewDao.getFoodName(reviewDto.getFoodCode());
+		List<ImageDto> listImage = imageDao.imgList(reviewCode);		
+		JejuAspect.logger.info(JejuAspect.logMsg+listImage.toString());
+		mav.addObject("foodName",foodName);
+		mav.addObject("reviewDto",reviewDto);
+		mav.addObject("listImage",listImage);
+		mav.setViewName("review/myUpdate.tiles");	
+	}
 
 	// 리뷰 정보 수정시 입력된 리뷰 정보 보내기 
 	@Override
@@ -193,6 +209,77 @@ public class ReviewServiceImp implements ReviewService {
 		mav.addObject("check", check);
 		mav.addObject("foodCode",foodCode);
 		mav.setViewName("review/updateOk.tiles");		
+	}
+	
+	@Override
+	public void reviewMyUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModel();
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");		
+		List<MultipartFile> files = request.getFiles("imgFile");
+		ReviewDto reviewDto = (ReviewDto) map.get("reviewDto");
+		String foodCode = request.getParameter("foodCode");
+		reviewDto.setReviewDate(new Date());
+		JejuAspect.logger.info(JejuAspect.logMsg + reviewDto);
+		int check = reviewDao.reviewUpdateOk(reviewDto);
+		String reviewCode = reviewDto.getReviewCode();
+		// 삭제할 이미지의 이름을 받음 (ex: image.jpg,image1.jpg)
+		String delStr = request.getParameter("deleteImg");
+		//JejuAspect.logger.info(JejuAspect.logMsg + delStr.toString());
+		if(delStr != null && !delStr.equals("")) {
+			// split하여 delList라는 문자열배열에 입력
+			String[] delList = delStr.split(",");			 
+			for(int i = 0; i < delList.length; i++) {
+				// 돌면서 해당 리뷰 코드의 값과 이름을 삭제할 Dto에 넣고 해당 값의 이미지DTO를 불러옴
+				ImageDto imageDelDto = new ImageDto();
+				imageDelDto.setReferCode(reviewCode);
+				imageDelDto.setImageName(delList[i]);
+				ImageDto imageDto = imageDao.imgSelect(imageDelDto);		
+				// 불러온 이미지 DTO에서 이름이 있으면 해당 파일의 주소를 가지고 삭제
+				if (imageDto.getImageName() != null) {
+					File checkFile = new File(imageDto.getImagePath());
+					if (checkFile.exists() && checkFile.isFile()) {
+						checkFile.delete();
+					}
+				}
+				// 삭제할 이미지 DTO를 가지고 table로 부터 삭제
+				imageDao.imgSelectDelete(imageDelDto);
+			}		
+		}		
+		// 입력받은 이미지 파일들을 체크하여 새로 입력
+		for (MultipartFile f : files) {			
+			if (!f.isEmpty()) {
+				ImageDto imageDto = new ImageDto();
+				imageDto.setReferCode(reviewCode);
+				long fileSize = f.getSize();
+				if (fileSize != 0) {
+					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
+
+					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
+					// C://Spring//workspace//springProject//resources//ftp
+					// C:\\ftp\\
+					path.mkdirs();					
+
+					if (path.exists() && path.isDirectory()) {
+						File file = new File(path, fileName);
+						try {
+							f.transferTo(file);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						imageDto.setImagePath(file.getAbsolutePath());
+						imageDto.setImageSize(fileSize);
+						imageDto.setImageName(fileName);
+						JejuAspect.logger.info(JejuAspect.logMsg + imageDto.toString());
+						JejuAspect.logger.info(JejuAspect.logMsg+check);
+						check += imageDao.imgInsertReview(imageDto);
+					}
+				}
+			}
+		}
+		mav.addObject("check", check);
+		mav.addObject("foodCode",foodCode);
+		mav.setViewName("review/myUpdateOk.tiles");	
+		
 	}
 	
 	// 리뷰 정보 읽기

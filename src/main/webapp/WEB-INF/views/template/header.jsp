@@ -83,7 +83,7 @@
 
 
 .nav_1 > input {
-    width: 400px;
+    width: 300px;
     font-size: 23px;
     margin-left: 10px;
     /* padding-left: 20px; */
@@ -278,7 +278,7 @@
 	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
+	background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 	z-index:2; 
 }
 
@@ -294,7 +294,7 @@
 	overflow: auto; /* Enable scroll if needed */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
+	background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 	z-index: 3;
 }
 

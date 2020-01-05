@@ -116,7 +116,7 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -250px;
+	margin-left: -300px;
 	margin-top: -400px;
 	min-width: 450px;
 	background: transparent;
@@ -173,7 +173,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.95); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 }
 /* 음식점 등록 */
 .foodReg {
@@ -187,6 +187,12 @@
 }
 .foodReg > form > div {
 	font-size: 25px;
+	margin: 5px 20px;
+}
+
+.foodReg > form > div:last-child {
+	text-align: center;
+    margin: 20px;
 }
 .foodReg > form > div > button {
 	font-size: 25px;
@@ -252,7 +258,7 @@
 						</c:when>
 					</c:choose>
 					<div>
-						<a href="${root}/review/update.go?foodCode=${reviewList.foodCode}&reviewCode=${reviewList.reviewCode}">수정</a>
+						<a href="${root}/review/myUpdate.go?foodCode=${reviewList.foodCode}&reviewCode=${reviewList.reviewCode}">수정</a>
 						<a href="javascript:void(0)" onclick="userDelete('${root}','${reviewList.foodCode}','${reviewList.reviewCode}')">삭제</a>					
 					</div>
 				</div>
@@ -385,7 +391,15 @@
 				  <li>${foodList.foodAddr}</li>
 				  <li>${foodList.foodKind} </li>
 				  <li>${foodList.foodStatus}</li>
-				  <li style="cursor: pointer; color: #EFB730;" onclick="myFoodDel('${foodList.foodCode}')">취소</li>
+				  <c:choose>
+						<c:when test="${foodList.foodStatus == 'n'}">
+						  <li style="cursor: pointer; color: #EFB730;" onclick="myFoodDel('${foodList.foodCode}')">취소</li>
+						</c:when>
+						<c:when test="${foodList.foodStatus == 'y'}">
+						  <li>등록됨</li>
+						</c:when>
+					</c:choose>
+				  
 				</ul>
 				</c:forEach>
 			</div>

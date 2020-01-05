@@ -146,6 +146,9 @@
 	color: #9b9b9b;
 	font-size: 14px;
 }
+.foodInfo > span {
+	margin-right: 5px; 
+}
 
 
 </style>
@@ -217,8 +220,12 @@ function popularFood() {
 					cont += "<span class='foodName'>음식점명 : "+data[i].foodName+"</span>";
 					cont += "<div class='foodInfo'>"
 					if (data[i].reviewScore > 0) {
-						var reviewScore = Math.round(data[i].reviewScore * 10)/10
-					cont += "<span class='reviewScore'>리뷰점수 : "+reviewScore+"</span>";
+						var reviewScore = Math.round(data[i].reviewScore * 10)/10;
+					cont += "<span class='reviewScore' id='star_grade'>";
+						  for (var j = 0; j < reviewScore; j++) {
+							cont += "<a href='#'><i class='fa fa-star'></i></a>";
+						}  
+					cont += "</span>";
 					}
 //					cont += "<span class='foodArea'>지역 : "+data[i].foodArea+"  </span>";
 // 					cont += "<span class='foodKind'>종류 : "+data[i].foodKind+"</span>";

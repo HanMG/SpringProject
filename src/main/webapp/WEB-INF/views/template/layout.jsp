@@ -74,7 +74,9 @@
         url(${root}/resources/fonts/NotoSansKR-Black.woff) format('woff'),
         url(${root}/resources/fonts/NotoSansKR-Black.otf) format('opentype');
  } 
-
+input::-webkit-input-placeholder {
+	font-family: Noto Sans KR;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -126,6 +128,9 @@ button {
 }
 img {
 	object-fit: cover;
+}
+input {
+	outline: none;
 }
 </style>
 </head>

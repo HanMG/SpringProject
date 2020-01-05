@@ -147,7 +147,7 @@
 }
 .listBtn {
 	font-size: 23px;
-	width: 188px;
+	width: 180px;
 	height: 50px;
 	color: #FFFFFF;
 	border: #343A40 solid 1px;

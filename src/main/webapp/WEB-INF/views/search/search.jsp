@@ -9,6 +9,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+/* 마커 내용 */
+.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+.wrap * {padding: 0;margin: 0;}
+.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+.info .close:hover {cursor: pointer;}
+.info .body {position: relative;overflow: hidden;}
+.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+.info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.info .link {color: #5085BB;}
 #content {
 	margin : 0 auto;
 	max-width: 1240px;
@@ -28,11 +43,15 @@
 	display: flex;
     justify-content: space-between;
     font-size: 23px;
-    margin-bottom: 20px;
+    margin: 20px 10px;
     padding: 0 60px;
 }
 .filter > span {
-	color: #EFB730;
+	color: #030305;
+    font-size: 30px;
+}
+.filter i {
+	font-size: 30px;
 }
 .dragend {
 	position:absolute;
@@ -103,87 +122,63 @@
 	margin-top: 53px;
 }
 .couponList {
-	height: 150px;
 	display: flex;
     justify-content: center;
     margin-bottom: 10px;
-	
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
-.couponList > div:nth-child(1) {
-	height: 150px;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	position: relative;
-	text-align: center;
-	width: 300px;
+.couponList img {
+	width: 350px;
+    height: 150px;
 }
 
+.couponList > div:nth-child(1) {
+	position: relative;
+}
+.couponList > div:nth-child(2) {
+	transform: rotate(90deg);
+    margin: auto 0;
+    width: 63px;
+}
+.couponList > div:nth-child(2) > span {
+	position: absolute;
+    font-size: 25px;
+    color: #EFB730;
+    display: block;
+    width: 150px;
+    left: -25px;
+    top: -20px;
+}
 .couponList > div:nth-child(1):after{
 	content:"";
 	background-color: rgba(0,0,0,0.3);
 	width: 100%;
-	height: 100%;
+	height: 30%;
 	position: absolute;
-	top: 0;
+	top: 55px;
 	left:0;
 	right: 0;
 	bottom: 0;
 } 
 
+
 .couponList > div:nth-child(1):hover:after{
 	background: transparent;
 }
-
-.couponList > div:nth-child(1) > span {
-	display: inline-block;
-	position: absolute;
-	bottom: 33px;
-	right: 15px;
-	font-size: 23px;
-	color: white;
-	z-index: 1;
-	
-}
 .couponList > div:nth-child(1) > span:nth-child(2) {
+	color: white;
+	position: absolute;
 	bottom: 60px;
-	font-size: 14px;
-	z-index: 1;
-}
-.couponList > div:nth-child(1) > span:nth-child(3) {
-	bottom: 82px;
+	right: 15px;
 	font-size: 20px;
 	/* right: inherit; */
-	display: inline-block;
 	z-index: 1;
 }
-.couponList > div:nth-child(1) > a {
-	display: inline-block;
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	font-weight: bold;
-	color: white;
-	z-index: 1;
-}
-/* 마커 내용 */
-.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-.wrap * {padding: 0;margin: 0;}
-.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-.info .close:hover {cursor: pointer;}
-.info .body {position: relative;overflow: hidden;}
-.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-.info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-.info .link {color: #5085BB;}
 
 #map {
 	position: relative;
 }
+
 
 /* 쿠폰 관련 */
 
@@ -199,7 +194,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(255, 255, 255, 0.95); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #contentFilter{
@@ -208,18 +203,22 @@
 	top: 50%;
 	margin-left: -370px;
 	margin-top: -400px;
-	width: 740px;
 	height: 700px;
 	border-radius: 5px;
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-	background: white;
+	background: transparent;
+}
+.filter_title {
+	display: flex;
+	flex-direction: column;
 }
 .titleFilter {
-	width: 740px;
-	height: 50px;
-	line-height: 50px;
 	font-size: 30px;
-	font-weight: bold;
+	display: flex;
+	color: white;
+	margin: 45px 0;
+}
+.titleFilter > .close {
+	margin-right: 5px;
 }
 /* 개인정보 */
 .titleFilter > span:first-child {
@@ -228,6 +227,10 @@
 .radio-tile-label {
 	font-size: 15px;
 }
+.filter_nav {
+	background: white;
+    border-radius: 5px;
+}
 .filter_nav span {
 	font-size: 23px;
 	margin: 20px 30px;
@@ -235,32 +238,21 @@
 }
 .radio-tile-group {
 	justify-content: left;
-	margin-left: 25px;
 }
 .search {
-    height: 230px;
     text-align: center;
-    line-height: 230px;
+    margin: 40px 0;
 }
 .searchBtn {
 	width: 100px;
-	height: 50px;
 	font-size: 32px;
-	line-height: 50px;
-	border-radius: 5px;
+	cursor: pointer;
 }
 .icon {
 	width: 10px;
 	height: 10px;
 }
-.filter_modal {
-	width: 740px;
-	height: 50px;
-}
-.filter_title {
-	width: 740px;
-	height: 50px;
-}
+
 .input-container, label {
 	cursor: pointer;
 }
@@ -281,7 +273,7 @@ label {
 	<div class="food_nav_1">
 		<div class="filter">
 			<span>${keyword} 맛집 인기 검색 순위</span>
-			<a href="#" id="filterClick">필터</a>
+			<a href="#" id="filterClick"><i class="fa fa-bars" aria-hidden="true"></i></a>
 		</div>
 		<!-- 검색된 음식점 리스트 불러오기  -->
 		<div class="result"></div>
@@ -451,17 +443,31 @@ label {
 		mark(arr);
 		</script>
 		</c:forEach>
-		<div class="couponNav">
+		<%-- <div class="couponNav">
 			<c:if test="${couponCount > 0}">
 			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
 			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 				<div style="background-image: url('${root}/resources/ftp/${couponDto.imageName}'), url('${root}/resources/css/list.jpg');">
-					<%-- <img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> --%>
+					<img alt="쿠폰 이미지" src="${path}${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
 					<span>${couponDto.couponCostsale}</span>
-					<span style="text-decoration:line-through;">${couponDto.couponCostori}</span>
 					<span>${couponDto.couponName}</span>
 				</div>
 				<div>
+				</div>
+			</div>
+			</c:forEach>
+			</c:if>
+		</div> --%>
+		<div class="couponNav">
+			<c:if test="${couponCount > 0}">
+			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
+			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
+				<div>
+					<img alt="쿠폰 이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> 
+					<span>${couponDto.couponName}</span>
+				</div>
+				<div>
+					<span>${couponDto.couponSalerate} % OFF</span>
 				</div>
 			</div>
 			</c:forEach>

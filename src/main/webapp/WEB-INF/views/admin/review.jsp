@@ -90,7 +90,6 @@
 }
 .food > div span:nth-child(2) {
 	font-size: 23px;
-	display: inline-block;
 	width: 345px;
 	text-align: center;
 }

@@ -9,26 +9,6 @@
 <meta charset="UTF-8">
 <title>맛집 리스트</title>
 <style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-}
-a {
-	text-decoration: none;
-}
-.button {
-    color: #FFFFFF;
-    border: #EFB730 solid 2px;
-    border-radius: 5px;
-    background-color: transparent;
-    font-size: 23px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
-}
-.button > a {
-	color: #EFB730;
-	font-size: 18px;
-    line-height: 32px;
-}
 #content {
 	margin : 10px auto;
 	overflow: hidden;
@@ -42,30 +22,40 @@ a {
 .tag {
 	text-align: center;
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
 	margin-bottom: 40px;
 	
 }
-.tag > button {
-	width: 120px;
-	margin: 0 10px 6px;
-	line-height: 26px;
+.a {
+	font-size: 25px;
+    margin: 5px 10px;
+    border: 2px solid #EFB730;
+    border-radius: 10px;
+    padding: 2px 12px;
 }
-.tag > button:hover{
-	background: #EFB730;
-}
-.tag > button:hover a {
-	color: #fff;
-}
-
-.tag > .button.active {
-	background: #EFB730;
+.a:hover {
+	background: linear-gradient(90deg, rgb(235, 201, 114) 0%, rgb(235, 201, 114) 5%,rgb(232, 188, 112) 5%, rgb(232, 188, 112) 18%,rgb(230, 174, 109) 18%, rgb(230, 174, 109) 38%,rgb(227, 161, 107) 38%, rgb(227, 161, 107) 53%,rgb(224, 147, 104) 53%, rgb(224, 147, 104) 71%,rgb(222, 134, 102) 71%, rgb(222, 134, 102) 81%,rgb(219, 120, 99) 81%, rgb(219, 120, 99) 100%);
+	color: white;
+	border: 2px solid white;
 }
 
-.tag > .button.active a {
-	color: #fff;
+
+.a.active {
+  -webkit-animation: zoom .3s;
+  animation: zoom .3s;
 }
+@-webkit-keyframes zoom {
+  50% {
+    -webkit-transform: scale(1.05);
+  }
+}
+@keyframes zoom {
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .list {
 	display: flex;
 	flex-flow: row wrap;
@@ -170,8 +160,8 @@ a {
 </style>
 <script type="text/javascript">
 	$(function(){
-		$('.button').click(function(){
-			$('.button').removeClass("active");
+		$('.a').click(function(){
+			$('.a').removeClass("active");
 			$(this).addClass("active");
 		})
 	})
@@ -183,21 +173,21 @@ a {
 			<span>믿고 보는 맛집 리스트</span>
 		</div>
 		<div class="tag">
-			<button class="button"><a href="#">#푸드트럭</a></button>
-			<button class="button"><a href="#">#중문</a></button>
-			<button class="button"><a href="#">#성산</a></button>
-			<button class="button"><a href="#">#김녕</a></button>
-			<button class="button"><a href="#">#애월</a></button>
-			<button class="button"><a href="#">#함덕</a></button>
-			<button class="button"><a href="#">#협재</a></button>
-			<button class="button"><a href="#">#전복</a></button>
-			<button class="button"><a href="#">#전망</a></button>
-			<button class="button"><a href="#">#여유</a></button>
-			<button class="button"><a href="#">#데이트</a></button>
-			<button class="button"><a href="#">#가족</a></button>
-			<button class="button"><a href="#">#친구</a></button>
-			<button class="button"><a href="#">#흑돼지</a></button>
-			<button class="button"><a href="#">#고기국수</a></button>
+			<a class="a" href="#">#푸드트럭</a>
+			<a class="a" href="#">#중문</a>
+			<a class="a" href="#">#성산</a>
+			<a class="a" href="#">#김녕</a>
+			<a class="a" href="#">#애월</a>
+			<a class="a" href="#">#함덕</a>
+			<a class="a" href="#">#협재</a>
+			<a class="a" href="#">#전복</a>
+			<a class="a" href="#">#전망</a>
+			<a class="a" href="#">#여유</a>
+			<a class="a" href="#">#데이트</a>
+			<a class="a" href="#">#가족</a>
+			<a class="a" href="#">#친구</a>
+			<a class="a" href="#">#흑돼지</a>
+			<a class="a" href="#">#고기국수</a>
 		</div>
 		<div class="list">
 			<div class="page"></div>
@@ -274,8 +264,8 @@ $(function() {
 	updateList();
 });
 
-$('button').click(function() {
-	tagValue = $(this).find('a').text().substring(1);
+$('a').click(function() {
+	tagValue = $(this).text().substring(1);
 	if (tagValue == "푸드트럭" || tagValue == "중문" || tagValue == "성산" || tagValue == "김녕" || tagValue == "애월" || tagValue == "함덕" || tagValue == "협재") {
 		tagType = "area";
 	} else if (tagValue == "흑돼지" || tagValue == "고기국수" || tagValue == "전복") {

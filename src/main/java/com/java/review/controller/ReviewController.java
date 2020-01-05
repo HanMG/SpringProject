@@ -52,6 +52,15 @@ public class ReviewController {
 		reviewService.reviewUpdate(mav);
 		return mav;
 	}
+	
+	// 리뷰 수정시 페이지 이동
+	@RequestMapping(value = "/review/myUpdate.go", method = RequestMethod.GET)
+	public ModelAndView reviewMyUpdate(HttpServletRequest request, HttpServletResponse reponse) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		reviewService.reviewMyUpdate(mav);
+		return mav;
+	}
 
 	// 리뷰 수정시 정보 입력
 	@RequestMapping(value = "/review/updateOk.go", method = RequestMethod.POST)
@@ -61,6 +70,17 @@ public class ReviewController {
 		mav.addObject("reviewDto", reviewDto);
 		// 서비스에 model and view 보냄
 		reviewService.reviewUpdateOk(mav);
+		return mav;
+	}
+	
+	// 리뷰 수정시 정보 입력
+	@RequestMapping(value = "/review/MyUpdateOk.go", method = RequestMethod.POST)
+	public ModelAndView reviewMyUpdateOk(HttpServletRequest request, HttpServletResponse reponse, ReviewDto reviewDto) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("reviewDto", reviewDto);
+		// 서비스에 model and view 보냄
+		reviewService.reviewMyUpdateOk(mav);
 		return mav;
 	}
 
@@ -89,6 +109,16 @@ public class ReviewController {
 		mav.addObject("request", request);
 		mav.addObject("response", response);
 		reviewService.userReviewDelete(mav);
+		return mav;
+	}
+	
+	// 마이 페이지 유저가 리뷰 삭제
+	@RequestMapping(value = "/review/myUserDelete.go", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView myUserDelete(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		reviewService.myUserReviewDelete(mav);
 		return mav;
 	}
 	

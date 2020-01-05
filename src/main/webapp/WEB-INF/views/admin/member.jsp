@@ -182,8 +182,8 @@
 					</div>
 					<div>
 						<span>이메일</span>
-						<input type="hidden" value="" name="memberMail" id="memberMail"/>
-						<input type="text" id="memberMail" name="mail" value="" disabled="disabled"/>
+						<input type="hidden" value="" name="memberMail" class="memberMail"/>
+						<input type="text" class="memberMail" name="mail" value="" disabled="disabled"/>
 					</div>
 					<div>
 						<span>휴대폰</span>
@@ -195,8 +195,8 @@
 					</div>
 					<div>
 						<span>회원상태</span>
-						<input type="radio" name="memberStatus" value="y"><label class="span">활성화</label>
-						<input type="radio" name="memberStatus" value="n"><label class="span">비활성화</label>
+						<input type="radio" name="memberStatus" value="Y"><label class="span">활성화</label>
+						<input type="radio" name="memberStatus" value="N"><label class="span">비활성화</label>
 					</div>
 					<div class="btn">
 						<input class="button" type="submit" value="수정하기"></input>
@@ -232,7 +232,7 @@ function getMember(memberCode){
 			$("#memberDate").text(data.memberDate);
 			$("#memberHidden").val(data.memberCode);
 			$("#memberName").val(data.memberName);
-			$("#memberMail").val(data.memberMail);
+			$(".memberMail").val(data.memberMail);
 			$("#memberPhone").val(data.memberPhone);
 			$("input:radio[name='memberStatus']:input[value="+data.memberStatus+"]").attr("checked", true);
 		},

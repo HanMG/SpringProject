@@ -12,13 +12,13 @@
 	<c:if test="${check > 0 }">
 		<script>
 			alert("리뷰가 수정되었습니다.");
-			location.href="${root}/food/read.go?foodCode=${foodCode}";
+			location.href = "${root}/member/myPage.go";
 		</script>
 	</c:if>
 	<c:if test="${check == 0 }">
 		<script>
 			alert("ERROR ! 리뷰가 수정되지않았습니다.");
-			location.href="${root}/food/read.go?foodCode=${foodCode}";
+			location.href = "${root}/member/myPage.go";
 		</script>
 	</c:if>	
 </body>

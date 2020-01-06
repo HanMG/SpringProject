@@ -23,7 +23,7 @@ EAT THE JEJU ( Kitri 프로젝트 )
 * Framework - Spring, MyBatis
 * API - 카카오지도, 카카오로그인, 네이버로그인, Google Chart, JDBC
 * OS - Windows10 / 64bit
-* 형상관리 - Git
+* 형상관리 - GitHub
 * 의존성 관리 - Maven
 
 구성원 역할

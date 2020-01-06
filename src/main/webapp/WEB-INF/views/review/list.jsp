@@ -43,7 +43,7 @@
 							<div class="reviewImg">
 								<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 								<c:forEach var="imgList" items="${img}">
-									<img src="${root}/resources/ftp/${imgList}" alt="이미지" onerror="this.src='${root}/resources/css/list.jpg'"/>
+									<img src="/img/${imgList}" alt="이미지" onerror="this.src='${root}/resources/css/list.jpg'"/>
 								</c:forEach>
 							</div>							
 						</a>

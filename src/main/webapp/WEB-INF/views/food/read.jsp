@@ -546,7 +546,7 @@
 						<c:forEach var="couponDto" items="${couponDtoList}" varStatus="status" >
 							<div class="cp_mySlides fade">
 								<a href="${root}/coupon/couponRead.go?couponCode=${couponDto.couponCode}&pageNumber=1">
-								<img alt="쿠폰이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
+								<img alt="쿠폰이미지" src="/img/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'">
 								<span class="couponCouponName"> ${couponDto.couponName}</span>
 								<span class="couponSalerate"> ${couponDto.couponSalerate}%</span> 
 								<span class="couponCostsale"> ${couponDto.couponCostsale}원</span>
@@ -593,7 +593,7 @@
 										<div class="reviewImg">
 											<c:set var="img" value="${fn:split(foodReviewDto.imageName,',')}" />
 											<c:forEach var="imgList" items="${img}">
-												<img src="${root}/resources/ftp/${imgList}" alt="이미지" onerror="this.src='${root}/resources/css/list.jpg'"/>
+												<img src="/img/${imgList}" alt="이미지" onerror="this.src='${root}/resources/css/list.jpg'"/>
 											</c:forEach>
 										</div>							
 									</a>
@@ -634,7 +634,7 @@
 			<div class="img">
 				<c:choose>
 					<c:when test="${foodDto.foodStatus == 'Y'}">
-						<img src="${root}/resources/ftp/${imageDto.imageName}" alt="이미지"
+						<img src="/img/${imageDto.imageName}" alt="이미지"
 							 onerror="this.src='${root}/resources/css/list.jpg'" />
 					</c:when>
 					<c:when test="${foodDto.foodStatus != 'N'}">
@@ -782,19 +782,19 @@ function myReview(reviewCode) {
 			for(var i=0; i < Object.keys(json.imgList).length;i++){
 				if (i == 0) {
 					mySlides = '<div class="mySlides reviewFade" style="block;">';
-					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
+					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='/img/"+json.imgList[i].imageName+"'>";
 					mySlides += '</div>';
 					$(".slideshow-review").append(mySlides);
 					
 				} else {
 					mySlides = '<div class="mySlides reviewFade" style="display:none;">';
-					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>";
+					mySlides += "<img style='width: 800px; height: 500px; vertical-align:bottom;' src='/img/"+json.imgList[i].imageName+"'>";
 					mySlides += '</div>';
 					$(".slideshow-review").append(mySlides);
 				}
 				//console.log("1");
 				//console.log(json.imgList[i].imageName);
-				console.log("<img style='width: 800px; height: 500px; ' src='"+root+"/resources/ftp/"+json.imgList[i].imageName+"'>");
+				console.log("<img style='width: 800px; height: 500px; ' src='/img/"+json.imgList[i].imageName+"'>");
 			}
 		}
 	});

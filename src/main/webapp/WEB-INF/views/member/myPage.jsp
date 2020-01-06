@@ -241,7 +241,7 @@
 					<div>
 						<c:set var="img" value="${fn:split(reviewList.imageName,',')}" />
 						<c:forEach var="imgList" items="${img}">
-							<img src="${root}/resources/ftp/${imgList}" alt="이미지 준비중" style="width: 100px; height: 100px;" />
+							<img src="/img/${imgList}" alt="이미지 준비중" style="width: 100px; height: 100px;" />
 						</c:forEach>
 					</div>
 				</div>
@@ -297,12 +297,12 @@
 									<span>사용가능</span>
 								</c:when>
 								<c:when test="${couponList.purchaseStatus == 'N'}">
-									<span>사용완료</span>
+									<span>취소됨</span>
 								</c:when>
 							</c:choose>
 							</li>
 							<li>
-								<span style="cursor: pointer; color: #EFB730;" onclick="myCouponDel('${couponList.purchaseCode}')">사용하기</span>
+								<span style="cursor: pointer; color: #EFB730;" onclick="myCouponDel('${couponList.purchaseCode}')">취소하기</span>
 							</li>
 						</ul>
 					</c:when>
@@ -323,7 +323,7 @@
 									<span>사용가능</span>
 								</c:when>
 								<c:when test="${couponList.purchaseStatus == 'N'}">
-									<span>사용완료</span>
+									<span>취소됨</span>
 								</c:when>
 							</c:choose>
 							</li>
@@ -354,7 +354,7 @@
 				</ul>
 				<c:forEach var="favoriteList" items="${favoriteList}">
 				<ul id="${favoriteList.foodCode}">
-				  <li><img alt="음식점" src="${root}/resources/ftp/${favoriteList.imageName}"></li>
+				  <li><img alt="음식점" src="/img/${favoriteList.imageName}"></li>
 				  <li>${favoriteList.foodName}</li>
 				  <li>${favoriteList.foodArea} </li>
 				  <c:choose>

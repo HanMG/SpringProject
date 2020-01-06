@@ -236,7 +236,7 @@ $(".reviewClick").click(function(){
 			$("#reviewCont").val(data.reviewCont);
 			$("#reviewScore").text(data.reviewScore);
 			for(let i = 0; i<data.listImage.length; i++){				
-				$("#imgWrapper").append("<img src='${root}/resources/ftp/"+data.listImage[i].imageName+"\' alt='"+data.listImage[i].imageName+"' style='width:150px; height:150px' />");
+				$("#imgWrapper").append("<img src='/img/"+data.listImage[i].imageName+"\' alt='"+data.listImage[i].imageName+"' style='width:150px; height:150px' />");
 			}
 		},
 		error:function(request,status,error){

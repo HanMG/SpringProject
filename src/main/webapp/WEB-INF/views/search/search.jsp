@@ -386,7 +386,7 @@ label {
 						img.className = "img";
 						body.prepend(img);
 					var image = document.createElement("img");
-					var foodImage = "${root}/resources/ftp/"+imageName;
+					var foodImage = "/img/"+imageName;
 						console.log(foodImage);
 						image.setAttribute("src", foodImage);
 						image.setAttribute("width", "73px");
@@ -463,7 +463,7 @@ label {
 			<c:forEach var="couponDto" items="${couponList}" begin="0" step="1" end="5">
 			<div id="inner" class="couponList" style="cursor:pointer;" onclick="location.href='${root}/food/read.go?foodCode=${couponDto.foodCode}'">
 				<div>
-					<img alt="쿠폰 이미지" src="${root}/resources/ftp/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> 
+					<img alt="쿠폰 이미지" src="/img/${couponDto.imageName}" onerror="this.src='${root}/resources/css/list.jpg'"> 
 					<span>${couponDto.couponName}</span>
 				</div>
 				<div>
@@ -648,7 +648,7 @@ function searchResultAjax() {
 					cont += "<div class='list' style='cursor:pointer;' onclick='location.href=\""+url+"\"'>";
 						cont += "<div>";
 							var err = root + "/resources/css/list.jpg";
-							cont += "<img alt='음식 이미지' src='"+root+"/resources/ftp/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
+							cont += "<img alt='음식 이미지' src='/img/"+data[i].imageName+"' onerror='this.src=\""+err+"\"'>";
 						cont += "</div>";
 						cont += "<div>";
 							cont += "<span class='foodName'>"+data[i].foodName+"</span>";

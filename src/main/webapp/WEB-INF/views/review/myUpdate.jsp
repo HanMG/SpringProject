@@ -154,7 +154,7 @@ $(document).on("change", ".file-input", function(){
 								<c:forEach var="imageDto" items="${listImage}">			
 									<c:set var="tdId" value="${fn:substringBefore(imageDto.imageName,'_')}"></c:set>				
 									<c:set var="imgName" value="${fn:substringAfter(imageDto.imageName,'_')}"></c:set>
-									<td id="${tdId}" style="text-align: center;"><img src="${root}/resources/ftp/${imageDto.imageName}"
+									<td id="${tdId}" style="text-align: center;"><img src="/img/${imageDto.imageName}"
 										alt="image" style="width: 100px; height: 100px;" onerror="this.src='${root}/resources/css/list.jpg'"/><br />
 										<input style="cursor: pointer;" class="imgBtn" type="button" value="이미지삭제" onclick="delImage('${tdId}','${imageDto.imageName}')"/>
 									</td>

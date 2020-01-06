@@ -80,7 +80,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\image"); 
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdirs();					
@@ -184,7 +184,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\image"); 
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdirs();					
@@ -254,7 +254,7 @@ public class ReviewServiceImp implements ReviewService {
 				if (fileSize != 0) {
 					String fileName = Long.toString(System.currentTimeMillis()) + "_" + f.getOriginalFilename();
 
-					File path = new File("C:\\Spring\\workspace\\eatthejeju\\src\\main\\webapp\\resources\\ftp");
+					File path = new File("C:\\Spring\\workspace\\image"); 
 					// C://Spring//workspace//springProject//resources//ftp
 					// C:\\ftp\\
 					path.mkdirs();					

@@ -26,6 +26,11 @@ EAT THE JEJU ( Kitri 프로젝트 )
 * 형상관리 - GitHub
 * 의존성 관리 - Maven
 
+
+개발 일정
+-------------
+![개발일정](https://user-images.githubusercontent.com/22463540/71796042-4cc8bc80-308c-11ea-8d2a-db9662047029.png)
+
 구성원 역할
 -------------
 * 진현기 - 회원가입. 소셜 로그인, 마이페이지, 회원관리
@@ -34,4 +39,11 @@ EAT THE JEJU ( Kitri 프로젝트 )
 * 박준혁 - DB 설계, 통합/조건 검색, 테마별 음식점 조회, 검색어 자동완성, 음식점 즐겨찾기, 데이터 크롤링
 * 전지원 - 쿠폰 (조회/수정/삭제) 구매(조회/취소), 구매내역 메일연동, 관리자메인 (구글차트)
 
+마인드맵
+------------
+![브레인맵  잇더제주](https://user-images.githubusercontent.com/22463540/71796103-8dc0d100-308c-11ea-9b97-26837a237509.png)
 
+
+E-R Diagram
+------------
+![DB_Model  잇더제주](https://user-images.githubusercontent.com/22463540/71796102-8dc0d100-308c-11ea-8944-3a482fa2a17e.png)

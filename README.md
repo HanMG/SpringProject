@@ -47,3 +47,8 @@ EAT THE JEJU ( Kitri 프로젝트 )
 E-R Diagram
 ------------
 ![DB_Model  잇더제주](https://user-images.githubusercontent.com/22463540/71796102-8dc0d100-308c-11ea-8944-3a482fa2a17e.png)
+
+
+PPT 
+------------
+<https://drive.google.com/open?id=1BkpyZ6oXhUUHLDASrElqZxLpSCapjezx>

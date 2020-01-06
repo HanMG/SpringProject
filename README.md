@@ -1,6 +1,8 @@
 EAT THE JEJU ( Kitri 프로젝트 )
 =============
 
+![메인](https://user-images.githubusercontent.com/22463540/71795860-864cf800-308b-11ea-8fe5-d7145e30f78f.png)
+
 팀원
 -------------
 * 조장 : 진현기

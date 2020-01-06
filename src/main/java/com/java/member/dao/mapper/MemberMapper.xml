@@ -7,12 +7,13 @@
 	<resultMap type="com.java.food.dto.FoodDto" id="foodDto"/>
 	
 	<insert id="insert" parameterType="com.java.member.dto.MemberDto">
-		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME) 
+		insert into member(MEMBER_CODE, MEMBER_DATE, MEMBER_MAIL, MEMBER_PWD, MEMBER_NAME, MEMBER_STATUS) 
 		values('MEMBER'||LPAD(seqMember.nextval,4,0),
 		#{memberDate},
 		#{memberMail},
 		#{memberPwd},
-		#{memberName}
+		#{memberName},
+		'Y'
 		)
 	</insert>
 	 

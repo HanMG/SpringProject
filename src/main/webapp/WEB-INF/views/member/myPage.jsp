@@ -392,10 +392,10 @@
 				  <li>${foodList.foodKind} </li>
 				  <li>${foodList.foodStatus}</li>
 				  <c:choose>
-						<c:when test="${foodList.foodStatus == 'n'}">
+						<c:when test="${foodList.foodStatus == 'N'}">
 						  <li style="cursor: pointer; color: #EFB730;" onclick="myFoodDel('${foodList.foodCode}')">취소</li>
 						</c:when>
-						<c:when test="${foodList.foodStatus == 'y'}">
+						<c:when test="${foodList.foodStatus == 'Y'}">
 						  <li>등록됨</li>
 						</c:when>
 					</c:choose>

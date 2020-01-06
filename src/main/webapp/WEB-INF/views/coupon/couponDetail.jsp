@@ -176,7 +176,7 @@ a {
 				%>
 				
 					<div style="text-align: center;">
-						<span class="nav_5"> *휴대폰 번호<span style="font-size: 14px;">(해당 번호로 쿠폰을 보내드립니다.)</span></span>
+						<span class="nav_5"> *휴대폰 번호를 입력해주세요.<span style="font-size: 14px;"></span></span>
 						<input class="input phone_input" type="text" name="purchasePhone" onChange="inputPhone(this)">
 					</div>
 					<div style="text-align: center; margin-top: 10px;">
